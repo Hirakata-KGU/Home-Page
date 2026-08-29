@@ -1,0 +1,16 @@
+:root {
+  --olive: #2f5b34;
+  --olive-light: #4a7f52;
+  --olive-dark: #1e3d26;
+  --accent: #f7f7ec;
+  --accent-2: #e8f5e0;
+  --gold: #c9a85a;
+  --gold-light: #d4b972;
+  --text: #222222;
+  --muted: #666666;
+  --border: #e6e6e6;
+  --max-width: 1200px;
+  --shadow-sm: 0 2px 8px rgba(47, 91, 52, 0.06);
+  --shadow-md: 0 8px 24px rgba(47, 91, 52, 0.08);
+  --shadow-lg: 0 16px 48px rgba(47, 91, 52, 0.12);
+}
