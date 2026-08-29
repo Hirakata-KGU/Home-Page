@@ -8,34 +8,45 @@
             関東学院大学 金沢八景キャンパスで開催される秋の学園祭。<br>
             学生たちの熱い情熱と、地域とつながる特別な2日間をお届けします。
           </p>
-          <p style="font-size: 14px; opacity: 0.8;">
+          <p class="footer-address">
             〒236-8501 神奈川県横浜市金沢区六浦東1-50-1<br>
             主催：平潟祭実行委員会
           </p>
         </div>
 
         <div class="footer-section">
-          <h4>クイックリンク</h4>
+          <h4>ページ一覧</h4>
           <ul class="footer-links">
-            <li><a href="#about">平潟祭について</a></li>
-            <li><a href="#events">企画一覧</a></li>
-            <li><a href="#schedule">タイムテーブル</a></li>
-            <li><a href="#access">アクセス</a></li>
-            <li><a href="#sns">SNS</a></li>
+            <li><NuxtLink to="/">ホーム（概要・ギャラリー）</NuxtLink></li>
+            <li><NuxtLink to="/events">企画・模擬店一覧</NuxtLink></li>
+            <li><NuxtLink to="/schedule">タイムテーブル</NuxtLink></li>
+            <li><NuxtLink to="/map">場内マップ（全体・文化館・音楽館）</NuxtLink></li>
+            <li><NuxtLink to="/access">アクセス</NuxtLink></li>
+            <li><NuxtLink to="/contact">お問い合わせ</NuxtLink></li>
           </ul>
         </div>
 
         <div class="footer-section">
-          <h4>外部リンク</h4>
+          <h4>公式SNS・リンク</h4>
           <ul class="footer-links">
             <li>
+              <a href="https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w" target="_blank" rel="noopener noreferrer">
+                公式 X (Twitter) ↗
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg==" target="_blank" rel="noopener noreferrer">
+                公式 Instagram ↗
+              </a>
+            </li>
+            <li>
               <a href="https://univ.kanto-gakuin.ac.jp/" target="_blank" rel="noopener noreferrer">
-                関東学院大学 公式サイト
+                関東学院大学 公式サイト ↗
               </a>
             </li>
             <li>
               <a href="https://univ.kanto-gakuin.ac.jp/about-university/location.html" target="_blank" rel="noopener noreferrer">
-                キャンパスマップ
+                大学キャンパスマップ ↗
               </a>
             </li>
           </ul>
@@ -96,7 +107,7 @@ footer {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1.2fr 1.2fr;
   gap: 48px;
   margin-bottom: 48px;
 }
@@ -113,6 +124,11 @@ footer {
   margin-bottom: 16px;
 }
 
+.footer-address {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
 .footer-section h4 {
   font-size: 16px;
   font-weight: 800;
@@ -125,19 +141,19 @@ footer {
 }
 
 .footer-links li {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .footer-links a {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   font-size: 14px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .footer-links a:hover {
   color: white;
-  padding-left: 8px;
+  padding-left: 6px;
 }
 
 .footer-bottom {

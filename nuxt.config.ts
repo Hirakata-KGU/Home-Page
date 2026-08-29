@@ -48,7 +48,14 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'github-pages',
     prerender: {
-      routes: ['/'],
+      routes: [
+        '/',
+        '/events',
+        '/schedule',
+        '/map',
+        '/access',
+        '/contact',
+      ],
       crawlLinks: true,
     },
   },

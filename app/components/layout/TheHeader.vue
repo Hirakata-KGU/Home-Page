@@ -12,11 +12,12 @@ const closeMobileMenu = () => {
 };
 
 const navLinks = [
-  { name: '概要', href: '#about' },
-  { name: '企画', href: '#events' },
-  { name: 'スケジュール', href: '#schedule' },
-  { name: 'アクセス', href: '#access' },
-  { name: 'SNS', href: '#sns' },
+  { name: 'ホーム', to: '/' },
+  { name: '企画一覧', to: '/events' },
+  { name: 'タイムテーブル', to: '/schedule' },
+  { name: '場内マップ', to: '/map' },
+  { name: 'アクセス', to: '/access' },
+  { name: 'お問い合わせ', to: '/contact' },
 ];
 </script>
 
@@ -35,13 +36,15 @@ const navLinks = [
 
       <!-- Desktop Navigation -->
       <nav class="desktop-nav" aria-label="メインナビゲーション">
-        <a
+        <NuxtLink
           v-for="link in navLinks"
-          :key="link.href"
-          :href="link.href"
+          :key="link.to"
+          :to="link.to"
+          class="nav-item"
+          :class="{ 'contact-nav-item': link.to === '/contact' }"
         >
           {{ link.name }}
-        </a>
+        </NuxtLink>
       </nav>
 
       <!-- Mobile Menu Button -->
@@ -59,15 +62,16 @@ const navLinks = [
     <!-- Mobile Drawer Navigation -->
     <transition name="drawer">
       <nav v-if="isMobileMenuOpen" class="mobile-drawer" aria-label="モバイルナビゲーション">
-        <a
+        <NuxtLink
           v-for="link in navLinks"
-          :key="link.href"
-          :href="link.href"
+          :key="link.to"
+          :to="link.to"
           class="mobile-nav-link"
+          :class="{ 'mobile-contact-link': link.to === '/contact' }"
           @click="closeMobileMenu"
         >
           {{ link.name }}
-        </a>
+        </NuxtLink>
       </nav>
     </transition>
   </header>
@@ -82,7 +86,6 @@ header {
   border-bottom: 1px solid var(--border);
   z-index: 1000;
   box-shadow: var(--shadow-sm);
-  animation: slideDown 0.6s ease;
 }
 
 .header-inner {
@@ -103,8 +106,8 @@ header {
 }
 
 .brand-logo-wrapper {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   background: linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%);
   border-radius: 8px;
   display: flex;
@@ -123,35 +126,59 @@ header {
 .brand-text .title {
   font-weight: 900;
   color: var(--olive);
-  font-size: 22px;
+  font-size: 20px;
   letter-spacing: 0.5px;
 }
 
 .brand-text .subtitle {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
   font-weight: 600;
 }
 
 .desktop-nav {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
-.desktop-nav a {
+.nav-item {
   font-weight: 700;
   text-decoration: none;
   color: var(--muted);
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 8px;
   font-size: 14px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
-.desktop-nav a:hover {
+.nav-item:hover {
   color: var(--olive);
   background: var(--accent-2);
+}
+
+.nav-item.router-link-exact-active,
+.nav-item.router-link-active:not([href="/"]) {
+  color: var(--olive);
+  background: var(--accent-2);
+  font-weight: 800;
+}
+
+/* Contact button highlight */
+.contact-nav-item {
+  background: var(--olive);
+  color: white !important;
+  border-radius: 20px;
+  padding: 8px 18px;
+  margin-left: 6px;
+}
+
+.contact-nav-item:hover {
+  background: var(--olive-light);
+}
+
+.contact-nav-item.router-link-exact-active {
+  background: var(--olive-dark);
 }
 
 .mobile-menu-btn {
@@ -159,8 +186,8 @@ header {
   background: var(--olive);
   color: white;
   border: none;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
   font-size: 22px;
   cursor: pointer;
@@ -188,13 +215,24 @@ header {
   color: var(--olive);
   padding: 14px 16px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
   border-bottom: 1px solid rgba(47, 91, 52, 0.1);
   transition: all 0.2s ease;
 }
 
-.mobile-nav-link:hover {
+.mobile-nav-link:hover,
+.mobile-nav-link.router-link-exact-active {
   background: var(--accent-2);
+  font-weight: 800;
+}
+
+.mobile-contact-link {
+  background: var(--olive);
+  color: white !important;
+  border-radius: 8px;
+  margin-top: 8px;
+  text-align: center;
+  border-bottom: none;
 }
 
 /* Transitions */
@@ -209,7 +247,7 @@ header {
   transform: translateY(-10px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .desktop-nav {
     display: none;
   }

@@ -6,13 +6,14 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
   color: var(--text);
-  background: #4285F4;
-  line-height: 1.7;
+  background: var(--bg-main);
+  line-height: 1.75;
   overflow-x: hidden;
 }
 
@@ -36,12 +37,15 @@ img {
 
 /* Button styles */
 .btn {
-  display: inline-block;
-  padding: 16px 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 30px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 15px;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-md);
   cursor: pointer;
@@ -49,25 +53,38 @@ img {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  background: linear-gradient(135deg, var(--sprout-light) 0%, var(--sprout) 100%);
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(201, 168, 90, 0.4);
+  box-shadow: 0 10px 28px rgba(46, 125, 50, 0.3);
+  background: linear-gradient(135deg, var(--sprout-bright) 0%, var(--sprout-light) 100%);
 }
 
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+.btn-gold {
+  background: linear-gradient(135deg, var(--sun-gold) 0%, var(--sun-gold-light) 100%);
   color: white;
 }
 
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(245, 158, 11, 0.35);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--border);
+  color: var(--sprout-dark);
+}
+
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: white;
+  border-color: var(--sprout);
+  color: var(--sprout);
+  transform: translateY(-2px);
 }
 
 /* Section base styles */
@@ -75,8 +92,9 @@ img {
   background: white;
   border-radius: 20px;
   padding: 40px;
-  box-shadow: var(--shadow-md);
-  border-top: 6px solid var(--olive);
+  box-shadow: var(--shadow-sm);
+  border-top: 5px solid var(--sprout);
+  border-bottom: 1px solid var(--border);
   animation: fadeInUp 0.6s ease both;
 }
 
@@ -86,18 +104,18 @@ img {
   gap: 16px;
   margin-bottom: 32px;
   padding-bottom: 20px;
-  border-bottom: 3px solid var(--accent-2);
+  border-bottom: 2px solid var(--sprout-bg);
 }
 
 .section-icon {
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%);
-  border-radius: 12px;
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--sprout-light) 0%, var(--sprout) 100%);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 26px;
   color: white;
   box-shadow: var(--shadow-sm);
   flex-shrink: 0;
@@ -108,16 +126,18 @@ img {
 }
 
 .section-title h2 {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 900;
-  color: var(--olive);
+  color: var(--sprout-dark);
   margin-bottom: 4px;
 }
 
 .section-title p {
-  font-size: 14px;
-  color: var(--muted);
-  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Keyframe animations */
@@ -135,7 +155,7 @@ img {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -146,7 +166,7 @@ img {
 @keyframes fadeInRight {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(30px);
   }
   to {
     opacity: 1;
@@ -159,7 +179,18 @@ img {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
   }
 }
 

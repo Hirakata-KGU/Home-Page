@@ -1,17 +1,5 @@
 <template>
-  <div class="app-root">
-    <NuxtRouteAnnouncer />
-    <LayoutTheHeader />
-    <LayoutNoticeBanner />
+  <NuxtLayout>
     <NuxtPage />
-    <LayoutTheFooter />
-  </div>
+  </NuxtLayout>
 </template>
-
-<style scoped>
-.app-root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-</style>

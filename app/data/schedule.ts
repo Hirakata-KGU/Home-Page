@@ -1,68 +1,136 @@
-export interface ScheduleItem {
-  time: string;
-  label?: string;
+export interface StageProgram {
   title: string;
-  description: string;
-  location: string;
+  timeRange: string;
+  performer?: string;
+  eventId?: string;
+  isSpecial?: boolean;
 }
 
-export interface DaySchedule {
-  id: string;
+export interface ParallelTimeSlot {
+  timeLabel: string;
+  indoor?: StageProgram;
+  outdoor?: StageProgram;
+  other?: StageProgram;
+}
+
+export interface DayParallelSchedule {
+  id: 'day1' | 'day2';
   dayName: string;
   dateLabel: string;
-  items: ScheduleItem[];
+  slots: ParallelTimeSlot[];
 }
 
-export const scheduleData: DaySchedule[] = [
+export const parallelScheduleData: DayParallelSchedule[] = [
   {
     id: 'day1',
     dayName: '10月31日（土）',
     dateLabel: 'Day 1',
-    items: [
+    slots: [
       {
-        time: '10:00',
-        label: 'START',
-        title: '開会式・オープニングセレモニー',
-        description: '平潟祭2026の幕開け！学長挨拶、実行委員長挨拶、オープニングパフォーマンスで華やかにスタート。',
-        location: 'メインステージ',
+        timeLabel: '10:00',
+        indoor: {
+          title: '開会式・オープニングセレモニー',
+          timeRange: '10:00 - 10:45',
+          performer: '学長 / 実行委員会 / 吹奏楽部',
+          eventId: 'opening-ceremony',
+          isSpecial: true,
+        },
+        other: {
+          title: 'スタンプラリー・各展示スタート',
+          timeRange: '10:00 - 17:00',
+          performer: '文化館・本部テント',
+          eventId: 'stamp-rally',
+        },
       },
       {
-        time: '11:00',
-        label: 'OPEN',
-        title: '模擬店エリアオープン',
-        description: '約30店舗の模擬店が一斉オープン！焼きそば、たこ焼き、唐揚げ、クレープ、ドリンクなど多彩なグルメをお楽しみください。',
-        location: '模擬店エリア（キャンパス各所）',
+        timeLabel: '11:00',
+        indoor: {
+          title: '吹奏楽部 ポップスコンサート',
+          timeRange: '11:30 - 12:30',
+          performer: '関東学院大学 吹奏楽部',
+        },
+        outdoor: {
+          title: '野外オープニング DJ ＆ パフォーマンス',
+          timeRange: '11:00 - 12:00',
+          performer: 'DJサークル',
+        },
+        other: {
+          title: '模擬店ストリート オープン',
+          timeRange: '11:00 - 17:30',
+          performer: '約30店舗の模擬店',
+          eventId: 'food-stalls-area',
+        },
       },
       {
-        time: '12:00',
-        title: '学生バンドライブ Vol.1',
-        description: '軽音楽サークルによる熱いライブステージ。J-POP、ロック、ポップスなど幅広いジャンルの楽曲を演奏します。',
-        location: 'メインステージ',
+        timeLabel: '12:00',
+        outdoor: {
+          title: '学生バンドライブ Vol.1',
+          timeRange: '12:00 - 13:30',
+          performer: '軽音楽サークル 3バンド',
+          eventId: 'outdoor-band-live-1',
+        },
+        other: {
+          title: '学生映画上映会',
+          timeRange: '12:00 - 16:30',
+          performer: '文化館 3F シアタールーム',
+          eventId: 'student-movie-screening',
+        },
       },
       {
-        time: '13:30',
-        title: 'ダンスパフォーマンスショー',
-        description: 'ダンスサークル合同公演。ヒップホップ、ジャズ、ブレイクダンスなど、圧巻のパフォーマンスをお届けします。',
-        location: 'メインステージ',
+        timeLabel: '13:30',
+        indoor: {
+          title: 'ダンスパフォーマンス合同公演',
+          timeRange: '13:30 - 14:45',
+          performer: 'ダンス部 / 有志チーム',
+          eventId: 'dance-show',
+          isSpecial: true,
+        },
+        outdoor: {
+          title: 'ストリートダンス ＆ ダブルダッチ',
+          timeRange: '14:00 - 15:30',
+          performer: 'パフォーマンスサークル',
+        },
       },
       {
-        time: '15:00',
-        title: 'アコースティックライブ',
-        description: '音楽館での落ち着いた雰囲気のアコースティックライブ。座席限定の特別企画です（入場整理券配布あり）。',
-        location: '音楽館ホール',
+        timeLabel: '14:30',
+        other: {
+          title: 'アコースティック ＆ ジャズ サウンド',
+          timeRange: '14:30 - 16:00',
+          performer: '音楽館ホール（7号館）',
+          eventId: 'acoustic-live',
+        },
       },
       {
-        time: '16:30',
-        title: '野外ステージ（軽音楽フリーライブ）',
-        description: '開放的な野外空間で、夕暮れ時のライブを満喫。複数バンドが次々に登場する、フェス形式のライブです。',
-        location: '野外ステージエリア',
+        timeLabel: '15:30',
+        indoor: {
+          title: 'アカペラ ヴォーカルショー',
+          timeRange: '15:30 - 16:30',
+          performer: 'アカペラサークル',
+        },
       },
       {
-        time: '18:30',
-        label: 'FINALE',
-        title: '1日目フィナーレ・花火演出',
-        description: '1日目を締めくくるフィナーレイベント。夜空を彩る花火と音楽のコラボレーション（天候により変更の可能性あり）。',
-        location: 'メインステージ前広場',
+        timeLabel: '16:30',
+        outdoor: {
+          title: 'サンセット・ロックフェス 2026',
+          timeRange: '16:30 - 18:00',
+          performer: '軽音楽部 選抜バンド',
+          eventId: 'sunset-rock-fes',
+          isSpecial: true,
+        },
+        indoor: {
+          title: '軽音楽部 選抜アコースティック',
+          timeRange: '17:30 - 18:30',
+          performer: '軽音楽部',
+        },
+      },
+      {
+        timeLabel: '18:30',
+        outdoor: {
+          title: '1日目フィナーレ・花火演出',
+          timeRange: '18:30 - 18:45',
+          performer: '屋外ステージ前広場',
+          isSpecial: true,
+        },
       },
     ],
   },
@@ -70,57 +138,97 @@ export const scheduleData: DaySchedule[] = [
     id: 'day2',
     dayName: '11月1日（日）',
     dateLabel: 'Day 2',
-    items: [
+    slots: [
       {
-        time: '10:00',
-        label: 'START',
-        title: '2日目オープン・スタンプラリー開始',
-        description: '2日目スタート！スタンプラリーの受付開始。キャンパス内6箇所を巡って、豪華景品をゲットしよう。',
-        location: '各ポイント・本部テント',
+        timeLabel: '10:00',
+        other: {
+          title: '2日目オープン・スタンプラリー開始',
+          timeRange: '10:00 - 17:00',
+          performer: '本部テント・各ポイント',
+          eventId: 'stamp-rally',
+        },
       },
       {
-        time: '11:00',
-        title: '文化館企画スタート',
-        description: '美術展、写真展、研究発表、ワークショップなど、文化系企画が本格始動。体験型コンテンツも多数ご用意。',
-        location: '文化館（各教室）',
+        timeLabel: '10:30',
+        indoor: {
+          title: 'ゴスペル・クワイア ライブ',
+          timeRange: '10:30 - 11:30',
+          performer: '宗教部・聖歌隊',
+        },
+        outdoor: {
+          title: 'フリースタイル・セッション',
+          timeRange: '10:30 - 12:00',
+          performer: '有志学生ミュージシャン',
+        },
+        other: {
+          title: '模擬店ストリート オープン',
+          timeRange: '11:00 - 17:30',
+          performer: 'メインストリート',
+          eventId: 'food-stalls-area',
+        },
       },
       {
-        time: '12:00',
-        title: '学生映画上映会',
-        description: '映像制作サークルによるオリジナル作品上映。ショートフィルム、ドキュメンタリー、アニメーションなど多彩なラインナップ。',
-        location: '文化館シアタールーム',
+        timeLabel: '12:30',
+        outdoor: {
+          title: 'ブラスアンサンブル ＆ マーチング',
+          timeRange: '12:30 - 14:00',
+          performer: '応援団・吹奏楽団',
+        },
+        other: {
+          title: '学生映画上映会',
+          timeRange: '12:00 - 16:30',
+          performer: '文化館 3F',
+          eventId: 'student-movie-screening',
+        },
       },
       {
-        time: '13:00',
-        title: 'お笑いライブ・トークショー',
-        description: 'お笑い芸人によるスペシャルライブステージ。ゲストとのトークセッションも予定しています。',
-        location: 'メインステージ',
+        timeLabel: '13:00',
+        indoor: {
+          title: 'お笑いライブ ＆ トークショー',
+          timeRange: '13:00 - 14:00',
+          performer: 'スペシャルゲスト芸人',
+          eventId: 'comedy-live',
+          isSpecial: true,
+        },
       },
       {
-        time: '15:00',
-        label: 'SPECIAL',
-        title: '特別ゲストライブ',
-        description: '平潟祭2026のスペシャルゲストによるライブパフォーマンス！（ゲストは後日発表予定）',
-        location: 'メインステージ',
+        timeLabel: '14:30',
+        outdoor: {
+          title: 'アコースティック ＆ ジャズ セッション',
+          timeRange: '14:30 - 16:00',
+          performer: 'ジャズ研究会',
+          eventId: 'acoustic-live',
+        },
       },
       {
-        time: '17:00',
-        title: '学生バンドライブ Vol.2',
-        description: '2日目のバンドライブ。フィナーレに向けて会場のボルテージが最高潮に！',
-        location: 'メインステージ',
+        timeLabel: '15:30',
+        indoor: {
+          title: '平潟祭2026 特別ゲスト 音楽ライブ',
+          timeRange: '15:30 - 16:45',
+          performer: '特別ゲストアーティスト',
+          eventId: 'special-guest-live',
+          isSpecial: true,
+        },
       },
       {
-        time: '18:00',
-        title: '表彰式・抽選会',
-        description: 'スタンプラリー参加者による大抽選会。豪華賞品が当たるチャンス！模擬店コンテストの表彰も行います。',
-        location: 'メインステージ',
+        timeLabel: '17:00',
+        outdoor: {
+          title: '野外ファイナル・バンドバトル',
+          timeRange: '17:00 - 18:30',
+          performer: '軽音楽サークル オールスターズ',
+          eventId: 'outdoor-band-battle',
+          isSpecial: true,
+        },
       },
       {
-        time: '19:00',
-        label: 'END',
-        title: '閉会式・グランドフィナーレ',
-        description: '平潟祭2026のフィナーレ。全員でエンディングソングを歌い、2日間の感動を共有します。来年の再会を約束して！',
-        location: 'メインステージ',
+        timeLabel: '18:00',
+        indoor: {
+          title: '表彰式 ＆ グランドフィナーレ',
+          timeRange: '18:00 - 19:30',
+          performer: '大抽選会・模擬店グランプリ',
+          eventId: 'grand-finale',
+          isSpecial: true,
+        },
       },
     ],
   },
