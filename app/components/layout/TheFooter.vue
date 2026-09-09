@@ -1,66 +1,81 @@
 <template>
-  <footer>
-    <div class="footer-content">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <h3>平潟祭 2026</h3>
-          <p>
-            関東学院大学 金沢八景キャンパスで開催される秋の学園祭。<br>
-            学生たちの熱い情熱と、地域とつながる特別な2日間をお届けします。
-          </p>
-          <p class="footer-address">
-            〒236-8501 神奈川県横浜市金沢区六浦東1-50-1<br>
-            主催：平潟祭実行委員会
-          </p>
+  <footer class="figma-footer">
+    <!-- Top Transition / Vector Arch -->
+    <div class="footer-vector-top" aria-hidden="true">
+      <svg viewBox="0 0 1920 60" preserveAspectRatio="none" class="footer-top-svg">
+        <path d="M0,0 Q960,60 1920,0 L1920,60 L0,60 Z" fill="#1B3A24" />
+      </svg>
+    </div>
+
+    <div class="footer-content-holder">
+      <div class="footer-component">
+        <!-- Columns -->
+        <div class="footer-columns">
+          <!-- Col 1: Brand -->
+          <div class="brand-summary">
+            <div class="footer-brand">
+              <div class="brand-logo-frame">
+                <img src="/images/hirakata-logo.png" alt="平潟祭ロゴ" class="brand-logo-img" />
+              </div>
+              <span class="brand-title">平潟祭 2026</span>
+              <span class="brand-sub">関東学院大学 金沢八景キャンパス</span>
+            </div>
+          </div>
+
+          <!-- Col 2: TOP -->
+          <div class="footer-links-col links-col-1">
+            <div class="col-header">
+              <span class="col-title">TOP</span>
+              <div class="col-line"></div>
+            </div>
+            <ul class="col-links">
+              <li><NuxtLink to="/">ホームページ</NuxtLink></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: 企画 (2 sub-columns) -->
+          <div class="footer-links-col links-col-2">
+            <div class="col-header">
+              <span class="col-title">企画</span>
+              <div class="col-line"></div>
+            </div>
+            <div class="col-links-subgrid">
+              <ul class="col-links">
+                <li><NuxtLink to="/events">企画一覧</NuxtLink></li>
+                <li><NuxtLink to="/schedule">タイムテーブル</NuxtLink></li>
+              </ul>
+              <ul class="col-links">
+                <li><NuxtLink to="/map">全体・模擬店マップ</NuxtLink></li>
+                <li><NuxtLink to="/map">音楽館マップ</NuxtLink></li>
+                <li><NuxtLink to="/map">文化館マップ</NuxtLink></li>
+                <li><NuxtLink to="/map">3号館マップ</NuxtLink></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Col 4: ご案内 -->
+          <div class="footer-links-col links-col-3">
+            <div class="col-header">
+              <span class="col-title">ご案内</span>
+              <div class="col-line"></div>
+            </div>
+            <ul class="col-links">
+              <li><NuxtLink to="/access">アクセス</NuxtLink></li>
+              <li><NuxtLink to="/#about">平潟祭について</NuxtLink></li>
+              <li><NuxtLink to="/contact">協賛について</NuxtLink></li>
+              <li><NuxtLink to="/contact">お問い合わせ</NuxtLink></li>
+            </ul>
+          </div>
         </div>
 
-        <div class="footer-section">
-          <h4>ページ一覧</h4>
-          <ul class="footer-links">
-            <li><NuxtLink to="/">ホーム（概要・ギャラリー）</NuxtLink></li>
-            <li><NuxtLink to="/events">企画・模擬店一覧</NuxtLink></li>
-            <li><NuxtLink to="/schedule">タイムテーブル</NuxtLink></li>
-            <li><NuxtLink to="/map">場内マップ（全体・文化館・音楽館）</NuxtLink></li>
-            <li><NuxtLink to="/access">アクセス</NuxtLink></li>
-            <li><NuxtLink to="/contact">お問い合わせ</NuxtLink></li>
-          </ul>
-        </div>
-
-        <div class="footer-section">
-          <h4>公式SNS・リンク</h4>
-          <ul class="footer-links">
-            <li>
-              <a href="https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w" target="_blank" rel="noopener noreferrer">
-                公式 X (Twitter) ↗
-              </a>
-            </li>
-            <li>
-              <a href="https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg==" target="_blank" rel="noopener noreferrer">
-                公式 Instagram ↗
-              </a>
-            </li>
-            <li>
-              <a href="https://univ.kanto-gakuin.ac.jp/" target="_blank" rel="noopener noreferrer">
-                関東学院大学 公式サイト ↗
-              </a>
-            </li>
-            <li>
-              <a href="https://univ.kanto-gakuin.ac.jp/about-university/location.html" target="_blank" rel="noopener noreferrer">
-                大学キャンパスマップ ↗
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="footer-socials">
+        <!-- Social Icons Row -->
+        <div class="footer-social-row">
           <a
             href="https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w"
             target="_blank"
             rel="noopener noreferrer"
-            class="social-link"
-            aria-label="X (Twitter)"
+            class="sns-badge"
+            aria-label="公式X"
           >
             𝕏
           </a>
@@ -68,23 +83,19 @@
             href="https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg=="
             target="_blank"
             rel="noopener noreferrer"
-            class="social-link"
-            aria-label="Instagram"
+            class="sns-badge"
+            aria-label="公式Instagram"
           >
             📷
           </a>
-          <a
-            href="https://www.youtube.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            aria-label="YouTube"
-          >
-            ▶️
-          </a>
         </div>
-        <div class="footer-copyright">
-          © 2026 平潟祭実行委員会（関東学院大学）All Rights Reserved.
+
+        <!-- Bottom Line & Copyright -->
+        <div class="footer-bottom">
+          <div class="footer-line"></div>
+          <div class="copyright-row">
+            <span class="copyright-text">© 2026 平潟祭実行委員会 All rights reserved.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -92,110 +103,245 @@
 </template>
 
 <style scoped>
-footer {
-  background: transparent;
-  color: white;
-  padding: 60px 0 32px;
-  margin-top: 80px;
+.figma-footer {
+  width: 100%;
+  background: #1B3A24;
+  position: relative;
+  overflow: hidden;
+  margin-top: 0;
+  padding: 0;
 }
 
-.footer-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 24px;
+.footer-vector-top {
+  width: 100%;
+  height: 40px;
+  line-height: 0;
+  overflow: hidden;
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1.2fr 1.2fr;
-  gap: 48px;
-  margin-bottom: 48px;
+.footer-top-svg {
+  width: 100%;
+  height: 40px;
+  display: block;
 }
 
-.footer-about h3 {
-  font-size: 24px;
-  font-weight: 900;
-  margin-bottom: 16px;
-}
-
-.footer-about p {
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.8;
-  margin-bottom: 16px;
-}
-
-.footer-address {
-  font-size: 13px;
-  opacity: 0.8;
-}
-
-.footer-section h4 {
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 16px;
-  color: var(--gold-light);
-}
-
-.footer-links {
-  list-style: none;
-}
-
-.footer-links li {
-  margin-bottom: 10px;
-}
-
-.footer-links a {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-  font-size: 14px;
-  transition: all 0.25s ease;
-}
-
-.footer-links a:hover {
-  color: white;
-  padding-left: 6px;
-}
-
-.footer-bottom {
-  padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  text-align: center;
-}
-
-.footer-socials {
+.footer-content-holder {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 20px;
+  align-items: center;
+  padding: 20px 24px 40px;
+  width: 100%;
 }
 
-.social-link {
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.1);
+.footer-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 1136px;
+}
+
+.footer-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 32px;
+}
+
+/* Brand */
+.brand-summary {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.brand-logo-frame {
+  width: 80px;
+  height: 80px;
+  background: #B9DD7B;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: white;
-  font-size: 20px;
-  transition: all 0.3s ease;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.social-link:hover {
-  background: var(--gold);
-  transform: translateY(-4px);
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.footer-copyright {
+.brand-title {
+  font-family: 'Noto Serif JP', serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 34px;
+  color: #FFFFFF;
+}
+
+.brand-sub {
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
 }
 
-@media (max-width: 1024px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
+/* Links Columns */
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.links-col-1 {
+  width: 140px;
+}
+
+.links-col-2 {
+  width: 336px;
+}
+
+.links-col-3 {
+  width: 180px;
+}
+
+.col-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.col-title {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  color: #B9DD7B;
+  letter-spacing: 0.5px;
+}
+
+.col-line {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid #42845A;
+}
+
+.col-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.col-links-subgrid {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+}
+
+.col-links a {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.col-links a:hover {
+  color: #DFF794;
+  padding-left: 4px;
+}
+
+/* Social Icons */
+.footer-social-row {
+  display: flex;
+  gap: 12px;
+  align-self: flex-start;
+}
+
+.sns-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.sns-badge:hover {
+  background: #B9DD7B;
+  color: #1B3A24;
+}
+
+/* Bottom & Copyright */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.footer-line {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid #42845A;
+}
+
+.copyright-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #DFF794;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .footer-columns {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .brand-summary,
+  .links-col-1,
+  .links-col-2,
+  .links-col-3 {
+    width: 100%;
+  }
+
+  .col-links-subgrid {
+    flex-direction: column;
+    gap: 12px;
   }
 }
 </style>
+

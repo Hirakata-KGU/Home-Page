@@ -8,10 +8,22 @@
   --sprout-bg: #e8f5e9;
   --sprout-soft: #f1f8e9;
 
+  /* Figma Palette */
+  --figma-bg: #F8F8ED;
+  --figma-title: #325632;
+  --figma-border: #42845A;
+  --figma-border-light: #69A362;
+  --figma-sprout-1: #B9DD7B;
+  --figma-sprout-2: #88BD76;
+  --figma-sprout-3: #619D6E;
+  --figma-sprout-4: #437C62;
+  --figma-dark: #1B3A24;
+  --figma-accent: #DFF794;
+
   /* Olive & Green backwards compatibility */
-  --olive: var(--sprout);
-  --olive-light: var(--sprout-light);
-  --olive-dark: var(--sprout-dark);
+  --olive: var(--figma-title);
+  --olive-light: var(--figma-border);
+  --olive-dark: var(--figma-dark);
   --accent: #f9fbf8;
   --accent-2: #e8f5e9;
 
@@ -25,8 +37,8 @@
   --text: #1a2e1c;
   --text-muted: #556b57;
   --muted: var(--text-muted);
-  --border: #e0ebd0;
-  --bg-main: #f4f9f4;
+  --border: var(--figma-border);
+  --bg-main: #F8F8ED;
   --max-width: 1200px;
 
   /* Shadows with green tint */
