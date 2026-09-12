@@ -8,22 +8,23 @@
   --sprout-bg: #e8f5e9;
   --sprout-soft: #f1f8e9;
 
-  /* Figma Palette */
-  --figma-bg: #F8F8ED;
-  --figma-title: #325632;
-  --figma-border: #42845A;
-  --figma-border-light: #69A362;
-  --figma-sprout-1: #B9DD7B;
-  --figma-sprout-2: #88BD76;
-  --figma-sprout-3: #619D6E;
-  --figma-sprout-4: #437C62;
-  --figma-dark: #1B3A24;
-  --figma-accent: #DFF794;
+  /* Theme Palette */
+  --theme-bg: #F8F8ED;
+  --theme-title: #325632;
+  --theme-forest: #2C5E3B;
+  --theme-border: #42845A;
+  --theme-border-light: #69A362;
+  --theme-sprout-light: #B9DD7B;
+  --theme-sprout-grass: #88BD76;
+  --theme-sprout-mid: #619D6E;
+  --theme-sprout-moss: #437C62;
+  --theme-dark: #1B3A24;
+  --theme-accent: #DFF794;
 
   /* Olive & Green backwards compatibility */
-  --olive: var(--figma-title);
-  --olive-light: var(--figma-border);
-  --olive-dark: var(--figma-dark);
+  --olive: var(--theme-title);
+  --olive-light: var(--theme-border);
+  --olive-dark: var(--theme-dark);
   --accent: #f9fbf8;
   --accent-2: #e8f5e9;
 
@@ -37,7 +38,7 @@
   --text: #1a2e1c;
   --text-muted: #556b57;
   --muted: var(--text-muted);
-  --border: var(--figma-border);
+  --border: var(--theme-border);
   --bg-main: #F8F8ED;
   --max-width: 1200px;
 

@@ -11,7 +11,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div class="figma-line-wrapper" :style="{ maxWidth: maxWidth }">
+  <div class="ornament-line-wrapper" :style="{ maxWidth: maxWidth }">
     <!-- Left 3 dots -->
     <div class="dots dots-left">
       <span class="dot" :style="{ backgroundColor: color }"></span>
@@ -32,7 +32,7 @@ withDefaults(defineProps<Props>(), {
 </template>
 
 <style scoped>
-.figma-line-wrapper {
+.ornament-line-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -2,7 +2,6 @@
   <div class="site-wrapper">
     <NuxtRouteAnnouncer />
     <LayoutTheHeader />
-    <LayoutNoticeBanner />
     <main class="site-main">
       <slot />
     </main>

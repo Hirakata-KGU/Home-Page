@@ -1,39 +1,41 @@
 <script setup lang="ts">
-// Figma design: Top Section
+// Top Section
 </script>
 
 <template>
-  <section class="figma-top-hero">
+  <section class="relative w-full min-h-[920px] bg-sprout-bg overflow-hidden flex flex-col justify-start items-center pt-10 lg:pt-16 pb-[240px] lg:pb-0">
     <!-- Top Geometric Border Decorations (Group 3: top-right) -->
-    <div class="deco-group group-top-right" aria-hidden="true">
-      <div class="deco-polygon poly-1"></div>
-      <div class="deco-polygon poly-2"></div>
-      <div class="deco-polygon poly-3"></div>
+    <div class="absolute pointer-events-none opacity-40 -top-40 -right-28 w-[650px] h-[650px] z-[1]" aria-hidden="true">
+      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px]"></div>
+      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"></div>
+      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px]"></div>
     </div>
 
     <!-- Bottom Geometric Border Decorations (Group 2: bottom-left) -->
-    <div class="deco-group group-bottom-left" aria-hidden="true">
-      <div class="deco-polygon poly-1"></div>
-      <div class="deco-polygon poly-2"></div>
-      <div class="deco-polygon poly-3"></div>
+    <div class="absolute pointer-events-none opacity-40 top-[380px] -left-40 w-[680px] h-[680px] z-[1]" aria-hidden="true">
+      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[680px]"></div>
+      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[630px] h-[630px]"></div>
+      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px]"></div>
     </div>
 
     <!-- Main Container -->
-    <div class="hero-container">
+    <div class="relative z-10 w-full max-w-[1600px] px-6 lg:px-10 flex flex-col-reverse lg:flex-row items-center justify-between gap-10">
       <!-- Title Block (left: 163px, top: 288px) -->
-      <div class="title-block">
-        <div class="title-sub-row">
-          <span class="edition-text">第77回</span>
-          <span class="theme-text">『SPROUT』</span>
+      <div class="flex-1 max-w-[824px] text-center lg:text-left">
+        <div class="flex items-center justify-center lg:justify-start gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
+          <span>第77回</span>
+          <span>『SPROUT』</span>
         </div>
-        <h1 class="main-title">平潟祭 2026</h1>
-        <!-- Figma Line -->
-        <UiFigmaLine color="#42845A" max-width="100%" />
+        <h1 class="font-sans font-bold text-[48px] sm:text-[64px] lg:text-[96px] leading-[1.15] text-sprout-title m-0 tracking-tight">
+          平潟祭 2026
+        </h1>
+        <!-- Ornament Line -->
+        <UiOrnamentLine color="#42845A" max-width="100%" />
 
         <!-- Tagline & Quick CTA -->
-        <div class="hero-actions">
-          <UiCountdownTimer target-date="2026-10-31T10:00:00" class="hero-countdown" />
-          <div class="cta-row">
+        <div class="mt-6">
+          <UiCountdownTimer target-date="2026-10-31T10:00:00" class="mb-5" />
+          <div class="flex gap-4 flex-wrap justify-center lg:justify-start">
             <NuxtLink to="/events" class="btn btn-primary">企画を探す 🎪</NuxtLink>
             <NuxtLink to="/schedule" class="btn btn-secondary">タイムテーブル 📅</NuxtLink>
             <NuxtLink to="/map" class="btn btn-secondary">場内マップ 🗺️</NuxtLink>
@@ -42,27 +44,30 @@
       </div>
 
       <!-- Date & Badge Block (Group 1: right side) -->
-      <div class="badge-block">
-        <div class="polygon-stack">
-          <div class="badge-poly poly-outer-1"></div>
-          <div class="badge-poly poly-outer-2"></div>
-          <div class="badge-poly poly-fill-3"></div>
-          <div class="badge-poly poly-inner-4"></div>
+      <div class="shrink-0 w-[320px] sm:w-[440px] lg:w-[540px] h-[320px] sm:h-[440px] lg:h-[540px] relative flex items-center justify-center">
+        <div class="relative w-[500px] h-[500px] flex items-center justify-center scale-[0.68] sm:scale-[0.85] lg:scale-100 transition-transform">
+          <!-- Polygon 1 -->
+          <div class="absolute box-border w-[480px] h-[480px] border-[1.5px] border-sprout-border -rotate-[22.5deg]"></div>
+          <!-- Polygon 2 -->
+          <div class="absolute box-border w-[440px] h-[440px] border-[1.5px] border-sprout-border"></div>
+          <!-- Polygon 3 (Fill) -->
+          <div class="absolute box-border w-[410px] h-[410px] bg-sprout-light -rotate-[22.5deg] shadow-[0_12px_36px_rgba(67,124,98,0.25)]"></div>
+          <!-- Polygon 4 (Inner Border) -->
+          <div class="absolute box-border w-[396px] h-[396px] border-[3px] border-sprout-border-light -rotate-[22.5deg]"></div>
 
           <!-- Inside Badge Content -->
-          <div class="badge-content">
-            <span class="badge-year">2026</span>
-            <div class="badge-date">
+          <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none">
+            <span class="text-[32px] font-bold text-sprout-bg leading-tight mb-0.5">2026</span>
+            <div class="text-[44px] lg:text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-3">
               <span>10/31</span>
-              <span class="date-sep"></span>
               <span>11/1</span>
             </div>
-            <div class="badge-arrow"></div>
-            <span class="badge-time">10:00 ~ 17:00</span>
+            <div class="w-8 h-0 border-t-2 border-sprout-bg my-1.5"></div>
+            <span class="text-[28px] font-bold text-sprout-bg leading-tight mb-2">10:00 ~ 17:00</span>
 
-            <div class="badge-location">
+            <div class="flex items-center gap-2 mt-1">
               <svg
-                class="location-pin"
+                class="w-9 h-9 shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +77,9 @@
                   fill="#F8F8ED"
                 />
               </svg>
-              <div class="loc-text">
-                <span class="univ-name">関東学院大学</span>
-                <span class="campus-name">金沢八景キャンパス</span>
+              <div class="flex flex-col text-left">
+                <span class="text-base font-medium text-sprout-bg leading-tight">関東学院大学</span>
+                <span class="text-xl font-bold text-sprout-bg leading-tight">金沢八景キャンパス</span>
               </div>
             </div>
           </div>
@@ -83,13 +88,13 @@
     </div>
 
     <!-- 4 Layers of Green Hills & Sprout Leaves (bottom) -->
-    <div class="hills-container" aria-hidden="true">
+    <div class="absolute bottom-0 left-0 w-full h-[280px] pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
       <!-- Hill 1 (Back, #B9DD7B) -->
-      <div class="hill-layer hill-1">
-        <svg class="hill-svg" viewBox="0 0 1920 180" preserveAspectRatio="none">
+      <div class="absolute bottom-0 left-0 w-full h-[260px] z-[1]">
+        <svg class="w-full h-full block" viewBox="0 0 1920 180" preserveAspectRatio="none">
           <path d="M0,70 Q480,10 960,50 T1920,30 L1920,180 L0,180 Z" fill="#B9DD7B" />
         </svg>
-        <div class="leaves-hill leaves-hill-1">
+        <div class="leaves-hill">
           <UiSproutLeaf style="left: 26%; top: 38px;" stem-color="#9AC467" leaf-left-color="#DFF794" leaf-right-color="#B9DD7B" :width="38" :height="56" />
           <UiSproutLeaf style="left: 40%; top: 22px;" stem-color="#9AC467" leaf-left-color="#DFF794" leaf-right-color="#B9DD7B" :width="34" :height="52" />
           <UiSproutLeaf style="left: 71%; top: 40px;" stem-color="#9AC467" leaf-left-color="#B9DD7B" leaf-right-color="#9AC467" :width="30" :height="48" />
@@ -98,11 +103,11 @@
       </div>
 
       <!-- Hill 2 (#88BD76) -->
-      <div class="hill-layer hill-2">
-        <svg class="hill-svg" viewBox="0 0 1920 160" preserveAspectRatio="none">
+      <div class="absolute bottom-0 left-0 w-full h-[200px] z-[2]">
+        <svg class="w-full h-full block" viewBox="0 0 1920 160" preserveAspectRatio="none">
           <path d="M0,80 Q520,130 1100,60 T1920,70 L1920,160 L0,160 Z" fill="#88BD76" />
         </svg>
-        <div class="leaves-hill leaves-hill-2">
+        <div class="leaves-hill">
           <UiSproutLeaf style="left: 10%; top: 45px;" stem-color="#69A362" leaf-left-color="#AED690" leaf-right-color="#88BD76" :width="36" :height="54" />
           <UiSproutLeaf style="left: 23%; top: 55px;" stem-color="#69A362" leaf-left-color="#88BD76" leaf-right-color="#88BD76" :width="28" :height="46" />
           <UiSproutLeaf style="left: 63%; top: 35px;" stem-color="#69A362" leaf-left-color="#88BD76" leaf-right-color="#88BD76" :width="30" :height="48" />
@@ -112,11 +117,11 @@
       </div>
 
       <!-- Hill 3 (#619D6E) -->
-      <div class="hill-layer hill-3">
-        <svg class="hill-svg" viewBox="0 0 1920 140" preserveAspectRatio="none">
+      <div class="absolute bottom-0 left-0 w-full h-[150px] z-[3]">
+        <svg class="w-full h-full block" viewBox="0 0 1920 140" preserveAspectRatio="none">
           <path d="M0,60 Q600,10 1200,70 T1920,50 L1920,140 L0,140 Z" fill="#619D6E" />
         </svg>
-        <div class="leaves-hill leaves-hill-3">
+        <div class="leaves-hill">
           <UiSproutLeaf style="left: 6%; top: 38px;" stem-color="#42845A" leaf-left-color="#619D6E" leaf-right-color="#87B787" :width="30" :height="50" />
           <UiSproutLeaf style="left: 15%; top: 32px;" stem-color="#42845A" leaf-left-color="#87B787" leaf-right-color="#619D6E" :width="38" :height="58" />
           <UiSproutLeaf style="left: 46%; top: 45px;" stem-color="#42845A" leaf-left-color="#619D6E" leaf-right-color="#619D6E" :width="28" :height="48" />
@@ -126,11 +131,11 @@
       </div>
 
       <!-- Hill 4 (Front, #437C62) -->
-      <div class="hill-layer hill-4">
-        <svg class="hill-svg" viewBox="0 0 1920 120" preserveAspectRatio="none">
+      <div class="absolute bottom-0 left-0 w-full h-[100px] z-[4]">
+        <svg class="w-full h-full block" viewBox="0 0 1920 120" preserveAspectRatio="none">
           <path d="M0,45 Q700,90 1350,30 T1920,40 L1920,120 L0,120 Z" fill="#437C62" />
         </svg>
-        <div class="leaves-hill leaves-hill-4">
+        <div class="leaves-hill">
           <UiSproutLeaf style="left: 2%; top: 25px;" stem-color="#24624E" leaf-left-color="#69957B" leaf-right-color="#437C62" :width="44" :height="68" />
           <UiSproutLeaf style="left: 33%; top: 35px;" stem-color="#24624E" leaf-left-color="#437C62" leaf-right-color="#437C62" :width="32" :height="54" />
           <UiSproutLeaf style="left: 44%; top: 20px;" stem-color="#24624E" leaf-left-color="#437C62" leaf-right-color="#437C62" :width="36" :height="60" />
@@ -144,278 +149,6 @@
 </template>
 
 <style scoped>
-.figma-top-hero {
-  position: relative;
-  width: 100%;
-  min-height: 920px;
-  background: var(--figma-bg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 60px;
-}
-
-/* Background Geometric Frames */
-.deco-group {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0.45;
-  z-index: 1;
-}
-
-.group-top-right {
-  top: -160px;
-  right: -120px;
-  width: 650px;
-  height: 650px;
-}
-
-.group-bottom-left {
-  top: 380px;
-  left: -160px;
-  width: 680px;
-  height: 680px;
-}
-
-.deco-polygon {
-  box-sizing: border-box;
-  position: absolute;
-  border: 1px solid var(--figma-border);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.group-top-right .poly-1 { width: 650px; height: 650px; }
-.group-top-right .poly-2 { width: 600px; height: 600px; }
-.group-top-right .poly-3 { width: 550px; height: 550px; }
-
-.group-bottom-left .poly-1 { width: 680px; height: 680px; }
-.group-bottom-left .poly-2 { width: 630px; height: 630px; }
-.group-bottom-left .poly-3 { width: 580px; height: 580px; }
-
-/* Main Content Layout */
-.hero-container {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  max-width: 1600px;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-}
-
-/* Title Block */
-.title-block {
-  flex: 1;
-  max-width: 824px;
-  text-align: left;
-}
-
-.title-sub-row {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 1.2;
-  color: var(--figma-title);
-  margin-bottom: 8px;
-}
-
-.main-title {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 700;
-  font-size: clamp(48px, 6vw, 96px);
-  line-height: 1.15;
-  color: var(--figma-title);
-  margin: 0;
-  letter-spacing: -1px;
-}
-
-.hero-actions {
-  margin-top: 24px;
-}
-
-.hero-countdown {
-  margin-bottom: 20px;
-}
-
-.cta-row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* Badge Block */
-.badge-block {
-  flex-shrink: 0;
-  width: 540px;
-  height: 540px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.polygon-stack {
-  position: relative;
-  width: 500px;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.badge-poly {
-  position: absolute;
-  box-sizing: border-box;
-}
-
-.poly-outer-1 {
-  width: 480px;
-  height: 480px;
-  border: 1.5px solid var(--figma-border);
-  transform: rotate(-22.5deg);
-}
-
-.poly-outer-2 {
-  width: 440px;
-  height: 440px;
-  border: 1.5px solid var(--figma-border);
-}
-
-.poly-fill-3 {
-  width: 410px;
-  height: 410px;
-  background: var(--figma-sprout-1);
-  transform: rotate(-22.5deg);
-  box-shadow: 0 12px 36px rgba(67, 124, 98, 0.25);
-}
-
-.poly-inner-4 {
-  width: 396px;
-  height: 396px;
-  border: 3px solid var(--figma-border-light);
-  transform: rotate(-22.5deg);
-}
-
-/* Content inside rotating stack */
-.badge-content {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--figma-bg);
-  font-family: 'Noto Sans JP', sans-serif;
-  user-select: none;
-}
-
-.badge-year {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--figma-bg);
-  line-height: 1.1;
-  margin-bottom: 2px;
-}
-
-.badge-date {
-  font-size: clamp(38px, 4vw, 54px);
-  font-weight: 700;
-  color: #FFFFFF;
-  line-height: 1.15;
-  text-shadow: 0px 4px 4px rgba(92, 92, 92, 0.25);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.badge-arrow {
-  width: 32px;
-  height: 0;
-  border-top: 2px solid var(--figma-bg);
-  margin: 6px 0;
-}
-
-.badge-time {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--figma-bg);
-  line-height: 1.2;
-  margin-bottom: 8px;
-}
-
-.badge-location {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.location-pin {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.loc-text {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.univ-name {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--figma-bg);
-  line-height: 1.2;
-}
-
-.campus-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--figma-bg);
-  line-height: 1.2;
-}
-
-/* 4 Layers of Hills */
-.hills-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 280px;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-}
-
-.hill-layer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.hill-svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.hill-1 { height: 260px; z-index: 1; }
-.hill-2 { height: 200px; z-index: 2; }
-.hill-3 { height: 150px; z-index: 3; }
-.hill-4 { height: 100px; z-index: 4; }
-
 .leaves-hill {
   position: absolute;
   top: 0;
@@ -428,65 +161,6 @@
 .leaves-hill :deep(.sprout-leaf-svg) {
   position: absolute;
 }
-
-/* Responsive */
-@media (max-width: 1200px) {
-  .hero-container {
-    flex-direction: column-reverse;
-    text-align: center;
-    gap: 32px;
-    padding-top: 20px;
-  }
-
-  .title-block {
-    text-align: center;
-  }
-
-  .title-sub-row {
-    justify-content: center;
-    font-size: 24px;
-  }
-
-  .cta-row {
-    justify-content: center;
-  }
-
-  .badge-block {
-    width: 440px;
-    height: 440px;
-  }
-
-  .polygon-stack {
-    width: 420px;
-    height: 420px;
-    transform: scale(0.85);
-  }
-
-  .figma-top-hero {
-    min-height: auto;
-    padding-bottom: 240px;
-  }
-}
-
-@media (max-width: 600px) {
-  .polygon-stack {
-    transform: scale(0.68);
-  }
-
-  .badge-block {
-    width: 320px;
-    height: 320px;
-  }
-
-  .title-sub-row {
-    font-size: 18px;
-    gap: 12px;
-  }
-
-  .figma-top-hero {
-    padding-top: 30px;
-    padding-bottom: 200px;
-  }
-}
 </style>
+
 

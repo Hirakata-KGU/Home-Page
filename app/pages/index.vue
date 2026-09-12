@@ -31,47 +31,51 @@ const featuredEvents = [
 </script>
 
 <template>
-  <div class="figma-page-container">
+  <div class="flex flex-col items-center p-0 relative w-full bg-sprout-bg overflow-x-hidden">
     <!-- 1. Top (Hero Section) -->
     <SectionsHeroSection />
 
     <!-- 2. Frame 4: 企画セクション (背景: #437C62) -->
-    <section class="frame-4-section" id="events-frame">
-      <div class="frame-inner">
+    <section class="w-full bg-sprout-moss py-16 px-0 relative z-[5]" id="events-frame">
+      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
         <!-- Group 5: Title & Line -->
-        <div class="group-5-title">
-          <h2 class="section-heading heading-light">企画</h2>
-          <UiFigmaLine color="#DFF794" max-width="824px" />
+        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
+          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-accent mb-1">企画</h2>
+          <UiOrnamentLine color="#DFF794" max-width="824px" />
         </div>
 
         <!-- Frame 7: 3 Cards Grid (Rectangle 2, 1, 3) -->
-        <div class="frame-7-grid">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
           <NuxtLink
             v-for="(item, idx) in featuredEvents"
             :key="idx"
             :to="item.to"
-            class="event-card-white"
+            class="group bg-white rounded-2xl p-7 min-h-[200px] flex flex-col justify-between no-underline shadow-[0_8px_24px_rgba(27,58,36,0.18)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)] border-2 border-transparent hover:border-sprout-light transition-all duration-300 hover:-translate-y-1.5"
           >
-            <div class="card-badge">{{ item.badge }}</div>
-            <div class="card-icon-title">
-              <span class="card-icon">{{ item.icon }}</span>
-              <h3 class="card-title">{{ item.title }}</h3>
+            <div>
+              <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
+                {{ item.badge }}
+              </div>
+              <div class="flex items-center gap-2.5 mb-2.5">
+                <span class="text-2xl">{{ item.icon }}</span>
+                <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
+              </div>
+              <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
             </div>
-            <p class="card-desc">{{ item.desc }}</p>
-            <div class="card-link-action">
+            <div class="flex items-center justify-between text-[13px] font-bold text-sprout-border border-t border-gray-100 pt-2.5">
               <span>詳細を見る</span>
-              <span class="card-arrow">→</span>
+              <span class="transition-transform group-hover:translate-x-1">→</span>
             </div>
           </NuxtLink>
         </div>
 
         <!-- 説明文 (上の企画の説明文とか) -->
-        <div class="frame-desc-wrapper">
-          <p class="frame-desc-text">
+        <div class="text-center flex flex-col items-center gap-5 max-w-[800px]">
+          <p class="font-sans font-bold text-base sm:text-lg lg:text-xl leading-relaxed text-white">
             音楽ライブ、模擬店グルメ、展示発表、参加型イベントなど盛りだくさん！<br>
             学生たちの情熱が芽吹き、咲き誇る特別な2日間をお楽しみください。
           </p>
-          <NuxtLink to="/events" class="btn btn-gold figma-action-btn">
+          <NuxtLink to="/events" class="btn btn-gold px-9 py-3.5 text-base">
             全企画・模擬店一覧を見る 🎪
           </NuxtLink>
         </div>
@@ -79,65 +83,69 @@ const featuredEvents = [
     </section>
 
     <!-- 3. Frame 5: タイムテーブルセクション (背景: #F8F8ED + 上部反転波) -->
-    <section class="frame-5-section" id="schedule-frame">
+    <section class="w-full bg-sprout-bg pb-16 relative z-[6]" id="schedule-frame">
       <!-- Group 6: 反転した4層の波 (rotate 180deg) -->
-      <div class="inverted-hills-container" aria-hidden="true">
+      <div class="relative w-full h-[100px] overflow-hidden mb-10 leading-none" aria-hidden="true">
         <!-- Wave 1 (#B9DD7B) -->
-        <div class="inv-hill inv-hill-1">
-          <svg viewBox="0 0 1920 100" preserveAspectRatio="none" class="inv-svg">
+        <div class="absolute top-0 left-0 w-full h-[100px] z-[1]">
+          <svg viewBox="0 0 1920 100" preserveAspectRatio="none" class="w-full h-full block">
             <path d="M0,0 L1920,0 L1920,30 Q1440,80 960,40 T0,60 Z" fill="#B9DD7B" />
           </svg>
         </div>
         <!-- Wave 2 (#88BD76) -->
-        <div class="inv-hill inv-hill-2">
-          <svg viewBox="0 0 1920 85" preserveAspectRatio="none" class="inv-svg">
+        <div class="absolute top-0 left-0 w-full h-[85px] z-[2]">
+          <svg viewBox="0 0 1920 85" preserveAspectRatio="none" class="w-full h-full block">
             <path d="M0,0 L1920,0 L1920,25 Q1380,75 800,30 T0,40 Z" fill="#88BD76" />
           </svg>
         </div>
         <!-- Wave 3 (#619D6E) -->
-        <div class="inv-hill inv-hill-3">
-          <svg viewBox="0 0 1920 65" preserveAspectRatio="none" class="inv-svg">
+        <div class="absolute top-0 left-0 w-full h-[65px] z-[3]">
+          <svg viewBox="0 0 1920 65" preserveAspectRatio="none" class="w-full h-full block">
             <path d="M0,0 L1920,0 L1920,20 Q1200,60 600,20 T0,30 Z" fill="#619D6E" />
           </svg>
         </div>
         <!-- Wave 4 (#437C62) -->
-        <div class="inv-hill inv-hill-4">
-          <svg viewBox="0 0 1920 45" preserveAspectRatio="none" class="inv-svg">
+        <div class="absolute top-0 left-0 w-full h-[45px] z-[4]">
+          <svg viewBox="0 0 1920 45" preserveAspectRatio="none" class="w-full h-full block">
             <path d="M0,0 L1920,0 L1920,15 Q960,45 0,15 Z" fill="#437C62" />
           </svg>
         </div>
       </div>
 
-      <div class="frame-inner">
+      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
         <!-- Group 6: Title & Line -->
-        <div class="group-6-title">
-          <h2 class="section-heading heading-dark">タイムテーブル</h2>
-          <UiFigmaLine color="#42845A" max-width="824px" />
+        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
+          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-title mb-1">タイムテーブル</h2>
+          <UiOrnamentLine color="#42845A" max-width="824px" />
         </div>
 
         <!-- Schedule Preview Cards -->
-        <div class="timetable-preview-grid">
-          <div class="stage-card indoor">
-            <div class="stage-tag">屋内ステージ（SCC 4階ホール）</div>
-            <h4>ゲストライブ・オープニング・お笑い企画</h4>
-            <p>10/31(土) & 11/1(日) 10:30 開演 〜 16:30 終演</p>
-            <NuxtLink to="/schedule" class="stage-link">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-7 w-full max-w-[1000px] mb-8">
+          <div class="p-7 rounded-[18px] text-white flex flex-col shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 bg-gradient-to-br from-sprout-title to-sprout-dark border border-sprout-border">
+            <div class="inline-block self-start bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3">
+              屋内ステージ（SCC 4階ホール）
+            </div>
+            <h4 class="text-[19px] font-extrabold mb-2">ゲストライブ・オープニング・お笑い企画</h4>
+            <p class="text-[13px] opacity-90 flex-1 mb-4">10/31(土) & 11/1(日) 10:30 開演 〜 16:30 終演</p>
+            <NuxtLink to="/schedule" class="text-sm font-extrabold text-sprout-accent no-underline hover:underline">
               屋内進行表をチェック →
             </NuxtLink>
           </div>
 
-          <div class="stage-card outdoor">
-            <div class="stage-tag">野外ステージ（芝生広場）</div>
-            <h4>青空軽音楽ライブ & ダンスパフォーマンス</h4>
-            <p>10/31(土) & 11/1(日) 10:00 スタート 〜 17:00 フィナーレ</p>
-            <NuxtLink to="/schedule" class="stage-link">
+          <div class="p-7 rounded-[18px] text-white flex flex-col shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 bg-gradient-to-br from-sprout-border to-sprout-title border border-sprout-border-light">
+            <div class="inline-block self-start bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3">
+              野外ステージ（芝生広場）
+            </div>
+            <h4 class="text-[19px] font-extrabold mb-2">青空軽音楽ライブ & ダンスパフォーマンス</h4>
+            <p class="text-[13px] opacity-90 flex-1 mb-4">10/31(土) & 11/1(日) 10:00 スタート 〜 17:00 フィナーレ</p>
+            <NuxtLink to="/schedule" class="text-sm font-extrabold text-sprout-accent no-underline hover:underline">
               野外進行表をチェック →
             </NuxtLink>
           </div>
         </div>
 
-        <div class="section-center-action">
-          <NuxtLink to="/schedule" class="btn btn-primary figma-action-btn">
+        <div class="text-center">
+          <NuxtLink to="/schedule" class="btn btn-primary px-9 py-3.5 text-base">
             2日間の全タイムテーブルを見る 📅
           </NuxtLink>
         </div>
@@ -145,30 +153,30 @@ const featuredEvents = [
     </section>
 
     <!-- 4. Frame 8: 場内マップセクション (背景: #F8F8ED) -->
-    <section class="frame-8-section" id="map-frame">
-      <div class="frame-inner">
+    <section class="w-full bg-sprout-bg py-10 lg:py-16 relative z-[6]" id="map-frame">
+      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
         <!-- Group 5: Title & Line -->
-        <div class="group-5-title">
-          <h2 class="section-heading heading-dark">場内マップ</h2>
-          <UiFigmaLine color="#42845A" max-width="824px" />
+        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
+          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-title mb-1">場内マップ</h2>
+          <UiOrnamentLine color="#42845A" max-width="824px" />
         </div>
 
         <!-- Image 1: 1121px x 797px -->
-        <div class="map-image-holder">
-          <div class="map-image-card">
+        <div class="w-full max-w-[1121px] mb-8">
+          <div class="relative rounded-2xl overflow-hidden shadow-lg border-[3px] border-sprout-border bg-white">
             <img
               src="https://univ.kanto-gakuin.ac.jp/wp-content/themes/gakuin/images/img_map_kanazawa.jpg"
               alt="関東学院大学 金沢八景キャンパス 平潟祭 会場マップ"
-              class="figma-map-img"
+              class="w-full h-auto block"
             />
-            <div class="map-card-badge-overlay">
+            <div class="absolute top-4 left-4 bg-sprout-dark/85 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-[13px] font-bold border border-sprout-border">
               <span>金沢八景キャンパス 全体マップ</span>
             </div>
           </div>
         </div>
 
         <!-- Map Navigation Buttons -->
-        <div class="map-actions-row">
+        <div class="flex gap-4 flex-wrap justify-center">
           <NuxtLink to="/map" class="btn btn-primary">
             全体・模擬店マップを見る 🗺️
           </NuxtLink>
@@ -183,29 +191,29 @@ const featuredEvents = [
     </section>
 
     <!-- 5. Visitor Guidelines (ご来場案内) -->
-    <section class="guidelines-section" id="about">
-      <div class="frame-inner">
-        <div class="group-5-title">
-          <h2 class="section-heading heading-dark">ご来場にあたって</h2>
-          <UiFigmaLine color="#42845A" max-width="824px" />
+    <section class="w-full bg-sprout-bg pt-5 pb-20" id="about">
+      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
+        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
+          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-title mb-1">ご来場にあたって</h2>
+          <UiOrnamentLine color="#42845A" max-width="824px" />
         </div>
 
-        <div class="guidelines-grid">
-          <div class="guide-box">
-            <h4>入場無料・事前予約不要</h4>
-            <p>平潟祭はどなたでも自由にご入場いただけます。地域の皆さま、受験生、卒業生の方々もぜひお越しください。</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-[1121px]">
+          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
+            <h4 class="text-base font-extrabold text-sprout-title mb-2">入場無料・事前予約不要</h4>
+            <p class="text-[13px] text-text-muted leading-relaxed m-0">平潟祭はどなたでも自由にご入場いただけます。地域の皆さま、受験生、卒業生の方々もぜひお越しください。</p>
           </div>
-          <div class="guide-box">
-            <h4>公共交通機関のご利用</h4>
-            <p>来場者用駐車場はございません。京急線「金沢八景駅」またはシーサイドラインからの徒歩・バスをご利用ください。</p>
+          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
+            <h4 class="text-base font-extrabold text-sprout-title mb-2">公共交通機関のご利用</h4>
+            <p class="text-[13px] text-text-muted leading-relaxed m-0">来場者用駐車場はございません。京急線「金沢八景駅」またはシーサイドラインからの徒歩・バスをご利用ください。</p>
           </div>
-          <div class="guide-box">
-            <h4>総合案内・救護所</h4>
-            <p>正門ロータリー付近に本部テントを設置しております。落とし物や迷子、体調不良の際はお気軽にお声がけください。</p>
+          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
+            <h4 class="text-base font-extrabold text-sprout-title mb-2">総合案内・救護所</h4>
+            <p class="text-[13px] text-text-muted leading-relaxed m-0">正門ロータリー付近に本部テントを設置しております。落とし物や迷子、体調不良の際はお気軽にお声がけください。</p>
           </div>
-          <div class="guide-box">
-            <h4>キャンパス内全面禁煙</h4>
-            <p>キャンパス内は指定の喫煙所を除き全面禁煙です。ゴミの分別回収にご協力をお願いいたします。</p>
+          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
+            <h4 class="text-base font-extrabold text-sprout-title mb-2">キャンパス内全面禁煙</h4>
+            <p class="text-[13px] text-text-muted leading-relaxed m-0">キャンパス内は指定の喫煙所を除き全面禁煙です。ゴミの分別回収にご協力をお願いいたします。</p>
           </div>
         </div>
       </div>
@@ -213,387 +221,4 @@ const featuredEvents = [
   </div>
 </template>
 
-<style scoped>
-/* Page Layout: Figma Specification */
-.figma-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0;
-  position: relative;
-  width: 100%;
-  background: var(--figma-bg);
-  overflow-x: hidden;
-}
-
-.frame-inner {
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 24px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Headings */
-.section-heading {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: clamp(36px, 4vw, 48px);
-  line-height: 58px;
-  text-align: center;
-  margin-bottom: 4px;
-}
-
-.heading-light {
-  color: var(--figma-accent);
-}
-
-.heading-dark {
-  color: var(--figma-title);
-}
-
-.group-5-title,
-.group-6-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 824px;
-  margin-bottom: 32px;
-}
-
-/* 2. Frame 4: 企画セクション */
-.frame-4-section {
-  width: 100%;
-  background: var(--figma-sprout-4); /* #437C62 */
-  padding: 60px 0 70px;
-  position: relative;
-  z-index: 5;
-}
-
-.frame-7-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  width: 100%;
-  max-width: 1126px;
-  margin-bottom: 32px;
-}
-
-.event-card-white {
-  background: #FFFFFF;
-  border-radius: 16px;
-  padding: 28px 24px;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(27, 58, 36, 0.18);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  border: 2px solid transparent;
-}
-
-.event-card-white:hover {
-  transform: translateY(-6px);
-  border-color: var(--figma-sprout-1);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
-}
-
-.card-badge {
-  display: inline-block;
-  align-self: flex-start;
-  background: var(--figma-bg);
-  color: var(--figma-title);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  margin-bottom: 12px;
-  border: 1px solid var(--figma-border-light);
-}
-
-.card-icon-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.card-icon {
-  font-size: 24px;
-}
-
-.card-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--figma-title);
-  margin: 0;
-}
-
-.card-desc {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  flex: 1;
-  margin-bottom: 16px;
-}
-
-.card-link-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--figma-border);
-  border-top: 1px solid #eee;
-  padding-top: 10px;
-}
-
-.card-arrow {
-  transition: transform 0.2s ease;
-}
-
-.event-card-white:hover .card-arrow {
-  transform: translateX(5px);
-}
-
-/* 説明文 */
-.frame-desc-wrapper {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  max-width: 800px;
-}
-
-.frame-desc-text {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: clamp(16px, 2vw, 20px);
-  line-height: 1.7;
-  color: #FFFFFF;
-}
-
-/* 3. Frame 5: タイムテーブルセクション */
-.frame-5-section {
-  width: 100%;
-  background: var(--figma-bg);
-  padding: 0 0 60px;
-  position: relative;
-  z-index: 6;
-}
-
-/* Inverted Waves Transition (Group 6: rotate 180deg) */
-.inverted-hills-container {
-  position: relative;
-  width: 100%;
-  height: 100px;
-  overflow: hidden;
-  margin-bottom: 40px;
-  line-height: 0;
-}
-
-.inv-hill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-.inv-svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.inv-hill-1 { height: 100px; z-index: 1; }
-.inv-hill-2 { height: 85px; z-index: 2; }
-.inv-hill-3 { height: 65px; z-index: 3; }
-.inv-hill-4 { height: 45px; z-index: 4; }
-
-.timetable-preview-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  width: 100%;
-  max-width: 1000px;
-  margin-bottom: 32px;
-}
-
-.stage-card {
-  padding: 28px;
-  border-radius: 18px;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s ease;
-}
-
-.stage-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.stage-card.indoor {
-  background: linear-gradient(135deg, var(--figma-title) 0%, var(--figma-dark) 100%);
-  border: 1px solid var(--figma-border);
-}
-
-.stage-card.outdoor {
-  background: linear-gradient(135deg, var(--figma-border) 0%, var(--figma-title) 100%);
-  border: 1px solid var(--figma-border-light);
-}
-
-.stage-tag {
-  display: inline-block;
-  align-self: flex-start;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-.stage-card h4 {
-  font-size: 19px;
-  font-weight: 800;
-  margin-bottom: 8px;
-}
-
-.stage-card p {
-  font-size: 13px;
-  opacity: 0.9;
-  flex: 1;
-  margin-bottom: 16px;
-}
-
-.stage-link {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--figma-accent);
-  text-decoration: none;
-}
-
-.stage-link:hover {
-  text-decoration: underline;
-}
-
-.section-center-action {
-  text-align: center;
-}
-
-/* 4. Frame 8: 場内マップセクション */
-.frame-8-section {
-  width: 100%;
-  background: var(--figma-bg);
-  padding: 40px 0 70px;
-  position: relative;
-  z-index: 6;
-}
-
-.map-image-holder {
-  width: 100%;
-  max-width: 1121px;
-  margin-bottom: 32px;
-}
-
-.map-image-card {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  border: 3px solid var(--figma-border);
-  background: white;
-}
-
-.figma-map-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.map-card-badge-overlay {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: rgba(27, 58, 36, 0.85);
-  backdrop-filter: blur(8px);
-  color: #FFFFFF;
-  padding: 6px 16px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 700;
-  border: 1px solid var(--figma-border);
-}
-
-.map-actions-row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* 5. Guidelines Section */
-.guidelines-section {
-  width: 100%;
-  background: var(--figma-bg);
-  padding: 20px 0 80px;
-}
-
-.guidelines-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  width: 100%;
-  max-width: 1121px;
-}
-
-.guide-box {
-  background: #FFFFFF;
-  padding: 24px;
-  border-radius: 14px;
-  border-left: 5px solid var(--figma-border);
-  box-shadow: var(--shadow-sm);
-}
-
-.guide-box h4 {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--figma-title);
-  margin-bottom: 8px;
-}
-
-.guide-box p {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin: 0;
-}
-
-.figma-action-btn {
-  padding: 14px 36px;
-  font-size: 16px;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .frame-7-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .timetable-preview-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
 
