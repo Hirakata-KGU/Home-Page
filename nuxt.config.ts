@@ -7,6 +7,10 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
   ],
 
+  tailwindcss: {
+    cssPath: '~/assets/css/main.css',
+  },
+
   app: {
     baseURL: '/',
     head: {

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -85,6 +89,48 @@ img {
   border-color: var(--sprout);
   color: var(--sprout);
   transform: translateY(-2px);
+}
+
+/* Reusable Tailwind Components */
+@layer components {
+  /* Section Layout */
+  .section-container {
+    @apply w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center;
+  }
+
+  /* Guide Cards (ご来場にあたって) */
+  .guide-card {
+    @apply bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm;
+  }
+  .guide-card-title {
+    @apply text-base font-extrabold text-sprout-title mb-2;
+  }
+  .guide-card-desc {
+    @apply text-[13px] text-text-muted leading-relaxed m-0;
+  }
+
+  /* Schedule Highlights */
+  .schedule-preview-card {
+    @apply p-7 rounded-[18px] text-white flex flex-col shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 border bg-gradient-to-br;
+  }
+  .schedule-preview-badge {
+    @apply inline-block self-start bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3;
+  }
+  .schedule-preview-link {
+    @apply text-sm font-extrabold text-sprout-accent no-underline hover:underline;
+  }
+
+  /* Hero Section Components */
+  .hero-deco-frame {
+    @apply box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
+
+
+  /* Pill Buttons */
+  .btn-pill-green {
+    @apply inline-flex justify-center items-center px-7 py-3.5 min-w-[160px] h-[52px] bg-sprout-border hover:bg-[#356b48] text-white rounded-full no-underline shadow-[0_2px_8px_rgba(66,132,90,0.25)] hover:shadow-[0_4px_14px_rgba(66,132,90,0.35)] transition-all hover:-translate-y-0.5 font-sans font-normal text-[19px] leading-[24px];
+  }
 }
 
 /* Section base styles */

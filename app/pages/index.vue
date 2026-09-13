@@ -28,6 +28,42 @@ const featuredEvents = [
     icon: '🎨',
   },
 ];
+
+// タイムテーブル概要
+const scheduleHighlights = [
+  {
+    stage: '屋内ステージ（SCC 4階ホール）',
+    title: 'ゲストライブ・オープニング・お笑い企画',
+    time: '10/31(土) & 11/1(日) 10:30 開演 〜 16:30 終演',
+    gradient: 'from-sprout-title to-sprout-dark border-sprout-border',
+  },
+  {
+    stage: '野外ステージ（芝生広場）',
+    title: '青空軽音楽ライブ & ダンスパフォーマンス',
+    time: '10/31(土) & 11/1(日) 10:00 スタート 〜 17:00 フィナーレ',
+    gradient: 'from-sprout-border to-sprout-title border-sprout-border-light',
+  },
+];
+
+// ご来場にあたって
+const visitorGuidelines = [
+  {
+    title: '入場無料・事前予約不要',
+    desc: '平潟祭はどなたでも自由にご入場いただけます。地域の皆さま、受験生、卒業生の方々もぜひお越しください。',
+  },
+  {
+    title: '公共交通機関のご利用',
+    desc: '来場者用駐車場はございません。京急線「金沢八景駅」またはシーサイドラインからの徒歩・バスをご利用ください。',
+  },
+  {
+    title: '総合案内・救護所',
+    desc: '正門ロータリー付近に本部テントを設置しております。落とし物や迷子、体調不良の際はお気軽にお声がけください。',
+  },
+  {
+    title: 'キャンパス内全面禁煙',
+    desc: 'キャンパス内は指定の喫煙所を除き全面禁煙です。ゴミの分別回収にご協力をお願いいたします。',
+  },
+];
 </script>
 
 <template>
@@ -37,14 +73,11 @@ const featuredEvents = [
 
     <!-- 2. Frame 4: 企画セクション (背景: #437C62) -->
     <section class="w-full bg-sprout-moss py-16 px-0 relative z-[5]" id="events-frame">
-      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
-        <!-- Group 5: Title & Line -->
-        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
-          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-accent mb-1">企画</h2>
-          <UiOrnamentLine color="#DFF794" max-width="824px" />
-        </div>
+      <div class="section-container">
+        <!-- Title -->
+        <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
 
-        <!-- Frame 7: 3 Cards Grid (Rectangle 2, 1, 3) -->
+        <!-- 3 Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
           <NuxtLink
             v-for="(item, idx) in featuredEvents"
@@ -69,7 +102,7 @@ const featuredEvents = [
           </NuxtLink>
         </div>
 
-        <!-- 説明文 (上の企画の説明文とか) -->
+        <!-- 説明文 & ボタン -->
         <div class="text-center flex flex-col items-center gap-5 max-w-[800px]">
           <p class="font-sans font-bold text-base sm:text-lg lg:text-xl leading-relaxed text-white">
             音楽ライブ、模擬店グルメ、展示発表、参加型イベントなど盛りだくさん！<br>
@@ -84,62 +117,29 @@ const featuredEvents = [
 
     <!-- 3. Frame 5: タイムテーブルセクション (背景: #F8F8ED + 上部反転波) -->
     <section class="w-full bg-sprout-bg pb-16 relative z-[6]" id="schedule-frame">
-      <!-- Group 6: 反転した4層の波 (rotate 180deg) -->
-      <div class="relative w-full h-[100px] overflow-hidden mb-10 leading-none" aria-hidden="true">
-        <!-- Wave 1 (#B9DD7B) -->
-        <div class="absolute top-0 left-0 w-full h-[100px] z-[1]">
-          <svg viewBox="0 0 1920 100" preserveAspectRatio="none" class="w-full h-full block">
-            <path d="M0,0 L1920,0 L1920,30 Q1440,80 960,40 T0,60 Z" fill="#B9DD7B" />
-          </svg>
-        </div>
-        <!-- Wave 2 (#88BD76) -->
-        <div class="absolute top-0 left-0 w-full h-[85px] z-[2]">
-          <svg viewBox="0 0 1920 85" preserveAspectRatio="none" class="w-full h-full block">
-            <path d="M0,0 L1920,0 L1920,25 Q1380,75 800,30 T0,40 Z" fill="#88BD76" />
-          </svg>
-        </div>
-        <!-- Wave 3 (#619D6E) -->
-        <div class="absolute top-0 left-0 w-full h-[65px] z-[3]">
-          <svg viewBox="0 0 1920 65" preserveAspectRatio="none" class="w-full h-full block">
-            <path d="M0,0 L1920,0 L1920,20 Q1200,60 600,20 T0,30 Z" fill="#619D6E" />
-          </svg>
-        </div>
-        <!-- Wave 4 (#437C62) -->
-        <div class="absolute top-0 left-0 w-full h-[45px] z-[4]">
-          <svg viewBox="0 0 1920 45" preserveAspectRatio="none" class="w-full h-full block">
-            <path d="M0,0 L1920,0 L1920,15 Q960,45 0,15 Z" fill="#437C62" />
-          </svg>
-        </div>
+      <!-- 反転した4層の波 (rotate 180deg) -->
+      <div class="w-full h-fit leading-none" aria-hidden="true">
+        <SvgWave class="w-full rotate-180" preserveAspectRatio="none"></SvgWave>>
       </div>
 
-      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
-        <!-- Group 6: Title & Line -->
-        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
-          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-title mb-1">タイムテーブル</h2>
-          <UiOrnamentLine color="#42845A" max-width="824px" />
-        </div>
+      <div class="section-container">
+        <!-- Title -->
+        <UiSectionTitle title="タイムテーブル" />
 
         <!-- Schedule Preview Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-7 w-full max-w-[1000px] mb-8">
-          <div class="p-7 rounded-[18px] text-white flex flex-col shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 bg-gradient-to-br from-sprout-title to-sprout-dark border border-sprout-border">
-            <div class="inline-block self-start bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3">
-              屋内ステージ（SCC 4階ホール）
+          <div
+            v-for="(card, cIdx) in scheduleHighlights"
+            :key="cIdx"
+            :class="['schedule-preview-card', card.gradient]"
+          >
+            <div class="schedule-preview-badge">
+              {{ card.stage }}
             </div>
-            <h4 class="text-[19px] font-extrabold mb-2">ゲストライブ・オープニング・お笑い企画</h4>
-            <p class="text-[13px] opacity-90 flex-1 mb-4">10/31(土) & 11/1(日) 10:30 開演 〜 16:30 終演</p>
-            <NuxtLink to="/schedule" class="text-sm font-extrabold text-sprout-accent no-underline hover:underline">
-              屋内進行表をチェック →
-            </NuxtLink>
-          </div>
-
-          <div class="p-7 rounded-[18px] text-white flex flex-col shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 bg-gradient-to-br from-sprout-border to-sprout-title border border-sprout-border-light">
-            <div class="inline-block self-start bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3">
-              野外ステージ（芝生広場）
-            </div>
-            <h4 class="text-[19px] font-extrabold mb-2">青空軽音楽ライブ & ダンスパフォーマンス</h4>
-            <p class="text-[13px] opacity-90 flex-1 mb-4">10/31(土) & 11/1(日) 10:00 スタート 〜 17:00 フィナーレ</p>
-            <NuxtLink to="/schedule" class="text-sm font-extrabold text-sprout-accent no-underline hover:underline">
-              野外進行表をチェック →
+            <h4 class="text-[19px] font-extrabold mb-2">{{ card.title }}</h4>
+            <p class="text-[13px] opacity-90 flex-1 mb-4">{{ card.time }}</p>
+            <NuxtLink to="/schedule" class="schedule-preview-link">
+              進行表をチェック →
             </NuxtLink>
           </div>
         </div>
@@ -154,14 +154,11 @@ const featuredEvents = [
 
     <!-- 4. Frame 8: 場内マップセクション (背景: #F8F8ED) -->
     <section class="w-full bg-sprout-bg py-10 lg:py-16 relative z-[6]" id="map-frame">
-      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
-        <!-- Group 5: Title & Line -->
-        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
-          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-title mb-1">場内マップ</h2>
-          <UiOrnamentLine color="#42845A" max-width="824px" />
-        </div>
+      <div class="section-container">
+        <!-- Title -->
+        <UiSectionTitle title="場内マップ" />
 
-        <!-- Image 1: 1121px x 797px -->
+        <!-- Map Image -->
         <div class="w-full max-w-[1121px] mb-8">
           <div class="relative rounded-2xl overflow-hidden shadow-lg border-[3px] border-sprout-border bg-white">
             <img
@@ -192,28 +189,14 @@ const featuredEvents = [
 
     <!-- 5. Visitor Guidelines (ご来場案内) -->
     <section class="w-full bg-sprout-bg pt-5 pb-20" id="about">
-      <div class="w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center">
-        <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
-          <h2 class="font-sans font-bold text-4xl lg:text-5xl leading-tight text-sprout-title mb-1">ご来場にあたって</h2>
-          <UiOrnamentLine color="#42845A" max-width="824px" />
-        </div>
+      <div class="section-container">
+        <!-- Title -->
+        <UiSectionTitle title="ご来場にあたって" />
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-[1121px]">
-          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
-            <h4 class="text-base font-extrabold text-sprout-title mb-2">入場無料・事前予約不要</h4>
-            <p class="text-[13px] text-text-muted leading-relaxed m-0">平潟祭はどなたでも自由にご入場いただけます。地域の皆さま、受験生、卒業生の方々もぜひお越しください。</p>
-          </div>
-          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
-            <h4 class="text-base font-extrabold text-sprout-title mb-2">公共交通機関のご利用</h4>
-            <p class="text-[13px] text-text-muted leading-relaxed m-0">来場者用駐車場はございません。京急線「金沢八景駅」またはシーサイドラインからの徒歩・バスをご利用ください。</p>
-          </div>
-          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
-            <h4 class="text-base font-extrabold text-sprout-title mb-2">総合案内・救護所</h4>
-            <p class="text-[13px] text-text-muted leading-relaxed m-0">正門ロータリー付近に本部テントを設置しております。落とし物や迷子、体調不良の際はお気軽にお声がけください。</p>
-          </div>
-          <div class="bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm">
-            <h4 class="text-base font-extrabold text-sprout-title mb-2">キャンパス内全面禁煙</h4>
-            <p class="text-[13px] text-text-muted leading-relaxed m-0">キャンパス内は指定の喫煙所を除き全面禁煙です。ゴミの分別回収にご協力をお願いいたします。</p>
+          <div v-for="(guide, gIdx) in visitorGuidelines" :key="gIdx" class="guide-card">
+            <h4 class="guide-card-title">{{ guide.title }}</h4>
+            <p class="guide-card-desc">{{ guide.desc }}</p>
           </div>
         </div>
       </div>

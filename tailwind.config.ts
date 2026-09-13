@@ -4,6 +4,11 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       colors: {
+        text: {
+          main: '#2C3E2D',
+          muted: '#555555',
+          light: '#767676',
+        },
         sprout: {
           bg: '#F8F8ED',
           title: '#325632',
