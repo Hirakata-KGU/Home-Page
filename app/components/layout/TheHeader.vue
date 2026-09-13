@@ -60,11 +60,8 @@ const navItems = [
 
       <!-- Right: Button (Frame 9) -->
       <div class="hidden md:block shrink-0">
-        <NuxtLink
-          to="/contact"
-          class="inline-flex flex-row justify-center items-center px-[28px] py-[14px] min-w-[160px] h-[52px] bg-sprout-border hover:bg-[#356b48] text-white rounded-[71px] no-underline shadow-[0_2px_8px_rgba(66,132,90,0.25)] hover:shadow-[0_4px_14px_rgba(66,132,90,0.35)] transition-all hover:-translate-y-0.5"
-        >
-          <span class="font-sans font-normal text-[19px] leading-[24px]">お問い合わせ</span>
+        <NuxtLink to="/contact" class="btn-pill-green">
+          <span>お問い合わせ</span>
         </NuxtLink>
       </div>
 

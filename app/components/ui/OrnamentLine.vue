@@ -14,9 +14,7 @@ withDefaults(defineProps<Props>(), {
   <div class="ornament-line-wrapper" :style="{ maxWidth: maxWidth }">
     <!-- Left 3 dots -->
     <div class="dots dots-left">
-      <span class="dot" :style="{ backgroundColor: color }"></span>
-      <span class="dot" :style="{ backgroundColor: color }"></span>
-      <span class="dot" :style="{ backgroundColor: color }"></span>
+      <span v-for="n in 3" :key="n" class="dot" :style="{ backgroundColor: color }"></span>
     </div>
 
     <!-- Center Line -->
@@ -24,9 +22,7 @@ withDefaults(defineProps<Props>(), {
 
     <!-- Right 3 dots -->
     <div class="dots dots-right">
-      <span class="dot" :style="{ backgroundColor: color }"></span>
-      <span class="dot" :style="{ backgroundColor: color }"></span>
-      <span class="dot" :style="{ backgroundColor: color }"></span>
+      <span v-for="n in 3" :key="n" class="dot" :style="{ backgroundColor: color }"></span>
     </div>
   </div>
 </template>

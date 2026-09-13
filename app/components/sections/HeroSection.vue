@@ -1,21 +1,54 @@
 <script setup lang="ts">
-// Top Section
+interface LeafItem {
+  id: string
+  name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
+  left: number   // X座標 (px)
+  top: number    // Y座標 (px)
+  width: number  // 横幅 (px)
+  height: number // 縦幅 (px)
+}
+
+const leaves: LeafItem[] = [
+  // --- Hill 1 (最奥の丘) ---
+  { id: 'leaf-0-11', name: 5, left: 1877, top: 50, width: 29.22, height: 56 },
+  { id: 'leaf-0-8',  name: 12, left: 1370, top: 97, width: 23.2,  height: 58 },
+  { id: 'leaf-0-4',  name: 3, left: 765,  top: 0,  width: 34.67, height: 52 },
+  { id: 'leaf-0-3',  name: 8, left: 503,  top: 55, width: 40.0,  height: 60 },
+
+  // --- Hill 2 ---
+  { id: 'leaf-1-13', name: 6, left: 1837, top: 110, width: 15.14, height: 58 },
+  { id: 'leaf-1-11', name: 14, left: 1511, top: 135, width: 34.42, height: 58 },
+  { id: 'leaf-1-8',  name: 16, left: 1214, top: 84, width: 22.0,  height: 55 },
+  { id: 'leaf-1-3',  name: 6, left: 434,  top: 125, width: 17.28, height: 58 },
+  { id: 'leaf-1-1',  name: 3, left: 188,  top: 90, width: 36.42, height: 57 },
+
+  // --- Hill 3 ---
+  { id: 'leaf-2-14', name: 6,  left: 1756, top: 174, width: 14.0,  height: 67 },
+  { id: 'leaf-2-13', name: 1,  left: 1642, top: 163, width: 38.67, height: 58 },
+  { id: 'leaf-2-7',  name: 5,  left: 1007,  top: 205, width: 20.38, height: 63 },
+  { id: 'leaf-2-2',  name: 3,  left: 293,  top: 120, width: 42.67, height: 64 },
+  { id: 'leaf-2-1',  name: 14, left: 116,  top: 135, width: 27.45, height: 61 },
+
+  // --- Hill 4 (最前面の丘) ---
+  { id: 'leaf-3-13', name: 5, left: 1866, top: 200, width: 44.87, height: 86 },
+  { id: 'leaf-3-11', name: 3, left: 1585, top: 255, width: 34.0,  height: 51 },
+  { id: 'leaf-3-9',  name: 3, left: 1269, top: 230, width: 42.67, height: 64 },
+  { id: 'leaf-3-6',  name: 11, left: 853,  top: 170, width: 36.8,  height: 92 },
+  { id: 'leaf-3-4',  name: 6, left: 631,  top: 170, width: 24.21, height: 83 },
+  { id: 'leaf-3-0',  name: 8, left: 47,   top: 225, width: 50.67, height: 76 },
+]
 </script>
 
 <template>
   <section class="relative w-full min-h-[920px] bg-sprout-bg overflow-hidden flex flex-col justify-start items-center pt-10 lg:pt-16 pb-[240px] lg:pb-0">
     <!-- Top Geometric Border Decorations (Group 3: top-right) -->
     <div class="absolute pointer-events-none opacity-40 -top-40 -right-28 w-[650px] h-[650px] z-[1]" aria-hidden="true">
-      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px]"></div>
-      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"></div>
-      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px]"></div>
+      <div v-for="size in [650, 600, 550]" :key="size" class="hero-deco-frame" :style="{ width: `${size}px`, height: `${size}px` }"></div>
     </div>
 
     <!-- Bottom Geometric Border Decorations (Group 2: bottom-left) -->
     <div class="absolute pointer-events-none opacity-40 top-[380px] -left-40 w-[680px] h-[680px] z-[1]" aria-hidden="true">
-      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[680px]"></div>
-      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[630px] h-[630px]"></div>
-      <div class="box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px]"></div>
+      <div v-for="size in [680, 630, 580]" :key="size" class="hero-deco-frame" :style="{ width: `${size}px`, height: `${size}px` }"></div>
     </div>
 
     <!-- Main Container -->
@@ -57,13 +90,13 @@
 
           <!-- Inside Badge Content -->
           <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none">
-            <span class="text-[32px] font-bold text-sprout-bg leading-tight mb-0.5">2026</span>
+            <span class="text-[32px] font-bold leading-tight mb-0.5">2026</span>
             <div class="text-[44px] lg:text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-3">
               <span>10/31</span>
               <span>11/1</span>
             </div>
             <div class="w-8 h-0 border-t-2 border-sprout-bg my-1.5"></div>
-            <span class="text-[28px] font-bold text-sprout-bg leading-tight mb-2">10:00 ~ 17:00</span>
+            <span class="text-[28px] font-bold leading-tight mb-2">10:00 ~ 17:00</span>
 
             <div class="flex items-center gap-2 mt-1">
               <svg
@@ -78,8 +111,8 @@
                 />
               </svg>
               <div class="flex flex-col text-left">
-                <span class="text-base font-medium text-sprout-bg leading-tight">関東学院大学</span>
-                <span class="text-xl font-bold text-sprout-bg leading-tight">金沢八景キャンパス</span>
+                <span class="text-base font-medium leading-tight">関東学院大学</span>
+                <span class="text-xl font-bold leading-tight">金沢八景キャンパス</span>
               </div>
             </div>
           </div>
@@ -88,62 +121,25 @@
     </div>
 
     <!-- 4 Layers of Green Hills & Sprout Leaves (bottom) -->
-    <div class="absolute bottom-0 left-0 w-full h-[280px] pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
-      <!-- Hill 1 (Back, #B9DD7B) -->
-      <div class="absolute bottom-0 left-0 w-full h-[260px] z-[1]">
-        <svg class="w-full h-full block" viewBox="0 0 1920 180" preserveAspectRatio="none">
-          <path d="M0,70 Q480,10 960,50 T1920,30 L1920,180 L0,180 Z" fill="#B9DD7B" />
-        </svg>
-        <div class="leaves-hill">
-          <UiSproutLeaf style="left: 26%; top: 38px;" stem-color="#9AC467" leaf-left-color="#DFF794" leaf-right-color="#B9DD7B" :width="38" :height="56" />
-          <UiSproutLeaf style="left: 40%; top: 22px;" stem-color="#9AC467" leaf-left-color="#DFF794" leaf-right-color="#B9DD7B" :width="34" :height="52" />
-          <UiSproutLeaf style="left: 71%; top: 40px;" stem-color="#9AC467" leaf-left-color="#B9DD7B" leaf-right-color="#9AC467" :width="30" :height="48" />
-          <UiSproutLeaf style="left: 95%; top: 30px;" stem-color="#9AC467" leaf-left-color="#DFF794" leaf-right-color="#9AC467" :width="32" :height="50" />
-        </div>
-      </div>
-
-      <!-- Hill 2 (#88BD76) -->
-      <div class="absolute bottom-0 left-0 w-full h-[200px] z-[2]">
-        <svg class="w-full h-full block" viewBox="0 0 1920 160" preserveAspectRatio="none">
-          <path d="M0,80 Q520,130 1100,60 T1920,70 L1920,160 L0,160 Z" fill="#88BD76" />
-        </svg>
-        <div class="leaves-hill">
-          <UiSproutLeaf style="left: 10%; top: 45px;" stem-color="#69A362" leaf-left-color="#AED690" leaf-right-color="#88BD76" :width="36" :height="54" />
-          <UiSproutLeaf style="left: 23%; top: 55px;" stem-color="#69A362" leaf-left-color="#88BD76" leaf-right-color="#88BD76" :width="28" :height="46" />
-          <UiSproutLeaf style="left: 63%; top: 35px;" stem-color="#69A362" leaf-left-color="#88BD76" leaf-right-color="#88BD76" :width="30" :height="48" />
-          <UiSproutLeaf style="left: 79%; top: 48px;" stem-color="#69A362" leaf-left-color="#AED690" leaf-right-color="#88BD76" :width="34" :height="52" />
-          <UiSproutLeaf style="left: 92%; top: 42px;" stem-color="#69A362" leaf-left-color="#88BD76" leaf-right-color="#88BD76" :width="26" :height="44" />
-        </div>
-      </div>
-
-      <!-- Hill 3 (#619D6E) -->
-      <div class="absolute bottom-0 left-0 w-full h-[150px] z-[3]">
-        <svg class="w-full h-full block" viewBox="0 0 1920 140" preserveAspectRatio="none">
-          <path d="M0,60 Q600,10 1200,70 T1920,50 L1920,140 L0,140 Z" fill="#619D6E" />
-        </svg>
-        <div class="leaves-hill">
-          <UiSproutLeaf style="left: 6%; top: 38px;" stem-color="#42845A" leaf-left-color="#619D6E" leaf-right-color="#87B787" :width="30" :height="50" />
-          <UiSproutLeaf style="left: 15%; top: 32px;" stem-color="#42845A" leaf-left-color="#87B787" leaf-right-color="#619D6E" :width="38" :height="58" />
-          <UiSproutLeaf style="left: 46%; top: 45px;" stem-color="#42845A" leaf-left-color="#619D6E" leaf-right-color="#619D6E" :width="28" :height="48" />
-          <UiSproutLeaf style="left: 85%; top: 35px;" stem-color="#42845A" leaf-left-color="#87B787" leaf-right-color="#619D6E" :width="36" :height="54" />
-          <UiSproutLeaf style="left: 91%; top: 42px;" stem-color="#42845A" leaf-left-color="#619D6E" leaf-right-color="#619D6E" :width="26" :height="44" />
-        </div>
-      </div>
-
-      <!-- Hill 4 (Front, #437C62) -->
-      <div class="absolute bottom-0 left-0 w-full h-[100px] z-[4]">
-        <svg class="w-full h-full block" viewBox="0 0 1920 120" preserveAspectRatio="none">
-          <path d="M0,45 Q700,90 1350,30 T1920,40 L1920,120 L0,120 Z" fill="#437C62" />
-        </svg>
-        <div class="leaves-hill">
-          <UiSproutLeaf style="left: 2%; top: 25px;" stem-color="#24624E" leaf-left-color="#69957B" leaf-right-color="#437C62" :width="44" :height="68" />
-          <UiSproutLeaf style="left: 33%; top: 35px;" stem-color="#24624E" leaf-left-color="#437C62" leaf-right-color="#437C62" :width="32" :height="54" />
-          <UiSproutLeaf style="left: 44%; top: 20px;" stem-color="#24624E" leaf-left-color="#437C62" leaf-right-color="#437C62" :width="36" :height="60" />
-          <UiSproutLeaf style="left: 66%; top: 28px;" stem-color="#24624E" leaf-left-color="#69957B" leaf-right-color="#437C62" :width="40" :height="62" />
-          <UiSproutLeaf style="left: 82%; top: 32px;" stem-color="#24624E" leaf-left-color="#69957B" leaf-right-color="#437C62" :width="34" :height="52" />
-          <UiSproutLeaf style="left: 97%; top: 22px;" stem-color="#24624E" leaf-left-color="#69957B" leaf-right-color="#24624E" :width="42" :height="66" />
-        </div>
-      </div>
+    <div class="absolute bottom-0 left-0 w-full h-fit pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
+      <!-- Hill -->
+      <SvgWave class="w-full mt-10" preserveAspectRatio="none"></SvgWave>
+      <div
+      v-for="leaf in leaves"
+      :key="leaf.id"
+      class="absolute bottom-0 left-0 pointer-events-none"
+      :style="{
+        left: `${(leaf.left / 1920) * 100}%`,
+        top: `${(leaf.top / 370) * 100}%`,
+        width: `clamp(${leaf.width*1.2}px, ${(leaf.width / 1400) * 100}vw, ${leaf.width*2}px)`,
+        height: `${(leaf.height /240) * 100}%`,
+      }"
+    >
+      <SvgLeafIcon
+        :name="leaf.name"
+        class="w-full h-full drop-shadow-sm"
+      />
+    </div>
     </div>
   </section>
 </template>
