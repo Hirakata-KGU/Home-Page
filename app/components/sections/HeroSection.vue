@@ -55,24 +55,19 @@ const leaves: LeafItem[] = [
     <div class="relative z-10 w-full max-w-[1600px] px-6 lg:px-10 flex flex-col-reverse lg:flex-row items-center justify-between gap-10">
       <!-- Title Block (left: 163px, top: 288px) -->
       <div class="flex-1 max-w-[824px] text-center lg:text-left">
-        <div class="flex items-center justify-center lg:justify-start gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
+        <div class="flex items-end justify-center gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
           <span>第77回</span>
-          <span>『SPROUT』</span>
-        </div>
-        <h1 class="font-sans font-bold text-[48px] sm:text-[64px] lg:text-[96px] leading-[1.15] text-sprout-title m-0 tracking-tight">
+          <h1 class="font-sans font-bold text-[48px] sm:text-[64px] lg:text-[72px] leading-[1.15] text-sprout-title m-0 tracking-tight">
           平潟祭 2026
-        </h1>
+          </h1>
+        </div>
+
         <!-- Ornament Line -->
         <UiOrnamentLine color="#42845A" max-width="100%" />
 
         <!-- Tagline & Quick CTA -->
         <div class="mt-6">
-          <UiCountdownTimer target-date="2026-10-31T10:00:00" class="mb-5" />
-          <div class="flex gap-4 flex-wrap justify-center lg:justify-start">
-            <NuxtLink to="/events" class="btn btn-primary">企画を探す 🎪</NuxtLink>
-            <NuxtLink to="/schedule" class="btn btn-secondary">タイムテーブル 📅</NuxtLink>
-            <NuxtLink to="/map" class="btn btn-secondary">場内マップ 🗺️</NuxtLink>
-          </div>
+          <UiCountdownTimer target-date="2026-10-31T10:00:00" class="mb-5 w-full" />
         </div>
       </div>
 

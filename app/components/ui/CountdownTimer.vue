@@ -13,10 +13,9 @@ const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);
 </script>
 
 <template>
-  <div class="countdown">
-    <div class="countdown-label">
-      {{ isFinished ? '平潟祭開催中！' : '開催まであと' }}
-    </div>
+  <div class="flex flex-row justify-center items-center gap-6">
+    <div v-if="isFinished" class="text-[24px]">開催中！</div>
+    <div v-if="!isFinished" class="countdown-label">開催まであと</div>
     <div v-if="!isFinished" class="countdown-timer">
       <div class="countdown-item">
         <div class="countdown-value">{{ days }}</div>
@@ -40,10 +39,9 @@ const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);
 }
 
 .countdown-label {
-  font-size: 14px;
+  font-size: 18px;
   color: var(--muted);
   font-weight: 700;
-  margin-bottom: 12px;
 }
 
 .countdown-timer {

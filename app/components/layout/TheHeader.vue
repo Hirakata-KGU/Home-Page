@@ -21,10 +21,10 @@ const navItems = [
 </script>
 
 <template>
-  <header class="sticky top-0 w-full h-[100px] bg-white shadow-header z-[1000] flex justify-center items-center">
+  <header class="sticky top-0 w-full h-[80px] bg-white shadow-header z-[1000] flex justify-center items-center">
     <div class="w-full max-w-[1920px] h-full px-6 lg:px-[51px] flex flex-row justify-between items-center gap-8">
       <!-- Left: Brand (Frame 6) -->
-      <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[100px] no-underline shrink-0" @click="closeMobileMenu">
+      <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[80px] no-underline shrink-0" @click="closeMobileMenu">
         <!-- 平実 1: Logo -->
         <div class="w-[76px] h-[76px] flex items-center justify-center">
           <img src="/images/hirakata-logo.png" alt="平実ロゴ" class="w-full h-full object-contain" />
@@ -32,12 +32,12 @@ const navItems = [
         <!-- Title text block -->
         <div class="flex flex-col justify-center items-start">
           <span class="font-sans font-light text-[18px] leading-[22px] text-black">第77回</span>
-          <span class="font-serif font-semibold text-[32px] leading-[44px] text-black tracking-[1px]">平潟祭</span>
+          <span class="font-serif font-semibold text-[32px] leading-[30px] text-black tracking-[1px]">平潟祭</span>
         </div>
       </NuxtLink>
 
       <!-- Center: Menu-Links -->
-      <nav class="hidden md:flex flex-row items-center gap-8 h-[100px]" aria-label="ヘッダーメニュー">
+      <nav class="hidden lg:flex flex-row items-center gap-8 h-[80px]" aria-label="ヘッダーメニュー">
         <NuxtLink
           v-for="item in navItems"
           :key="item.to"
@@ -46,7 +46,7 @@ const navItems = [
           :class="{ 'is-active': $route.path === item.to }"
         >
           <span
-            class="font-sans text-[20px] leading-[24px] text-sprout-forest transition-colors"
+            class="font-sans text-[16px] leading-[24px] text-sprout-forest transition-colors"
             :class="$route.path === item.to ? 'font-bold' : 'font-medium group-hover:text-sprout-border'"
           >
             {{ item.name }}
@@ -59,7 +59,7 @@ const navItems = [
       </nav>
 
       <!-- Right: Button (Frame 9) -->
-      <div class="hidden md:block shrink-0">
+      <div class="hidden lg:block shrink-0">
         <NuxtLink to="/contact" class="btn-pill-green">
           <span>お問い合わせ</span>
         </NuxtLink>
@@ -67,7 +67,7 @@ const navItems = [
 
       <!-- Mobile Menu Hamburger Button -->
       <button
-        class="md:hidden flex items-center justify-center w-[44px] h-[44px] bg-sprout-border hover:bg-[#356b48] text-white rounded-lg text-2xl cursor-pointer border-none transition-colors"
+        class="lg:hidden flex items-center justify-center w-[44px] h-[44px] bg-sprout-border hover:bg-[#356b48] text-white rounded-lg text-2xl cursor-pointer border-none transition-colors"
         :aria-expanded="isMobileMenuOpen"
         aria-label="メニューを開閉"
         @click="toggleMobileMenu"
@@ -79,7 +79,7 @@ const navItems = [
 
     <!-- Mobile Drawer -->
     <transition name="drawer">
-      <nav v-if="isMobileMenuOpen" class="md:hidden flex flex-col bg-white absolute top-[100px] left-0 w-full px-6 py-8 shadow-[0_10px_20px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-3" aria-label="モバイルナビゲーション">
+      <nav v-if="isMobileMenuOpen" class="lg:hidden flex flex-col bg-white absolute top-[100px] left-0 w-full px-6 py-8 shadow-[0_10px_20px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-3" aria-label="モバイルナビゲーション">
         <NuxtLink
           v-for="item in navItems"
           :key="item.to"
