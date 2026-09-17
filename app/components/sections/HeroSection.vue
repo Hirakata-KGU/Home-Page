@@ -40,24 +40,28 @@ const leaves: LeafItem[] = [
 </script>
 
 <template>
-  <section class="relative w-full min-h-[920px] bg-sprout-bg overflow-hidden flex flex-col justify-start items-center pt-10 lg:pt-16 pb-[240px] lg:pb-0">
+  <section class="relative w-full h-fit min-h-[calc(100dvh-60px)] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
     <!-- Top Geometric Border Decorations (Group 3: top-right) -->
     <div class="absolute pointer-events-none opacity-40 -top-40 -right-28 w-[650px] h-[650px] z-[1]" aria-hidden="true">
-      <div v-for="size in [650, 600, 550]" :key="size" class="hero-deco-frame" :style="{ width: `${size}px`, height: `${size}px` }"></div>
+      <div v-for="size in [650, 600, 550]" :key="size" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" :style="{ width: `${size}px`, height: `${size}px` }">
+        <Svg8 class="w-full h-full"></Svg8>
+      </div>
     </div>
 
     <!-- Bottom Geometric Border Decorations (Group 2: bottom-left) -->
-    <div class="absolute pointer-events-none opacity-40 top-[380px] -left-40 w-[680px] h-[680px] z-[1]" aria-hidden="true">
-      <div v-for="size in [680, 630, 580]" :key="size" class="hero-deco-frame" :style="{ width: `${size}px`, height: `${size}px` }"></div>
+    <div class="absolute pointer-events-none opacity-40 bottom-[-200px] -left-40 w-[680px] h-[680px] z-[1]" aria-hidden="true">
+      <div v-for="size in [650, 600, 550]" :key="size" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" :style="{ width: `${size}px`, height: `${size}px` }">
+        <Svg8 class="w-full h-full"></Svg8>
+      </div>
     </div>
 
     <!-- Main Container -->
-    <div class="relative z-10 w-full max-w-[1600px] px-6 lg:px-10 flex flex-col-reverse lg:flex-row items-center justify-between gap-10">
+    <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row items-center justify-between pb-[250px] lg:pb-[150px]">
       <!-- Title Block (left: 163px, top: 288px) -->
       <div class="flex-1 max-w-[824px] text-center lg:text-left">
         <div class="flex items-end justify-center gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
           <span>第77回</span>
-          <h1 class="font-sans font-bold text-[48px] sm:text-[64px] lg:text-[72px] leading-[1.15] text-sprout-title m-0 tracking-tight">
+          <h1 class="font-sans font-bold text-[48px] sm:text-[64px] xl:text-[72px] leading-[1.15] text-sprout-title m-0 tracking-tight">
           平潟祭 2026
           </h1>
         </div>
@@ -72,43 +76,41 @@ const leaves: LeafItem[] = [
       </div>
 
       <!-- Date & Badge Block (Group 1: right side) -->
-      <div class="shrink-0 w-[320px] sm:w-[440px] lg:w-[540px] h-[320px] sm:h-[440px] lg:h-[540px] relative flex items-center justify-center">
-        <div class="relative w-[500px] h-[500px] flex items-center justify-center scale-[0.68] sm:scale-[0.85] lg:scale-100 transition-transform">
-          <!-- Polygon 1 -->
-          <div class="absolute box-border w-[480px] h-[480px] border-[1.5px] border-sprout-border -rotate-[22.5deg]"></div>
-          <!-- Polygon 2 -->
-          <div class="absolute box-border w-[440px] h-[440px] border-[1.5px] border-sprout-border"></div>
-          <!-- Polygon 3 (Fill) -->
-          <div class="absolute box-border w-[410px] h-[410px] bg-sprout-light -rotate-[22.5deg] shadow-[0_12px_36px_rgba(67,124,98,0.25)]"></div>
-          <!-- Polygon 4 (Inner Border) -->
-          <div class="absolute box-border w-[396px] h-[396px] border-[3px] border-sprout-border-light -rotate-[22.5deg]"></div>
+      <div class="relative w-[480px] h-[480px] flex items-center justify-center scale-[0.68] sm:scale-[0.85] lg:scale-[0.9] xl:scale-100 transition-transform">
+        <!-- Polygon 1 -->
+        <Svg8 :style="{ width: '480px', height: '480px' }" class="absolute -rotate-[22.5deg]"></Svg8>
+        <!-- Polygon 2 -->
+        <Svg8 :style="{ width: '443px', height: '443px' }" class="absolute"></Svg8>
+        <!-- Polygon 3 (Fill) -->
+        <Svg8 :style="{ width: '409px', height: '409px' }" class="absolute -rotate-[22.5deg] drop-shadow-[0_12px_36px_rgba(67,124,98,0.25)]" fill-color="var(--theme-sprout-light)"></Svg8>
+        <!-- Polygon 4 (Inner Border) -->
+        <Svg8 :style="{ width: '395px', height: '395px' }" class="absolute -rotate-[22.5deg]"></Svg8>
 
-          <!-- Inside Badge Content -->
-          <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none">
-            <span class="text-[32px] font-bold leading-tight mb-0.5">2026</span>
-            <div class="text-[44px] lg:text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-3">
-              <span>10/31</span>
-              <span>11/1</span>
-            </div>
-            <div class="w-8 h-0 border-t-2 border-sprout-bg my-1.5"></div>
-            <span class="text-[28px] font-bold leading-tight mb-2">10:00 ~ 17:00</span>
+        <!-- Inside Badge Content -->
+        <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none">
+          <span class="text-[32px] font-bold leading-tight mb-0.5">2026</span>
+          <div class="text-[44px] lg:text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-3">
+            <span>10/31</span>
+            <span>11/1</span>
+          </div>
+          <div class="w-8 h-0 border-t-2 border-sprout-bg my-1.5"></div>
+          <span class="text-[28px] font-bold leading-tight mb-2">10:00 ~ 17:00</span>
 
-            <div class="flex items-center gap-2 mt-1">
-              <svg
-                class="w-9 h-9 shrink-0"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
-                  fill="#F8F8ED"
-                />
-              </svg>
-              <div class="flex flex-col text-left">
-                <span class="text-base font-medium leading-tight">関東学院大学</span>
-                <span class="text-xl font-bold leading-tight">金沢八景キャンパス</span>
-              </div>
+          <div class="flex items-center gap-2 mt-1">
+            <svg
+              class="w-9 h-9 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
+                fill="#F8F8ED"
+              />
+            </svg>
+            <div class="flex flex-col text-left">
+              <span class="text-base font-medium leading-tight">関東学院大学</span>
+              <span class="text-xl font-bold leading-tight">金沢八景キャンパス</span>
             </div>
           </div>
         </div>
