@@ -1,0 +1,137 @@
+[
+  {
+    "id": "exhibit-wandervogel-bu",
+    "content": "コンペ兼活動報告",
+    "groupName": "ワンダーフォーゲル部",
+    "category": "文化館",
+    "room": "8-204",
+    "pr": "ワンダーフォーゲル部では、山行記録の映像上映や登山道具を展示中！自然の魅力を部員がお届けします！ぜひお越しください。",
+    "photoNo": "①"
+  },
+  {
+    "id": "exhibit-su-bu",
+    "content": "数学に関するポスター展示",
+    "groupName": "すーぶ（数理・物理コース）",
+    "category": "文化館",
+    "room": "3-205",
+    "pr": "すーぶ（数理物理コース）（兼子研究室）は数学の面白さ、奥深さを楽しく感じ取ってもらえるようMEAGと協力して展示会を開きます！難しく感じてしまう数学も見方を変えれば簡単に感じるかもしれないですよ！",
+    "photoNo": "②"
+  },
+  {
+    "id": "exhibit-meag",
+    "content": "ワークショップ",
+    "groupName": "MEAG",
+    "category": "文化館",
+    "room": "3-206",
+    "pr": "MEAGは「算数・数学ワークショップ」で、子供から大人まで楽しめる数学アクティビティを多数用意しています！",
+    "photoNo": "③"
+  },
+  {
+    "id": "exhibit-bijutsu-bu",
+    "content": "作品展示",
+    "groupName": "美術部",
+    "category": "文化館",
+    "room": "8-206",
+    "pr": "学年や技量を問わず楽しく活動しています。ぜひ気軽に展示スペースへ！！",
+    "photoNo": "④"
+  },
+  {
+    "id": "exhibit-mokei-bu",
+    "content": "作品展示",
+    "groupName": "模型部",
+    "category": "文化館",
+    "room": "8-102",
+    "pr": "プラモデルやジオラマ制作を楽しむ、ものづくり好きが集まる部です。",
+    "photoNo": "⑤"
+  },
+  {
+    "id": "exhibit-board-game",
+    "content": "ボードゲームの紹介・体験",
+    "groupName": "ボードゲーム研究会",
+    "category": "文化館",
+    "room": "8-306",
+    "pr": "分かりやすいものから変わり種なルールまで、楽しいボードゲームの世界の広がりを体験しましょう！",
+    "photoNo": "⑥"
+  },
+  {
+    "id": "exhibit-hoso-kenkyukai",
+    "content": "映像作品発表及び創作・ゲーム体験",
+    "groupName": "放送研究会",
+    "category": "文化館",
+    "room": "8-203",
+    "pr": "放送研究会KGUBでは放送にまつわる機材の展示・体験や仕掛けをご用意しています！ぜひお越しください！",
+    "photoNo": "⑦"
+  },
+  {
+    "id": "exhibit-shinsengumi",
+    "content": "公演",
+    "groupName": "演劇部 劇団新鮮組",
+    "category": "文化館",
+    "room": "8-101",
+    "pr": "",
+    "photoNo": "⑧"
+  },
+  {
+    "id": "exhibit-rainbow",
+    "content": "展示",
+    "groupName": "Rainbow(第三文明)",
+    "category": "文化館",
+    "room": "8-201",
+    "pr": "いま話題の社会問題について楽しく学べる展示や企画を行います！お菓子を用意して待っています！ぜひ！",
+    "photoNo": "⑨"
+  },
+  {
+    "id": "exhibit-shashin-bu",
+    "content": "写真展示",
+    "groupName": "写真部",
+    "category": "文化館",
+    "room": "カフェポンド前",
+    "pr": "写真部では写真展を開催しています！個性あふれる写真をぜひ見に来てください！棒餃子も販売中です！",
+    "photoNo": "⑩"
+  },
+  {
+    "id": "exhibit-manga-colors",
+    "content": "作品展示",
+    "groupName": "漫画創作部 color's",
+    "category": "文化館",
+    "room": "8-103・105",
+    "pr": "こんにちは！漫画創作部color'sです！ 漫画創作部color'sでは、部員が描いた漫画をまとめた部誌の配布を行なっています。漫画以外にもイラストの展示をしておりますので、興味がある方はお気軽にお越しください！",
+    "photoNo": "⑪"
+  },
+  {
+    "id": "exhibit-tenmon-subaru",
+    "content": "作品展示",
+    "groupName": "天文部すばる",
+    "category": "文化館",
+    "room": "6-101",
+    "pr": "自作プラネタリウムで本物のような星空を再現！天文部スバルが皆さんを宇宙の世界へご案内します。",
+    "photoNo": "⑫"
+  },
+  {
+    "id": "exhibit-tetsudo-bu",
+    "content": "作品展示・体験展示",
+    "groupName": "鉄道研究部",
+    "category": "文化館",
+    "room": "8-205",
+    "pr": "鉄道研究部です。部員自慢のNゲージコレクションや沢山のプラレール達が走り回るジオラマ展示がございます！他にも鉄道に関する様々な 展示を行います。大人の方もお子様も、是非ご来場下さい！",
+    "photoNo": "⑬"
+  },
+  {
+    "id": "exhibit-oystars",
+    "content": "マッスルコンテスト",
+    "groupName": "筋トレサークル OYSTARS",
+    "category": "文化館",
+    "room": "8-305",
+    "pr": "初心者大歓迎！ 合トレ、学祭。ボディビルダーも輩出。プロテイン片手に、なりたい自分へ。",
+    "photoNo": "⑭"
+  },
+  {
+    "id": "exhibit-ebihara-lab",
+    "content": "味覚の体験",
+    "groupName": "海老原研究室",
+    "category": "文化館",
+    "room": "3-204",
+    "pr": "あなたの味覚は本当に正しい？味覚の不思議を楽しく体験できる企画です！新たな発見があるかも！",
+    "photoNo": "⑮"
+  }
+]

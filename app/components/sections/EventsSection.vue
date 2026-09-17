@@ -13,23 +13,25 @@ import { eventItems } from '~/data/events';
     </div>
 
     <div class="events-grid">
-      <div
-        v-for="event in eventItems"
+      <NuxtLink
+        v-for="event in eventItems.slice(0, 6)"
         :key="event.id"
-        class="event-card"
+        :to="`/events/${event.id}`"
+        class="event-card block no-underline"
       >
         <div
           class="event-image"
           :style="event.gradient ? { background: event.gradient } : {}"
         >
           <!-- アイコンSVG提供後に配置予定 -->
+          <span class="text-white/90 text-sm font-bold tracking-wider">{{ event.categoryLabel }}</span>
         </div>
         <div class="event-content">
-          <span class="event-category">{{ event.category }}</span>
+          <span class="event-category">{{ event.categoryLabel }}</span>
           <h3>{{ event.title }}</h3>
           <p>{{ event.description }}</p>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </section>
 </template>

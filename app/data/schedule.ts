@@ -1,15 +1,85 @@
+import rawTimetable from './timetable.json';
+
+// ==========================================
+// 1. タイムテーブルスロットの型定義
+// ==========================================
+
+export interface TimetableSlot {
+  id: string;
+  slotId: string;
+  day: 'DAY1' | 'DAY2';
+  venue: string;
+  time: string;
+  startTime: string;
+  endTime: string;
+  startMinutes: string | number;
+  endMinutes: string | number;
+  durationMinutes: string | number;
+  title: string;
+  groupName: string;
+  detail?: string | null;
+  isSpecial?: boolean;
+}
+
+// タイムテーブル実データ（全33件）
+export const timetable: TimetableSlot[] = (rawTimetable as any[]).map((t) => ({
+  ...t,
+  isSpecial: t.id === 'stage-geino-miyase' || t.title?.includes('特別') || t.title?.includes('ゲスト') || false,
+}));
+
+// イベントIDごとに紐付けられたスロットマップ
+export const timetableByEventId = new Map<string, TimetableSlot[]>();
+for (const slot of timetable) {
+  if (!timetableByEventId.has(slot.id)) {
+    timetableByEventId.set(slot.id, []);
+  }
+  timetableByEventId.get(slot.id)!.push(slot);
+}
+
+// 日程別のスロット
+export const timetableDay1 = timetable.filter((s) => s.day === 'DAY1');
+export const timetableDay2 = timetable.filter((s) => s.day === 'DAY2');
+
+// ==========================================
+// 2. 会場情報と判定
+// ==========================================
+
+export type VenueCategory = 'outdoor' | 'indoor' | 'chapel' | 'other';
+
+export const venueCategoryList: { key: 'all' | VenueCategory; label: string; locationDesc: string }[] = [
+  { key: 'all', label: 'すべての会場', locationDesc: '全ステージ・会場' },
+  { key: 'outdoor', label: '屋外ステージ', locationDesc: '体育館横 芝生広場' },
+  { key: 'indoor', label: '屋内ステージ', locationDesc: 'SCC 4階 ベネットホール' },
+  { key: 'chapel', label: 'チャペル', locationDesc: 'キャンパス チャペル' },
+  { key: 'other', label: '体育館・1号館前', locationDesc: '各指定会場' },
+];
+
+export const getVenueCategory = (venueName: string): VenueCategory => {
+  if (venueName.includes('屋外')) return 'outdoor';
+  if (venueName.includes('屋内') || venueName.includes('SCC') || venueName.includes('ベネット')) return 'indoor';
+  if (venueName.includes('チャペル')) return 'chapel';
+  return 'other';
+};
+
+// ==========================================
+// 3. 並列・時系列スケジュール構成
+// ==========================================
+
 export interface StageProgram {
   title: string;
   timeRange: string;
   performer?: string;
   eventId?: string;
+  venueName?: string;
   isSpecial?: boolean;
 }
 
 export interface ParallelTimeSlot {
   timeLabel: string;
-  indoor?: StageProgram;
+  startMinutes: number;
   outdoor?: StageProgram;
+  indoor?: StageProgram;
+  chapel?: StageProgram;
   other?: StageProgram;
 }
 
@@ -18,218 +88,78 @@ export interface DayParallelSchedule {
   dayName: string;
   dateLabel: string;
   slots: ParallelTimeSlot[];
+  allSlots: TimetableSlot[];
+  venueGroups: {
+    outdoor: TimetableSlot[];
+    indoor: TimetableSlot[];
+    chapel: TimetableSlot[];
+    other: TimetableSlot[];
+  };
 }
 
+// 分数を取得するヘルパー
+const parseMinutes = (timeStr: string): number => {
+  const [h, m] = timeStr.split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+};
+
+// 並列スケジュール生成
+const buildParallelSchedule = (dayId: 'DAY1' | 'DAY2', dayName: string, dateLabel: string): DayParallelSchedule => {
+  const daySlots = timetable.filter((s) => s.day === dayId);
+
+  // 会場別グループ
+  const venueGroups = {
+    outdoor: daySlots.filter((s) => getVenueCategory(s.venue) === 'outdoor'),
+    indoor: daySlots.filter((s) => getVenueCategory(s.venue) === 'indoor'),
+    chapel: daySlots.filter((s) => getVenueCategory(s.venue) === 'chapel'),
+    other: daySlots.filter((s) => getVenueCategory(s.venue) === 'other'),
+  };
+
+  // 全時間ポイントを収集して並び替え
+  const timePoints = new Set<string>();
+  daySlots.forEach((s) => {
+    if (s.startTime) timePoints.add(s.startTime);
+  });
+
+  const sortedTimes = Array.from(timePoints).sort((a, b) => parseMinutes(a) - parseMinutes(b));
+
+  const slots: ParallelTimeSlot[] = sortedTimes.map((tStr) => {
+    const min = parseMinutes(tStr);
+    const result: ParallelTimeSlot = {
+      timeLabel: tStr,
+      startMinutes: min,
+    };
+
+    // 各会場でこの開始時間（またはこの時間枠）に合致するスロットを探す
+    for (const s of daySlots) {
+      if (s.startTime === tStr) {
+        const cat = getVenueCategory(s.venue);
+        const prog: StageProgram = {
+          title: s.title,
+          timeRange: s.time,
+          performer: s.groupName,
+          eventId: s.id,
+          venueName: s.venue,
+          isSpecial: s.isSpecial,
+        };
+        result[cat] = prog;
+      }
+    }
+
+    return result;
+  });
+
+  return {
+    id: dayId.toLowerCase() as 'day1' | 'day2',
+    dayName,
+    dateLabel,
+    slots,
+    allSlots: daySlots,
+    venueGroups,
+  };
+};
+
 export const parallelScheduleData: DayParallelSchedule[] = [
-  {
-    id: 'day1',
-    dayName: '10月31日（土）',
-    dateLabel: 'Day 1',
-    slots: [
-      {
-        timeLabel: '10:00',
-        indoor: {
-          title: '開会式・オープニングセレモニー',
-          timeRange: '10:00 - 10:45',
-          performer: '学長 / 実行委員会 / 吹奏楽部',
-          eventId: 'opening-ceremony',
-          isSpecial: true,
-        },
-        other: {
-          title: 'スタンプラリー・各展示スタート',
-          timeRange: '10:00 - 17:00',
-          performer: '文化館・本部テント',
-          eventId: 'stamp-rally',
-        },
-      },
-      {
-        timeLabel: '11:00',
-        indoor: {
-          title: '吹奏楽部 ポップスコンサート',
-          timeRange: '11:30 - 12:30',
-          performer: '関東学院大学 吹奏楽部',
-        },
-        outdoor: {
-          title: '野外オープニング DJ ＆ パフォーマンス',
-          timeRange: '11:00 - 12:00',
-          performer: 'DJサークル',
-        },
-        other: {
-          title: '模擬店ストリート オープン',
-          timeRange: '11:00 - 17:30',
-          performer: '約30店舗の模擬店',
-          eventId: 'food-stalls-area',
-        },
-      },
-      {
-        timeLabel: '12:00',
-        outdoor: {
-          title: '学生バンドライブ Vol.1',
-          timeRange: '12:00 - 13:30',
-          performer: '軽音楽サークル 3バンド',
-          eventId: 'outdoor-band-live-1',
-        },
-        other: {
-          title: '学生映画上映会',
-          timeRange: '12:00 - 16:30',
-          performer: '文化館 3F シアタールーム',
-          eventId: 'student-movie-screening',
-        },
-      },
-      {
-        timeLabel: '13:30',
-        indoor: {
-          title: 'ダンスパフォーマンス合同公演',
-          timeRange: '13:30 - 14:45',
-          performer: 'ダンス部 / 有志チーム',
-          eventId: 'dance-show',
-          isSpecial: true,
-        },
-        outdoor: {
-          title: 'ストリートダンス ＆ ダブルダッチ',
-          timeRange: '14:00 - 15:30',
-          performer: 'パフォーマンスサークル',
-        },
-      },
-      {
-        timeLabel: '14:30',
-        other: {
-          title: 'アコースティック ＆ ジャズ サウンド',
-          timeRange: '14:30 - 16:00',
-          performer: '音楽館ホール（7号館）',
-          eventId: 'acoustic-live',
-        },
-      },
-      {
-        timeLabel: '15:30',
-        indoor: {
-          title: 'アカペラ ヴォーカルショー',
-          timeRange: '15:30 - 16:30',
-          performer: 'アカペラサークル',
-        },
-      },
-      {
-        timeLabel: '16:30',
-        outdoor: {
-          title: 'サンセット・ロックフェス 2026',
-          timeRange: '16:30 - 18:00',
-          performer: '軽音楽部 選抜バンド',
-          eventId: 'sunset-rock-fes',
-          isSpecial: true,
-        },
-        indoor: {
-          title: '軽音楽部 選抜アコースティック',
-          timeRange: '17:30 - 18:30',
-          performer: '軽音楽部',
-        },
-      },
-      {
-        timeLabel: '18:30',
-        outdoor: {
-          title: '1日目フィナーレ・花火演出',
-          timeRange: '18:30 - 18:45',
-          performer: '屋外ステージ前広場',
-          isSpecial: true,
-        },
-      },
-    ],
-  },
-  {
-    id: 'day2',
-    dayName: '11月1日（日）',
-    dateLabel: 'Day 2',
-    slots: [
-      {
-        timeLabel: '10:00',
-        other: {
-          title: '2日目オープン・スタンプラリー開始',
-          timeRange: '10:00 - 17:00',
-          performer: '本部テント・各ポイント',
-          eventId: 'stamp-rally',
-        },
-      },
-      {
-        timeLabel: '10:30',
-        indoor: {
-          title: 'ゴスペル・クワイア ライブ',
-          timeRange: '10:30 - 11:30',
-          performer: '宗教部・聖歌隊',
-        },
-        outdoor: {
-          title: 'フリースタイル・セッション',
-          timeRange: '10:30 - 12:00',
-          performer: '有志学生ミュージシャン',
-        },
-        other: {
-          title: '模擬店ストリート オープン',
-          timeRange: '11:00 - 17:30',
-          performer: 'メインストリート',
-          eventId: 'food-stalls-area',
-        },
-      },
-      {
-        timeLabel: '12:30',
-        outdoor: {
-          title: 'ブラスアンサンブル ＆ マーチング',
-          timeRange: '12:30 - 14:00',
-          performer: '応援団・吹奏楽団',
-        },
-        other: {
-          title: '学生映画上映会',
-          timeRange: '12:00 - 16:30',
-          performer: '文化館 3F',
-          eventId: 'student-movie-screening',
-        },
-      },
-      {
-        timeLabel: '13:00',
-        indoor: {
-          title: 'お笑いライブ ＆ トークショー',
-          timeRange: '13:00 - 14:00',
-          performer: 'スペシャルゲスト芸人',
-          eventId: 'comedy-live',
-          isSpecial: true,
-        },
-      },
-      {
-        timeLabel: '14:30',
-        outdoor: {
-          title: 'アコースティック ＆ ジャズ セッション',
-          timeRange: '14:30 - 16:00',
-          performer: 'ジャズ研究会',
-          eventId: 'acoustic-live',
-        },
-      },
-      {
-        timeLabel: '15:30',
-        indoor: {
-          title: '平潟祭2026 特別ゲスト 音楽ライブ',
-          timeRange: '15:30 - 16:45',
-          performer: '特別ゲストアーティスト',
-          eventId: 'special-guest-live',
-          isSpecial: true,
-        },
-      },
-      {
-        timeLabel: '17:00',
-        outdoor: {
-          title: '野外ファイナル・バンドバトル',
-          timeRange: '17:00 - 18:30',
-          performer: '軽音楽サークル オールスターズ',
-          eventId: 'outdoor-band-battle',
-          isSpecial: true,
-        },
-      },
-      {
-        timeLabel: '18:00',
-        indoor: {
-          title: '表彰式 ＆ グランドフィナーレ',
-          timeRange: '18:00 - 19:30',
-          performer: '大抽選会・模擬店グランプリ',
-          eventId: 'grand-finale',
-          isSpecial: true,
-        },
-      },
-    ],
-  },
+  buildParallelSchedule('DAY1', '10月31日（土）', 'Day 1'),
+  buildParallelSchedule('DAY2', '11月1日（日）', 'Day 2'),
 ];

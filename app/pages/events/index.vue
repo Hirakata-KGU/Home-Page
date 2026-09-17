@@ -1,28 +1,72 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { allEvents, categoryList, type EventCategory, type EventDay } from '~/data/events';
+import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
 
 useSeoMeta({
-  title: '企画・出し物・模擬店一覧｜平潟祭 2026',
-  description: '平潟祭2026の全企画・模擬店・ステージ・展示・ワークショップ一覧。カテゴリや日程で簡単検索＆絞り込み！',
+  title: '企画・模擬店・展示一覧｜平潟祭 2026',
+  description: '平潟祭2026の全59企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ）一覧。カテゴリや日程、団体名で簡単検索！',
 });
 
 const selectedCategory = ref<'all' | EventCategory>('all');
+const selectedSubCategory = ref<string>('all');
 const selectedDay = ref<'all' | EventDay>('all');
 const searchQuery = ref('');
 
+// カテゴリ変更時にサブカテゴリをリセット
+const onSelectCategory = (catKey: 'all' | EventCategory) => {
+  selectedCategory.value = catKey;
+  selectedSubCategory.value = 'all';
+};
+
+// 現在選択されているカテゴリに応じたサブカテゴリのリスト
+const availableSubCategories = computed(() => {
+  const eventsInCat = selectedCategory.value === 'all'
+    ? allEvents
+    : allEvents.filter(e => e.category === selectedCategory.value);
+
+  const map = new Map<string, number>();
+  for (const ev of eventsInCat) {
+    if (ev.subCategory) {
+      map.set(ev.subCategory, (map.get(ev.subCategory) || 0) + 1);
+    }
+  }
+
+  const items: { name: string; count: number }[] = [];
+  for (const [name, count] of map.entries()) {
+    items.push({ name, count });
+  }
+  return items;
+});
+
+// 各メインカテゴリの件数
+const categoryCounts = computed(() => {
+  const counts: Record<string, number> = { all: allEvents.length };
+  for (const cat of ['food', 'culture', 'music']) {
+    counts[cat] = allEvents.filter(e => e.category === cat).length;
+  }
+  return counts;
+});
+
+// フィルタリング処理
 const filteredEvents = computed(() => {
   return allEvents.filter((event) => {
     // カテゴリフィルター
     if (selectedCategory.value !== 'all' && event.category !== selectedCategory.value) {
       return false;
     }
+
+    // サブカテゴリフィルター
+    if (selectedSubCategory.value !== 'all' && event.subCategory !== selectedSubCategory.value) {
+      return false;
+    }
+
     // 日程フィルター
     if (selectedDay.value !== 'all') {
       if (event.day !== 'both' && event.day !== selectedDay.value) {
         return false;
       }
     }
+
     // キーワード検索
     if (searchQuery.value.trim()) {
       const q = searchQuery.value.toLowerCase().trim();
@@ -30,28 +74,41 @@ const filteredEvents = computed(() => {
       const matchDesc = event.description.toLowerCase().includes(q);
       const matchOrg = event.organizer.toLowerCase().includes(q);
       const matchLoc = event.locationName.toLowerCase().includes(q);
+      const matchSub = event.subCategory.toLowerCase().includes(q);
+      const matchSales = event.salesInfo ? event.salesInfo.toLowerCase().includes(q) : false;
       const matchTags = event.tags.some((t) => t.toLowerCase().includes(q));
-      if (!matchTitle && !matchDesc && !matchOrg && !matchLoc && !matchTags) {
+
+      if (!matchTitle && !matchDesc && !matchOrg && !matchLoc && !matchSub && !matchSales && !matchTags) {
         return false;
       }
     }
+
     return true;
   });
 });
+
+// 全条件リセット
+const resetFilters = () => {
+  selectedCategory.value = 'all';
+  selectedSubCategory.value = 'all';
+  selectedDay.value = 'all';
+  searchQuery.value = '';
+};
 </script>
 
 <template>
   <div>
-    <!-- 絵文字不使用（※アイコンSVG提供後に配置予定） -->
+    <!-- ページヘッダー（絵文字不使用） -->
     <LayoutPageHeader
-      title="企画・模擬店一覧"
-      sub-title="Event Programs & Stalls"
+      title="企画・出店・展示一覧"
+      sub-title="Festival Programs & Stalls"
       :breadcrumbs="[{ name: '企画一覧' }]"
     />
 
     <div class="page-container">
-      <!-- Search & Filter Controls -->
-      <section class="section filter-section">
+      <!-- 検索・フィルターエリア -->
+      <section class="section filter-section shadow-sm">
+        <!-- 検索入力 -->
         <div class="search-box">
           <svg class="search-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
@@ -60,7 +117,7 @@ const filteredEvents = computed(() => {
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="企画名、サークル名、場所（SCC、文化館など）、キーワードで検索..."
+            placeholder="企画名、サークル・団体名、場所（テント、教室番号）、メニューで検索..."
             class="search-input"
           />
           <button
@@ -73,53 +130,92 @@ const filteredEvents = computed(() => {
           </button>
         </div>
 
-        <!-- Category Tabs -->
-        <div class="category-tabs" role="tablist">
-          <button
-            v-for="cat in categoryList"
-            :key="cat.key"
-            class="tab-btn"
-            :class="{ active: selectedCategory === cat.key }"
-            role="tab"
-            :aria-selected="selectedCategory === cat.key"
-            @click="selectedCategory = cat.key"
-          >
-            {{ cat.label }}
-          </button>
+        <!-- メインカテゴリタブ -->
+        <div class="filter-group">
+          <div class="filter-label">カテゴリ:</div>
+          <div class="category-tabs" role="tablist">
+            <button
+              v-for="cat in categoryList"
+              :key="cat.key"
+              class="tab-btn"
+              :class="{ active: selectedCategory === cat.key }"
+              role="tab"
+              :aria-selected="selectedCategory === cat.key"
+              @click="onSelectCategory(cat.key)"
+            >
+              <span>{{ cat.label }}</span>
+              <span class="tab-count">{{ categoryCounts[cat.key] }}</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Day Filter -->
-        <div class="day-filter">
-          <span class="filter-label">日程:</span>
-          <button
-            class="day-btn"
-            :class="{ active: selectedDay === 'all' }"
-            @click="selectedDay = 'all'"
-          >
-            すべて
-          </button>
-          <button
-            class="day-btn"
-            :class="{ active: selectedDay === 'day1' }"
-            @click="selectedDay = 'day1'"
-          >
-            10/31（土）Day 1
-          </button>
-          <button
-            class="day-btn"
-            :class="{ active: selectedDay === 'day2' }"
-            @click="selectedDay = 'day2'"
-          >
-            11/1（日）Day 2
-          </button>
+        <!-- サブカテゴリ（絞り込みチップ） -->
+        <div v-if="availableSubCategories.length > 1" class="filter-group sub-category-group">
+          <div class="filter-label">ジャンル / 形態:</div>
+          <div class="sub-chip-list">
+            <button
+              class="sub-chip"
+              :class="{ active: selectedSubCategory === 'all' }"
+              @click="selectedSubCategory = 'all'"
+            >
+              すべて
+            </button>
+            <button
+              v-for="sub in availableSubCategories"
+              :key="sub.name"
+              class="sub-chip"
+              :class="{ active: selectedSubCategory === sub.name }"
+              @click="selectedSubCategory = sub.name"
+            >
+              {{ sub.name }} ({{ sub.count }})
+            </button>
+          </div>
         </div>
 
-        <div class="results-count">
-          該当企画: <strong>{{ filteredEvents.length }}</strong> 件
+        <!-- 日程フィルター -->
+        <div class="filter-group day-filter-group">
+          <div class="filter-label">開催日:</div>
+          <div class="day-filter">
+            <button
+              class="day-btn"
+              :class="{ active: selectedDay === 'all' }"
+              @click="selectedDay = 'all'"
+            >
+              両日・すべて
+            </button>
+            <button
+              class="day-btn"
+              :class="{ active: selectedDay === 'day1' }"
+              @click="selectedDay = 'day1'"
+            >
+              10/31（土）Day 1
+            </button>
+            <button
+              class="day-btn"
+              :class="{ active: selectedDay === 'day2' }"
+              @click="selectedDay = 'day2'"
+            >
+              11/1（日）Day 2
+            </button>
+          </div>
+        </div>
+
+        <!-- 該当件数 & アクティブ条件リセット -->
+        <div class="filter-footer">
+          <div class="results-count">
+            該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 59 件
+          </div>
+          <button
+            v-if="selectedCategory !== 'all' || selectedSubCategory !== 'all' || selectedDay !== 'all' || searchQuery"
+            class="reset-text-btn"
+            @click="resetFilters"
+          >
+            条件をすべてクリア
+          </button>
         </div>
       </section>
 
-      <!-- Events Grid -->
+      <!-- 企画一覧グリッド -->
       <div v-if="filteredEvents.length > 0" class="events-grid">
         <NuxtLink
           v-for="event in filteredEvents"
@@ -127,39 +223,63 @@ const filteredEvents = computed(() => {
           :to="`/events/${event.id}`"
           class="event-card"
         >
+          <!-- カード上部ヘッダー（グラデーションバー） -->
           <div
-            class="event-image"
-            :style="event.gradient ? { background: event.gradient } : {}"
+            class="event-card-header"
+            :style="{ background: event.gradient || 'linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%)' }"
           >
-            <!-- アイコンSVG提供後に配置予定 -->
-            <span class="text-white/80 font-bold text-xs tracking-wider">{{ event.categoryLabel }}</span>
+            <div class="header-badges">
+              <span class="category-chip">{{ event.categoryLabel }}</span>
+              <span class="sub-chip-header">{{ event.subCategory }}</span>
+            </div>
+            <span class="day-chip">{{ event.dayLabel }}</span>
           </div>
 
+          <!-- カードコンテンツ -->
           <div class="event-content">
-            <div class="event-meta-top">
-              <span class="event-category">{{ event.categoryLabel }}</span>
-              <span class="event-day-badge">{{ event.dayLabel }}</span>
+            <div class="event-organizer-row">
+              <span class="organizer-badge">{{ event.organizer }}</span>
             </div>
 
             <h3 class="event-title">{{ event.title }}</h3>
+
             <p class="event-desc">{{ event.description }}</p>
 
+            <!-- 模擬店の販売メニュー情報プレビュー -->
+            <div v-if="event.salesInfo" class="event-sales-preview">
+              <div class="sales-preview-label">メニュー・価格:</div>
+              <div class="sales-preview-text">{{ event.salesInfo }}</div>
+            </div>
+
+            <!-- タイムテーブル連携枠プレビュー -->
+            <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="event-tt-preview">
+              <span class="tt-tag">
+                タイムテーブル出演あり ({{ event.timetableSlots.length }}枠)
+              </span>
+            </div>
+
+            <!-- フッター情報 -->
             <div class="event-footer">
-              <div class="event-location">{{ event.locationName }}</div>
+              <div class="event-location">
+                <svg class="w-3.5 h-3.5 inline-block mr-1 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>{{ event.locationName }}</span>
+              </div>
               <span class="event-more-link">詳細を見る →</span>
             </div>
           </div>
         </NuxtLink>
       </div>
 
-      <!-- No Results -->
+      <!-- 検索該当なしの場合 -->
       <section v-else class="section no-results">
-        <!-- アイコンSVG提供後に配置予定 -->
         <h3>該当する企画が見つかりませんでした</h3>
-        <p>検索条件やカテゴリを変更してお試しください。</p>
+        <p>条件を変更して再度お試しいただくか、リセットボタンを押してください。</p>
         <button
           class="btn btn-primary reset-btn"
-          @click="selectedCategory = 'all'; selectedDay = 'all'; searchQuery = ''"
+          @click="resetFilters"
         >
           すべての条件をリセット
         </button>
@@ -180,7 +300,10 @@ const filteredEvents = computed(() => {
 }
 
 .filter-section {
-  padding: 28px;
+  padding: 24px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
 }
 
 .search-box {
@@ -193,53 +316,69 @@ const filteredEvents = computed(() => {
 .search-icon {
   position: absolute;
   left: 16px;
-  font-size: 18px;
   color: var(--muted);
 }
 
 .search-input {
   width: 100%;
-  padding: 14px 44px;
+  padding: 12px 44px;
   border-radius: 50px;
   border: 2px solid var(--border);
-  font-size: 15px;
+  font-size: 14px;
   font-family: inherit;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
+  background: var(--bg-alt, #fafaf9);
 }
 
 .search-input:focus {
   outline: none;
+  background: white;
   border-color: var(--olive);
-  box-shadow: 0 0 0 3px rgba(47, 91, 52, 0.15);
+  box-shadow: 0 0 0 3px rgba(47, 91, 52, 0.12);
 }
 
 .clear-btn {
   position: absolute;
-  right: 16px;
+  right: 14px;
   background: transparent;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--muted);
   cursor: pointer;
+  padding: 4px;
+}
+
+.filter-group {
+  margin-bottom: 16px;
+}
+
+.filter-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
 }
 
 .category-tabs {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
 }
 
 .tab-btn {
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
   border-radius: 50px;
   border: 2px solid var(--border);
   background: white;
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--muted);
-  font-size: 14px;
-  transition: all 0.25s ease;
+  font-size: 13px;
+  transition: all 0.2s ease;
 }
 
 .tab-btn:hover {
@@ -248,10 +387,52 @@ const filteredEvents = computed(() => {
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%);
+  background: var(--olive);
   color: white;
-  border-color: transparent;
+  border-color: var(--olive);
   box-shadow: var(--shadow-sm);
+}
+
+.tab-count {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  font-weight: 800;
+}
+
+.tab-btn.active .tab-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+.sub-chip-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sub-chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sub-chip:hover {
+  border-color: var(--olive);
+}
+
+.sub-chip.active {
+  background: var(--olive-light, #4a7f52);
+  color: white;
+  border-color: var(--olive-light, #4a7f52);
 }
 
 .day-filter {
@@ -259,23 +440,15 @@ const filteredEvents = computed(() => {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.filter-label {
-  font-weight: 800;
-  font-size: 13px;
-  color: var(--muted);
 }
 
 .day-btn {
   padding: 6px 14px;
   border-radius: 20px;
   border: 1px solid var(--border);
-  background: var(--accent);
+  background: white;
   color: var(--text);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -286,21 +459,39 @@ const filteredEvents = computed(() => {
 }
 
 .day-btn.active {
-  background: var(--olive);
+  background: var(--text, #222);
   color: white;
-  border-color: var(--olive);
+  border-color: var(--text, #222);
+}
+
+.filter-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
 }
 
 .results-count {
-  margin-top: 16px;
-  font-size: 13px;
   color: var(--muted);
-  text-align: right;
 }
 
 .results-count strong {
   color: var(--olive);
   font-size: 16px;
+}
+
+.reset-text-btn {
+  background: none;
+  border: none;
+  color: var(--olive);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
 }
 
 /* Events Grid */
@@ -313,134 +504,199 @@ const filteredEvents = computed(() => {
 .event-card {
   background: white;
   border-radius: 16px;
+  border: 1px solid var(--border);
   overflow: hidden;
-  border: 2px solid var(--border);
-  text-decoration: none;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
   transition: all 0.3s ease;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .event-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
   border-color: var(--olive);
+  box-shadow: var(--shadow-md);
 }
 
-.event-image {
-  height: 160px;
-  background: linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%);
+.event-card-header {
+  padding: 12px 16px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: 56px;
   color: white;
 }
 
+.header-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.category-chip {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.02em;
+}
+
+.sub-chip-header {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.day-chip {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
 .event-content {
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.event-meta-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 12px;
+.event-organizer-row {
+  margin-bottom: 8px;
 }
 
-.event-category {
-  background: var(--accent-2);
-  color: var(--olive);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.event-day-badge {
-  background: var(--accent);
-  color: var(--muted);
-  padding: 4px 10px;
-  border-radius: 20px;
+.organizer-badge {
+  display: inline-block;
   font-size: 12px;
   font-weight: 700;
+  color: var(--olive);
+  background: rgba(47, 91, 52, 0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
 }
 
 .event-title {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
-  color: var(--olive);
+  color: var(--text);
   margin-bottom: 8px;
   line-height: 1.4;
 }
 
 .event-desc {
   font-size: 13px;
-  color: var(--muted);
   line-height: 1.6;
-  margin-bottom: 16px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   flex: 1;
 }
 
+.event-sales-preview {
+  background: #fdfbf7;
+  border: 1px dashed rgba(201, 168, 90, 0.5);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.sales-preview-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #997825;
+  margin-bottom: 2px;
+}
+
+.sales-preview-text {
+  font-size: 12px;
+  color: #555;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-tt-preview {
+  margin-bottom: 12px;
+}
+
+.tt-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e3d26;
+  background: #eaf3eb;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(47, 91, 52, 0.2);
+}
+
 .event-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-top: 12px;
   border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 13px;
+  font-size: 12px;
+  margin-top: auto;
 }
 
 .event-location {
-  color: var(--text);
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--text);
+  display: flex;
+  align-items: center;
 }
 
 .event-more-link {
-  color: var(--olive);
   font-weight: 800;
-  white-space: nowrap;
+  color: var(--olive);
+  transition: transform 0.2s ease;
 }
 
-/* No Results */
+.event-card:hover .event-more-link {
+  transform: translateX(4px);
+}
+
 .no-results {
   text-align: center;
-  padding: 60px 24px;
-}
-
-.no-results-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
 }
 
 .no-results h3 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
-  color: var(--olive);
   margin-bottom: 8px;
 }
 
 .no-results p {
   color: var(--muted);
-  margin-bottom: 24px;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
 .reset-btn {
-  margin: 0 auto;
+  padding: 10px 24px;
+  border-radius: 50px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .events-grid {
     grid-template-columns: 1fr;
+  }
+  .filter-section {
+    padding: 16px;
   }
 }
 </style>

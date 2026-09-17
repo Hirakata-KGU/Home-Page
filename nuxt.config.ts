@@ -5,6 +5,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/tailwindcss',
+    './modules/festival-data',
   ],
 
   tailwindcss: {
