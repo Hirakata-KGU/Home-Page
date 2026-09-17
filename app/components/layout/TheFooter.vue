@@ -25,9 +25,10 @@ const footerSections = [
     title: 'ご案内',
     columns: [
       [
-        { label: 'アクセス', to: '/access' },
-        { label: '平潟祭について', to: '/#about' },
-        { label: '協賛について', to: '/contact' },
+        { label: 'アクセス', to: '/#access' },
+        { label: '電子パンフレット', to: '/pamphlet' },
+        { label: '平潟祭について', to: '/about' },
+        { label: 'FAQ', to: '/faq' },
         { label: 'お問い合わせ', to: '/contact' }
       ]
     ]
@@ -102,7 +103,7 @@ const footerSections = [
             class="footer-social-btn"
             aria-label="公式X"
           >
-            𝕏
+            <SvgX class="w-4 h-4 fill-white" />
           </a>
           <a
             href="https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg=="
@@ -111,7 +112,7 @@ const footerSections = [
             class="footer-social-btn"
             aria-label="公式Instagram"
           >
-            📷
+            <SvgInstagram class="w-4 h-4" stroke-color="#FFFFFF" />
           </a>
         </div>
           </div>

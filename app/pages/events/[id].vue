@@ -18,11 +18,10 @@ useSeoMeta({
 
 <template>
   <div>
-    <!-- Breadcrumb & Header -->
+    <!-- Breadcrumb & Header（絵文字不使用・※アイコンSVG提供後に配置予定） -->
     <LayoutPageHeader
       :title="event ? event.title : '企画詳細'"
       :sub-title="event ? event.categoryLabel : 'Event Details'"
-      :icon="event ? event.icon : '🎪'"
       :breadcrumbs="[
         { name: '企画一覧', path: '/events' },
         { name: event ? event.title : '詳細' },
@@ -43,15 +42,15 @@ useSeoMeta({
           <!-- Event Meta Info Grid -->
           <div class="info-grid">
             <div class="info-item">
-              <span class="info-label">📍 開催場所</span>
+              <span class="info-label">開催場所</span>
               <span class="info-value">{{ event.locationName }}</span>
             </div>
             <div class="info-item">
-              <span class="info-label">⏰ 開催時間</span>
+              <span class="info-label">開催時間</span>
               <span class="info-value">{{ event.timeRange }}</span>
             </div>
             <div class="info-item">
-              <span class="info-label">👥 主催・出演団体</span>
+              <span class="info-label">主催・出演団体</span>
               <span class="info-value">{{ event.organizer }}</span>
             </div>
           </div>
@@ -81,10 +80,10 @@ useSeoMeta({
           <!-- Action Buttons -->
           <div class="action-buttons">
             <NuxtLink to="/map" class="btn btn-primary">
-              🗺️ 場内マップで場所を確認
+              場内マップで場所を確認 →
             </NuxtLink>
             <NuxtLink to="/schedule" class="btn btn-secondary">
-              📅 タイムテーブルで確認
+              タイムテーブルで確認 →
             </NuxtLink>
           </div>
         </section>
@@ -97,7 +96,7 @@ useSeoMeta({
 
       <!-- Not Found -->
       <section v-else class="section not-found">
-        <div class="not-found-icon">❓</div>
+        <!-- アイコンSVG提供後に配置予定 -->
         <h2>企画が見つかりませんでした</h2>
         <p>指定された企画は存在しないか、移動した可能性があります。</p>
         <NuxtLink to="/events" class="btn btn-primary">企画一覧へ戻る</NuxtLink>

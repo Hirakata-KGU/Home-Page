@@ -30,7 +30,7 @@ const galleryImages = [
 <template>
   <section class="section">
     <div class="section-header">
-      <div class="section-icon">📸</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>過去の平潟祭</h2>
         <p>Photo Gallery</p>

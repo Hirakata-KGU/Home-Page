@@ -8,7 +8,7 @@ const activeDayId = ref('day1');
 <template>
   <section id="schedule" class="section">
     <div class="section-header">
-      <div class="section-icon">📅</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>タイムテーブル</h2>
         <p>Schedule 2026.10.31-11.1</p>
@@ -59,7 +59,7 @@ const activeDayId = ref('day1');
               <div class="event-info">
                 <h4>{{ slot.title }}</h4>
                 <p>{{ slot.description }}</p>
-                <span class="event-location">📍 {{ slot.location }}</span>
+                <span class="event-location">{{ slot.location }}</span>
               </div>
             </div>
           </div>

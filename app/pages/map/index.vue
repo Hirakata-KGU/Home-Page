@@ -12,10 +12,10 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
 
 <template>
   <div>
+    <!-- 絵文字不使用（※アイコンSVG提供後に配置予定） -->
     <LayoutPageHeader
       title="場内マップ・施設案内"
       sub-title="Campus & Building Maps"
-      icon="🗺️"
       :breadcrumbs="[{ name: '場内マップ' }]"
     />
 
@@ -30,7 +30,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
             :aria-selected="currentTab === 'campus'"
             @click="currentTab = 'campus'"
           >
-            🗺️ キャンパス全体 ＆ 模擬店
+            キャンパス全体 ＆ 模擬店
           </button>
           <button
             class="tab-btn"
@@ -39,7 +39,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
             :aria-selected="currentTab === 'culture'"
             @click="currentTab = 'culture'"
           >
-            🎨 文化館（8号館）
+            文化館（8号館）
           </button>
           <button
             class="tab-btn"
@@ -48,7 +48,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
             :aria-selected="currentTab === 'music'"
             @click="currentTab = 'music'"
           >
-            🎵 音楽館（7号館）
+            音楽館（7号館）
           </button>
         </div>
       </section>
@@ -56,7 +56,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
       <!-- Tab 1: Campus Overall & Stalls Map -->
       <section v-show="currentTab === 'campus'" class="section">
         <div class="section-header">
-          <div class="section-icon">🏫</div>
+          <!-- アイコンSVG提供後に配置予定 -->
           <div class="section-title">
             <h2>キャンパス全体 ＆ 模擬店エリア</h2>
             <p>Overall Campus & Food Stalls Map</p>
@@ -80,7 +80,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
         </div>
 
         <h3 class="zone-list-title">主要エリア・施設案内</h3>
-        <p class="hint-text">💡 エリアカードをクリックすると、開催されている企画の詳細ページを開くことができます。</p>
+        <p class="hint-text">※ エリアカードをクリックすると、開催されている企画の詳細ページを開くことができます。</p>
 
         <div class="zones-grid">
           <template v-for="zone in mapData.campusZones" :key="zone.id">
@@ -89,7 +89,6 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
               :to="`/events/${zone.eventId}`"
               class="zone-card clickable"
             >
-              <div class="zone-card-icon">{{ zone.icon }}</div>
               <div class="zone-card-body">
                 <span class="zone-location">{{ zone.location }}</span>
                 <h4>{{ zone.name }}</h4>
@@ -98,7 +97,6 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
               </div>
             </NuxtLink>
             <div v-else class="zone-card">
-              <div class="zone-card-icon">{{ zone.icon }}</div>
               <div class="zone-card-body">
                 <span class="zone-location">{{ zone.location }}</span>
                 <h4>{{ zone.name }}</h4>
@@ -112,7 +110,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
       <!-- Tab 2: Culture Hall Map -->
       <section v-show="currentTab === 'culture'" class="section">
         <div class="section-header">
-          <div class="section-icon">🎨</div>
+          <!-- アイコンSVG提供後に配置予定 -->
           <div class="section-title">
             <h2>{{ mapData.cultureHall.buildingName }} フロア案内</h2>
             <p>Culture Hall Floors</p>
@@ -150,7 +148,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
       <!-- Tab 3: Music Hall Map -->
       <section v-show="currentTab === 'music'" class="section">
         <div class="section-header">
-          <div class="section-icon">🎵</div>
+          <!-- アイコンSVG提供後に配置予定 -->
           <div class="section-title">
             <h2>{{ mapData.musicHall.buildingName }} フロア案内</h2>
             <p>Music Hall Floors</p>
@@ -192,7 +190,7 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
             <h3>ステージ進行やタイムテーブルはこちら</h3>
             <p>屋内ステージ・屋外ステージの並列タイムテーブルをチェック！</p>
           </div>
-          <NuxtLink to="/schedule" class="btn btn-primary">タイムテーブルを見る 📅</NuxtLink>
+          <NuxtLink to="/schedule" class="btn btn-primary">タイムテーブルを見る →</NuxtLink>
         </div>
       </section>
     </div>

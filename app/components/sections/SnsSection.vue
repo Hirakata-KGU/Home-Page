@@ -2,24 +2,24 @@
 const snsList = [
   {
     name: 'X (Twitter)',
-    account: '@hirakata_fes',
+    account: '@shin_hirakata',
     description: '最新情報を随時更新中',
     url: 'https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w',
-    icon: '𝕏',
+    type: 'x',
   },
   {
     name: 'Instagram',
     account: '@hirakatasai',
     description: '写真・動画でお届け',
     url: 'https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg==',
-    icon: '📷',
+    type: 'instagram',
   },
   {
     name: 'YouTube',
     account: '平潟祭チャンネル',
     description: '過去の映像アーカイブ',
     url: 'https://www.youtube.com/',
-    icon: '▶️',
+    type: 'youtube',
   },
 ];
 </script>
@@ -27,7 +27,7 @@ const snsList = [
 <template>
   <section id="sns" class="section">
     <div class="section-header">
-      <div class="section-icon">📱</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>SNS・最新情報</h2>
         <p>Follow Us on Social Media</p>
@@ -43,7 +43,11 @@ const snsList = [
         rel="noopener noreferrer"
         class="sns-card"
       >
-        <div class="sns-icon">{{ sns.icon }}</div>
+        <div class="sns-icon">
+          <SvgX v-if="sns.type === 'x'" class="w-6 h-6 fill-sprout-title" />
+          <SvgInstagram v-else-if="sns.type === 'instagram'" class="w-6 h-6" stroke-color="#325632" />
+          <span v-else class="text-xs font-bold text-sprout-title">YouTube</span>
+        </div>
         <h3>{{ sns.name }}</h3>
         <p>
           {{ sns.description }}<br>

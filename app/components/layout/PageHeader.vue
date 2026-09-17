@@ -15,24 +15,30 @@ defineProps<Props>();
 </script>
 
 <template>
-  <div class="page-header">
-    <div class="container">
-      <nav v-if="breadcrumbs && breadcrumbs.length" class="breadcrumb" aria-label="パンくずリスト">
-        <NuxtLink to="/">ホーム</NuxtLink>
-        <template v-for="(crumb, idx) in breadcrumbs" :key="idx">
-          <span class="separator">/</span>
-          <NuxtLink v-if="crumb.path" :to="crumb.path">{{ crumb.name }}</NuxtLink>
-          <span v-else class="current">{{ crumb.name }}</span>
-        </template>
-      </nav>
-
-      <div class="header-content">
-        <span v-if="icon" class="header-icon">{{ icon }}</span>
-        <div>
-          <h1>{{ title }}</h1>
-          <p class="subtitle">{{ subTitle }}</p>
+  <div class="flex flex-col text-white relative">
+    <div class="flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center">
+      <div class="w-full max-w-[1136px] justify-start">
+        <nav v-if="breadcrumbs && breadcrumbs.length" class="breadcrumb" aria-label="パンくずリスト">
+          <NuxtLink to="/">ホーム</NuxtLink>
+          <template v-for="(crumb, idx) in breadcrumbs" :key="idx">
+            <span class="separator">/</span>
+            <NuxtLink v-if="crumb.path" :to="crumb.path">{{ crumb.name }}</NuxtLink>
+            <span v-else class="current">{{ crumb.name }}</span>
+          </template>
+        </nav>
+  
+        <div class="header-content">
+          <span v-if="icon" class="header-icon">{{ icon }}</span>
+          <div>
+            <h1>{{ title }}</h1>
+            <p class="subtitle">{{ subTitle }}</p>
+          </div>
         </div>
       </div>
+    </div>
+          <!-- 反転した4層の波 (rotate 180deg) -->
+    <div class="w-full h-[100px] leading-none -translate-y-10" aria-hidden="true">
+      <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
     </div>
   </div>
 </template>

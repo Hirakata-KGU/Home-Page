@@ -39,7 +39,7 @@ export const mapData: MapData = {
       name: 'メインストリート（模擬店通り）',
       location: '正門〜メイン広場',
       description: '約30店舗の学生模擬店・キッチンカーが立ち並ぶメインエリア。焼きそば・たこ焼き・スイーツなど多彩なグルメが集結！',
-      icon: '🍜',
+      icon: '',
       eventId: 'food-stalls-area',
     },
     {
@@ -47,7 +47,7 @@ export const mapData: MapData = {
       name: '屋内ステージ（SCC 4F）',
       location: 'SCC（学生センター）4階ホール',
       description: '音響・照明完備の屋内ホール。オープニングセレモニー、ゲストライブ、お笑い企画、グランドフィナーレ等を開催。',
-      icon: '🎤',
+      icon: '',
       eventId: 'special-guest-live',
     },
     {
@@ -55,7 +55,7 @@ export const mapData: MapData = {
       name: '屋外ステージ（芝生広場）',
       location: '体育館横 芝生広場',
       description: '青空の下で楽しむ軽音楽サークルによるフリーライブ＆ダンスパフォーマンス！夕方のサンセットライブも必見。',
-      icon: '🎸',
+      icon: '',
       eventId: 'sunset-rock-fes',
     },
     {
@@ -63,7 +63,7 @@ export const mapData: MapData = {
       name: '文化館（8号館）',
       location: '8号館 各教室',
       description: '美術部展、写真展、学術・研究発表、映画上映会、体験ワークショップなど、学生の学びと創造が集うエリア。',
-      icon: '🎨',
+      icon: '',
       eventId: 'art-photo-exhibition',
     },
     {
@@ -71,7 +71,7 @@ export const mapData: MapData = {
       name: '音楽館（7号館）',
       location: '7号館 音楽ホール',
       description: 'クラシック、ジャズ、アコースティックなど、落ち着いた空間で上質な音楽をゆったり堪能できるホール。',
-      icon: '🎵',
+      icon: '',
       eventId: 'acoustic-live',
     },
     {
@@ -79,7 +79,7 @@ export const mapData: MapData = {
       name: '総合案内・本部テント・救護室',
       location: '正門ロータリー前',
       description: 'パンフレット配布、スタンプラリー台紙受取、落とし物・迷子対応、救護スタッフ常駐。',
-      icon: '⛺',
+      icon: '',
       eventId: 'stamp-rally',
     },
   ],

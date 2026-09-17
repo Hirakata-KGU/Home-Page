@@ -42,10 +42,10 @@ const filteredEvents = computed(() => {
 
 <template>
   <div>
+    <!-- 絵文字不使用（※アイコンSVG提供後に配置予定） -->
     <LayoutPageHeader
       title="企画・模擬店一覧"
       sub-title="Event Programs & Stalls"
-      icon="🎪"
       :breadcrumbs="[{ name: '企画一覧' }]"
     />
 
@@ -53,7 +53,10 @@ const filteredEvents = computed(() => {
       <!-- Search & Filter Controls -->
       <section class="section filter-section">
         <div class="search-box">
-          <span class="search-icon">🔍</span>
+          <svg class="search-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
           <input
             v-model="searchQuery"
             type="text"
@@ -128,7 +131,8 @@ const filteredEvents = computed(() => {
             class="event-image"
             :style="event.gradient ? { background: event.gradient } : {}"
           >
-            <span class="icon-emoji">{{ event.icon }}</span>
+            <!-- アイコンSVG提供後に配置予定 -->
+            <span class="text-white/80 font-bold text-xs tracking-wider">{{ event.categoryLabel }}</span>
           </div>
 
           <div class="event-content">
@@ -141,7 +145,7 @@ const filteredEvents = computed(() => {
             <p class="event-desc">{{ event.description }}</p>
 
             <div class="event-footer">
-              <div class="event-location">📍 {{ event.locationName }}</div>
+              <div class="event-location">{{ event.locationName }}</div>
               <span class="event-more-link">詳細を見る →</span>
             </div>
           </div>
@@ -150,7 +154,7 @@ const filteredEvents = computed(() => {
 
       <!-- No Results -->
       <section v-else class="section no-results">
-        <div class="no-results-icon">🔎</div>
+        <!-- アイコンSVG提供後に配置予定 -->
         <h3>該当する企画が見つかりませんでした</h3>
         <p>検索条件やカテゴリを変更してお試しください。</p>
         <button

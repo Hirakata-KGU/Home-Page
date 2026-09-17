@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="section-header">
-      <div class="section-icon">🗺️</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>キャンパスマップ</h2>
         <p>Campus Map</p>
@@ -25,11 +25,11 @@
     </div>
 
     <div class="campus-guide-text">
-      📍 <strong>屋内ステージ</strong>：SCC内4階<br>
-      📍 <strong>野外ステージ</strong>：体育館横の芝生エリア<br>
-      📍 <strong>模擬店エリア</strong>：キャンパス各所（主にメインストリート周辺）<br>
-      📍 <strong>音楽館</strong>：7号館（メインストリート右手）<br>
-      📍 <strong>文化館</strong>：8号館（展示・ワークショップエリア）<br>
+      ・<strong>屋内ステージ</strong>：SCC内4階<br>
+      ・<strong>野外ステージ</strong>：体育館横の芝生エリア<br>
+      ・<strong>模擬店エリア</strong>：キャンパス各所（主にメインストリート周辺）<br>
+      ・<strong>音楽館</strong>：7号館（メインストリート右手）<br>
+      ・<strong>文化館</strong>：8号館（展示・ワークショップエリア）<br>
       <small>※当日は案内スタッフが配置されます。お気軽にお声がけください。</small>
     </div>
   </section>

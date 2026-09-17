@@ -1,7 +1,7 @@
 <template>
   <section id="access" class="section">
     <div class="section-header">
-      <div class="section-icon">🚉</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>アクセス・交通案内</h2>
         <p>Access Information</p>
@@ -28,7 +28,6 @@
 
         <h3 class="access-subheading">お車でお越しの方</h3>
         <p class="car-notice">
-          <span class="car-icon">🚗</span>
           来場者用駐車場はございません。<br>
           <small class="car-warning">※当日は駐車場の混雑が予想されます。できる限り公共交通機関をご利用ください。</small>
         </p>
@@ -88,7 +87,7 @@
 }
 
 .access-list li {
-  padding: 12px 0 12px 32px;
+  padding: 10px 0 10px 18px;
   position: relative;
   border-bottom: 1px solid var(--border);
   font-size: 15px;
@@ -96,10 +95,11 @@
 }
 
 .access-list li::before {
-  content: '🚉';
+  content: '・';
   position: absolute;
   left: 0;
-  font-size: 20px;
+  color: var(--sprout);
+  font-weight: bold;
 }
 
 .access-list li:last-child {
@@ -107,15 +107,9 @@
 }
 
 .car-notice {
-  padding-left: 32px;
+  padding-left: 0;
   position: relative;
   line-height: 1.8;
-}
-
-.car-icon {
-  position: absolute;
-  left: 0;
-  font-size: 20px;
 }
 
 .car-warning {

@@ -12,10 +12,10 @@ const activeDayId = ref<'day1' | 'day2'>('day1');
 
 <template>
   <div>
+    <!-- 絵文字不使用（※アイコンSVG提供後に配置予定） -->
     <LayoutPageHeader
       title="タイムテーブル"
       sub-title="Timetable 2026.10.31 - 11.1"
-      icon="📅"
       :breadcrumbs="[{ name: 'タイムテーブル' }]"
     />
 
@@ -38,7 +38,6 @@ const activeDayId = ref<'day1' | 'day2'>('day1');
           </div>
 
           <div class="pdf-download-badge">
-            <span class="badge-icon">📄</span>
             <div>
               <span class="badge-text">印刷用タイムテーブルPDF</span>
               <a href="https://example.com/timetable.pdf" target="_blank" rel="noopener noreferrer" class="badge-link">ダウンロード ↗</a>
@@ -47,7 +46,7 @@ const activeDayId = ref<'day1' | 'day2'>('day1');
         </div>
 
         <p class="hint-text">
-          💡 プログラムをクリックすると、詳しい出演者情報や企画詳細ページを開くことができます。
+          ※ プログラムをクリックすると、詳しい出演者情報や企画詳細ページを開くことができます。
         </p>
       </section>
 
@@ -61,21 +60,18 @@ const activeDayId = ref<'day1' | 'day2'>('day1');
         <div class="board-header">
           <div class="time-col-header">時間帯</div>
           <div class="stage-col-header indoor-header">
-            <div class="stage-icon">🏢</div>
             <div>
               <h3>屋内ステージ</h3>
               <p>SCC 4階ホール（座席あり）</p>
             </div>
           </div>
           <div class="stage-col-header outdoor-header">
-            <div class="stage-icon">🎪</div>
             <div>
               <h3>屋外ステージ</h3>
               <p>体育館横 芝生広場（野外）</p>
             </div>
           </div>
           <div class="stage-col-header other-header">
-            <div class="stage-icon">🎵</div>
             <div>
               <h3>音楽館・その他</h3>
               <p>7号館・8号館・模擬店</p>

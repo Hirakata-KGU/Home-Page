@@ -1,7 +1,7 @@
 <template>
   <section id="about" class="section">
     <div class="section-header">
-      <div class="section-icon">🌱</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>平潟祭について</h2>
         <p>About Hirakata Festival</p>
@@ -11,7 +11,7 @@
     <!-- Theme Sprout Special Block -->
     <div class="theme-sprout-block">
       <div class="theme-header">
-        <span class="theme-icon-large">🌱</span>
+        <!-- アイコンSVG提供後に配置予定 -->
         <div>
           <span class="theme-sub-label">2026年度 開催テーマ</span>
           <h3 class="theme-title">sprout（スプラウト）</h3>
@@ -39,15 +39,15 @@
 
       <div class="about-highlights">
         <div class="highlight-card">
-          <h3>🎵 音楽ステージ</h3>
+          <h3>音楽ステージ</h3>
           <p>屋内ホールのメインライブ、青空の下の野外軽音フェス、音楽館での上質アコースティックなど多彩な音楽空間。</p>
         </div>
         <div class="highlight-card">
-          <h3>🍴 模擬店・グルメ</h3>
+          <h3>模擬店・グルメ</h3>
           <p>学生サークルによる約30店舗の手作り模擬店や、地元横浜の人気キッチンカーが大集結！</p>
         </div>
         <div class="highlight-card">
-          <h3>🎨 展示・体験企画</h3>
+          <h3>展示・体験企画</h3>
           <p>文化館での美術・写真展示、研究発表、映画上映会、ワークショップ、スタンプラリーなど参加型企画も充実。</p>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { eventItems } from '~/data/events';
 <template>
   <section id="events" class="section">
     <div class="section-header">
-      <div class="section-icon">🎪</div>
+      <!-- アイコンSVG提供後に配置予定 -->
       <div class="section-title">
         <h2>企画一覧</h2>
         <p>Event Programs</p>
@@ -22,7 +22,7 @@ import { eventItems } from '~/data/events';
           class="event-image"
           :style="event.gradient ? { background: event.gradient } : {}"
         >
-          {{ event.icon }}
+          <!-- アイコンSVG提供後に配置予定 -->
         </div>
         <div class="event-content">
           <span class="event-category">{{ event.category }}</span>

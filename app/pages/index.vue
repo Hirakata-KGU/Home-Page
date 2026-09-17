@@ -4,48 +4,54 @@ useSeoMeta({
   description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。',
 });
 
-// 企画カードデータ（Frame 4 Rectangle 2, 1, 3）
+// 1. 企画カードデータ（※アイコンSVG提供後に配置予定）
 const featuredEvents = [
   {
     title: 'ステージパフォーマンス',
     badge: '屋内 & 屋外',
     desc: 'SCC4階ホールのスペシャルライブ＆芝生広場の軽音・ダンス！熱気あふれるステージをお届け。',
     to: '/events',
-    icon: '🎤',
   },
   {
     title: '模擬店グルメ',
     badge: 'メインストリート',
     desc: '各サークル・学科が趣向を凝らした焼きそば、たこ焼き、スイーツなど美味しい屋台が大集合！',
     to: '/events',
-    icon: '🍲',
   },
   {
     title: '文化・展示・体験',
     badge: '文化館・音楽館',
     desc: '研究発表、美術・写真展示、体験型ワークショップなど、学生の日頃の成果が咲き誇る。',
     to: '/events',
-    icon: '🎨',
   },
 ];
 
-// タイムテーブル概要
-const scheduleHighlights = [
+// 2. ご案内カードデータ（電子パンフレット・平潟祭について・よくある質問 ※アイコンSVG提供後に配置予定）
+const guideItems = [
   {
-    stage: '屋内ステージ（SCC 4階ホール）',
-    title: 'ゲストライブ・オープニング・お笑い企画',
-    time: '10/31(土) & 11/1(日) 10:30 開演 〜 16:30 終演',
-    gradient: 'from-sprout-title to-sprout-dark border-sprout-border',
+    title: '電子パンフレット',
+    badge: 'Guidebook',
+    desc: '当日のタイムスケジュール、キャンパスマップ、出店・企画リストが1冊にまとまった公式電子ガイドです。',
+    to: '/pamphlet',
+    linkText: 'パンフレットを見る',
   },
   {
-    stage: '野外ステージ（芝生広場）',
-    title: '青空軽音楽ライブ & ダンスパフォーマンス',
-    time: '10/31(土) & 11/1(日) 10:00 スタート 〜 17:00 フィナーレ',
-    gradient: 'from-sprout-border to-sprout-title border-sprout-border-light',
+    title: '平潟祭について',
+    badge: 'About SPROUT',
+    desc: '2026年度テーマ「sprout（スプラウト）」に込められた想いや、平潟祭の歴史・開催概要をご紹介します。',
+    to: '/about',
+    linkText: '平潟祭を知る',
+  },
+  {
+    title: 'よくある質問',
+    badge: 'FAQ',
+    desc: '入場方法、事前予約、雨天時の開催、取材申請など、皆様から多く寄せられる質問と回答を掲載しています。',
+    to: '/faq',
+    linkText: 'よくある質問を見る',
   },
 ];
 
-// ご来場にあたって
+// 3. ご来場にあたって
 const visitorGuidelines = [
   {
     title: '入場無料・事前予約不要',
@@ -71,26 +77,26 @@ const visitorGuidelines = [
     <!-- 1. Top (Hero Section) -->
     <SectionsHeroSection />
 
-    <!-- 2. Frame 4: 企画セクション (背景: #437C62) -->
-    <section class="w-full bg-sprout-moss py-16 px-0 relative z-[5]" id="events-frame">
+    <!-- 2. 企画セクション (背景: #437C62) -->
+    <section class="w-full bg-sprout-moss py-12 px-0 relative z-[5]" id="events">
       <div class="section-container">
         <!-- Title -->
         <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
 
-        <!-- 3 Cards Grid -->
+        <!-- 3 Cards Grid (絵文字不使用) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
           <NuxtLink
             v-for="(item, idx) in featuredEvents"
             :key="idx"
             :to="item.to"
-            class="group bg-white rounded-2xl p-7 min-h-[200px] flex flex-col justify-between no-underline shadow-[0_8px_24px_rgba(27,58,36,0.18)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)] border-2 border-transparent hover:border-sprout-light transition-all duration-300 hover:-translate-y-1.5"
+            class="group bg-white rounded-2xl p-7 min-h-[190px] flex flex-col justify-between no-underline shadow-[0_8px_24px_rgba(27,58,36,0.18)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)] border-2 border-transparent hover:border-sprout-light transition-all duration-300 hover:-translate-y-1.5"
           >
             <div>
               <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
                 {{ item.badge }}
               </div>
-              <div class="flex items-center gap-2.5 mb-2.5">
-                <span class="text-2xl">{{ item.icon }}</span>
+              <div class="flex items-center gap-2 mb-2.5">
+                <!-- アイコンSVG提供後に配置予定 -->
                 <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
               </div>
               <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
@@ -102,93 +108,59 @@ const visitorGuidelines = [
           </NuxtLink>
         </div>
 
-        <!-- 説明文 & ボタン -->
+        <!-- 説明文 & ボタン (絵文字不使用) -->
         <div class="text-center flex flex-col items-center gap-5 max-w-[800px]">
           <p class="font-sans font-bold text-base sm:text-lg lg:text-xl leading-relaxed text-white">
             音楽ライブ、模擬店グルメ、展示発表、参加型イベントなど盛りだくさん！<br>
             学生たちの情熱が芽吹き、咲き誇る特別な2日間をお楽しみください。
           </p>
           <NuxtLink to="/events" class="btn btn-gold px-9 py-3.5 text-base">
-            全企画・模擬店一覧を見る 🎪
+            全企画・模擬店一覧を見る
           </NuxtLink>
         </div>
       </div>
     </section>
 
-    <!-- 3. Frame 5: タイムテーブルセクション (背景: #F8F8ED + 上部反転波) -->
-    <section class="w-full bg-sprout-bg pb-16 relative z-[6]" id="schedule-frame">
+    <!-- 3. ご案内セクション (背景: #F8F8ED + 上部反転波) -->
+    <section class="w-full bg-sprout-bg pb-16 relative z-[6]" id="guide">
       <!-- 反転した4層の波 (rotate 180deg) -->
       <div class="w-full h-fit leading-none" aria-hidden="true">
-        <SvgWave class="w-full rotate-180" preserveAspectRatio="none"></SvgWave>>
+        <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
       </div>
 
       <div class="section-container">
         <!-- Title -->
-        <UiSectionTitle title="タイムテーブル" />
+        <UiSectionTitle title="ご案内" />
 
-        <!-- Schedule Preview Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-7 w-full max-w-[1000px] mb-8">
-          <div
-            v-for="(card, cIdx) in scheduleHighlights"
-            :key="cIdx"
-            :class="['schedule-preview-card', card.gradient]"
+        <!-- 3 Cards Grid (電子パンフレット・平潟祭について・よくある質問 ※絵文字不使用) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
+          <NuxtLink
+            v-for="(item, idx) in guideItems"
+            :key="idx"
+            :to="item.to"
+            class="group bg-white rounded-2xl p-7 min-h-[210px] flex flex-col justify-between no-underline shadow-[0_4px_20px_rgba(46,125,50,0.08)] hover:shadow-[0_12px_32px_rgba(46,125,50,0.18)] border-2 border-sprout-border/20 hover:border-sprout-border transition-all duration-300 hover:-translate-y-1.5"
           >
-            <div class="schedule-preview-badge">
-              {{ card.stage }}
+            <div>
+              <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
+                {{ item.badge }}
+              </div>
+              <div class="flex items-center gap-2 mb-2.5">
+                <!-- アイコンSVG提供後に配置予定 -->
+                <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
+              </div>
+              <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
             </div>
-            <h4 class="text-[19px] font-extrabold mb-2">{{ card.title }}</h4>
-            <p class="text-[13px] opacity-90 flex-1 mb-4">{{ card.time }}</p>
-            <NuxtLink to="/schedule" class="schedule-preview-link">
-              進行表をチェック →
-            </NuxtLink>
-          </div>
-        </div>
-
-        <div class="text-center">
-          <NuxtLink to="/schedule" class="btn btn-primary px-9 py-3.5 text-base">
-            2日間の全タイムテーブルを見る 📅
+            <div class="flex items-center justify-between text-[13px] font-bold text-sprout-border border-t border-gray-100 pt-3">
+              <span>{{ item.linkText }}</span>
+              <span class="transition-transform group-hover:translate-x-1">→</span>
+            </div>
           </NuxtLink>
         </div>
       </div>
     </section>
 
-    <!-- 4. Frame 8: 場内マップセクション (背景: #F8F8ED) -->
-    <section class="w-full bg-sprout-bg py-10 lg:py-16 relative z-[6]" id="map-frame">
-      <div class="section-container">
-        <!-- Title -->
-        <UiSectionTitle title="場内マップ" />
-
-        <!-- Map Image -->
-        <div class="w-full max-w-[1121px] mb-8">
-          <div class="relative rounded-2xl overflow-hidden shadow-lg border-[3px] border-sprout-border bg-white">
-            <img
-              src="https://univ.kanto-gakuin.ac.jp/wp-content/themes/gakuin/images/img_map_kanazawa.jpg"
-              alt="関東学院大学 金沢八景キャンパス 平潟祭 会場マップ"
-              class="w-full h-auto block"
-            />
-            <div class="absolute top-4 left-4 bg-sprout-dark/85 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-[13px] font-bold border border-sprout-border">
-              <span>金沢八景キャンパス 全体マップ</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Map Navigation Buttons -->
-        <div class="flex gap-4 flex-wrap justify-center">
-          <NuxtLink to="/map" class="btn btn-primary">
-            全体・模擬店マップを見る 🗺️
-          </NuxtLink>
-          <NuxtLink to="/map" class="btn btn-secondary">
-            音楽館・文化館マップ 🏢
-          </NuxtLink>
-          <NuxtLink to="/access" class="btn btn-secondary">
-            アクセス・交通案内 🚉
-          </NuxtLink>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. Visitor Guidelines (ご来場案内) -->
-    <section class="w-full bg-sprout-bg pt-5 pb-20" id="about">
+    <!-- 4. ご来場にあたってセクション (背景: #F8F8ED) -->
+    <section class="w-full bg-sprout-bg pt-2 pb-16 relative z-[6]" id="about">
       <div class="section-container">
         <!-- Title -->
         <UiSectionTitle title="ご来場にあたって" />
@@ -201,7 +173,82 @@ const visitorGuidelines = [
         </div>
       </div>
     </section>
+
+    <!-- 5. アクセスセクション (背景: 白または淡い緑 ※絵文字不使用) -->
+    <section class="w-full bg-sprout-bg pt-2 pb-20 relative z-[6]" id="access">
+      <div class="section-container">
+        <!-- Title -->
+        <UiSectionTitle title="アクセス" />
+
+        <div class="w-full max-w-[1121px] bg-white rounded-2xl p-6 sm:p-10 shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <!-- Access Info Column -->
+            <div class="flex flex-col gap-6">
+              <div>
+                <span class="inline-block bg-sprout-bg text-sprout-title text-xs font-bold px-3 py-1 rounded-full border border-sprout-border mb-2">会場</span>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
+                <p class="text-text-muted text-sm">〒236-8501 神奈川県横浜市金沢区六浦東1-50-1</p>
+              </div>
+
+              <!-- Train -->
+              <div class="border-t border-gray-100 pt-4">
+                <h4 class="font-bold text-base text-sprout-title mb-2">
+                  電車でお越しの方
+                </h4>
+                <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
+                  <li><strong>京急本線「金沢八景駅」</strong>より徒歩約15分</li>
+                  <li><strong>シーサイドライン「金沢八景駅」</strong>より徒歩約15分</li>
+                  <li>横浜駅から京急線快速特急で約20分、品川駅から約40分</li>
+                </ul>
+              </div>
+
+              <!-- Bus -->
+              <div class="border-t border-gray-100 pt-4">
+                <h4 class="font-bold text-base text-sprout-title mb-2">
+                  バスでお越しの方
+                </h4>
+                <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
+                  <li><strong>京急バス「関東学院正門」</strong>下車すぐ（金沢八景駅東口より約5分）</li>
+                </ul>
+              </div>
+
+              <!-- Car -->
+              <div class="border-t border-gray-100 pt-4">
+                <h4 class="font-bold text-base text-sprout-title mb-2">
+                  お車でお越しの方
+                </h4>
+                <p class="text-sm text-text-muted leading-relaxed bg-sprout-bg/60 p-3 rounded-lg border-l-4 border-amber-500">
+                  <strong>来場者用駐車場はございません。</strong><br>
+                  近隣道路の混雑緩和のため、公共交通機関（京急線・バス）をご利用ください。
+                </p>
+              </div>
+
+              <!-- Official Access Page Button -->
+              <div class="pt-2">
+                <a
+                  href="https://univ.kanto-gakuin.ac.jp/about-university/location.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary text-sm px-6 py-3"
+                >
+                  大学公式アクセスページ →
+                </a>
+              </div>
+            </div>
+
+            <!-- Map Column -->
+            <div class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex">
+              <iframe
+                class="w-full h-full min-h-[340px] sm:min-h-[420px] border-0"
+                src="https://www.google.com/maps?q=35.323287,139.623311&z=15&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="関東学院大学 金沢八景キャンパス 地図"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
-
-

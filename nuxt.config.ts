@@ -58,10 +58,12 @@ export default defineNuxtConfig({
     prerender: {
       routes: [
         '/',
+        '/about',
+        '/pamphlet',
+        '/faq',
         '/events',
         '/schedule',
         '/map',
-        '/access',
         '/contact',
       ],
       crawlLinks: true,

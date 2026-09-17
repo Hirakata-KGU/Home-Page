@@ -9,7 +9,7 @@ const contactSns = [
     name: 'X (旧Twitter)',
     id: '@shin_hirakata',
     url: 'https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w',
-    icon: '𝕏',
+    type: 'x',
     desc: '最新情報の速報発信、タイムテーブルの変更案内などを行っています。ダイレクトメッセージ（DM）でのお問い合わせも受け付けております。',
     btnText: 'Xで問い合わせ・フォロー',
     gradient: 'linear-gradient(135deg, #111111 0%, #333333 100%)',
@@ -18,7 +18,7 @@ const contactSns = [
     name: 'Instagram',
     id: '@hirakatasai',
     url: 'https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg==',
-    icon: '📷',
+    type: 'instagram',
     desc: '当日の様子や企画のハイライト写真を投稿・ストーリーで配信！DMでのお問い合わせやご質問もこちらからどうぞ。',
     btnText: 'Instagramで問い合わせ・フォロー',
     gradient: 'linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)',
@@ -28,10 +28,10 @@ const contactSns = [
 
 <template>
   <div>
+    <!-- 絵文字不使用（※アイコンSVG提供後に配置予定） -->
     <LayoutPageHeader
       title="お問い合わせ"
       sub-title="Contact & Official Social Media"
-      icon="✉️"
       :breadcrumbs="[{ name: 'お問い合わせ' }]"
     />
 
@@ -39,7 +39,7 @@ const contactSns = [
       <!-- SNS Contact Cards -->
       <section class="section">
         <div class="section-header">
-          <div class="section-icon">💬</div>
+          <!-- アイコンSVG提供後に配置予定 -->
           <div class="section-title">
             <h2>公式SNS・お問い合わせ窓口</h2>
             <p>Official Social Media & Direct Inquiries</p>
@@ -57,7 +57,10 @@ const contactSns = [
             class="contact-sns-card"
           >
             <div class="sns-header-area" :style="{ background: sns.gradient }">
-              <span class="sns-large-icon">{{ sns.icon }}</span>
+              <span class="sns-large-icon">
+                <SvgX v-if="sns.type === 'x'" class="w-7 h-7 fill-white" />
+                <SvgInstagram v-else-if="sns.type === 'instagram'" class="w-7 h-7" stroke-color="#FFFFFF" />
+              </span>
               <div class="sns-title-group">
                 <h3>{{ sns.name }}</h3>
                 <span class="sns-handle">{{ sns.id }}</span>
@@ -72,7 +75,7 @@ const contactSns = [
                 rel="noopener noreferrer"
                 class="btn btn-primary sns-action-btn"
               >
-                {{ sns.btnText }} ↗
+                {{ sns.btnText }} →
               </a>
             </div>
           </div>
@@ -80,9 +83,9 @@ const contactSns = [
       </section>
 
       <!-- FAQ & Other Inquiries -->
-      <section class="section faq-section">
+      <section id="faq" class="section faq-section">
         <div class="section-header">
-          <div class="section-icon">❓</div>
+          <!-- アイコンSVG提供後に配置予定 -->
           <div class="section-title">
             <h2>よくあるご質問</h2>
             <p>Frequently Asked Questions</p>
@@ -106,6 +109,12 @@ const contactSns = [
             <h4>Q. 取材や撮影の申請はどうすればよいですか？</h4>
             <p>A. メディア取材や学外団体による撮影をご希望の場合は、公式XまたはInstagramのDMにて「媒体名・企画趣旨・人数」を明記の上ご連絡ください。</p>
           </div>
+        </div>
+
+        <div class="flex justify-center mt-6">
+          <NuxtLink to="/faq" class="btn btn-secondary">
+            すべてのよくある質問を見る →
+          </NuxtLink>
         </div>
       </section>
 
