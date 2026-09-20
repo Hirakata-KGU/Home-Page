@@ -133,19 +133,6 @@ const faqCategories = [
           </div>
         </section>
       </div>
-
-      <!-- Contact Banner -->
-      <section class="bg-gradient-to-r from-sprout-title to-sprout-forest text-white rounded-2xl p-8 sm:p-10 shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div>
-          <h3 class="text-xl sm:text-2xl font-bold mb-2">他にご質問やお困りごとはございますか？</h3>
-          <p class="text-sm sm:text-base text-white/80 m-0">
-            公式SNS（X / Instagram）のダイレクトメッセージでも随時ご質問を受け付けております。
-          </p>
-        </div>
-        <NuxtLink to="/contact" class="btn btn-gold shrink-0 px-8 py-3.5 text-base">
-          お問い合わせはこちら →
-        </NuxtLink>
-      </section>
     </div>
   </div>
 </template>

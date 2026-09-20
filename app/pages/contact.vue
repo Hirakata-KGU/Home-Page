@@ -81,54 +81,6 @@ const contactSns = [
           </div>
         </div>
       </section>
-
-      <!-- FAQ & Other Inquiries -->
-      <section id="faq" class="section faq-section">
-        <div class="section-header">
-          <!-- アイコンSVG提供後に配置予定 -->
-          <div class="section-title">
-            <h2>よくあるご質問</h2>
-            <p>Frequently Asked Questions</p>
-          </div>
-        </div>
-
-        <div class="faq-list">
-          <div class="faq-item">
-            <h4>Q. 入場料や事前予約は必要ですか？</h4>
-            <p>A. 入場無料・事前予約不要です。一般の方、受験生、近隣住民の皆様どなたでも自由にご来場いただけます。</p>
-          </div>
-          <div class="faq-item">
-            <h4>Q. 雨天の場合は開催されますか？</h4>
-            <p>A. 雨天決行です。荒天（台風・大雨警報等）によるプログラム変更や中止が発生する場合は、公式X（@shin_hirakata）にて随時告知いたします。</p>
-          </div>
-          <div class="faq-item">
-            <h4>Q. 車での来場や駐車場はありますか？</h4>
-            <p>A. 来場者用の駐車場はございません。公共交通機関（京急線・シーサイドライン・路線バス）をご利用ください。</p>
-          </div>
-          <div class="faq-item">
-            <h4>Q. 取材や撮影の申請はどうすればよいですか？</h4>
-            <p>A. メディア取材や学外団体による撮影をご希望の場合は、公式XまたはInstagramのDMにて「媒体名・企画趣旨・人数」を明記の上ご連絡ください。</p>
-          </div>
-        </div>
-
-        <div class="flex justify-center mt-6">
-          <NuxtLink to="/faq" class="btn btn-secondary">
-            すべてのよくある質問を見る →
-          </NuxtLink>
-        </div>
-      </section>
-
-      <!-- Committee Info -->
-      <section class="section committee-card">
-        <div class="committee-info">
-          <h4>主催：平潟祭実行委員会</h4>
-          <p>
-            関東学院大学 金沢八景キャンパス<br>
-            〒236-8501 神奈川県横浜市金沢区六浦東1-50-1<br>
-            ※ 学祭当日は正門前「総合案内・本部テント」にスタッフが常駐しております。
-          </p>
-        </div>
-      </section>
     </div>
   </div>
 </template>

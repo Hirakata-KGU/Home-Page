@@ -16,11 +16,11 @@ const activeDayId = ref<'day1' | 'day2'>('day1');
 
 // 5会場の定義
 const venueLanes: { key: VenueCategory; label: string; sub: string; colClass: string }[] = [
-  { key: 'outdoor', label: '屋外ステージ', sub: '芝生広場', colClass: 'outdoor-col' },
+  { key: 'outdoor', label: '屋外ステージ', sub: '', colClass: 'outdoor-col' },
   { key: 'indoor', label: '屋内ステージ', sub: 'SCC 4F', colClass: 'indoor-col' },
-  { key: 'chapel', label: 'チャペル', sub: '礼拝堂', colClass: 'chapel-col' },
-  { key: 'gym', label: '体育館', sub: 'アリーナ', colClass: 'gym-col' },
-  { key: 'bldg1', label: '1号館前', sub: 'セブンイレブン棟', colClass: 'bldg1-col' },
+  { key: 'chapel', label: 'チャペル', sub: '', colClass: 'chapel-col' },
+  { key: 'gym', label: '体育館', sub: '', colClass: 'gym-col' },
+  { key: 'bldg1', label: '1号館前', sub: '', colClass: 'bldg1-col' },
 ];
 
 // タップ（クリック）で展開・固定されているスロットID（スマホ用）
