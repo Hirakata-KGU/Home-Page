@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import {
   parallelScheduleData,
-  venueCategoryList,
   getVenueCategory,
   type VenueCategory,
   type TimetableSlot,
@@ -14,8 +13,6 @@ useSeoMeta({
 });
 
 const activeDayId = ref<'day1' | 'day2'>('day1');
-const selectedVenue = ref<'all' | VenueCategory>('all');
-const viewMode = ref<'grid' | 'timeline'>('grid');
 
 // 5会場の定義
 const venueLanes: { key: VenueCategory; label: string; sub: string; colClass: string }[] = [
@@ -60,12 +57,6 @@ const getSlotHeight = (slot: TimetableSlot): number => {
 // 会場ごとのスロット分類
 const getSlotsForVenue = (slots: TimetableSlot[], venueKey: VenueCategory): TimetableSlot[] => {
   return slots.filter((s) => getVenueCategory(s.venue) === venueKey);
-};
-
-// タイムライン用フィルター
-const getFilteredSlots = (allSlots: TimetableSlot[]) => {
-  if (selectedVenue.value === 'all') return allSlots;
-  return allSlots.filter((s) => getVenueCategory(s.venue) === selectedVenue.value);
 };
 
 // カードクリック時のハンドラー
@@ -133,56 +124,22 @@ onUnmounted(() => {
             </button>
           </div>
 
-          <!-- ビュー切替 & パンフレット案内 -->
+          <!-- パンフレット案内 -->
           <div class="header-right-tools">
-            <div class="view-switch-group">
-              <button
-                class="view-btn"
-                :class="{ active: viewMode === 'grid' }"
-                @click="viewMode = 'grid'"
-              >
-                タイムグリッド表
-              </button>
-              <button
-                class="view-btn"
-                :class="{ active: viewMode === 'timeline' }"
-                @click="viewMode = 'timeline'"
-              >
-                リスト形式
-              </button>
-            </div>
-
             <NuxtLink to="/pamphlet" class="pamphlet-link-badge">
               電子パンフレットを見る →
             </NuxtLink>
           </div>
         </div>
 
-        <!-- リスト形式時の会場絞り込みチップ -->
-        <div v-if="viewMode === 'timeline'" class="venue-filter-row">
-          <span class="venue-filter-label">会場絞り込み:</span>
-          <div class="venue-chips">
-            <button
-              v-for="v in venueCategoryList"
-              :key="v.key"
-              class="venue-chip"
-              :class="{ active: selectedVenue === v.key }"
-              @click="selectedVenue = v.key"
-            >
-              {{ v.label }}
-            </button>
-          </div>
-        </div>
-
         <p class="hint-text">
-          ※ 1時間ごとにグリッド線が引かれています。時間は開始〜終了時刻に合わせて枠線を跨いで表示されます。<br />
           ※ 画面を左右にスクロールして全5会場のタイムテーブルをご覧いただけます。<br />
           ※ プログラムにカーソルを合わせるかタップすると最前面へ展開されます（他の場所をクリックすると解除されます）。
         </p>
       </section>
 
-      <!-- 1. タイムグリッド表（全5会場並列・横スクロール可能） -->
-      <div v-if="viewMode === 'grid'" class="grid-view-wrapper">
+      <!-- タイムグリッド表（全5会場並列・横スクロール可能） -->
+      <div class="grid-view-wrapper">
         <section
           v-for="day in parallelScheduleData"
           v-show="activeDayId === day.id"
@@ -282,55 +239,6 @@ onUnmounted(() => {
         </section>
       </div>
 
-      <!-- 2. リスト形式（タイムライン） -->
-      <div v-else class="timeline-view-wrapper">
-        <section
-          v-for="day in parallelScheduleData"
-          v-show="activeDayId === day.id"
-          :key="day.id"
-          class="section timeline-section shadow-sm"
-        >
-          <div class="timeline-header-info">
-            <h3>{{ day.dayName }} タイムライン（全 {{ getFilteredSlots(day.allSlots).length }} プログラム）</h3>
-          </div>
-
-          <div v-if="getFilteredSlots(day.allSlots).length > 0" class="timeline-list">
-            <NuxtLink
-              v-for="item in getFilteredSlots(day.allSlots)"
-              :key="item.slotId"
-              :to="`/events/${item.id}`"
-              class="timeline-card"
-              :class="{ 'is-special': item.isSpecial }"
-            >
-              <!-- 時間カラム -->
-              <div class="timeline-time-col">
-                <div class="timeline-time-badge">{{ item.time }}</div>
-                <span class="timeline-duration">{{ item.durationMinutes }}分</span>
-              </div>
-
-              <!-- 内容カラム -->
-              <div class="timeline-content-col">
-                <div class="timeline-meta-row">
-                  <span class="timeline-venue-badge" :class="'venue-' + getVenueCategory(item.venue)">
-                    {{ item.venue }}
-                  </span>
-                  <span v-if="item.isSpecial" class="special-tag">注目企画</span>
-                </div>
-                <h4 class="timeline-title">{{ item.title }}</h4>
-                <div class="timeline-performer">{{ item.groupName }}</div>
-              </div>
-
-              <div class="timeline-arrow-col">
-                <span class="arrow-btn">詳細 →</span>
-              </div>
-            </NuxtLink>
-          </div>
-
-          <div v-else class="empty-timeline">
-            <p>選択された会場のプログラムはありません。</p>
-          </div>
-        </section>
-      </div>
 
       <!-- フッター案内 -->
       <section class="section bottom-nav-section" @click.stop>
@@ -417,32 +325,6 @@ onUnmounted(() => {
   flex-wrap: wrap;
 }
 
-.view-switch-group {
-  display: inline-flex;
-  background: var(--bg-alt, #f0f0f0);
-  padding: 3px;
-  border-radius: 30px;
-  border: 1px solid var(--border);
-}
-
-.view-btn {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: none;
-  background: transparent;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.view-btn.active {
-  background: white;
-  color: var(--text);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
 .pamphlet-link-badge {
   font-size: 12px;
   font-weight: 700;
@@ -452,51 +334,6 @@ onUnmounted(() => {
   border-radius: 20px;
   border: 1px solid rgba(47, 91, 52, 0.3);
   background: #f7faf7;
-}
-
-.venue-filter-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  margin-bottom: 12px;
-}
-
-.venue-filter-label {
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.venue-chips {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.venue-chip {
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: white;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.venue-chip:hover {
-  border-color: var(--olive);
-}
-
-.venue-chip.active {
-  background: var(--text, #222);
-  color: white;
-  border-color: var(--text, #222);
 }
 
 .hint-text {
@@ -831,167 +668,11 @@ onUnmounted(() => {
   font-size: 10px;
   font-weight: 800;
   color: var(--olive);
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.95);
   padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid currentColor;
-  transition: all 0.2s ease;
-  display: inline-block;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.block-detail-btn:hover {
-  background: var(--olive);
-  color: white;
-}
-
-
-/* ====================================================
-   2. リスト形式（タイムライン）
-   ==================================================== */
-.timeline-section {
-  padding: 24px;
-  background: white;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-}
-
-.timeline-header-info {
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.timeline-header-info h3 {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--text);
-}
-
-.timeline-list {
-  display: grid;
-  gap: 12px;
-}
-
-.timeline-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: white;
-  text-decoration: none;
-  color: inherit;
   transition: all 0.2s ease;
 }
 
-.timeline-card:hover {
-  transform: translateX(4px);
-  border-color: var(--olive);
-  box-shadow: var(--shadow-sm);
-}
 
-.timeline-card.is-special {
-  background: #fdfbf3;
-  border-color: #e5ad35;
-}
-
-.timeline-time-col {
-  min-width: 110px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.timeline-time-badge {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--olive);
-}
-
-.timeline-duration {
-  font-size: 11px;
-  color: var(--muted);
-  font-weight: 600;
-}
-
-.timeline-content-col {
-  flex: 1;
-}
-
-.timeline-meta-row {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.timeline-venue-badge {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.venue-outdoor {
-  background: #eef6ee;
-  color: #2b6131;
-}
-
-.venue-indoor {
-  background: #fcf6e8;
-  color: #8c6b1b;
-}
-
-.venue-chapel {
-  background: #f7f3fb;
-  color: #734b8c;
-}
-
-.venue-gym {
-  background: #eef7f6;
-  color: #00796b;
-}
-
-.venue-bldg1 {
-  background: #f5f6f8;
-  color: #455a64;
-}
-
-.special-tag {
-  font-size: 10px;
-  font-weight: 800;
-  background: #e5ad35;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.timeline-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-
-.timeline-performer {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.timeline-arrow-col {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--olive);
-}
-
-.empty-timeline {
-  text-align: center;
-  padding: 40px;
-  color: var(--muted);
-  font-size: 14px;
-}
 
 /* フッター案内 */
 .bottom-nav-section {
@@ -1029,15 +710,7 @@ onUnmounted(() => {
   }
   .header-right-tools {
     width: 100%;
-    justify-content: space-between;
-  }
-  .timeline-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .timeline-arrow-col {
-    align-self: flex-end;
+    justify-content: flex-end;
   }
 }
 </style>
