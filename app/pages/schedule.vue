@@ -40,8 +40,8 @@ const HOUR_HEIGHT = 110; // 1時間あたりのピクセル高さ
 const MINUTE_HEIGHT = HOUR_HEIGHT / 60; // 1分あたりのピクセル高さ
 
 // 10:00 と 18:00 の見切れ防止用上下余白
-const GRID_OFFSET_TOP = 26;
-const GRID_OFFSET_BOTTOM = 30;
+const GRID_OFFSET_TOP = 40;
+const GRID_OFFSET_BOTTOM = 100;
 const TOTAL_HEIGHT = (END_HOUR - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP + GRID_OFFSET_BOTTOM; // 約936px
 
 // スロットの位置計算（top）
