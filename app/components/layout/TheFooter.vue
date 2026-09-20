@@ -26,10 +26,10 @@ const footerSections = [
     columns: [
       [
         { label: 'アクセス', to: '/#access' },
-        { label: '電子パンフレット', to: '/pamphlet' },
-        { label: '平潟祭について', to: '/about' },
-        { label: 'FAQ', to: '/faq' },
-        { label: 'お問い合わせ', to: '/contact' }
+        { label: '電子パンフレット', to: '/info/pamphlet' },
+        { label: '平潟祭について', to: '/info/about' },
+        { label: 'FAQ', to: '/info/faq' },
+        { label: 'お問い合わせ', to: '/info/contact' }
       ]
     ]
   }

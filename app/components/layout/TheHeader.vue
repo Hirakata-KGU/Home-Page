@@ -21,9 +21,9 @@ const mainNavItems = [
 
 // ご案内メニュー（ホバーでドロップダウン展開、アクセスは index.vue#access に遷移）
 const guideSubItems = [
-  { name: '電子パンフレット', to: '/pamphlet', desc: 'デジタル版公式パンフレット' },
-  { name: '平潟祭について', to: '/about', desc: '開催概要・テーマ「sprout」' },
-  { name: 'よくある質問', to: '/faq', desc: 'FAQ・各種お問い合わせ' },
+  { name: '電子パンフレット', to: '/info/pamphlet', desc: 'デジタル版公式パンフレット' },
+  { name: '平潟祭について', to: '/info/about', desc: '開催概要・テーマ「sprout」' },
+  { name: 'よくある質問', to: '/info/faq', desc: 'FAQ・各種お問い合わせ' },
   { name: 'アクセス', to: '/#access', desc: '金沢八景駅からのルート' },
 ];
 </script>
@@ -69,7 +69,7 @@ const guideSubItems = [
           <button
             type="button"
             class="flex items-center gap-1.5 bg-transparent border-none p-0 cursor-pointer text-sprout-forest hover:text-sprout-border transition-colors font-sans text-[15px] leading-[22px]"
-            :class="{ 'font-bold text-sprout-border': ['/about', '/pamphlet', '/faq'].includes($route.path) }"
+            :class="{ 'font-bold text-sprout-border': ['/info/about', '/info/pamphlet', '/info/faq'].includes($route.path) }"
           >
             <span>ご案内</span>
             <!-- CSS chevron arrow (絵文字不使用) -->
@@ -81,7 +81,7 @@ const guideSubItems = [
           <!-- 下線インジケータ（他アイテムと完全に同じ位置・gapで配置） -->
           <span
             class="w-[14px] h-[2.5px] bg-sprout-border rounded-[1px] transition-all duration-200"
-            :class="['/about', '/pamphlet', '/faq'].includes($route.path) ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0 group-hover:opacity-60 group-hover:scale-x-100'"
+            :class="['/info/about', '/info/pamphlet', '/info/faq'].includes($route.path) ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0 group-hover:opacity-60 group-hover:scale-x-100'"
           ></span>
 
           <!-- ドロップダウンメニュー（絵文字不使用） -->
@@ -106,7 +106,7 @@ const guideSubItems = [
 
       <!-- Right: お問い合わせボタン（絵文字不使用） -->
       <div class="hidden lg:block shrink-0">
-        <NuxtLink to="/contact" class="btn-pill-green">
+        <NuxtLink to="/info/contact" class="btn-pill-green">
           <span>お問い合わせ</span>
         </NuxtLink>
       </div>
@@ -169,7 +169,7 @@ const guideSubItems = [
         <!-- お問い合わせ Button -->
         <div class="border-t border-gray-100 pt-3 mt-1">
           <NuxtLink
-            to="/contact"
+            to="/info/contact"
             class="flex justify-center items-center bg-sprout-border text-white font-sans font-bold text-[16px] p-3.5 rounded-full no-underline shadow-md hover:bg-[#356b48] transition-colors"
             @click="closeMobileMenu"
           >

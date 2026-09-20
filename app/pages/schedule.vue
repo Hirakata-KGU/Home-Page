@@ -126,7 +126,7 @@ onUnmounted(() => {
 
           <!-- パンフレット案内 -->
           <div class="header-right-tools">
-            <NuxtLink to="/pamphlet" class="pamphlet-link-badge">
+            <NuxtLink to="/info/pamphlet" class="pamphlet-link-badge">
               電子パンフレットを見る →
             </NuxtLink>
           </div>

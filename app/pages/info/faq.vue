@@ -92,7 +92,7 @@ const faqCategories = [
         <p class="text-base sm:text-lg text-text-muted leading-relaxed m-0">
           平潟祭に関する皆様からよくいただくご質問とその回答をまとめました。<br class="hidden sm:inline">
           こちらに掲載のないご不明な点がございましたら、お気軽に
-          <NuxtLink to="/contact" class="text-sprout-forest font-bold underline hover:text-sprout-border">
+          <NuxtLink to="/info/contact" class="text-sprout-forest font-bold underline hover:text-sprout-border">
             お問い合わせ窓口
           </NuxtLink>
           までご連絡ください。
