@@ -10,19 +10,19 @@ const featuredEvents = [
     title: 'ステージパフォーマンス',
     badge: '屋内 & 屋外',
     desc: 'SCC4階ホールのスペシャルライブ＆芝生広場の軽音・ダンス！熱気あふれるステージをお届け。',
-    to: '/events',
+    to: '/events?category=music',
   },
   {
     title: '模擬店グルメ',
     badge: 'メインストリート',
     desc: '各サークル・学科が趣向を凝らした焼きそば、たこ焼き、スイーツなど美味しい屋台が大集合！',
-    to: '/events',
+    to: '/events?category=food',
   },
   {
     title: '文化・展示・体験',
     badge: '文化館・音楽館',
     desc: '研究発表、美術・写真展示、体験型ワークショップなど、学生の日頃の成果が咲き誇る。',
-    to: '/events',
+    to: '/events?category=culture',
   },
 ];
 

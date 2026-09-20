@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import {
   parallelScheduleData,
   getVenueCategory,
+  timetable,
   type VenueCategory,
   type TimetableSlot,
 } from '~/data/schedule';
@@ -12,7 +14,11 @@ useSeoMeta({
   description: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全33出演プログラムを一覧掲載！',
 });
 
+const route = useRoute();
+const router = useRouter();
+
 const activeDayId = ref<'day1' | 'day2'>('day1');
+const highlightedSlotId = ref<string | null>(null);
 
 // 5会場の定義
 const venueLanes: { key: VenueCategory; label: string; sub: string; colClass: string }[] = [
@@ -82,12 +88,96 @@ const closeActiveSlot = () => {
   activeSlotId.value = null;
 };
 
+// 日程タブの切り替え
+const selectDay = (dayId: 'day1' | 'day2') => {
+  activeDayId.value = dayId;
+  activeSlotId.value = null;
+  highlightedSlotId.value = null;
+
+  // URLクエリも同期（day1なら初期値なのでdayクエリを外し、day2なら?day=day2にする）
+  const query = { ...route.query };
+  if (dayId === 'day2') {
+    query.day = 'day2';
+  } else {
+    delete query.day;
+  }
+  delete query.event;
+  delete query.slot;
+  router.replace({ query, hash: '' });
+};
+
+// スロットへのスクロール実行
+const scrollToSlot = (slotId: string) => {
+  if (!import.meta.client) return;
+  const el = document.getElementById(`slot-${slotId}`);
+  if (!el) return;
+
+  // 1. 横スクロールコンテナを該当レーンへスムーズスクロール
+  const container = el.closest('.timetable-scroll-container') as HTMLElement | null;
+  if (container) {
+    const containerRect = container.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const targetScrollLeft = container.scrollLeft + (elRect.left - containerRect.left) - 100;
+    container.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      behavior: 'smooth'
+    });
+  }
+
+  // 2. 画面全体の縦スクロールを該当カード中央へ
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
+// URLパラメータ（クエリやハッシュ）の解析と適用
+const applyRouteParams = async () => {
+  if (!import.meta.client) return;
+
+  const dayParam = route.query.day as string | undefined;
+  const eventParam =
+    (route.query.event as string) ||
+    (route.query.slot as string) ||
+    (route.hash ? route.hash.replace(/^#/, '').replace(/^slot-/, '') : undefined);
+
+  let targetSlot: TimetableSlot | undefined;
+
+  if (eventParam) {
+    // スロットID (tt-d1-01 など) または イベントID (stage-geino-miyase など) で検索
+    targetSlot = timetable.find((s) => s.slotId === eventParam || s.id === eventParam);
+  }
+
+  if (targetSlot) {
+    activeDayId.value = targetSlot.day === 'DAY2' ? 'day2' : 'day1';
+    activeSlotId.value = targetSlot.slotId;
+    highlightedSlotId.value = targetSlot.slotId;
+
+    await nextTick();
+    setTimeout(() => {
+      scrollToSlot(targetSlot!.slotId);
+    }, 150);
+  } else if (dayParam) {
+    const d = dayParam.toLowerCase();
+    if (d === 'day2' || d === '2') {
+      activeDayId.value = 'day2';
+    } else if (d === 'day1' || d === '1') {
+      activeDayId.value = 'day1';
+    }
+  }
+};
+
 onMounted(() => {
   if (import.meta.client) {
     isHoverDevice.value = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     window.addEventListener('click', closeActiveSlot);
+    applyRouteParams();
   }
 });
+
+watch(
+  () => [route.query.day, route.query.event, route.query.slot, route.hash],
+  () => {
+    applyRouteParams();
+  }
+);
 
 onUnmounted(() => {
   if (import.meta.client) {
@@ -118,7 +208,7 @@ onUnmounted(() => {
               :class="{ active: activeDayId === day.id }"
               role="tab"
               :aria-selected="activeDayId === day.id"
-              @click="activeDayId = day.id; activeSlotId = null;"
+              @click="selectDay(day.id)"
             >
               {{ day.dayName }}（{{ day.dateLabel }}）
             </button>
@@ -205,12 +295,14 @@ onUnmounted(() => {
                   <div
                     v-for="slot in getSlotsForVenue(day.allSlots, venue.key)"
                     :key="slot.slotId"
+                    :id="`slot-${slot.slotId}`"
                     class="program-block"
                     :class="[
                       venue.key + '-block',
                       {
                         'is-special': slot.isSpecial,
-                        'is-active': activeSlotId === slot.slotId
+                        'is-active': activeSlotId === slot.slotId,
+                        'is-highlighted': highlightedSlotId === slot.slotId
                       }
                     ]"
                     :style="{
@@ -545,6 +637,23 @@ onUnmounted(() => {
 .program-block.is-active {
   outline: 2px solid var(--olive);
   outline-offset: 1px;
+}
+
+/* URL指定で強調されたカードのアニメーション */
+.program-block.is-highlighted {
+  animation: pulse-focus 2s infinite ease-in-out;
+  outline: 3px solid #e5ad35 !important;
+  outline-offset: 2px;
+  z-index: 60 !important;
+}
+
+@keyframes pulse-focus {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(229, 173, 53, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(229, 173, 53, 0);
+  }
 }
 
 /* 会場ごとのテーマカラー */

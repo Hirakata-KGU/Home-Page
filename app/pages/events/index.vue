@@ -1,16 +1,86 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
 
 useSeoMeta({
   title: '企画・模擬店・展示一覧｜平潟祭 2026',
-  description: '平潟祭2026の全59企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ）一覧。カテゴリや日程、団体名で簡単検索！',
+  description: '平潟祭2026の全59企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
 });
 
-const selectedCategory = ref<'all' | EventCategory>('all');
-const selectedSubCategory = ref<string>('all');
-const selectedDay = ref<'all' | EventDay>('all');
-const searchQuery = ref('');
+const route = useRoute();
+const router = useRouter();
+
+// URLクエリのパース＆正規化ヘルパー
+const normalizeCategory = (cat: unknown): 'all' | EventCategory => {
+  if (typeof cat !== 'string') return 'all';
+  const c = cat.toLowerCase().trim();
+  if (c === 'food' || c === 'gourmet' || c === '模擬店' || c === 'グルメ') return 'food';
+  if (c === 'culture' || c === '文化館' || c === '展示') return 'culture';
+  if (c === 'music' || c === 'stage' || c === '音楽館' || c === 'ステージ') return 'music';
+  if (c === 'entertainment' || c === 'geino' || c === '芸能' || c === 'talkshow') return 'entertainment';
+  return 'all';
+};
+
+const normalizeDay = (day: unknown): 'all' | EventDay => {
+  if (typeof day !== 'string') return 'all';
+  const d = day.toLowerCase().trim();
+  if (d === 'day1' || d === '1' || d === '1日目') return 'day1';
+  if (d === 'day2' || d === '2' || d === '2日目') return 'day2';
+  if (d === 'both' || d === '両日') return 'both';
+  return 'all';
+};
+
+// クエリパラメータから初期値を復元
+const selectedCategory = ref<'all' | EventCategory>(
+  normalizeCategory(route.query.category || route.query.cat)
+);
+const selectedSubCategory = ref<string>(
+  (typeof (route.query.subCategory || route.query.sub) === 'string'
+    ? (route.query.subCategory || route.query.sub) as string
+    : 'all')
+);
+const selectedDay = ref<'all' | EventDay>(normalizeDay(route.query.day));
+const searchQuery = ref<string>(
+  typeof (route.query.q || route.query.search) === 'string'
+    ? ((route.query.q || route.query.search) as string)
+    : ''
+);
+
+// URLクエリの同期処理
+let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+let isSyncingFromRoute = false;
+
+const syncUrlQuery = (debounce = false) => {
+  if (!import.meta.client || isSyncingFromRoute) return;
+
+  const update = () => {
+    const query: Record<string, string> = {};
+
+    if (searchQuery.value.trim()) {
+      query.q = searchQuery.value.trim();
+    }
+    if (selectedCategory.value !== 'all') {
+      query.category = selectedCategory.value;
+    }
+    if (selectedSubCategory.value !== 'all') {
+      query.sub = selectedSubCategory.value;
+    }
+    if (selectedDay.value !== 'all') {
+      query.day = selectedDay.value;
+    }
+
+    router.replace({ query });
+  };
+
+  if (debounce) {
+    if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(update, 300);
+  } else {
+    if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+    update();
+  }
+};
 
 // カテゴリ変更時にサブカテゴリをリセット
 const onSelectCategory = (catKey: 'all' | EventCategory) => {
@@ -38,11 +108,13 @@ const availableSubCategories = computed(() => {
   return items;
 });
 
-// 各メインカテゴリの件数
+// 各メインカテゴリの件数（categoryListに基づいて動的集計）
 const categoryCounts = computed(() => {
   const counts: Record<string, number> = { all: allEvents.length };
-  for (const cat of ['food', 'culture', 'music']) {
-    counts[cat] = allEvents.filter(e => e.category === cat).length;
+  for (const cat of categoryList) {
+    if (cat.key !== 'all') {
+      counts[cat.key] = allEvents.filter(e => e.category === cat.key).length;
+    }
   }
   return counts;
 });
@@ -94,6 +166,40 @@ const resetFilters = () => {
   selectedDay.value = 'all';
   searchQuery.value = '';
 };
+
+// フィルター変更の監視（URLへ同期）
+watch([selectedCategory, selectedSubCategory, selectedDay], () => {
+  syncUrlQuery(false);
+});
+
+watch(searchQuery, () => {
+  syncUrlQuery(true);
+});
+
+// ブラウザの戻る/進むや外部リンクによるURL変化を監視・状態へ反映
+watch(
+  () => route.query,
+  (newQuery) => {
+    isSyncingFromRoute = true;
+    const nextCat = normalizeCategory(newQuery.category || newQuery.cat);
+    const nextSub = (typeof (newQuery.subCategory || newQuery.sub) === 'string'
+      ? (newQuery.subCategory || newQuery.sub) as string
+      : 'all');
+    const nextDay = normalizeDay(newQuery.day);
+    const nextQ = typeof (newQuery.q || newQuery.search) === 'string'
+      ? ((newQuery.q || newQuery.search) as string)
+      : '';
+
+    if (selectedCategory.value !== nextCat) selectedCategory.value = nextCat;
+    if (selectedSubCategory.value !== nextSub) selectedSubCategory.value = nextSub;
+    if (selectedDay.value !== nextDay) selectedDay.value = nextDay;
+    if (searchQuery.value !== nextQ) searchQuery.value = nextQ;
+
+    setTimeout(() => {
+      isSyncingFromRoute = false;
+    }, 50);
+  }
+);
 </script>
 
 <template>

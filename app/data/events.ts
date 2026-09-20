@@ -52,7 +52,7 @@ export type { TimetableSlot };
 // 2. 企画一覧・詳細ページ用の共通イベント型定義
 // ==========================================
 
-export type EventCategory = 'food' | 'culture' | 'music';
+export type EventCategory = 'food' | 'culture' | 'music' | 'entertainment';
 export type EventDay = 'day1' | 'day2' | 'both';
 
 export interface EventItem {
@@ -184,13 +184,15 @@ export const allEvents: EventItem[] = [
       }
     }
 
+    const isGeino = pf.category === '芸能' || pf.id === 'stage-geino-miyase';
+
     return {
       id: pf.id,
       title: pf.title,
       groupName: pf.groupName,
-      category: 'music',
-      categoryRaw: pf.category || '音楽館',
-      categoryLabel: '音楽館・ステージ',
+      category: isGeino ? 'entertainment' : 'music',
+      categoryRaw: pf.category || (isGeino ? '芸能' : '音楽館'),
+      categoryLabel: isGeino ? '芸能' : '音楽館・ステージ',
       subCategory,
       locationName,
       locationTab: locTab,
@@ -204,8 +206,10 @@ export const allEvents: EventItem[] = [
       tentNo: null,
       room: pf.venueRoom || null,
       photoNo: pf.photoNo || null,
-      gradient: 'linear-gradient(135deg, #1e3d26 0%, #2f5b34 100%)',
-      tags: ['音楽館', subCategory, locationName, participationDays].filter(Boolean) as string[],
+      gradient: isGeino
+        ? 'linear-gradient(135deg, #d48806 0%, #faad14 100%)'
+        : 'linear-gradient(135deg, #1e3d26 0%, #2f5b34 100%)',
+      tags: [isGeino ? '芸能' : '音楽館', subCategory, locationName, participationDays].filter(Boolean) as string[],
       timetableSlots: slots,
     };
   }),
@@ -213,9 +217,10 @@ export const allEvents: EventItem[] = [
 
 export const categoryList: { key: 'all' | EventCategory; label: string; count: number }[] = [
   { key: 'all', label: 'すべて', count: allEvents.length },
-  { key: 'food', label: '模擬店・グルメ', count: foodBooths.length },
-  { key: 'culture', label: '文化館・展示', count: exhibitions.length },
-  { key: 'music', label: '音楽館・ステージ', count: performances.length },
+  { key: 'food', label: '模擬店・グルメ', count: allEvents.filter(e => e.category === 'food').length },
+  { key: 'culture', label: '文化館・展示', count: allEvents.filter(e => e.category === 'culture').length },
+  { key: 'music', label: '音楽館・ステージ', count: allEvents.filter(e => e.category === 'music').length },
+  { key: 'entertainment', label: '芸能', count: allEvents.filter(e => e.category === 'entertainment').length },
 ];
 
 export const eventItems = allEvents;

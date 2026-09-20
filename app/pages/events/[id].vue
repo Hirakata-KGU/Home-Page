@@ -143,10 +143,10 @@ useSeoMeta({
             </NuxtLink>
             <NuxtLink
               v-if="event.timetableSlots && event.timetableSlots.length > 0"
-              to="/schedule"
+              :to="`/schedule?event=${event.id}`"
               class="btn btn-secondary"
             >
-              タイムテーブル一覧を見る →
+              タイムテーブルで時間を見る →
             </NuxtLink>
             <NuxtLink to="/events" class="btn btn-outline">
               企画一覧へ戻る
@@ -239,6 +239,10 @@ useSeoMeta({
 
 .cat-music {
   background: #1e3d26;
+}
+
+.cat-entertainment {
+  background: linear-gradient(135deg, #d48806 0%, #b37400 100%);
 }
 
 .sub-badge {
