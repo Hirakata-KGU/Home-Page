@@ -536,9 +536,8 @@ onUnmounted(() => {
 .program-block:hover,
 .program-block.is-active {
   z-index: 50 !important;
-  height: fit-content !important;
-  height: -moz-fit-content !important;
-  overflow: visible;
+  height: auto !important;
+  overflow: visible !important;
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
@@ -657,7 +656,7 @@ onUnmounted(() => {
 /* ホバーまたはアクティブ時に滑らかにアニメーション出現 */
 .program-block:hover .block-action-row,
 .program-block.is-active .block-action-row {
-  max-height: 40px;
+  max-height: 48px;
   opacity: 1;
   transform: translateY(0);
   margin-top: 6px;

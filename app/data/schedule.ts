@@ -24,7 +24,7 @@ export interface TimetableSlot {
 // タイムテーブル実データ（全33件）
 export const timetable: TimetableSlot[] = (rawTimetable as any[]).map((t) => ({
   ...t,
-  isSpecial: t.id === 'stage-geino-miyase' || t.title?.includes('特別') || t.title?.includes('ゲスト') || false,
+  isSpecial: t.category?.includes('芸能'),
 }));
 
 // イベントIDごとに紐付けられたスロットマップ
@@ -46,14 +46,6 @@ export const timetableDay2 = timetable.filter((s) => s.day === 'DAY2');
 
 export type VenueCategory = 'outdoor' | 'indoor' | 'chapel' | 'gym' | 'bldg1';
 
-export const venueCategoryList: { key: 'all' | VenueCategory; label: string; locationDesc: string }[] = [
-  { key: 'all', label: 'すべての会場', locationDesc: '全ステージ・会場' },
-  { key: 'outdoor', label: '屋外ステージ', locationDesc: '体育館横 芝生広場' },
-  { key: 'indoor', label: '屋内ステージ', locationDesc: 'SCC 4階 ベネットホール' },
-  { key: 'chapel', label: 'チャペル', locationDesc: '礼拝堂' },
-  { key: 'gym', label: '体育館', locationDesc: '体育館アリーナ' },
-  { key: 'bldg1', label: '1号館前', locationDesc: '1号館前 セブンイレブン棟' },
-];
 
 export const getVenueCategory = (venueName: string): VenueCategory => {
   if (venueName.includes('屋外')) return 'outdoor';

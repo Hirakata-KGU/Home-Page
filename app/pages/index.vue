@@ -197,7 +197,7 @@ const visitorGuidelines = [
                 </h4>
                 <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
                   <li><strong>金沢八景駅（京急本線・シーサイドライン）</strong>より徒歩約15分</li>
-                  <li><strong>追浜駅（京急本線）</strong>より徒歩約15分</li>
+                  <li><strong>追浜駅（京急本線）</strong>より徒歩約20分</li>
                   <li>キャンパスまで横浜駅から約35分、品川駅から約55分</li>
                 </ul>
               </div>
