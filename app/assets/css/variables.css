@@ -1,0 +1,49 @@
+:root {
+  /* Theme: sprout (新芽・芽吹き・成長・若葉) */
+  --sprout: #2e7d32;
+  --sprout-light: #43a047;
+  --sprout-bright: #66bb6a;
+  --sprout-pale: #a5d6a7;
+  --sprout-dark: #1b5e20;
+  --sprout-bg: #e8f5e9;
+  --sprout-soft: #f1f8e9;
+
+  /* Theme Palette */
+  --theme-bg: #F8F8ED;
+  --theme-title: #325632;
+  --theme-forest: #2C5E3B;
+  --theme-border: #42845A;
+  --theme-border-light: #69A362;
+  --theme-sprout-light: #B9DD7B;
+  --theme-sprout-grass: #88BD76;
+  --theme-sprout-mid: #619D6E;
+  --theme-sprout-moss: #437C62;
+  --theme-dark: #1B3A24;
+  --theme-accent: #DFF794;
+
+  /* Olive & Green backwards compatibility */
+  --olive: var(--theme-title);
+  --olive-light: var(--theme-border);
+  --olive-dark: var(--theme-dark);
+  --accent: #f9fbf8;
+  --accent-2: #e8f5e9;
+
+  /* Sunlight & Growth Gold */
+  --sun-gold: #f59e0b;
+  --sun-gold-light: #fbbf24;
+  --gold: var(--sun-gold);
+  --gold-light: var(--sun-gold-light);
+
+  /* Neutrals & Base */
+  --text: #1a2e1c;
+  --text-muted: #556b57;
+  --muted: var(--text-muted);
+  --border: var(--theme-border);
+  --bg-main: #F8F8ED;
+  --max-width: 1200px;
+
+  /* Shadows with green tint */
+  --shadow-sm: 0 2px 8px rgba(46, 125, 50, 0.08);
+  --shadow-md: 0 8px 24px rgba(46, 125, 50, 0.1);
+  --shadow-lg: 0 16px 48px rgba(46, 125, 50, 0.14);
+}
