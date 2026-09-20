@@ -41,24 +41,27 @@ export const timetableDay1 = timetable.filter((s) => s.day === 'DAY1');
 export const timetableDay2 = timetable.filter((s) => s.day === 'DAY2');
 
 // ==========================================
-// 2. 会場情報と判定
+// 2. 会場情報と判定（5会場に分離）
 // ==========================================
 
-export type VenueCategory = 'outdoor' | 'indoor' | 'chapel' | 'other';
+export type VenueCategory = 'outdoor' | 'indoor' | 'chapel' | 'gym' | 'bldg1';
 
 export const venueCategoryList: { key: 'all' | VenueCategory; label: string; locationDesc: string }[] = [
   { key: 'all', label: 'すべての会場', locationDesc: '全ステージ・会場' },
   { key: 'outdoor', label: '屋外ステージ', locationDesc: '体育館横 芝生広場' },
   { key: 'indoor', label: '屋内ステージ', locationDesc: 'SCC 4階 ベネットホール' },
-  { key: 'chapel', label: 'チャペル', locationDesc: 'キャンパス チャペル' },
-  { key: 'other', label: '体育館・1号館前', locationDesc: '各指定会場' },
+  { key: 'chapel', label: 'チャペル', locationDesc: '礼拝堂' },
+  { key: 'gym', label: '体育館', locationDesc: '体育館アリーナ' },
+  { key: 'bldg1', label: '1号館前', locationDesc: '1号館前 セブンイレブン棟' },
 ];
 
 export const getVenueCategory = (venueName: string): VenueCategory => {
   if (venueName.includes('屋外')) return 'outdoor';
   if (venueName.includes('屋内') || venueName.includes('SCC') || venueName.includes('ベネット')) return 'indoor';
   if (venueName.includes('チャペル')) return 'chapel';
-  return 'other';
+  if (venueName.includes('体育館')) return 'gym';
+  if (venueName.includes('1号館')) return 'bldg1';
+  return 'bldg1';
 };
 
 // ==========================================
@@ -80,7 +83,8 @@ export interface ParallelTimeSlot {
   outdoor?: StageProgram;
   indoor?: StageProgram;
   chapel?: StageProgram;
-  other?: StageProgram;
+  gym?: StageProgram;
+  bldg1?: StageProgram;
 }
 
 export interface DayParallelSchedule {
@@ -93,7 +97,8 @@ export interface DayParallelSchedule {
     outdoor: TimetableSlot[];
     indoor: TimetableSlot[];
     chapel: TimetableSlot[];
-    other: TimetableSlot[];
+    gym: TimetableSlot[];
+    bldg1: TimetableSlot[];
   };
 }
 
@@ -112,7 +117,8 @@ const buildParallelSchedule = (dayId: 'DAY1' | 'DAY2', dayName: string, dateLabe
     outdoor: daySlots.filter((s) => getVenueCategory(s.venue) === 'outdoor'),
     indoor: daySlots.filter((s) => getVenueCategory(s.venue) === 'indoor'),
     chapel: daySlots.filter((s) => getVenueCategory(s.venue) === 'chapel'),
-    other: daySlots.filter((s) => getVenueCategory(s.venue) === 'other'),
+    gym: daySlots.filter((s) => getVenueCategory(s.venue) === 'gym'),
+    bldg1: daySlots.filter((s) => getVenueCategory(s.venue) === 'bldg1'),
   };
 
   // 全時間ポイントを収集して並び替え
@@ -130,7 +136,6 @@ const buildParallelSchedule = (dayId: 'DAY1' | 'DAY2', dayName: string, dateLabe
       startMinutes: min,
     };
 
-    // 各会場でこの開始時間（またはこの時間枠）に合致するスロットを探す
     for (const s of daySlots) {
       if (s.startTime === tStr) {
         const cat = getVenueCategory(s.venue);
