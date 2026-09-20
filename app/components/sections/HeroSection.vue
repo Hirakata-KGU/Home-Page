@@ -40,7 +40,7 @@ const leaves: LeafItem[] = [
 </script>
 
 <template>
-  <section class="relative w-full h-fit min-h-[calc(100dvh-60px)] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
+  <section class="relative w-full min-h-fit h-[calc(100dvh-60px)] max-h-[1200px] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
     <!-- Top Geometric Border Decorations (Group 3: top-right) -->
     <div class="absolute pointer-events-none opacity-40 -top-40 -right-28 w-[650px] h-[650px] z-[1]" aria-hidden="true">
       <div v-for="size in [650, 600, 550]" :key="size" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" :style="{ width: `${size}px`, height: `${size}px` }">
@@ -56,7 +56,7 @@ const leaves: LeafItem[] = [
     </div>
 
     <!-- Main Container -->
-    <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row items-center justify-between pb-[250px] lg:pb-[150px]">
+    <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-between pb-[300px] lg:pb-[150px]">
       <!-- Title Block (left: 163px, top: 288px) -->
       <div class="flex-1 max-w-[824px] text-center lg:text-left">
         <div class="flex items-end justify-center gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
@@ -76,7 +76,7 @@ const leaves: LeafItem[] = [
       </div>
 
       <!-- Date & Badge Block (Group 1: right side) -->
-      <div class="relative w-[480px] h-[480px] flex items-center justify-center scale-[0.68] sm:scale-[0.85] lg:scale-[0.9] xl:scale-100 transition-transform">
+      <div class="relative w-[calc(480px*0.68)] h-[calc(480px*0.68)] flex items-center justify-center scale-[0.68] sm:w-[calc(480px*0.85)] sm:h-[calc(480px*0.85)] sm:scale-[0.85] lg:w-[calc(480px*0.9)] lg:h-[calc(480px*0.9)] lg:scale-[0.9] xl:w-[480px] xl:h-[480px] xl:scale-100 transition-transform">
         <!-- Polygon 1 -->
         <Svg8 :style="{ width: '480px', height: '480px' }" class="absolute -rotate-[22.5deg]"></Svg8>
         <!-- Polygon 2 -->

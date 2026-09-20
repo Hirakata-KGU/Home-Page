@@ -124,7 +124,7 @@ const visitorGuidelines = [
     <!-- 3. ご案内セクション (背景: #F8F8ED + 上部反転波) -->
     <section class="w-full bg-sprout-bg pb-16 relative z-[6]" id="guide">
       <!-- 反転した4層の波 (rotate 180deg) -->
-      <div class="w-full h-fit leading-none" aria-hidden="true">
+      <div class="w-full h-fit leading-none pb-16" aria-hidden="true">
         <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
       </div>
 
@@ -196,9 +196,9 @@ const visitorGuidelines = [
                   電車でお越しの方
                 </h4>
                 <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
-                  <li><strong>京急本線「金沢八景駅」</strong>より徒歩約15分</li>
-                  <li><strong>シーサイドライン「金沢八景駅」</strong>より徒歩約15分</li>
-                  <li>横浜駅から京急線快速特急で約20分、品川駅から約40分</li>
+                  <li><strong>金沢八景駅（京急本線・シーサイドライン）</strong>より徒歩約15分</li>
+                  <li><strong>追浜駅（京急本線）</strong>より徒歩約15分</li>
+                  <li>キャンパスまで横浜駅から約35分、品川駅から約55分</li>
                 </ul>
               </div>
 
@@ -208,31 +208,18 @@ const visitorGuidelines = [
                   バスでお越しの方
                 </h4>
                 <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
-                  <li><strong>京急バス「関東学院正門」</strong>下車すぐ（金沢八景駅東口より約5分）</li>
+                  <li><strong>京急バス「関東学院正門」</strong>下車すぐ</li>
+                  <li class="marker:content-['※_']"><strong class="text-black">日曜日及び祝日には運行されません。</strong></li>
                 </ul>
               </div>
 
               <!-- Car -->
               <div class="border-t border-gray-100 pt-4">
-                <h4 class="font-bold text-base text-sprout-title mb-2">
-                  お車でお越しの方
-                </h4>
-                <p class="text-sm text-text-muted leading-relaxed bg-sprout-bg/60 p-3 rounded-lg border-l-4 border-amber-500">
-                  <strong>来場者用駐車場はございません。</strong><br>
-                  近隣道路の混雑緩和のため、公共交通機関（京急線・バス）をご利用ください。
-                </p>
-              </div>
 
-              <!-- Official Access Page Button -->
-              <div class="pt-2">
-                <a
-                  href="https://univ.kanto-gakuin.ac.jp/about-university/location.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-primary text-sm px-6 py-3"
-                >
-                  大学公式アクセスページ →
-                </a>
+                <p class="text-sm text-text-muted leading-relaxed bg-sprout-bg/60 p-3 rounded-lg border-l-4 border-amber-500">
+                  <strong class="font-bold text-black">※ 来場者用駐車場はございません。</strong><br>
+                  公共交通機関（京急線・バス）をご利用ください。
+                </p>
               </div>
             </div>
 
