@@ -358,14 +358,14 @@ const visitorGuidelines = [
               role="button"
               tabindex="0"
               :aria-label="item.title"
-              class="shrink-0 snap-center cursor-pointer transition-all duration-300 w-[240px] xs:w-[260px] sm:w-[280px] md:w-[300px] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+              class="shrink-0 snap-center cursor-pointer transition-all duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
               :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
               @click="handleCardClick(idx, item.to)"
               @keydown.enter="handleCardClick(idx, item.to)"
               @dragstart.prevent
             >
               <div
-                class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border-2 transition-all duration-300 shadow-xl select-none"
+                class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-all duration-300 shadow-xl select-none"
                 :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
               >
                 <!-- ぼかした背景写真（枠いっぱいに伸ばす） -->
@@ -652,27 +652,9 @@ const visitorGuidelines = [
   scrollbar-width: none;
 }
 
-/* スワイプコンテナの左右パディング（端のカードも中央にスナップ可能にする） */
+/* スワイプコンテナの左右パディング（カードの可変幅に応じて端のカードも正確に中央スナップ） */
 .events-scroll-container {
-  padding-left: calc(50% - 120px);
-  padding-right: calc(50% - 120px);
-}
-@media (min-width: 480px) {
-  .events-scroll-container {
-    padding-left: calc(50% - 130px);
-    padding-right: calc(50% - 130px);
-  }
-}
-@media (min-width: 640px) {
-  .events-scroll-container {
-    padding-left: calc(50% - 140px);
-    padding-right: calc(50% - 140px);
-  }
-}
-@media (min-width: 768px) {
-  .events-scroll-container {
-    padding-left: calc(50% - 150px);
-    padding-right: calc(50% - 150px);
-  }
+  padding-left: calc(50% - clamp(101px, 15dvh, 158px));
+  padding-right: calc(50% - clamp(101px, 15dvh, 158px));
 }
 </style>
