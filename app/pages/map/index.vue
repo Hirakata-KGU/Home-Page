@@ -182,17 +182,6 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
           </div>
         </div>
       </section>
-
-      <!-- Timetable Link Banner -->
-      <section class="section timetable-link-banner">
-        <div class="timetable-link-content">
-          <div>
-            <h3>ステージ進行やタイムテーブルはこちら</h3>
-            <p>屋内ステージ・屋外ステージの並列タイムテーブルをチェック！</p>
-          </div>
-          <NuxtLink to="/schedule" class="btn btn-primary">タイムテーブルを見る →</NuxtLink>
-        </div>
-      </section>
     </div>
   </div>
 </template>
@@ -390,60 +379,12 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
   margin-bottom: 12px;
 }
 
-.floor-items {
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
-
-.floor-items li {
-  font-size: 14px;
-  color: var(--text);
-  font-weight: 600;
-}
-
-.floor-item-link {
-  color: var(--olive);
-  text-decoration: none;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.floor-item-link:hover {
-  text-decoration: underline;
-}
 
 .arrow-tag {
   font-size: 11px;
   background: var(--accent-2);
   padding: 2px 6px;
   border-radius: 4px;
-}
-
-.timetable-link-banner {
-  background: linear-gradient(135deg, var(--olive) 0%, var(--olive-dark) 100%);
-  color: white;
-}
-
-.timetable-link-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.timetable-link-content h3 {
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-
-.timetable-link-content p {
-  font-size: 14px;
-  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -455,11 +396,6 @@ const currentTab = ref<'campus' | 'culture' | 'music'>('campus');
     width: 60px;
     font-size: 18px;
     padding: 8px;
-  }
-
-  .timetable-link-content {
-    flex-direction: column;
-    text-align: center;
   }
 }
 </style>
