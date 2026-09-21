@@ -23,3 +23,8 @@ logs
 .env.*
 !.env.example
 .aider*
+app/data/exhibitions.json
+app/data/food-booths.json
+app/data/performances.json
+app/data/timetable.json
+app/data/hirakata_festival_data.json
