@@ -22,7 +22,7 @@ const featuredEvents: FeaturedEventItem[] = [
     title: '芸能ステージ',
     badge: 'SCC 4F メインアリーナ',
     image: '/images/events/stage-geino-miyase.jpg',
-    desc: '今年度の平潟祭を彩る豪華ゲストによるスペシャルステージ！特別なパフォーマンスをお見逃しなく。',
+    desc: '',
     to: '/events/stage-geino-miyase',
   },
   {
@@ -30,7 +30,7 @@ const featuredEvents: FeaturedEventItem[] = [
     title: 'ステージパフォーマンス',
     badge: '屋内 & 屋外ステージ',
     image: '/images/top/okugai-stage.jpg',
-    desc: 'SCC4階ホールのスペシャルライブ＆芝生広場の軽音・ダンス！学生たちの情熱が咲き誇るステージ。',
+    desc: '屋内、屋外で共におこなわれるステージパフォーマンス。ダンス、バンド演奏、演劇など、学生たちの熱いパフォーマンスをお楽しみください！',
     to: '/events?category=music',
   },
   {
@@ -46,7 +46,7 @@ const featuredEvents: FeaturedEventItem[] = [
     title: '文化館・展示',
     badge: '文化館・音楽館',
     image: '/images/top/bunkakan.jpg',
-    desc: '研究発表、美術・写真展示、体験型ワークショップなど、学生の日頃の成果が咲き誇る展示発表。',
+    desc: '美術・写真展示、体験型ワークショップなど、学生たちの創造力が光る文化館展示をお楽しみください！',
     to: '/events?category=culture',
   },
 ];
