@@ -121,121 +121,163 @@ const visitorGuidelines = [
       </div>
     </section>
 
-    <!-- 3. ご案内セクション (背景: #F8F8ED + 上部反転波) -->
-    <section class="w-full bg-sprout-bg pb-16 relative z-[6]" id="guide">
+    <!-- 3〜5. 下部コンテンツ群 (ご案内・ご来場にあたって・アクセス：共通ラッパーでセクション境界の途切れを防止) -->
+    <div class="w-full bg-sprout-bg relative z-[6] overflow-hidden">
       <!-- 反転した4層の波 (rotate 180deg) -->
-      <div class="w-full h-fit leading-none pb-16" aria-hidden="true">
+      <div class="w-full h-fit leading-none pb-16 relative z-10" aria-hidden="true">
         <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
       </div>
 
-      <div class="section-container">
-        <!-- Title -->
-        <UiSectionTitle title="ご案内" />
-
-        <!-- 3 Cards Grid (電子パンフレット・平潟祭について・よくある質問 ※絵文字不使用) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
-          <NuxtLink
-            v-for="(item, idx) in guideItems"
-            :key="idx"
-            :to="item.to"
-            class="group bg-white rounded-2xl p-7 min-h-[210px] flex flex-col justify-between no-underline shadow-[0_4px_20px_rgba(46,125,50,0.08)] hover:shadow-[0_12px_32px_rgba(46,125,50,0.18)] border-2 border-sprout-border/20 hover:border-sprout-border transition-all duration-300 hover:-translate-y-1.5"
+      <!-- 背景幾何学装飾 (HeroSection風: 巨大な三重八角形を左右交互に3箇所のみダイナミックに配置) -->
+      <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+        <!-- 1. ご案内エリア (左側見切れ: 三重八角形) -->
+        <div class="absolute top-[100px] -left-28 sm:-left-44 lg:-left-56 w-[380px] h-[380px] sm:w-[540px] sm:h-[540px] lg:w-[650px] lg:h-[650px] -rotate-12 opacity-35">
+          <div
+            v-for="scale in [1, 0.92, 0.84]"
+            :key="scale"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
           >
-            <div>
-              <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
-                {{ item.badge }}
-              </div>
-              <div class="flex items-center gap-2 mb-2.5">
-                <!-- アイコンSVG提供後に配置予定 -->
-                <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
-              </div>
-              <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
-            </div>
-            <div class="flex items-center justify-between text-[13px] font-bold text-sprout-border border-t border-gray-100 pt-3">
-              <span>{{ item.linkText }}</span>
-              <span class="transition-transform group-hover:translate-x-1">→</span>
-            </div>
-          </NuxtLink>
+            <Svg8 class="w-full h-full" stroke-color="#42845A" :stroke-width="1.8" />
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 4. ご来場にあたってセクション (背景: #F8F8ED) -->
-    <section class="w-full bg-sprout-bg pt-2 pb-16 relative z-[6]" id="about">
-      <div class="section-container">
-        <!-- Title -->
-        <UiSectionTitle title="ご来場にあたって" />
+        <!-- 2. ご来場にあたってエリア (右側見切れ: 三重八角形) -->
+        <div class="absolute top-[50%] -right-28 sm:-right-44 lg:-right-56 -translate-y-1/2 w-[400px] h-[400px] sm:w-[560px] sm:h-[560px] lg:w-[660px] lg:h-[660px] rotate-[34.5deg] opacity-35">
+          <div
+            v-for="scale in [1, 0.92, 0.84]"
+            :key="scale"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
+          >
+            <Svg8 class="w-full h-full" stroke-color="#42845A" :stroke-width="1.8" />
+          </div>
+        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-[1121px]">
-          <div v-for="(guide, gIdx) in visitorGuidelines" :key="gIdx" class="guide-card">
-            <h4 class="guide-card-title">{{ guide.title }}</h4>
-            <p class="guide-card-desc">{{ guide.desc }}</p>
+        <!-- 3. アクセスエリア (左下見切れ: 三重八角形) -->
+        <div class="absolute bottom-0 -left-28 sm:-left-44 lg:-left-56 w-[380px] h-[380px] sm:w-[540px] sm:h-[540px] lg:w-[650px] lg:h-[650px] -rotate-[15deg] opacity-35">
+          <div
+            v-for="scale in [1, 0.92, 0.84]"
+            :key="scale"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
+          >
+            <Svg8 class="w-full h-full" stroke-color="#42845A" :stroke-width="1.8" />
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- 5. アクセスセクション (背景: 白または淡い緑 ※絵文字不使用) -->
-    <section class="w-full bg-sprout-bg pt-2 pb-20 relative z-[6]" id="access">
-      <div class="section-container">
-        <!-- Title -->
-        <UiSectionTitle title="アクセス" />
+      <!-- 3. ご案内セクション -->
+      <section class="w-full pb-16 relative z-10" id="guide">
+        <div class="section-container">
+          <!-- Title -->
+          <UiSectionTitle title="ご案内" />
 
-        <div class="w-full max-w-[1121px] bg-white rounded-2xl p-6 sm:p-10 shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            <!-- Access Info Column -->
-            <div class="flex flex-col gap-6">
+          <!-- 3 Cards Grid (電子パンフレット・平潟祭について・よくある質問 ※絵文字不使用) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
+            <NuxtLink
+              v-for="(item, idx) in guideItems"
+              :key="idx"
+              :to="item.to"
+              class="group bg-white rounded-2xl p-7 min-h-[210px] flex flex-col justify-between no-underline shadow-[0_4px_20px_rgba(46,125,50,0.08)] hover:shadow-[0_12px_32px_rgba(46,125,50,0.18)] border-2 border-sprout-border/20 hover:border-sprout-border transition-all duration-300 hover:-translate-y-1.5"
+            >
               <div>
-                <span class="inline-block bg-sprout-bg text-sprout-title text-xs font-bold px-3 py-1 rounded-full border border-sprout-border mb-2">会場</span>
-                <h3 class="text-xl sm:text-2xl font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
-                <p class="text-text-muted text-sm">〒236-8501 神奈川県横浜市金沢区六浦東1-50-1</p>
+                <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
+                  {{ item.badge }}
+                </div>
+                <div class="flex items-center gap-2 mb-2.5">
+                  <!-- アイコンSVG提供後に配置予定 -->
+                  <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
+                </div>
+                <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
               </div>
-
-              <!-- Train -->
-              <div class="border-t border-gray-100 pt-4">
-                <h4 class="font-bold text-base text-sprout-title mb-2">
-                  電車でお越しの方
-                </h4>
-                <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
-                  <li><strong>金沢八景駅（京急本線・シーサイドライン）</strong>より徒歩約15分</li>
-                  <li><strong>追浜駅（京急本線）</strong>より徒歩約20分</li>
-                  <li>キャンパスまで横浜駅から約35分、品川駅から約55分</li>
-                </ul>
+              <div class="flex items-center justify-between text-[13px] font-bold text-sprout-border border-t border-gray-100 pt-3">
+                <span>{{ item.linkText }}</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
               </div>
+            </NuxtLink>
+          </div>
+        </div>
+      </section>
 
-              <!-- Bus -->
-              <div class="border-t border-gray-100 pt-4">
-                <h4 class="font-bold text-base text-sprout-title mb-2">
-                  バスでお越しの方
-                </h4>
-                <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
-                  <li><strong>京急バス「関東学院正門」</strong>下車すぐ</li>
-                  <li class="marker:content-['※_']"><strong class="text-black">日曜日及び祝日には運行されません。</strong></li>
-                </ul>
-              </div>
+      <!-- 4. ご来場にあたってセクション -->
+      <section class="w-full pt-2 pb-16 relative z-10" id="about">
+        <div class="section-container">
+          <!-- Title -->
+          <UiSectionTitle title="ご来場にあたって" />
 
-              <!-- Car -->
-              <div class="border-t border-gray-100 pt-4">
-
-                <p class="text-sm text-text-muted leading-relaxed bg-sprout-bg/60 p-3 rounded-lg border-l-4 border-amber-500">
-                  <strong class="font-bold text-black">※ 来場者用駐車場はございません。</strong><br>
-                  公共交通機関をご利用ください。
-                </p>
-              </div>
-            </div>
-
-            <!-- Map Column -->
-            <div class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex">
-              <iframe
-                class="w-full h-full min-h-[340px] sm:min-h-[420px] border-0"
-                src="https://www.google.com/maps?q=35.323287,139.623311&z=15&output=embed"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                title="関東学院大学 金沢八景キャンパス 地図"
-              />
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-[1121px]">
+            <div v-for="(guide, gIdx) in visitorGuidelines" :key="gIdx" class="guide-card">
+              <h4 class="guide-card-title">{{ guide.title }}</h4>
+              <p class="guide-card-desc">{{ guide.desc }}</p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- 5. アクセスセクション -->
+      <section class="w-full pt-2 pb-20 relative z-10" id="access">
+        <div class="section-container">
+          <!-- Title -->
+          <UiSectionTitle title="アクセス" />
+
+          <div class="w-full max-w-[1121px] bg-white rounded-2xl p-6 sm:p-10 shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+              <!-- Access Info Column -->
+              <div class="flex flex-col gap-6">
+                <div>
+                  <span class="inline-block bg-sprout-bg text-sprout-title text-xs font-bold px-3 py-1 rounded-full border border-sprout-border mb-2">会場</span>
+                  <h3 class="text-xl sm:text-2xl font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
+                  <p class="text-text-muted text-sm">〒236-8501 神奈川県横浜市金沢区六浦東1-50-1</p>
+                </div>
+
+                <!-- Train -->
+                <div class="border-t border-gray-100 pt-4">
+                  <h4 class="font-bold text-base text-sprout-title mb-2">
+                    電車でお越しの方
+                  </h4>
+                  <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
+                    <li><strong>金沢八景駅（京急本線・シーサイドライン）</strong>より徒歩約15分</li>
+                    <li><strong>追浜駅（京急本線）</strong>より徒歩約20分</li>
+                    <li>キャンパスまで横浜駅から約35分、品川駅から約55分</li>
+                  </ul>
+                </div>
+
+                <!-- Bus -->
+                <div class="border-t border-gray-100 pt-4">
+                  <h4 class="font-bold text-base text-sprout-title mb-2">
+                    バスでお越しの方
+                  </h4>
+                  <ul class="text-sm text-text-muted leading-relaxed space-y-1.5 pl-5 list-disc">
+                    <li><strong>京急バス「関東学院正門」</strong>下車すぐ</li>
+                    <li class="marker:content-['※_']"><strong class="text-black">日曜日及び祝日には運行されません。</strong></li>
+                  </ul>
+                </div>
+
+                <!-- Car -->
+                <div class="border-t border-gray-100 pt-4">
+
+                  <p class="text-sm text-text-muted leading-relaxed bg-sprout-bg/60 p-3 rounded-lg border-l-4 border-amber-500">
+                    <strong class="font-bold text-black">※ 来場者用駐車場はございません。</strong><br>
+                    公共交通機関をご利用ください。
+                  </p>
+                </div>
+              </div>
+
+              <!-- Map Column -->
+              <div class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex">
+                <iframe
+                  class="w-full h-full min-h-[340px] sm:min-h-[420px] border-0"
+                  src="https://www.google.com/maps?q=35.323287,139.623311&z=15&output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="関東学院大学 金沢八景キャンパス 地図"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 </template>

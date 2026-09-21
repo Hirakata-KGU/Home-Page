@@ -160,7 +160,6 @@ const guideSubItems = [
               @click="closeMobileMenu"
             >
               <span class="font-bold">{{ sub.name }}</span>
-              <span class="text-xs text-text-muted">{{ sub.desc }}</span>
             </NuxtLink>
           </div>
         </div>
