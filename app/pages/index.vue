@@ -1,30 +1,256 @@
 <script setup lang="ts">
+import { ref, computed, onMounted, nextTick, onBeforeUnmount } from 'vue';
+
 useSeoMeta({
   title: '平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭',
   description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。',
 });
 
-// 1. 企画カードデータ（※アイコンSVG提供後に配置予定）
-const featuredEvents = [
+// 1. 企画カードデータ（芸能ステージ・ステージパフォーマンス・模擬店グルメ・文化館展示の4つ）
+interface FeaturedEventItem {
+  id: string;
+  title: string;
+  badge: string;
+  image: string;
+  desc: string;
+  to: string;
+}
+
+const featuredEvents: FeaturedEventItem[] = [
   {
+    id: 'geino',
+    title: '芸能ステージ',
+    badge: 'SCC 4F メインアリーナ',
+    image: '/images/events/stage-geino-miyase.jpg',
+    desc: '今年度の平潟祭を彩る豪華ゲストによるスペシャルステージ！特別なパフォーマンスをお見逃しなく。',
+    to: '/events/stage-geino-miyase',
+  },
+  {
+    id: 'stage',
     title: 'ステージパフォーマンス',
-    badge: '屋内 & 屋外',
-    desc: 'SCC4階ホールのスペシャルライブ＆芝生広場の軽音・ダンス！熱気あふれるステージをお届け。',
+    badge: '屋内 & 屋外ステージ',
+    image: '/images/top/okugai-stage.jpg',
+    desc: 'SCC4階ホールのスペシャルライブ＆芝生広場の軽音・ダンス！学生たちの情熱が咲き誇るステージ。',
     to: '/events?category=music',
   },
   {
+    id: 'food',
     title: '模擬店グルメ',
     badge: 'メインストリート',
+    image: '/images/top/mogiten.jpg',
     desc: '各サークル・学科が趣向を凝らした焼きそば、たこ焼き、スイーツなど美味しい屋台が大集合！',
     to: '/events?category=food',
   },
   {
-    title: '文化・展示・体験',
+    id: 'culture',
+    title: '文化館・展示',
     badge: '文化館・音楽館',
-    desc: '研究発表、美術・写真展示、体験型ワークショップなど、学生の日頃の成果が咲き誇る。',
+    image: '/images/top/bunkakan.jpg',
+    desc: '研究発表、美術・写真展示、体験型ワークショップなど、学生の日頃の成果が咲き誇る展示発表。',
     to: '/events?category=culture',
   },
 ];
+
+// カルーセル状態管理
+const activeIndex = ref(0);
+const scrollContainer = ref<HTMLElement | null>(null);
+const cardRefs = ref<HTMLElement[]>([]);
+
+// マウスドラッグ（長押しスクロール）状態管理
+const isMouseDown = ref(false);
+let isMouseDownState = false;
+let preventClick = false;
+let startX = 0;
+let scrollStartLeft = 0;
+let movedDistance = 0;
+
+const currentFeaturedEvent = computed(() => {
+  return featuredEvents[activeIndex.value] || featuredEvents[0];
+});
+
+// スクロール時に最も中央に近いカードを判定してアクティブ更新
+const onScroll = () => {
+  const container = scrollContainer.value;
+  if (!container) return;
+  const containerCenter = container.scrollLeft + container.clientWidth / 2;
+  let minDiff = Infinity;
+  let closestIndex = activeIndex.value;
+
+  cardRefs.value.forEach((el, index) => {
+    if (!el) return;
+    const elCenter = el.offsetLeft + el.offsetWidth / 2;
+    const diff = Math.abs(containerCenter - elCenter);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestIndex = index;
+    }
+  });
+
+  if (closestIndex !== activeIndex.value) {
+    activeIndex.value = closestIndex;
+  }
+};
+
+// 指定したインデックスのカードを中央へスムーズスクロール
+const scrollToItem = (index: number) => {
+  if (index < 0 || index >= featuredEvents.length) return;
+  activeIndex.value = index;
+  const el = cardRefs.value[index];
+  if (el && scrollContainer.value) {
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
+  }
+};
+
+// ドラッグ後の誤クリックをキャプチャフェーズで完全に阻止
+const onContainerClickCapture = (e: MouseEvent) => {
+  if (preventClick || movedDistance > 5) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  }
+};
+
+// マウスドラッグスクロール処理
+const onMouseDown = (e: MouseEvent) => {
+  if (e.button !== 0) return;
+  const container = scrollContainer.value;
+  if (!container) return;
+
+  isMouseDownState = true;
+  isMouseDown.value = true;
+  preventClick = false;
+  startX = e.clientX;
+  scrollStartLeft = container.scrollLeft;
+  movedDistance = 0;
+
+  // ドラッグ中はスムーズスクロールやスナップを解除してマウスに完全追従
+  container.style.scrollSnapType = 'none';
+  container.style.scrollBehavior = 'auto';
+
+  if (import.meta.client) {
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  }
+};
+
+const onMouseMove = (e: MouseEvent) => {
+  if (!isMouseDownState) return;
+  const container = scrollContainer.value;
+  if (!container) return;
+
+  const dx = e.clientX - startX;
+  movedDistance = Math.abs(dx);
+
+  if (movedDistance > 5) {
+    preventClick = true;
+    container.scrollLeft = scrollStartLeft - dx;
+  }
+};
+
+const onMouseUp = () => {
+  if (import.meta.client) {
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+  }
+
+  if (!isMouseDownState) return;
+  isMouseDownState = false;
+  isMouseDown.value = false;
+  const container = scrollContainer.value;
+
+  if (container) {
+    container.style.scrollSnapType = 'x mandatory';
+    container.style.scrollBehavior = 'smooth';
+
+    if (preventClick) {
+      onScroll();
+      scrollToItem(activeIndex.value);
+    }
+  }
+
+  // クリックイベントが終了するまで preventClick を true に維持
+  if (preventClick) {
+    setTimeout(() => {
+      preventClick = false;
+      movedDistance = 0;
+    }, 200);
+  }
+};
+
+// カードクリック時の処理
+const handleCardClick = (index: number, to: string) => {
+  // ドラッグした直後の場合は一切の処理を防止
+  if (preventClick || movedDistance > 5) {
+    return;
+  }
+
+  // 芸能ステージの場合は常に詳細ページへ直接遷移
+  if (featuredEvents[index].id === 'geino') {
+    navigateTo(to);
+    return;
+  }
+
+  // それ以外のカードで中央にない場合は中央へスクロール
+  if (activeIndex.value !== index) {
+    scrollToItem(index);
+  } else {
+    // 既に中央にある場合は該当一覧へ遷移
+    navigateTo(to);
+  }
+};
+
+// 矢印ボタンの長押し（ホールド）スクロール対応
+let holdTimer: ReturnType<typeof setInterval> | null = null;
+const startHoldScroll = (direction: 'prev' | 'next') => {
+  if (direction === 'prev') prevItem();
+  else nextItem();
+
+  holdTimer = setInterval(() => {
+    if (direction === 'prev') prevItem();
+    else nextItem();
+  }, 450);
+};
+
+const stopHoldScroll = () => {
+  if (holdTimer) {
+    clearInterval(holdTimer);
+    holdTimer = null;
+  }
+};
+
+const prevItem = () => {
+  if (activeIndex.value > 0) {
+    scrollToItem(activeIndex.value - 1);
+  } else {
+    scrollToItem(featuredEvents.length - 1);
+  }
+};
+
+const nextItem = () => {
+  if (activeIndex.value < featuredEvents.length - 1) {
+    scrollToItem(activeIndex.value + 1);
+  } else {
+    scrollToItem(0);
+  }
+};
+
+onMounted(() => {
+  nextTick(() => {
+    scrollToItem(0);
+  });
+});
+
+onBeforeUnmount(() => {
+  stopHoldScroll();
+  if (import.meta.client) {
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+  }
+});
 
 // 2. ご案内カードデータ（電子パンフレット・平潟祭について・よくある質問 ※アイコンSVG提供後に配置予定）
 const guideItems = [
@@ -78,44 +304,178 @@ const visitorGuidelines = [
     <SectionsHeroSection />
 
     <!-- 2. 企画セクション (背景: #437C62) -->
-    <section class="w-full bg-sprout-moss py-12 px-0 relative z-[5]" id="events">
-      <div class="section-container">
+    <section class="w-full bg-sprout-moss py-12 sm:py-16 px-0 relative z-[5] overflow-hidden" id="events">
+      <div class="w-full flex flex-col items-center">
         <!-- Title -->
         <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
 
-        <!-- 3 Cards Grid (絵文字不使用) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
-          <NuxtLink
-            v-for="(item, idx) in featuredEvents"
-            :key="idx"
-            :to="item.to"
-            class="group bg-white rounded-2xl p-7 min-h-[190px] flex flex-col justify-between no-underline shadow-[0_8px_24px_rgba(27,58,36,0.18)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)] border-2 border-transparent hover:border-sprout-light transition-all duration-300 hover:-translate-y-1.5"
+        <!-- 4 Cards Horizontal Swipeable Carousel (3:4 Vertical Photos with Blurred Backdrop) -->
+        <div class="relative w-full max-w-[1400px] mt-4 mb-6">
+          <!-- Navigation Arrow (Prev) 長押し対応 -->
+          <button
+            type="button"
+            class="hidden sm:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-12 md:h-12 rounded-full bg-sprout-dark/60 hover:bg-sprout-dark text-white backdrop-blur-md items-center justify-center transition-all shadow-lg hover:scale-105 border border-white/20 cursor-pointer select-none"
+            aria-label="前の企画へ"
+            @mousedown.prevent="startHoldScroll('prev')"
+            @mouseup="stopHoldScroll"
+            @mouseleave="stopHoldScroll"
+            @click="prevItem"
           >
-            <div>
-              <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
-                {{ item.badge }}
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <!-- Navigation Arrow (Next) 長押し対応 -->
+          <button
+            type="button"
+            class="hidden sm:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-12 md:h-12 rounded-full bg-sprout-dark/60 hover:bg-sprout-dark text-white backdrop-blur-md items-center justify-center transition-all shadow-lg hover:scale-105 border border-white/20 cursor-pointer select-none"
+            aria-label="次の企画へ"
+            @mousedown.prevent="startHoldScroll('next')"
+            @mouseup="stopHoldScroll"
+            @mouseleave="stopHoldScroll"
+            @click="nextItem"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <!-- Scroll / Swipe Container (マウス長押しドラッグ対応) -->
+          <div
+            ref="scrollContainer"
+            class="events-scroll-container flex flex-row items-center gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory py-4 no-scrollbar select-none"
+            :class="isMouseDown ? 'cursor-grabbing' : 'cursor-grab'"
+            @scroll.passive="onScroll"
+            @mousedown="onMouseDown"
+            @click.capture="onContainerClickCapture"
+            @dragstart.prevent
+          >
+            <div
+              v-for="(item, idx) in featuredEvents"
+              :key="item.id"
+              :ref="(el) => { if (el) cardRefs[idx] = el as HTMLElement; }"
+              role="button"
+              tabindex="0"
+              :aria-label="item.title"
+              class="shrink-0 snap-center cursor-pointer transition-all duration-300 w-[240px] xs:w-[260px] sm:w-[280px] md:w-[300px] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+              :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
+              @click="handleCardClick(idx, item.to)"
+              @keydown.enter="handleCardClick(idx, item.to)"
+              @dragstart.prevent
+            >
+              <div
+                class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border-2 transition-all duration-300 shadow-xl select-none"
+                :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
+              >
+                <!-- ぼかした背景写真（枠いっぱいに伸ばす） -->
+                <NuxtImg
+                  :src="item.image"
+                  aria-hidden="true"
+                  loading="lazy"
+                  draggable="false"
+                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none"
+                />
+
+                <!-- 前面写真（枠外にはみ出ないよう object-contain で配置） -->
+                <NuxtImg
+                  :src="item.image"
+                  :alt="item.title"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                  sizes="xs:260px sm:280px md:300px"
+                  class="relative z-10 w-full h-full object-contain drop-shadow transition-transform duration-300 pointer-events-none select-none"
+                  :class="{ 'hover:scale-105': activeIndex === idx }"
+                />
+
+                <!-- バッジ（左上） -->
+                <div class="absolute top-3 left-3 z-30">
+                  <span class="inline-block bg-sprout-dark/85 backdrop-blur-md text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
+                    {{ item.badge }}
+                  </span>
+                </div>
+
+                <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示） -->
+                <div
+                  v-if="activeIndex === idx"
+                  class="absolute bottom-3 right-3 z-30"
+                >
+                  <span class="inline-flex items-center gap-1 bg-sprout-dark/85 backdrop-blur-md text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
+                    <span>詳細を見る</span>
+                    <span>→</span>
+                  </span>
+                </div>
+
+                <!-- 真ん中以外のものは薄く白くするオーバーレイ -->
+                <div
+                  class="absolute inset-0 z-20 transition-all duration-300 pointer-events-none"
+                  :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/55 backdrop-brightness-110 opacity-100'"
+                />
               </div>
-              <div class="flex items-center gap-2 mb-2.5">
-                <!-- アイコンSVG提供後に配置予定 -->
-                <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
-              </div>
-              <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
             </div>
-            <div class="flex items-center justify-between text-[13px] font-bold text-sprout-border border-t border-gray-100 pt-2.5">
-              <span>詳細を見る</span>
-              <span class="transition-transform group-hover:translate-x-1">→</span>
-            </div>
-          </NuxtLink>
+          </div>
+
+          <!-- Indicator Dots -->
+          <div class="flex items-center justify-center gap-2 mt-4">
+            <button
+              v-for="(item, idx) in featuredEvents"
+              :key="idx"
+              type="button"
+              class="h-2 rounded-full transition-all duration-300 border-none cursor-pointer p-0"
+              :class="activeIndex === idx ? 'w-8 bg-sprout-accent shadow-sm' : 'w-2 bg-white/40 hover:bg-white/70'"
+              :aria-label="`${item.title}を表示`"
+              @click="scrollToItem(idx)"
+            />
+          </div>
         </div>
 
-        <!-- 説明文 & ボタン (絵文字不使用) -->
-        <div class="text-center flex flex-col items-center gap-5 max-w-[800px]">
-          <p class="font-sans font-bold text-base sm:text-lg lg:text-xl leading-relaxed text-white">
-            音楽ライブ、模擬店グルメ、展示発表、参加型イベントなど盛りだくさん！<br>
-            学生たちの情熱が芽吹き、咲き誇る特別な2日間をお楽しみください。
+        <!-- 説明文（現在真ん中にある企画の題名と説明を表記） -->
+        <div class="text-center flex flex-col items-center gap-2.5 max-w-[800px] px-6 min-h-[110px] transition-all duration-300">
+          <h3 class="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-wide m-0">
+            {{ currentFeaturedEvent.title }}
+          </h3>
+          <p class="font-sans font-medium text-sm sm:text-base lg:text-lg leading-relaxed text-white/95 max-w-[650px] m-0">
+            {{ currentFeaturedEvent.desc }}
           </p>
-          <NuxtLink to="/events" class="btn btn-gold px-9 py-3.5 text-base">
-            全企画・模擬店一覧を見る
+        </div>
+
+        <!-- ボタン3つ横並び (場内マップ・タイムテーブル・企画一覧) -->
+        <div class="flex flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 mt-6 w-full max-w-[800px] px-6">
+          <NuxtLink
+            to="/map"
+            class="flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
+          >
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-sprout-border shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+            <span>場内マップ</span>
+          </NuxtLink>
+
+          <NuxtLink
+            to="/schedule"
+            class="flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
+          >
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-sprout-border shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>タイムテーブル</span>
+          </NuxtLink>
+
+          <NuxtLink
+            to="/events"
+            class="btn-gold flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] flex items-center justify-center gap-2 no-underline transition-all duration-200 hover:-translate-y-0.5"
+          >
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>企画一覧</span>
           </NuxtLink>
         </div>
       </div>
@@ -281,3 +641,38 @@ const visitorGuidelines = [
     </div>
   </div>
 </template>
+
+<style scoped>
+/* カルーセルのスクロールバー非表示 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* スワイプコンテナの左右パディング（端のカードも中央にスナップ可能にする） */
+.events-scroll-container {
+  padding-left: calc(50% - 120px);
+  padding-right: calc(50% - 120px);
+}
+@media (min-width: 480px) {
+  .events-scroll-container {
+    padding-left: calc(50% - 130px);
+    padding-right: calc(50% - 130px);
+  }
+}
+@media (min-width: 640px) {
+  .events-scroll-container {
+    padding-left: calc(50% - 140px);
+    padding-right: calc(50% - 140px);
+  }
+}
+@media (min-width: 768px) {
+  .events-scroll-container {
+    padding-left: calc(50% - 150px);
+    padding-right: calc(50% - 150px);
+  }
+}
+</style>
