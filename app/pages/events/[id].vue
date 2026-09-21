@@ -10,14 +10,6 @@ const event = computed(() => {
   return allEvents.find((e) => e.id === eventId.value);
 });
 
-// 同じカテゴリの他のおすすめ企画（最大3件）
-const relatedEvents = computed(() => {
-  if (!event.value) return [];
-  return allEvents
-    .filter((e) => e.category === event.value!.category && e.id !== event.value!.id)
-    .slice(0, 3);
-});
-
 useSeoMeta({
   title: () => event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026',
   description: () => event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ',
@@ -175,23 +167,6 @@ useSeoMeta({
             </NuxtLink>
           </div>
         </article>
-
-        <!-- 関連する企画（同カテゴリ） -->
-        <section v-if="relatedEvents.length > 0" class="related-section">
-          <h3 class="related-heading">こちらもおすすめ（{{ event.categoryLabel }}）</h3>
-          <div class="related-grid">
-            <UiEventCard
-              v-for="rel in relatedEvents"
-              :key="rel.id"
-              :event="rel"
-            />
-          </div>
-        </section>
-
-        <!-- Back to list -->
-        <div class="back-link-wrapper">
-          <NuxtLink to="/events" class="back-link">← 企画・出店一覧に戻る</NuxtLink>
-        </div>
       </div>
 
       <!-- Not Found -->
@@ -511,40 +486,6 @@ useSeoMeta({
 .btn-outline:hover {
   border-color: var(--olive);
   color: var(--olive);
-}
-
-/* 関連企画 */
-.related-section {
-  margin-top: 8px;
-}
-
-.related-heading {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 16px;
-}
-
-.related-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.back-link-wrapper {
-  text-align: center;
-  margin-top: 8px;
-}
-
-.back-link {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--olive);
-  text-decoration: none;
-}
-
-.back-link:hover {
-  text-decoration: underline;
 }
 
 .not-found {
