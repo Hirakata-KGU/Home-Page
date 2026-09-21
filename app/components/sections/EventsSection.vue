@@ -17,14 +17,29 @@ import { eventItems } from '~/data/events';
         v-for="event in eventItems.slice(0, 6)"
         :key="event.id"
         :to="`/events/${event.id}`"
-        class="event-card block no-underline"
+        class="event-card group block no-underline"
       >
         <div
-          class="event-image"
+          class="event-image relative overflow-hidden"
           :style="event.gradient ? { background: event.gradient } : {}"
         >
-          <!-- アイコンSVG提供後に配置予定 -->
-          <span class="text-white/90 text-sm font-bold tracking-wider">{{ event.categoryLabel }}</span>
+          <template v-if="event.imageUrl">
+            <NuxtImg
+              :src="event.imageUrl"
+              aria-hidden="true"
+              loading="lazy"
+              class="absolute inset-0 w-full h-full object-cover filter blur-[20px] scale-125 opacity-60 pointer-events-none select-none"
+            />
+            <NuxtImg
+              :src="event.imageUrl"
+              :alt="event.title"
+              loading="lazy"
+              decoding="async"
+              sizes="sm:100vw md:350px"
+              class="relative z-10 w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          </template>
+          <span v-else class="text-white/90 text-sm font-bold tracking-wider">{{ event.categoryLabel }}</span>
         </div>
         <div class="event-content">
           <span class="event-category">{{ event.categoryLabel }}</span>

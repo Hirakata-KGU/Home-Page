@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { allEvents } from '~/data/events';
 
@@ -65,6 +65,28 @@ useSeoMeta({
           </div>
 
           <h2 class="detail-title">{{ event.title }}</h2>
+
+          <!-- 企画写真（メインビジュアル: 高さは写真に合わせて自動変動・上限付き、余白には常時ぼかし背景を表示） -->
+          <div
+            v-if="event.imageUrl"
+            class="detail-featured-media"
+          >
+            <NuxtImg
+              :src="event.imageUrl"
+              class="ambient-bg"
+              aria-hidden="true"
+              loading="lazy"
+            />
+            <NuxtImg
+              :src="event.imageUrl"
+              :alt="`${event.title} - ${event.organizer}`"
+              class="featured-photo"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              sizes="sm:100vw md:900px"
+            />
+          </div>
 
           <!-- 基本情報グリッド -->
           <div class="info-grid">
@@ -158,20 +180,11 @@ useSeoMeta({
         <section v-if="relatedEvents.length > 0" class="related-section">
           <h3 class="related-heading">こちらもおすすめ（{{ event.categoryLabel }}）</h3>
           <div class="related-grid">
-            <NuxtLink
+            <UiEventCard
               v-for="rel in relatedEvents"
               :key="rel.id"
-              :to="`/events/${rel.id}`"
-              class="related-card"
-            >
-              <div class="related-top">
-                <span class="related-cat">{{ rel.subCategory }}</span>
-                <span class="related-day">{{ rel.dayLabel }}</span>
-              </div>
-              <h4 class="related-title">{{ rel.title }}</h4>
-              <div class="related-org">{{ rel.organizer }}</div>
-              <div class="related-loc">{{ rel.locationName }}</div>
-            </NuxtLink>
+              :event="rel"
+            />
           </div>
         </section>
 
@@ -295,8 +308,50 @@ useSeoMeta({
   font-size: 30px;
   font-weight: 900;
   color: var(--text);
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   line-height: 1.3;
+}
+
+.detail-featured-media {
+  position: relative;
+  margin-bottom: 32px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border);
+  background: var(--bg-alt, #fafaf9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 常時敷き詰められるアンビエント背景（上下・左右の余白を写真の色味で満たす） */
+.ambient-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(28px);
+  transform: scale(1.25);
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 前面の本体写真（全体が見切れることなく表示され、高さ上限内で写真に合わせて自動伸縮） */
+.featured-photo {
+  position: relative;
+  z-index: 2;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
 }
 
 .info-grid {
@@ -472,59 +527,8 @@ useSeoMeta({
 
 .related-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-.related-card {
-  background: white;
-  padding: 16px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s ease;
-}
-
-.related-card:hover {
-  border-color: var(--olive);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-sm);
-}
-
-.related-top {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 11px;
-}
-
-.related-cat {
-  color: var(--olive);
-  font-weight: 700;
-}
-
-.related-day {
-  color: var(--muted);
-}
-
-.related-title {
-  font-size: 15px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  color: var(--text);
-}
-
-.related-org {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 4px;
-}
-
-.related-loc {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--olive);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }
 
 .back-link-wrapper {
