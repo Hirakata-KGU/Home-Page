@@ -54,20 +54,10 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
   ],
 
-  nitro: {
+  nitro: { //Nuxtを動かすサーバーエンジン 静的サイトの出力も行う
     preset: 'github-pages',
     prerender: {
-      routes: [
-        '/',
-        '/info/about',
-        '/info/pamphlet',
-        '/info/faq',
-        '/events',
-        '/schedule',
-        '/map',
-        '/info/contact',
-      ],
-      crawlLinks: true,
+      crawlLinks: true, // "/"から始まり、リンク先として見つかったページを芋づる式にすべて静的 HTML として書き出す
     },
   },
 })
