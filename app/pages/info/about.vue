@@ -100,10 +100,12 @@ onBeforeUnmount(() => {
               :key="item.src"
               class="slide-image-wrapper"
             >
-              <img
+              <NuxtImg
                 :src="item.src"
                 :alt="item.alt"
                 loading="lazy"
+                format="webp"
+                sizes="xs:100vw sm:100vw md:1000px"
                 class="slide-image"
               />
             </div>
@@ -156,8 +158,8 @@ onBeforeUnmount(() => {
         <div class="greeting-card">
           <!-- 写真スペース（写真配置用プレースホルダー） -->
           <div class="greeting-photo-wrapper">
-            <!-- 写真を用意した際は以下のimgタグを使用してください -->
-            <!-- <img src="/images/greeting/leader.jpg" alt="第77回 平潟祭実行委員長" class="greeting-photo" /> -->
+            <!-- 写真を用意した際は以下のNuxtImgタグを使用してください -->
+            <!-- <NuxtImg src="/images/greeting/leader.jpg" alt="第77回 平潟祭実行委員長" format="webp" class="greeting-photo" /> -->
             <div class="greeting-photo-placeholder">
               <svg class="w-12 h-12 text-sprout/40 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
