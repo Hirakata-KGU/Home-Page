@@ -46,12 +46,11 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
       id: 'no3',
       name: '3号館',
       subName: 'Building No.3',
-      description: '研究・実験や学術系の体験型ワークショップ、ポスター展示が行われる棟です。',
+      description: '1階には休憩・飲食スペースを設けているほか、GREEN×EXPOと連携した特別出店もお楽しみいただけます。',
       floors: [
         {
           floor: '2F',
           floorLabel: '2階 教室フロア',
-          description: '数学ポスター展示、味覚の体験、体験型ワークショップを開催',
           events: no3_2F,
         },
       ],
@@ -65,7 +64,6 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
         {
           floor: '1F',
           floorLabel: '1階 教室展示',
-          description: '天文部 昴による作品展示',
           events: no6_1F,
         },
       ],
@@ -74,24 +72,21 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
       id: 'no7',
       name: '7号館（音楽館）',
       subName: 'Building No.7 / Music Hall',
-      description: '軽音・JAZZ・フォークソング・ウエスタンなど多彩な音楽サークルのライブが繰り広げられる音楽棟です。',
+      description: '軽音・JAZZ・フォークソング・ウエスタンなど多彩な音楽サークルのライブが繰り広げられます。',
       floors: [
         {
           floor: '2F',
           floorLabel: '2階 ライブフロア',
-          description: '軽音楽部・アルティメイト軽音楽部によるバンドライブ',
           events: no7_2F,
         },
         {
           floor: '3F',
           floorLabel: '3階 ライブフロア',
-          description: 'でんでん虫（バンド）・JAZZ部によるライブ演奏',
           events: no7_3F,
         },
         {
           floor: '4F',
           floorLabel: '4階 ライブフロア',
-          description: 'ウエスタン部・フォークソング部によるバンドライブ',
           events: no7_4F,
         },
       ],
@@ -100,24 +95,21 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
       id: 'no8',
       name: '8号館（文化館）',
       subName: 'Building No.8 / Culture Hall',
-      description: '美術・写真・鉄道・模型・マンガ・放送研究・演劇など、文化系サークルの多彩な作品展示と公演が集結する拠点です。',
+      description: '美術・写真・鉄道・模型・マンガ・放送研究・演劇など、文化系サークルの多彩な作品展示と公演が集結する建物です。',
       floors: [
         {
           floor: '1F',
           floorLabel: '1階 エントランス＆展示・公演',
-          description: '新選組（公演）、模型部展示、まんが研究会 Colors展示',
           events: no8_1F,
         },
         {
           floor: '2F',
           floorLabel: '2階 文化作品・体験フロア',
-          description: 'Rainbow展示、放送研究会作品発表、ワンダーフォーゲル部報告、鉄道研究部展示、美術部作品展',
           events: no8_2F,
         },
         {
           floor: '3F',
           floorLabel: '3階 特別企画・体験フロア',
-          description: '筋トレサークル OYSTARS マッスルコンテスト、ボードゲーム同好会 体験・紹介',
           events: no8_3F,
         },
       ],
@@ -126,12 +118,11 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
       id: 'scc',
       name: '屋内ステージ（SCC）',
       subName: 'SCC (Student Community Center) / Indoor Stage',
-      description: '学生センター（SCC）4階 ベネットホール。オーケストラ、吹奏楽、合唱、そして豪華ゲストトークショーが開催される屋内メインステージです。',
+      description: 'オーケストラ、吹奏楽、合唱、そして豪華ゲストトークショーが開催される屋内ステージです。',
       floors: [
         {
           floor: '4F',
           floorLabel: '4階 ベネットホール（屋内メインステージ）',
-          description: 'オーケストラ・管弦楽・吹奏楽・アカペラ合唱の本格演奏、および宮世琉弥スペシャルトークショー',
           events: scc_4F,
         },
       ],

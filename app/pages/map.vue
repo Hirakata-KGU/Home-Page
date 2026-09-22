@@ -119,7 +119,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
             <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
               {{ currentTabInfo?.title }}
             </h2>
-            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium max-w-2xl mx-auto">
+            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium mx-auto">
               {{ currentBuilding.description }}
             </p>
           </div>
