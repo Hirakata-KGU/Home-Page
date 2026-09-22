@@ -99,13 +99,25 @@ useSeoMeta({
           <div class="info-grid">
             <div class="info-item">
               <span class="info-label">開催場所</span>
-              <span class="info-value location-highlight">
-                <svg class="w-4 h-4 inline-block mr-1 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                {{ event.locationName }}
-              </span>
+              <NuxtLink
+                :to="mapUrl"
+                class="location-link group"
+                title="場内マップで場所を確認"
+              >
+                <div class="location-main">
+                  <svg class="w-4 h-4 text-olive shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span class="location-name">{{ event.locationName }}</span>
+                </div>
+                <span class="location-badge">
+                  <span>マップを見る</span>
+                  <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </span>
+              </NuxtLink>
             </div>
 
             <div class="info-item">
@@ -142,13 +154,27 @@ useSeoMeta({
 
           <!-- 音楽館・ステージ専用：タイムテーブル出演スケジュール -->
           <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="detail-section timetable-section">
-            <h3 class="section-heading">ステージ出演スケジュール</h3>
-            <p class="section-subtext">以下のタイムテーブル枠に出演を予定しています。</p>
+            <div class="timetable-header-row">
+              <h3 class="section-heading !mb-0 !border-b-0 !pb-0">ステージ出演スケジュール</h3>
+              <NuxtLink
+                :to="`/schedule?event=${event.id}`"
+                class="timetable-all-link group"
+                title="タイムテーブルで確認"
+              >
+                <span>タイムテーブルで確認</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </NuxtLink>
+            </div>
+            <p class="section-subtext">タップすると該当のタイムテーブルへジャンプします。</p>
             <div class="timetable-slot-list">
-              <div
+              <NuxtLink
                 v-for="(slot, idx) in event.timetableSlots"
                 :key="idx"
-                class="timetable-slot-card"
+                :to="slot.slotId ? `/schedule?slot=${slot.slotId}` : `/schedule?event=${event.id}`"
+                class="timetable-slot-card is-clickable group"
+                title="タイムテーブルでこの枠を見る"
               >
                 <div class="slot-day-badge">{{ slot.day }}</div>
                 <div class="slot-body">
@@ -156,30 +182,21 @@ useSeoMeta({
                   <div class="slot-venue">会場: {{ slot.venue }}</div>
                   <div class="slot-title">{{ slot.title }}</div>
                 </div>
-              </div>
+                <div class="slot-action">
+                  <span class="slot-action-btn">
+                    <span>時間を見る</span>
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </span>
+                </div>
+              </NuxtLink>
             </div>
           </div>
 
           <!-- タグ一覧 -->
-          <div v-if="event.tags && event.tags.length" class="tags-row">
+          <div v-if="event.tags && event.tags.length" class="tags-row !mb-0">
             <span v-for="tag in event.tags" :key="tag" class="tag">#{{ tag }}</span>
-          </div>
-
-          <!-- アクション導線ボタン -->
-          <div class="action-buttons">
-            <NuxtLink :to="mapUrl" class="btn btn-primary">
-              場内マップで場所を確認 →
-            </NuxtLink>
-            <NuxtLink
-              v-if="event.timetableSlots && event.timetableSlots.length > 0"
-              :to="`/schedule?event=${event.id}`"
-              class="btn btn-secondary"
-            >
-              タイムテーブルで時間を見る →
-            </NuxtLink>
-            <NuxtLink to="/events" class="btn btn-outline">
-              企画一覧へ戻る
-            </NuxtLink>
           </div>
         </article>
       </div>
@@ -373,8 +390,61 @@ useSeoMeta({
   color: var(--text);
 }
 
-.location-highlight {
+.location-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 8px;
+  padding: 8px 12px;
+  background: white;
+  border: 1.5px solid rgba(47, 91, 52, 0.2);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.location-link:hover {
+  border-color: var(--olive);
+  background: #f4f8f5;
+  box-shadow: 0 2px 8px rgba(47, 91, 52, 0.12);
+  transform: translateY(-1px);
+}
+
+.location-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: var(--olive);
+  min-width: 0;
+}
+
+.location-name {
+  word-break: break-word;
+}
+
+.location-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--olive);
+  background: rgba(47, 91, 52, 0.08);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.location-link:hover .location-badge {
+  background: var(--olive);
+  color: white;
 }
 
 .detail-section {
@@ -422,6 +492,38 @@ useSeoMeta({
 }
 
 /* タイムテーブルスロット */
+.timetable-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+.timetable-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--olive);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #f4f8f5;
+  border: 1px solid rgba(47, 91, 52, 0.2);
+  transition: all 0.2s ease;
+}
+
+.timetable-all-link:hover {
+  background: var(--olive);
+  color: white;
+  border-color: var(--olive);
+}
+
 .timetable-slot-list {
   display: grid;
   gap: 12px;
@@ -437,6 +539,19 @@ useSeoMeta({
   border-radius: 12px;
 }
 
+.timetable-slot-card.is-clickable {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timetable-slot-card.is-clickable:hover {
+  transform: translateY(-2px);
+  background: #edf5ef;
+  border-color: var(--olive);
+  box-shadow: 0 4px 12px rgba(47, 91, 52, 0.12);
+}
+
 .slot-day-badge {
   background: var(--olive);
   color: white;
@@ -445,6 +560,7 @@ useSeoMeta({
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
 .slot-body {
@@ -468,11 +584,39 @@ useSeoMeta({
   color: var(--muted);
 }
 
+.slot-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.slot-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--olive);
+  background: white;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(47, 91, 52, 0.25);
+  transition: all 0.2s ease;
+}
+
+.timetable-slot-card.is-clickable:hover .slot-action-btn {
+  background: var(--olive);
+  color: white;
+  border-color: var(--olive);
+}
+
 .tags-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-top: 12px;
+  margin-bottom: 0;
 }
 
 .tag {
@@ -481,26 +625,6 @@ useSeoMeta({
   background: var(--accent);
   padding: 4px 10px;
   border-radius: 6px;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
-}
-
-.btn-outline {
-  background: white;
-  border: 2px solid var(--border);
-  color: var(--text);
-  font-weight: 700;
-}
-
-.btn-outline:hover {
-  border-color: var(--olive);
-  color: var(--olive);
 }
 
 .not-found {
@@ -518,16 +642,14 @@ useSeoMeta({
   .detail-title {
     font-size: 22px;
   }
-  .action-buttons {
-    flex-direction: column;
-  }
-  .action-buttons .btn {
-    width: 100%;
-    text-align: center;
-  }
   .timetable-slot-card {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+  .slot-action {
+    width: 100%;
+    justify-content: flex-end;
   }
 }
 </style>
