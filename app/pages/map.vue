@@ -42,14 +42,16 @@ const setTab = (key: TabKey, isPush = true) => {
   }
 };
 
-const tabs: { key: TabKey; label: string; sub: string }[] = [
-  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店' },
-  { key: 'no3', label: '社会連携館', sub: '3号館' },
-  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F' },
-  { key: 'no7', label: '音楽館', sub: '7号館' },
-  { key: 'no8', label: '文化館 (8号館)', sub: '8号館' },
-  { key: 'no6', label: '文化館 (6号館)', sub: '6号館' },
+const tabs: { key: TabKey; label: string; sub: string; title: string }[] = [
+  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店', title: '全体マップ' },
+  { key: 'no3', label: '社会連携館', sub: '3号館', title: '社会連携館 (3号館)' },
+  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F', title: '屋内ステージ (SCC 4F)' },
+  { key: 'no7', label: '音楽館', sub: '7号館', title: '音楽館 (7号館)' },
+  { key: 'no8', label: '文化館 (8号館)', sub: '8号館', title: '文化館 (8号館)' },
+  { key: 'no6', label: '文化館 (6号館)', sub: '6号館', title: '文化館 (6号館)' },
 ];
+
+const currentTabInfo = computed(() => tabs.find(t => t.key === currentTab.value));
 
 const buildingDataList = getBuildingDataList();
 
@@ -64,15 +66,6 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
     window.scrollTo({ top: 260, behavior: 'smooth' });
   }
 };
-
-const handleBackToMap = () => {
-  // 全体マップから遷移してきた場合は履歴で戻る
-  if (typeof window !== 'undefined' && window.history.state?.back) {
-    router.back();
-  } else {
-    setTab('all', true);
-  }
-};
 </script>
 
 <template>
@@ -83,9 +76,9 @@ const handleBackToMap = () => {
       :breadcrumbs="[{ name: '場内マップ' }]"
     />
 
-    <div class="page-container">
-      <!-- 1. マップ選択box（マップ本体と横幅を完全統一：max-width: 820px） -->
-      <nav class="map-nav-wrapper" aria-label="場内エリア切り替え">
+    <div class="page-container pb-20">
+      <!-- 1. マップ選択box -->
+      <nav class="map-nav-wrapper pb-6 sm:pb-8" aria-label="場内エリア切り替え">
         <div class="tab-grid" role="tablist">
           <button
             v-for="t in tabs"
@@ -104,44 +97,31 @@ const handleBackToMap = () => {
 
       <!-- 2. 全体マップタブ -->
       <Transition name="fade-fast" mode="out-in">
-        <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section pt-10">
-          <!-- その下の文字（横幅をマップ本体と完全統一） -->
-          <div class="section-heading-box">
+        <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section">
+          <!-- その下の文字 -->
+          <div class="section-heading-box pb-4 sm:pb-6">
             <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
-              キャンパス全体 ＆ 模擬店エリア
+              {{ currentTabInfo?.title }}
             </h2>
             <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium">
-              Overall Campus & Food Stalls Map
+              キャンパス ＆ 模擬店エリア
             </p>
           </div>
 
-          <!-- 地図説明 ＆ 地図（CampusOverallMap内部も max-width: 820px） -->
+          <!-- 地図説明 ＆ 地図（全体マップは最初の幅 max-width: 820px） -->
           <CampusOverallMap @select-building="handleSelectBuildingFromMap" />
         </section>
 
         <!-- 3. 建物別タブ（3号館、6号館、7号館、8号館、SCC） -->
         <section v-else-if="currentBuilding" :key="`tab-${currentBuilding.id}`" class="building-detail-section">
-          <!-- 建物案内ヘッダー（max-width: 820px で統一） -->
-          <div class="building-header-card">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <div class="building-badge-pill">{{ currentBuilding.subName }}</div>
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34] mt-2">
-                  {{ currentBuilding.name }} フロア案内
-                </h2>
-                <p class="text-xs sm:text-sm text-[#4b5563] mt-2 leading-relaxed max-w-2xl">
-                  {{ currentBuilding.description }}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                class="back-to-map-btn"
-                @click="handleBackToMap"
-              >
-                ← 全体マップに戻る
-              </button>
-            </div>
+          <!-- 建物案内見出し（ボタン表記と統一） -->
+          <div class="section-heading-box pb-4 sm:pb-6">
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
+              {{ currentTabInfo?.title }}
+            </h2>
+            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium max-w-2xl mx-auto">
+              {{ currentBuilding.description }}
+            </p>
           </div>
 
           <!-- 階層（フロア）ごとの企画カード一覧 -->
@@ -151,16 +131,13 @@ const handleBackToMap = () => {
               :key="fl.floor"
               class="floor-block"
             >
-              <!-- フロア見出し -->
+              <!-- フロア見出し（サブの薄い文字は削除） -->
               <div class="floor-heading-row">
                 <div class="floor-badge-tag">{{ fl.floor }}</div>
                 <div>
                   <h3 class="text-base sm:text-lg font-extrabold text-[#2f5b34]">
                     {{ fl.floorLabel }}
                   </h3>
-                  <p v-if="fl.description" class="text-xs text-[#6b7280] mt-0.5">
-                    {{ fl.description }}
-                  </p>
                 </div>
               </div>
 
@@ -186,13 +163,17 @@ const handleBackToMap = () => {
 <style scoped>
 .map-page {
   width: 100%;
+  display: flex;
   overflow-x: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 0 50px 0;
 }
 
 /* ページ全体の共通コンテナ */
 .page-container {
-  max-width: 820px; /* マップ選択box、見出し、地図、説明すべてこの幅に統一 */
-  margin: -32px auto 80px;
+  max-width: 1400px;
   padding: 0 16px;
   position: relative;
   z-index: 10;
@@ -203,10 +184,10 @@ const handleBackToMap = () => {
   box-sizing: border-box;
 }
 
-/* 1. マップ選択box: 画面幅ピッタリ、はみ出し・見切れゼロ */
+/* 1. マップ選択box（最大幅1400px） */
 .map-nav-wrapper {
   width: 100%;
-  max-width: 820px;
+  max-width: 840px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -273,15 +254,15 @@ const handleBackToMap = () => {
   opacity: 0.95;
 }
 
-/* 2. その下の文字（見出し） */
+/* 2. その下の文字（見出し：最大幅1400px） */
 .section-heading-box {
   text-align: center;
   margin: 4px auto 16px;
   width: 100%;
-  max-width: 820px;
+  max-width: 1400px;
 }
 
-/* 全体マップセクション */
+/* 全体マップセクション（地図は最初の幅 max-width: 820px） */
 .map-content-section {
   width: 100%;
   max-width: 820px;
@@ -289,50 +270,12 @@ const handleBackToMap = () => {
   box-sizing: border-box;
 }
 
-/* 3. 建物詳細セクション（max-width: 820px 統一） */
+/* 3. 建物詳細セクション（企画一覧は広々 max-width: 1400px） */
 .building-detail-section {
   width: 100%;
-  max-width: 820px;
+  max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
-}
-
-.building-header-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f6faed 100%);
-  border: 1px solid var(--border, #e5e5e5);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  box-sizing: border-box;
-}
-
-.building-badge-pill {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--olive, #2f5b34);
-  background: rgba(47, 91, 52, 0.1);
-  padding: 2px 8px;
-  border-radius: 20px;
-}
-
-.back-to-map-btn {
-  align-self: flex-start;
-  padding: 8px 16px;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--olive, #2f5b34);
-  background: white;
-  border: 1.5px solid var(--olive, #2f5b34);
-  border-radius: 50px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-}
-
-.back-to-map-btn:hover {
-  background: var(--olive, #2f5b34);
-  color: white;
 }
 
 .floor-block {
