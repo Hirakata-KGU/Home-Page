@@ -35,11 +35,6 @@ const normalizeDay = (day: unknown): 'all' | EventDay => {
 const selectedCategory = ref<'all' | EventCategory>(
   normalizeCategory(route.query.category || route.query.cat)
 );
-const selectedSubCategory = ref<string>(
-  (typeof (route.query.subCategory || route.query.sub) === 'string'
-    ? (route.query.subCategory || route.query.sub) as string
-    : 'all')
-);
 const selectedDay = ref<'all' | EventDay>(normalizeDay(route.query.day));
 const searchQuery = ref<string>(
   typeof (route.query.q || route.query.search) === 'string'
@@ -63,9 +58,6 @@ const syncUrlQuery = (debounce = false) => {
     if (selectedCategory.value !== 'all') {
       query.category = selectedCategory.value;
     }
-    if (selectedSubCategory.value !== 'all') {
-      query.sub = selectedSubCategory.value;
-    }
     if (selectedDay.value !== 'all') {
       query.day = selectedDay.value;
     }
@@ -82,31 +74,10 @@ const syncUrlQuery = (debounce = false) => {
   }
 };
 
-// カテゴリ変更時にサブカテゴリをリセット
+// カテゴリ変更
 const onSelectCategory = (catKey: 'all' | EventCategory) => {
   selectedCategory.value = catKey;
-  selectedSubCategory.value = 'all';
 };
-
-// 現在選択されているカテゴリに応じたサブカテゴリのリスト
-const availableSubCategories = computed(() => {
-  const eventsInCat = selectedCategory.value === 'all'
-    ? allEvents
-    : allEvents.filter(e => e.category === selectedCategory.value);
-
-  const map = new Map<string, number>();
-  for (const ev of eventsInCat) {
-    if (ev.subCategory) {
-      map.set(ev.subCategory, (map.get(ev.subCategory) || 0) + 1);
-    }
-  }
-
-  const items: { name: string; count: number }[] = [];
-  for (const [name, count] of map.entries()) {
-    items.push({ name, count });
-  }
-  return items;
-});
 
 // 各メインカテゴリの件数（categoryListに基づいて動的集計）
 const categoryCounts = computed(() => {
@@ -124,11 +95,6 @@ const filteredEvents = computed(() => {
   return allEvents.filter((event) => {
     // カテゴリフィルター
     if (selectedCategory.value !== 'all' && event.category !== selectedCategory.value) {
-      return false;
-    }
-
-    // サブカテゴリフィルター
-    if (selectedSubCategory.value !== 'all' && event.subCategory !== selectedSubCategory.value) {
       return false;
     }
 
@@ -162,13 +128,12 @@ const filteredEvents = computed(() => {
 // 全条件リセット
 const resetFilters = () => {
   selectedCategory.value = 'all';
-  selectedSubCategory.value = 'all';
   selectedDay.value = 'all';
   searchQuery.value = '';
 };
 
 // フィルター変更の監視（URLへ同期）
-watch([selectedCategory, selectedSubCategory, selectedDay], () => {
+watch([selectedCategory, selectedDay], () => {
   syncUrlQuery(false);
 });
 
@@ -182,16 +147,12 @@ watch(
   (newQuery) => {
     isSyncingFromRoute = true;
     const nextCat = normalizeCategory(newQuery.category || newQuery.cat);
-    const nextSub = (typeof (newQuery.subCategory || newQuery.sub) === 'string'
-      ? (newQuery.subCategory || newQuery.sub) as string
-      : 'all');
     const nextDay = normalizeDay(newQuery.day);
     const nextQ = typeof (newQuery.q || newQuery.search) === 'string'
       ? ((newQuery.q || newQuery.search) as string)
       : '';
 
     if (selectedCategory.value !== nextCat) selectedCategory.value = nextCat;
-    if (selectedSubCategory.value !== nextSub) selectedSubCategory.value = nextSub;
     if (selectedDay.value !== nextDay) selectedDay.value = nextDay;
     if (searchQuery.value !== nextQ) searchQuery.value = nextQ;
 
@@ -255,29 +216,6 @@ watch(
           </div>
         </div>
 
-        <!-- サブカテゴリ（絞り込みチップ） -->
-        <div v-if="availableSubCategories.length > 1" class="filter-group sub-category-group">
-          <div class="filter-label">ジャンル / 形態:</div>
-          <div class="sub-chip-list">
-            <button
-              class="sub-chip"
-              :class="{ active: selectedSubCategory === 'all' }"
-              @click="selectedSubCategory = 'all'"
-            >
-              すべて
-            </button>
-            <button
-              v-for="sub in availableSubCategories"
-              :key="sub.name"
-              class="sub-chip"
-              :class="{ active: selectedSubCategory === sub.name }"
-              @click="selectedSubCategory = sub.name"
-            >
-              {{ sub.name }} ({{ sub.count }})
-            </button>
-          </div>
-        </div>
-
         <!-- 日程フィルター -->
         <div class="filter-group day-filter-group">
           <div class="filter-label">開催日:</div>
@@ -312,7 +250,7 @@ watch(
             該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 59 件
           </div>
           <button
-            v-if="selectedCategory !== 'all' || selectedSubCategory !== 'all' || selectedDay !== 'all' || searchQuery"
+            v-if="selectedCategory !== 'all' || selectedDay !== 'all' || searchQuery"
             class="reset-text-btn"
             @click="resetFilters"
           >
@@ -462,34 +400,6 @@ watch(
 .tab-btn.active .tab-count {
   background: rgba(255, 255, 255, 0.25);
   color: white;
-}
-
-.sub-chip-list {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.sub-chip {
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--accent);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sub-chip:hover {
-  border-color: var(--olive);
-}
-
-.sub-chip.active {
-  background: var(--olive-light, #4a7f52);
-  color: white;
-  border-color: var(--olive-light, #4a7f52);
 }
 
 .day-filter {
