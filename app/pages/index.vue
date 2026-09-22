@@ -56,23 +56,48 @@ const activeIndex = ref(0);
 const scrollContainer = ref<HTMLElement | null>(null);
 const cardRefs = ref<HTMLElement[]>([]);
 
-// マウスドラッグ（長押しスクロール）状態管理
+// マウス＆タッチドラッグ（長押しスクロール）状態管理
 const isMouseDown = ref(false);
 let isMouseDownState = false;
 let preventClick = false;
 let startX = 0;
+let lastX = 0;
+let lastTime = 0;
+let velocity = 0;
 let scrollStartLeft = 0;
 let movedDistance = 0;
+let dragRafId: number | null = null;
+let pendingScrollLeft: number | null = null;
+let scrollRafId: number | null = null;
+let targetScrollIndex: number | null = null;
+let programmaticScrollTimer: ReturnType<typeof setTimeout> | null = null;
 
 const currentFeaturedEvent = computed(() => {
   return featuredEvents[activeIndex.value] || featuredEvents[0];
 });
 
-// スクロール時に最も中央に近いカードを判定してアクティブ更新
-const onScroll = () => {
+// スクロール時に最も中央に近いカードを判定してアクティブ更新（RAFで間引き）
+const updateActiveIndexFromScroll = () => {
   const container = scrollContainer.value;
   if (!container) return;
   const containerCenter = container.scrollLeft + container.clientWidth / 2;
+
+  // クリックによる自動スクロール中は、目標カードが中央付近（幅の50%以内）に近づくまで
+  // 白ぼかしやアクティブ枠を維持し、「一瞬ぼかしが外れて戻る」チラつきを完全に防止
+  if (targetScrollIndex !== null) {
+    const targetEl = cardRefs.value[targetScrollIndex];
+    if (targetEl) {
+      const targetCenter = targetEl.offsetLeft + targetEl.offsetWidth / 2;
+      const distToTarget = Math.abs(containerCenter - targetCenter);
+      if (distToTarget < targetEl.offsetWidth * 0.5) {
+        if (activeIndex.value !== targetScrollIndex) {
+          activeIndex.value = targetScrollIndex;
+        }
+      }
+      return;
+    }
+  }
+
   let minDiff = Infinity;
   let closestIndex = activeIndex.value;
 
@@ -91,18 +116,38 @@ const onScroll = () => {
   }
 };
 
-// 指定したインデックスのカードを中央へスムーズスクロール
+const onScroll = () => {
+  if (scrollRafId !== null) return;
+  scrollRafId = requestAnimationFrame(() => {
+    updateActiveIndexFromScroll();
+    scrollRafId = null;
+  });
+};
+
+// 指定したインデックスのカードを中央へスムーズスクロール（正確なピクセル位置を直接指定）
 const scrollToItem = (index: number) => {
   if (index < 0 || index >= featuredEvents.length) return;
-  activeIndex.value = index;
+  const container = scrollContainer.value;
   const el = cardRefs.value[index];
-  if (el && scrollContainer.value) {
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'center',
-    });
+  if (!el || !container) return;
+
+  targetScrollIndex = index;
+  if (programmaticScrollTimer) {
+    clearTimeout(programmaticScrollTimer);
   }
+
+  const targetLeft = el.offsetLeft + el.offsetWidth / 2 - container.clientWidth / 2;
+  container.scrollTo({
+    left: targetLeft,
+    behavior: 'smooth',
+  });
+
+  // スクロール完了後にロック解除＆最終位置同期
+  programmaticScrollTimer = setTimeout(() => {
+    targetScrollIndex = null;
+    updateActiveIndexFromScroll();
+    programmaticScrollTimer = null;
+  }, 400);
 };
 
 // ドラッグ後の誤クリックをキャプチャフェーズで完全に阻止
@@ -114,47 +159,74 @@ const onContainerClickCapture = (e: MouseEvent) => {
   }
 };
 
-// マウスドラッグスクロール処理
-const onMouseDown = (e: MouseEvent) => {
-  if (e.button !== 0) return;
+// ポインタードラッグ（マウス・ペン・タッチ統一）スクロール処理
+const onPointerDown = (e: PointerEvent) => {
+  if (e.button !== 0 && e.pointerType === 'mouse') return;
   const container = scrollContainer.value;
   if (!container) return;
+
+  if (programmaticScrollTimer) {
+    clearTimeout(programmaticScrollTimer);
+    programmaticScrollTimer = null;
+  }
+  targetScrollIndex = null;
 
   isMouseDownState = true;
   isMouseDown.value = true;
   preventClick = false;
   startX = e.clientX;
+  lastX = e.clientX;
+  lastTime = performance.now();
+  velocity = 0;
   scrollStartLeft = container.scrollLeft;
   movedDistance = 0;
 
-  // ドラッグ中はスムーズスクロールやスナップを解除してマウスに完全追従
+  // ドラッグ中はスムーズスクロールやスナップを一時解除して完全追従
   container.style.scrollSnapType = 'none';
   container.style.scrollBehavior = 'auto';
 
   if (import.meta.client) {
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
   }
 };
 
-const onMouseMove = (e: MouseEvent) => {
+const onPointerMove = (e: PointerEvent) => {
   if (!isMouseDownState) return;
   const container = scrollContainer.value;
   if (!container) return;
 
+  const now = performance.now();
+  const dt = now - lastTime;
   const dx = e.clientX - startX;
   movedDistance = Math.abs(dx);
 
+  if (dt > 0) {
+    velocity = (e.clientX - lastX) / dt;
+  }
+  lastX = e.clientX;
+  lastTime = now;
+
   if (movedDistance > 5) {
     preventClick = true;
-    container.scrollLeft = scrollStartLeft - dx;
+    pendingScrollLeft = scrollStartLeft - dx;
+    if (dragRafId === null) {
+      dragRafId = requestAnimationFrame(() => {
+        if (container && pendingScrollLeft !== null) {
+          container.scrollLeft = pendingScrollLeft;
+        }
+        dragRafId = null;
+      });
+    }
   }
 };
 
-const onMouseUp = () => {
+const onPointerUp = () => {
   if (import.meta.client) {
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerUp);
   }
 
   if (!isMouseDownState) return;
@@ -162,13 +234,25 @@ const onMouseUp = () => {
   isMouseDown.value = false;
   const container = scrollContainer.value;
 
+  if (dragRafId !== null) {
+    cancelAnimationFrame(dragRafId);
+    dragRafId = null;
+  }
+
   if (container) {
     container.style.scrollSnapType = 'x mandatory';
     container.style.scrollBehavior = 'smooth';
 
     if (preventClick) {
-      onScroll();
-      scrollToItem(activeIndex.value);
+      // 慣性（フリック判定）: 素早くスワイプ・ドラッグした場合は前後のカードへ進める
+      if (velocity < -0.3 && activeIndex.value < featuredEvents.length - 1) {
+        scrollToItem(activeIndex.value + 1);
+      } else if (velocity > 0.3 && activeIndex.value > 0) {
+        scrollToItem(activeIndex.value - 1);
+      } else {
+        updateActiveIndexFromScroll();
+        scrollToItem(activeIndex.value);
+      }
     }
   }
 
@@ -177,7 +261,7 @@ const onMouseUp = () => {
     setTimeout(() => {
       preventClick = false;
       movedDistance = 0;
-    }, 200);
+    }, 150);
   }
 };
 
@@ -203,41 +287,6 @@ const handleCardClick = (index: number, to: string) => {
   }
 };
 
-// 矢印ボタンの長押し（ホールド）スクロール対応
-let holdTimer: ReturnType<typeof setInterval> | null = null;
-const startHoldScroll = (direction: 'prev' | 'next') => {
-  if (direction === 'prev') prevItem();
-  else nextItem();
-
-  holdTimer = setInterval(() => {
-    if (direction === 'prev') prevItem();
-    else nextItem();
-  }, 450);
-};
-
-const stopHoldScroll = () => {
-  if (holdTimer) {
-    clearInterval(holdTimer);
-    holdTimer = null;
-  }
-};
-
-const prevItem = () => {
-  if (activeIndex.value > 0) {
-    scrollToItem(activeIndex.value - 1);
-  } else {
-    scrollToItem(featuredEvents.length - 1);
-  }
-};
-
-const nextItem = () => {
-  if (activeIndex.value < featuredEvents.length - 1) {
-    scrollToItem(activeIndex.value + 1);
-  } else {
-    scrollToItem(0);
-  }
-};
-
 onMounted(() => {
   nextTick(() => {
     scrollToItem(0);
@@ -245,10 +294,18 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  stopHoldScroll();
+  if (scrollRafId !== null) {
+    cancelAnimationFrame(scrollRafId);
+    scrollRafId = null;
+  }
+  if (dragRafId !== null) {
+    cancelAnimationFrame(dragRafId);
+    dragRafId = null;
+  }
   if (import.meta.client) {
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerUp);
   }
 });
 
@@ -310,44 +367,14 @@ const visitorGuidelines = [
         <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
 
         <!-- 4 Cards Horizontal Swipeable Carousel (3:4 Vertical Photos with Blurred Backdrop) -->
-        <div class="relative w-full max-w-[1400px] mt-4 mb-6">
-          <!-- Navigation Arrow (Prev) 長押し対応 -->
-          <button
-            type="button"
-            class="hidden sm:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-12 md:h-12 rounded-full bg-sprout-dark/60 hover:bg-sprout-dark text-white backdrop-blur-md items-center justify-center transition-all shadow-lg hover:scale-105 border border-white/20 cursor-pointer select-none"
-            aria-label="前の企画へ"
-            @mousedown.prevent="startHoldScroll('prev')"
-            @mouseup="stopHoldScroll"
-            @mouseleave="stopHoldScroll"
-            @click="prevItem"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <!-- Navigation Arrow (Next) 長押し対応 -->
-          <button
-            type="button"
-            class="hidden sm:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-12 md:h-12 rounded-full bg-sprout-dark/60 hover:bg-sprout-dark text-white backdrop-blur-md items-center justify-center transition-all shadow-lg hover:scale-105 border border-white/20 cursor-pointer select-none"
-            aria-label="次の企画へ"
-            @mousedown.prevent="startHoldScroll('next')"
-            @mouseup="stopHoldScroll"
-            @mouseleave="stopHoldScroll"
-            @click="nextItem"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          <!-- Scroll / Swipe Container (マウス長押しドラッグ対応) -->
+        <div class="relative w-full mt-4 mb-6">
+          <!-- Scroll / Swipe Container (マウス長押しドラッグ・タッチスワイプ対応) -->
           <div
             ref="scrollContainer"
             class="events-scroll-container flex flex-row items-center gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory py-4 no-scrollbar select-none"
             :class="isMouseDown ? 'cursor-grabbing' : 'cursor-grab'"
             @scroll.passive="onScroll"
-            @mousedown="onMouseDown"
+            @pointerdown="onPointerDown"
             @click.capture="onContainerClickCapture"
             @dragstart.prevent
           >
@@ -358,14 +385,14 @@ const visitorGuidelines = [
               role="button"
               tabindex="0"
               :aria-label="item.title"
-              class="shrink-0 snap-center cursor-pointer transition-all duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent will-change-transform"
               :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
               @click="handleCardClick(idx, item.to)"
               @keydown.enter="handleCardClick(idx, item.to)"
               @dragstart.prevent
             >
               <div
-                class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-all duration-300 shadow-xl select-none"
+                class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
                 :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
               >
                 <!-- ぼかした背景写真（枠いっぱいに伸ばす） -->
@@ -374,7 +401,7 @@ const visitorGuidelines = [
                   aria-hidden="true"
                   loading="lazy"
                   draggable="false"
-                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none"
+                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none transform-gpu"
                 />
 
                 <!-- 前面写真（枠外にはみ出ないよう object-contain で配置） -->
@@ -385,7 +412,7 @@ const visitorGuidelines = [
                   decoding="async"
                   draggable="false"
                   sizes="xs:260px sm:280px md:300px"
-                  class="relative z-10 w-full h-full object-contain drop-shadow transition-transform duration-300 pointer-events-none select-none"
+                  class="relative z-10 w-full h-full object-contain drop-shadow transition-transform duration-300 pointer-events-none select-none transform-gpu"
                   :class="{ 'hover:scale-105': activeIndex === idx }"
                 />
 
@@ -409,7 +436,7 @@ const visitorGuidelines = [
 
                 <!-- 真ん中以外のものは薄く白くするオーバーレイ -->
                 <div
-                  class="absolute inset-0 z-20 transition-all duration-300 pointer-events-none"
+                  class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
                   :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/55 backdrop-brightness-110 opacity-100'"
                 />
               </div>
@@ -431,13 +458,17 @@ const visitorGuidelines = [
         </div>
 
         <!-- 説明文（現在真ん中にある企画の題名と説明を表記） -->
-        <div class="text-center flex flex-col items-center gap-2.5 max-w-[800px] px-6 min-h-[110px] transition-all duration-300">
-          <h3 class="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-wide m-0">
-            {{ currentFeaturedEvent.title }}
-          </h3>
-          <p class="font-sans font-medium text-sm sm:text-base lg:text-lg leading-relaxed text-white/95 max-w-[650px] m-0">
-            {{ currentFeaturedEvent.desc }}
-          </p>
+        <div class="text-center flex flex-col items-center gap-2.5 max-w-[800px] px-6 min-h-[110px]">
+          <Transition name="event-desc-fade" mode="out-in">
+            <div :key="currentFeaturedEvent.id" class="flex flex-col items-center gap-2.5">
+              <h3 class="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-wide m-0">
+                {{ currentFeaturedEvent.title }}
+              </h3>
+              <p class="font-sans font-medium text-sm sm:text-base lg:text-lg leading-relaxed text-white/95 max-w-[650px] m-0">
+                {{ currentFeaturedEvent.desc }}
+              </p>
+            </div>
+          </Transition>
         </div>
 
         <!-- ボタン3つ横並び (場内マップ・タイムテーブル・企画一覧) -->
@@ -656,5 +687,22 @@ const visitorGuidelines = [
 .events-scroll-container {
   padding-left: calc(50% - clamp(101px, 15dvh, 158px));
   padding-right: calc(50% - clamp(101px, 15dvh, 158px));
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* 企画説明文の切り替えアニメーション（スムーズ＆高速） */
+.event-desc-fade-enter-active,
+.event-desc-fade-leave-active {
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.event-desc-fade-enter-from {
+  opacity: 0;
+  transform: translateY(4px);
+}
+.event-desc-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
 }
 </style>
