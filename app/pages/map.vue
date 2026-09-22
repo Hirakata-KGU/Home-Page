@@ -84,7 +84,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 
       <!-- 2. 全体マップタブ -->
       <Transition name="fade-fast" mode="out-in">
-        <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section">
+        <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section pt-10">
           <!-- その下の文字（横幅をマップ本体と完全統一） -->
           <div class="section-heading-box">
             <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
@@ -97,65 +97,6 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 
           <!-- 地図説明 ＆ 地図（CampusOverallMap内部も max-width: 820px） -->
           <CampusOverallMap @select-building="handleSelectBuildingFromMap" />
-
-          <!-- 模擬店テント一覧クイックリスト（横幅統一） -->
-          <div class="stalls-quick-list">
-            <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
-              <div>
-                <h3 class="text-lg sm:text-xl font-extrabold text-[#2f5b34]">
-                  模擬店テント出店一覧（全22店舗 ＋ 企業ブース）
-                </h3>
-                <p class="text-xs text-[#6b7280] mt-0.5">
-                  マップ上のテント、または下記の一覧から企画詳細をご確認いただけます。
-                </p>
-              </div>
-              <NuxtLink
-                to="/events"
-                class="text-xs sm:text-sm font-bold text-[#2f5b34] hover:underline flex items-center gap-1"
-              >
-                全企画一覧を見る →
-              </NuxtLink>
-            </div>
-
-            <div class="stalls-grid">
-              <div
-                v-for="stall in foodBooths"
-                :key="stall.id"
-                class="stall-item-card"
-              >
-                <NuxtLink :to="`/events/${stall.id}`" class="stall-link">
-                  <div class="stall-tent-badge">
-                    {{ stall.tentNo ? (String(stall.tentNo).includes('テント') ? stall.tentNo : `No.${stall.tentNo}`) : '模擬店' }}
-                  </div>
-                  <div class="stall-info">
-                    <h4 class="stall-item-title">{{ stall.item }}</h4>
-                    <p class="stall-group-name">{{ stall.groupName }}</p>
-                  </div>
-                  <span class="stall-arrow">→</span>
-                </NuxtLink>
-              </div>
-
-              <!-- 企業テント -->
-              <div class="stall-item-card company-item">
-                <div class="stall-link cursor-default">
-                  <div class="stall-tent-badge company-badge">企業1</div>
-                  <div class="stall-info">
-                    <h4 class="stall-item-title">企業協賛ブース①</h4>
-                    <p class="stall-group-name">協賛企業による特別体験・PRコーナー</p>
-                  </div>
-                </div>
-              </div>
-              <div class="stall-item-card company-item">
-                <div class="stall-link cursor-default">
-                  <div class="stall-tent-badge company-badge">企業2</div>
-                  <div class="stall-info">
-                    <h4 class="stall-item-title">企業協賛ブース②</h4>
-                    <p class="stall-group-name">協賛企業による特別体験・PRコーナー</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
         <!-- 3. 建物別タブ（3号館、6号館、7号館、8号館、SCC） -->
@@ -326,94 +267,6 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   max-width: 820px;
   margin: 0 auto;
   box-sizing: border-box;
-}
-
-/* 模擬店クイックリスト */
-.stalls-quick-list {
-  width: 100%;
-  max-width: 820px;
-  margin: 32px auto 0;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
-  box-sizing: border-box;
-}
-
-.stalls-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.stall-item-card {
-  background: white;
-  border: 1px solid var(--border, #e5e5e5);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
-
-.stall-item-card:hover {
-  border-color: var(--olive, #2f5b34);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-.stall-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  text-decoration: none;
-  color: inherit;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.stall-tent-badge {
-  flex-shrink: 0;
-  font-size: 11px;
-  font-weight: 800;
-  color: #c9a063;
-  background: #fbf8f2;
-  border: 1px solid #c9a063;
-  padding: 2px 7px;
-  border-radius: 6px;
-}
-
-.stall-tent-badge.company-badge {
-  color: var(--olive, #2f5b34);
-  background: #f1f8f2;
-  border-color: var(--olive, #2f5b34);
-}
-
-.stall-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.stall-item-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: #1f2937;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.stall-group-name {
-  font-size: 11px;
-  color: #6b7280;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.stall-arrow {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--olive, #2f5b34);
 }
 
 /* 3. 建物詳細セクション（max-width: 820px 統一） */

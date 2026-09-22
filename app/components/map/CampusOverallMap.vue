@@ -60,21 +60,6 @@ onMounted(() => {
 
 <template>
   <div class="overall-map-container">
-    <!-- 地図説明ガイド（外枠と横幅を統一） -->
-    <div class="map-instruction">
-      <div class="instruction-item">
-        <span class="instruction-dot tent-dot"></span>
-        <span><strong>模擬店テント:</strong> タップで詳細</span>
-      </div>
-      <div class="instruction-item">
-        <span class="instruction-dot building-dot"></span>
-        <span><strong>各建物:</strong> 企画一覧へ</span>
-      </div>
-      <div class="instruction-item">
-        <span class="instruction-dot stage-dot"></span>
-        <span><strong>ステージ・チャペル:</strong> タイムテーブルへ</span>
-      </div>
-    </div>
 
     <!-- 地図の外枠フレーム（画面幅ぴったり、外枠からはみ出る部分はoverflow: hiddenで完全非描画） -->
     <div class="map-outer-frame">
@@ -242,49 +227,6 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-/* 地図説明ガイド */
-.map-instruction {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 0 auto 14px;
-  padding: 10px 16px;
-  background: white;
-  border-radius: 50px;
-  border: 1px solid var(--border, #e5e5e5);
-  font-size: 12px;
-  color: #4b5563;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.instruction-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.instruction-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.instruction-dot.tent-dot {
-  background: #f6faed;
-  border: 1.5px solid #c9a063;
-}
-
-.instruction-dot.building-dot {
-  background: #2f5b34;
-}
-
-.instruction-dot.stage-dot {
-  background: #8b5cf6;
-}
 
 /* 地図の外枠フレーム:
    - 画面幅（max-width: 820px）に合わせて収まる
