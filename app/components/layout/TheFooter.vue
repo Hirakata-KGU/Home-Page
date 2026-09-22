@@ -15,11 +15,11 @@ const footerSections = [
       ],
       [
         { label: '全体・模擬店マップ', to: '/map' },
-        { label: '3号館マップ', to: '/map?tab=no3' },
-        { label: '6号館マップ', to: '/map?tab=no6' },
+        { label: '屋内ステージ（SCC）', to: '/map?tab=scc' },
+        { label: '社会連携館', to: '/map?tab=no3' },
         { label: '音楽館（7号館）', to: '/map?tab=no7' },
         { label: '文化館（8号館）', to: '/map?tab=no8' },
-        { label: '屋内ステージ（SCC）', to: '/map?tab=scc' }
+        { label: '文化館 (6号館)', to: '/map?tab=no6' },
       ]
     ]
   },
@@ -27,11 +27,11 @@ const footerSections = [
     title: 'ご案内',
     columns: [
       [
-        { label: 'アクセス', to: '/#access' },
         { label: '電子パンフレット', to: '/info/pamphlet' },
         { label: '平潟祭について', to: '/info/about' },
-        { label: 'FAQ', to: '/info/faq' },
-        { label: 'お問い合わせ', to: '/info/contact' }
+        { label: 'よくある質問', to: '/info/faq' },
+        { label: 'アクセス', to: '/#access' },
+        { label: 'お問い合わせ', to: '/info/contact' },
       ]
     ]
   }
