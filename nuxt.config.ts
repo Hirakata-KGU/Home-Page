@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { process } from 'std-env'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -10,7 +12,7 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: '/',
+    baseURL: process.env.NUXT_APP_BASE_URL ?? '/',
     head: {
       htmlAttrs: {
         lang: 'ja',
