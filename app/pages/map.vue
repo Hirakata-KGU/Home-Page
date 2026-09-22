@@ -20,15 +20,26 @@ const validTabs: TabKey[] = ['all', 'no3', 'no6', 'no7', 'no8', 'scc'];
 const initialTab = (route.query.tab as TabKey);
 const currentTab = ref<TabKey>(validTabs.includes(initialTab) ? initialTab : 'all');
 
+// URLクエリの変更（ブラウザの戻る・進むボタン含む）を検知してタブを同期
 watch(() => route.query.tab, (newTab) => {
   if (newTab && validTabs.includes(newTab as TabKey)) {
     currentTab.value = newTab as TabKey;
+  } else {
+    // クエリがない場合は全体マップに戻る
+    currentTab.value = 'all';
   }
 });
 
-const setTab = (key: TabKey) => {
+// タブを切り替え、履歴に積む (router.push)
+const setTab = (key: TabKey, isPush = true) => {
+  if (currentTab.value === key && (route.query.tab || 'all') === key) return;
   currentTab.value = key;
-  router.replace({ query: key === 'all' ? {} : { tab: key } });
+  const query = key === 'all' ? {} : { tab: key };
+  if (isPush) {
+    router.push({ path: '/map', query });
+  } else {
+    router.replace({ path: '/map', query });
+  }
 };
 
 const tabs: { key: TabKey; label: string; sub: string }[] = [
@@ -48,9 +59,18 @@ const currentBuilding = computed(() => {
 });
 
 const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' | 'scc') => {
-  setTab(buildingId);
+  setTab(buildingId, true);
   if (typeof window !== 'undefined') {
     window.scrollTo({ top: 260, behavior: 'smooth' });
+  }
+};
+
+const handleBackToMap = () => {
+  // 全体マップから遷移してきた場合は履歴で戻る
+  if (typeof window !== 'undefined' && window.history.state?.back) {
+    router.back();
+  } else {
+    setTab('all', true);
   }
 };
 </script>
@@ -117,7 +137,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
               <button
                 type="button"
                 class="back-to-map-btn"
-                @click="setTab('all')"
+                @click="handleBackToMap"
               >
                 ← 全体マップに戻る
               </button>
