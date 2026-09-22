@@ -55,85 +55,180 @@ const featuredEvents: FeaturedEventItem[] = [
 const activeIndex = ref(0);
 const scrollContainer = ref<HTMLElement | null>(null);
 const cardRefs = ref<HTMLElement[]>([]);
-
-// マウス＆タッチドラッグ（長押しスクロール）状態管理
-const isMouseDown = ref(false);
-let isMouseDownState = false;
-let preventClick = false;
-let startX = 0;
-let lastX = 0;
-let lastTime = 0;
-let velocity = 0;
-let scrollStartLeft = 0;
-let movedDistance = 0;
-let dragRafId: number | null = null;
-let pendingScrollLeft: number | null = null;
-let scrollRafId: number | null = null;
-let targetScrollIndex: number | null = null;
-let programmaticScrollTimer: ReturnType<typeof setTimeout> | null = null;
+const isDragging = ref(false);
 
 const currentFeaturedEvent = computed(() => {
   return featuredEvents[activeIndex.value] || featuredEvents[0];
 });
 
-// スクロール時に最も中央に近いカードを判定してアクティブ更新（RAFで間引き）
-const updateActiveIndexFromScroll = () => {
+// ポインタースクロール / ドラッグ制御
+let isPointerDown = false;
+let hasDragged = false;
+let startX = 0;
+let scrollStart = 0;
+let lastX = 0;
+let lastTime = 0;
+let velocity = 0;
+let targetIndex: number | null = null;
+let scrollRaf: number | null = null;
+let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+
+// 自動切り替えタイマー（6秒ごと）
+const AUTO_PLAY_INTERVAL = 6000;
+let autoPlayTimer: ReturnType<typeof setTimeout> | null = null;
+
+const stopAutoPlay = () => {
+  if (autoPlayTimer) {
+    clearTimeout(autoPlayTimer);
+    autoPlayTimer = null;
+  }
+};
+
+const startAutoPlay = () => {
+  stopAutoPlay();
+  if (!import.meta.client) return;
+  autoPlayTimer = setTimeout(() => {
+    const nextIndex = (activeIndex.value + 1) % featuredEvents.length;
+    scrollToItem(nextIndex);
+    startAutoPlay();
+  }, AUTO_PLAY_INTERVAL);
+};
+
+const handleVisibilityChange = () => {
+  if (document.hidden) {
+    stopAutoPlay();
+  } else {
+    startAutoPlay();
+  }
+};
+
+const onPointerDown = (e: PointerEvent) => {
+  if (e.button !== 0 && e.pointerType === 'mouse') return;
   const container = scrollContainer.value;
   if (!container) return;
-  const containerCenter = container.scrollLeft + container.clientWidth / 2;
 
-  // クリックによる自動スクロール中は、目標カードが中央付近（幅の50%以内）に近づくまで
-  // 白ぼかしやアクティブ枠を維持し、「一瞬ぼかしが外れて戻る」チラつきを完全に防止
-  if (targetScrollIndex !== null) {
-    const targetEl = cardRefs.value[targetScrollIndex];
+  stopAutoPlay();
+  isPointerDown = true;
+  hasDragged = false;
+  startX = e.clientX;
+  lastX = e.clientX;
+  lastTime = performance.now();
+  scrollStart = container.scrollLeft;
+  velocity = 0;
+  targetIndex = null;
+};
+
+const onPointerMove = (e: PointerEvent) => {
+  if (!isPointerDown) return;
+  const container = scrollContainer.value;
+  if (!container) return;
+
+  const dx = e.clientX - startX;
+  if (!hasDragged && Math.abs(dx) > 5) {
+    hasDragged = true;
+    isDragging.value = true;
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+    container.style.scrollSnapType = 'none';
+    container.style.scrollBehavior = 'auto';
+  }
+
+  if (hasDragged) {
+    container.scrollLeft = scrollStart - dx;
+    const now = performance.now();
+    const dt = now - lastTime;
+    if (dt > 0) {
+      velocity = (e.clientX - lastX) / dt;
+    }
+    lastX = e.clientX;
+    lastTime = now;
+  }
+};
+
+const onPointerUp = (e: PointerEvent) => {
+  if (!isPointerDown) return;
+  isPointerDown = false;
+  const container = scrollContainer.value;
+  if (!container) return;
+
+  if (hasDragged) {
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+
+    container.style.scrollSnapType = 'x mandatory';
+    container.style.scrollBehavior = 'smooth';
+
+    if (velocity < -0.25 && activeIndex.value < featuredEvents.length - 1) {
+      scrollToItem(activeIndex.value + 1);
+    } else if (velocity > 0.25 && activeIndex.value > 0) {
+      scrollToItem(activeIndex.value - 1);
+    } else {
+      updateActiveIndex();
+      scrollToItem(activeIndex.value);
+    }
+    setTimeout(() => {
+      hasDragged = false;
+      isDragging.value = false;
+    }, 60);
+  } else {
+    isDragging.value = false;
+  }
+  startAutoPlay();
+};
+
+// スクロール時に最も中央に近いカードを判定（チラつき防止ロジック付き）
+const updateActiveIndex = () => {
+  const container = scrollContainer.value;
+  if (!container) return;
+  const center = container.scrollLeft + container.clientWidth / 2;
+
+  // 目標カードへ移動中は、目標が中央近く（カード幅の45%以内）に来るまで切り替えない（チラつき防止）
+  if (targetIndex !== null) {
+    const targetEl = cardRefs.value[targetIndex];
     if (targetEl) {
       const targetCenter = targetEl.offsetLeft + targetEl.offsetWidth / 2;
-      const distToTarget = Math.abs(containerCenter - targetCenter);
-      if (distToTarget < targetEl.offsetWidth * 0.5) {
-        if (activeIndex.value !== targetScrollIndex) {
-          activeIndex.value = targetScrollIndex;
-        }
+      if (Math.abs(center - targetCenter) < targetEl.offsetWidth * 0.45) {
+        activeIndex.value = targetIndex;
+        targetIndex = null;
       }
       return;
     }
   }
 
   let minDiff = Infinity;
-  let closestIndex = activeIndex.value;
-
-  cardRefs.value.forEach((el, index) => {
+  let closest = activeIndex.value;
+  cardRefs.value.forEach((el, i) => {
     if (!el) return;
     const elCenter = el.offsetLeft + el.offsetWidth / 2;
-    const diff = Math.abs(containerCenter - elCenter);
+    const diff = Math.abs(center - elCenter);
     if (diff < minDiff) {
       minDiff = diff;
-      closestIndex = index;
+      closest = i;
     }
   });
-
-  if (closestIndex !== activeIndex.value) {
-    activeIndex.value = closestIndex;
-  }
+  activeIndex.value = closest;
 };
 
 const onScroll = () => {
-  if (scrollRafId !== null) return;
-  scrollRafId = requestAnimationFrame(() => {
-    updateActiveIndexFromScroll();
-    scrollRafId = null;
+  if (scrollRaf !== null) return;
+  scrollRaf = requestAnimationFrame(() => {
+    updateActiveIndex();
+    scrollRaf = null;
   });
 };
 
-// 指定したインデックスのカードを中央へスムーズスクロール（正確なピクセル位置を直接指定）
+// 指定したカードを中央へスムーズスクロール
 const scrollToItem = (index: number) => {
   if (index < 0 || index >= featuredEvents.length) return;
   const container = scrollContainer.value;
   const el = cardRefs.value[index];
-  if (!el || !container) return;
+  if (!container || !el) return;
 
-  targetScrollIndex = index;
-  if (programmaticScrollTimer) {
-    clearTimeout(programmaticScrollTimer);
+  targetIndex = index;
+  if (scrollTimer) {
+    clearTimeout(scrollTimer);
   }
 
   const targetLeft = el.offsetLeft + el.offsetWidth / 2 - container.clientWidth / 2;
@@ -142,147 +237,22 @@ const scrollToItem = (index: number) => {
     behavior: 'smooth',
   });
 
-  // スクロール完了後にロック解除＆最終位置同期
-  programmaticScrollTimer = setTimeout(() => {
-    targetScrollIndex = null;
-    updateActiveIndexFromScroll();
-    programmaticScrollTimer = null;
-  }, 400);
-};
-
-// ドラッグ後の誤クリックをキャプチャフェーズで完全に阻止
-const onContainerClickCapture = (e: MouseEvent) => {
-  if (preventClick || movedDistance > 5) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-  }
-};
-
-// ポインタードラッグ（マウス・ペン・タッチ統一）スクロール処理
-const onPointerDown = (e: PointerEvent) => {
-  if (e.button !== 0 && e.pointerType === 'mouse') return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  if (programmaticScrollTimer) {
-    clearTimeout(programmaticScrollTimer);
-    programmaticScrollTimer = null;
-  }
-  targetScrollIndex = null;
-
-  isMouseDownState = true;
-  isMouseDown.value = true;
-  preventClick = false;
-  startX = e.clientX;
-  lastX = e.clientX;
-  lastTime = performance.now();
-  velocity = 0;
-  scrollStartLeft = container.scrollLeft;
-  movedDistance = 0;
-
-  // ドラッグ中はスムーズスクロールやスナップを一時解除して完全追従
-  container.style.scrollSnapType = 'none';
-  container.style.scrollBehavior = 'auto';
-
-  if (import.meta.client) {
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerup', onPointerUp);
-    window.addEventListener('pointercancel', onPointerUp);
-  }
-};
-
-const onPointerMove = (e: PointerEvent) => {
-  if (!isMouseDownState) return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  const now = performance.now();
-  const dt = now - lastTime;
-  const dx = e.clientX - startX;
-  movedDistance = Math.abs(dx);
-
-  if (dt > 0) {
-    velocity = (e.clientX - lastX) / dt;
-  }
-  lastX = e.clientX;
-  lastTime = now;
-
-  if (movedDistance > 5) {
-    preventClick = true;
-    pendingScrollLeft = scrollStartLeft - dx;
-    if (dragRafId === null) {
-      dragRafId = requestAnimationFrame(() => {
-        if (container && pendingScrollLeft !== null) {
-          container.scrollLeft = pendingScrollLeft;
-        }
-        dragRafId = null;
-      });
-    }
-  }
-};
-
-const onPointerUp = () => {
-  if (import.meta.client) {
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-    window.removeEventListener('pointercancel', onPointerUp);
-  }
-
-  if (!isMouseDownState) return;
-  isMouseDownState = false;
-  isMouseDown.value = false;
-  const container = scrollContainer.value;
-
-  if (dragRafId !== null) {
-    cancelAnimationFrame(dragRafId);
-    dragRafId = null;
-  }
-
-  if (container) {
-    container.style.scrollSnapType = 'x mandatory';
-    container.style.scrollBehavior = 'smooth';
-
-    if (preventClick) {
-      // 慣性（フリック判定）: 素早くスワイプ・ドラッグした場合は前後のカードへ進める
-      if (velocity < -0.3 && activeIndex.value < featuredEvents.length - 1) {
-        scrollToItem(activeIndex.value + 1);
-      } else if (velocity > 0.3 && activeIndex.value > 0) {
-        scrollToItem(activeIndex.value - 1);
-      } else {
-        updateActiveIndexFromScroll();
-        scrollToItem(activeIndex.value);
-      }
-    }
-  }
-
-  // クリックイベントが終了するまで preventClick を true に維持
-  if (preventClick) {
-    setTimeout(() => {
-      preventClick = false;
-      movedDistance = 0;
-    }, 150);
-  }
+  // スクロール完了時（または到着時）に確実にアクティブを同期
+  scrollTimer = setTimeout(() => {
+    targetIndex = null;
+    activeIndex.value = index;
+    scrollTimer = null;
+  }, 350);
 };
 
 // カードクリック時の処理
 const handleCardClick = (index: number, to: string) => {
-  // ドラッグした直後の場合は一切の処理を防止
-  if (preventClick || movedDistance > 5) {
-    return;
-  }
+  if (hasDragged) return;
 
-  // 芸能ステージの場合は常に詳細ページへ直接遷移
-  if (featuredEvents[index].id === 'geino') {
-    navigateTo(to);
-    return;
-  }
-
-  // それ以外のカードで中央にない場合は中央へスクロール
+  startAutoPlay();
   if (activeIndex.value !== index) {
     scrollToItem(index);
   } else {
-    // 既に中央にある場合は該当一覧へ遷移
     navigateTo(to);
   }
 };
@@ -290,22 +260,23 @@ const handleCardClick = (index: number, to: string) => {
 onMounted(() => {
   nextTick(() => {
     scrollToItem(0);
+    startAutoPlay();
   });
+  if (import.meta.client) {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  }
 });
 
 onBeforeUnmount(() => {
-  if (scrollRafId !== null) {
-    cancelAnimationFrame(scrollRafId);
-    scrollRafId = null;
+  stopAutoPlay();
+  if (scrollRaf !== null) {
+    cancelAnimationFrame(scrollRaf);
   }
-  if (dragRafId !== null) {
-    cancelAnimationFrame(dragRafId);
-    dragRafId = null;
+  if (scrollTimer) {
+    clearTimeout(scrollTimer);
   }
   if (import.meta.client) {
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-    window.removeEventListener('pointercancel', onPointerUp);
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
   }
 });
 
@@ -372,10 +343,14 @@ const visitorGuidelines = [
           <div
             ref="scrollContainer"
             class="events-scroll-container flex flex-row items-center gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory py-4 no-scrollbar select-none"
-            :class="isMouseDown ? 'cursor-grabbing' : 'cursor-grab'"
+            :class="isDragging ? 'cursor-grabbing' : 'cursor-grab'"
             @scroll.passive="onScroll"
             @pointerdown="onPointerDown"
-            @click.capture="onContainerClickCapture"
+            @pointermove="onPointerMove"
+            @pointerup="onPointerUp"
+            @pointercancel="onPointerUp"
+            @mouseenter="stopAutoPlay"
+            @mouseleave="startAutoPlay"
             @dragstart.prevent
           >
             <div
@@ -452,7 +427,7 @@ const visitorGuidelines = [
               class="h-2 rounded-full transition-all duration-300 border-none cursor-pointer p-0"
               :class="activeIndex === idx ? 'w-8 bg-sprout-accent shadow-sm' : 'w-2 bg-white/40 hover:bg-white/70'"
               :aria-label="`${item.title}を表示`"
-              @click="scrollToItem(idx)"
+              @click="scrollToItem(idx); startAutoPlay();"
             />
           </div>
         </div>
