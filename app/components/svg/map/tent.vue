@@ -4,8 +4,8 @@ import type { EventItem } from '~/data/events';
 import EventCard from '~/components/ui/EventCard.vue';
 
 interface Props {
-  tentNo?: string | number;
-  company?: boolean;
+  label?: string;
+  strokeColor?: string;
   event?: EventItem | null;
   events?: EventItem[];
   placement?: 'top' | 'bottom' | 'left' | 'right' | 'auto';
@@ -14,8 +14,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  tentNo: '1',
-  company: false,
+  label: '1',
+  strokeColor: '#c9a063',
   event: null,
   events: () => [],
   placement: 'auto',
@@ -43,20 +43,10 @@ const targetEvents = computed<EventItem[]>(() => {
 
 const hasEvents = computed(() => targetEvents.value.length > 0);
 
-// 表示テキスト
-const displayText = computed(() => {
-  if (props.company) {
-    return `企業${props.tentNo}`;
-  }
-  return String(props.tentNo);
-});
 
 // フォントサイズ
 const fontSize = computed(() => {
-  if (props.company) {
-    return '4.5px';
-  }
-  const str = String(props.tentNo);
+  const str = String(props.label);
   if (str.length >= 4) return '5px';
   if (str.length >= 3) return '5.8px';
   return '7.5px';
@@ -74,7 +64,7 @@ const toggleOpen = () => {
   if (!props.interactive || !hasEvents.value) return;
   isOpen.value = !isOpen.value;
   if (isOpen.value) {
-    emit('select', props.tentNo);
+    emit('select', props.label);
   }
 };
 
@@ -123,7 +113,6 @@ onBeforeUnmount(() => {
     :class="{
       'is-active': isOpen,
       'is-clickable': interactive && hasEvents,
-      'is-company': company
     }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
@@ -135,7 +124,7 @@ onBeforeUnmount(() => {
       xmlns="http://www.w3.org/2000/svg"
       class="tent-svg"
       role="button"
-      :aria-label="company ? `企業テント ${tentNo}` : `テント ${tentNo}`"
+      :aria-label="props.label"
       tabindex="0"
       @keydown.enter="toggleOpen"
       @keydown.space.prevent="toggleOpen"
@@ -147,7 +136,7 @@ onBeforeUnmount(() => {
         height="13.496"
         rx="2"
         class="tent-rect"
-        :class="{ 'company-rect': company }"
+        :stroke="props.strokeColor"
       />
       <text
         x="10.393"
@@ -155,10 +144,9 @@ onBeforeUnmount(() => {
         text-anchor="middle"
         dominant-baseline="central"
         class="tent-label-text"
-        :class="{ 'company-text': company }"
         :style="{ fontSize }"
       >
-        {{ displayText }}
+        {{ props.label }}
       </text>
     </svg>
 
@@ -215,15 +203,10 @@ onBeforeUnmount(() => {
 
 .tent-rect {
   fill: #f6faed;
-  stroke: #c9a063;
   stroke-width: 1.5;
   transition: fill 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease;
 }
 
-.tent-rect.company-rect {
-  fill: #f1f8f2;
-  stroke: #4a7f52;
-}
 
 .tent-wrapper:hover .tent-svg,
 .tent-wrapper.is-active .tent-svg {
@@ -243,12 +226,6 @@ onBeforeUnmount(() => {
   font-family: inherit;
   font-weight: 900;
   pointer-events: none;
-  letter-spacing: -0.02em;
-}
-
-.tent-label-text.company-text {
-  fill: #1e3d26;
-  font-weight: 800;
 }
 
 /* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示 */

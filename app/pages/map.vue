@@ -33,11 +33,11 @@ const setTab = (key: TabKey) => {
 
 const tabs: { key: TabKey; label: string; sub: string }[] = [
   { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店' },
-  { key: 'no3', label: '3号館', sub: '研究・展示' },
-  { key: 'no6', label: '6号館', sub: '天文部' },
-  { key: 'no7', label: '7号館', sub: '音楽館' },
-  { key: 'no8', label: '8号館', sub: '文化館' },
+  { key: 'no3', label: '社会連携館', sub: '3号館' },
   { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F' },
+  { key: 'no7', label: '音楽館', sub: '7号館' },
+  { key: 'no8', label: '文化館 (8号館)', sub: '8号館' },
+  { key: 'no6', label: '文化館 (6号館)', sub: '6号館' },
 ];
 
 const buildingDataList = getBuildingDataList();

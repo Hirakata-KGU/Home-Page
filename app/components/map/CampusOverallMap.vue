@@ -18,30 +18,30 @@ const scrollContainerRef = ref<HTMLElement | null>(null);
 
 // テント配置データ (ViewBox 457.29 x 652.38 基準のパーセント値)
 const tentList = [
-  { id: 'tc1', tentNo: '1', company: true, left: 43.85, top: 69.9, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 'tc2', tentNo: '2', company: true, left: 43.85, top: 51.9, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't1', tentNo: '1', company: false, left: 43.85, top: 67.8, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't2', tentNo: '2', company: false, left: 43.85, top: 65.6, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't3', tentNo: '3', company: false, left: 43.85, top: 63.4, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't4', tentNo: '4', company: false, left: 43.85, top: 61.2, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't5', tentNo: '5', company: false, left: 43.85, top: 59.1, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't6', tentNo: '6', company: false, left: 52.25, top: 49.4, width: 5.8, height: 2.85, placement: 'right' as const },
-  { id: 't7', tentNo: '7', company: false, left: 52.25, top: 47.2, width: 5.8, height: 2.85, placement: 'right' as const },
-  { id: 't8', tentNo: '8', company: false, left: 43.85, top: 49.8, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't9', tentNo: '9', company: false, left: 43.85, top: 47.6, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't10', tentNo: '10', company: false, left: 43.85, top: 45.4, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't11', tentNo: '11', company: false, left: 43.85, top: 42.6, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't12', tentNo: '12', company: false, left: 43.85, top: 40.4, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't13', tentNo: '13', company: false, left: 43.85, top: 34.1, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't14', tentNo: '14', company: false, left: 43.85, top: 31.9, width: 5.8, height: 2.85, placement: 'left' as const },
-  { id: 't15', tentNo: '15', company: false, left: 52.25, top: 34.2, width: 5.8, height: 2.85, placement: 'right' as const },
-  { id: 't16', tentNo: '16', company: false, left: 52.25, top: 32.0, width: 5.8, height: 2.85, placement: 'right' as const },
-  { id: 't17', tentNo: '17', company: false, left: 52.25, top: 29.8, width: 5.8, height: 2.85, placement: 'right' as const },
-  { id: 't18', tentNo: '18', company: false, left: 52.25, top: 27.7, width: 5.8, height: 2.85, placement: 'right' as const },
-  { id: 't19', tentNo: '19', company: false, left: 55.20, top: 10.1, width: 5.8, height: 2.85, placement: 'bottom' as const },
-  { id: 't20', tentNo: '20', company: false, left: 60.10, top: 9.5, width: 5.8, height: 2.85, placement: 'bottom' as const },
-  { id: 't21', tentNo: '21', company: false, left: 65.00, top: 7.8, width: 5.8, height: 2.85, placement: 'bottom' as const },
-  { id: 't22', tentNo: '22', company: false, left: 68.20, top: 4.2, width: 5.8, height: 2.85, placement: 'bottom' as const },
+  { strokeColor: '#4a7f52', id: 'tc1', label: '企画1', company: true, left: 43.85, top: 69.9, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#4a7f52', id: 'tc2', label: '企画2', company: true, left: 43.85, top: 51.9, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't1', label: '1', company: false, left: 43.85, top: 67.8, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't2', label: '2', company: false, left: 43.85, top: 65.6, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't3', label: '3', company: false, left: 43.85, top: 63.4, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't4', label: '4', company: false, left: 43.85, top: 61.2, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't5', label: '5', company: false, left: 43.85, top: 59.1, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't6', label: '6', company: false, left: 52.25, top: 49.4, width: 5.8, height: 2.85, placement: 'right' as const },
+  { strokeColor: '#c9a063', id: 't7', label: '7', company: false, left: 52.25, top: 47.2, width: 5.8, height: 2.85, placement: 'right' as const },
+  { strokeColor: '#c9a063', id: 't8', label: '8', company: false, left: 43.85, top: 49.8, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't9', label: '9', company: false, left: 43.85, top: 47.6, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't10', label: '10', company: false, left: 43.85, top: 45.4, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't11', label: '11', company: false, left: 43.85, top: 41.6, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't12', label: '12', company: false, left: 43.85, top: 39.4, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't13', label: '13', company: false, left: 43.85, top: 34.1, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't14', label: '14', company: false, left: 43.85, top: 31.9, width: 5.8, height: 2.85, placement: 'left' as const },
+  { strokeColor: '#c9a063', id: 't15', label: '15', company: false, left: 52.25, top: 34.2, width: 5.8, height: 2.85, placement: 'right' as const },
+  { strokeColor: '#c9a063', id: 't16', label: '16', company: false, left: 52.25, top: 32.0, width: 5.8, height: 2.85, placement: 'right' as const },
+  { strokeColor: '#c9a063', id: 't17', label: '17', company: false, left: 52.25, top: 29.8, width: 5.8, height: 2.85, placement: 'right' as const },
+  { strokeColor: '#c9a063', id: 't18', label: '18', company: false, left: 52.25, top: 27.7, width: 5.8, height: 2.85, placement: 'right' as const },
+  { strokeColor: '#c9a063', id: 't19', label: '19', company: false, left: 55.20, top: 10.1, width: 5.8, height: 2.85, placement: 'bottom' as const },
+  { strokeColor: '#c9a063', id: 't20', label: '20', company: false, left: 60.10, top: 9.5, width: 5.8, height: 2.85, placement: 'bottom' as const },
+  { strokeColor: '#c9a063', id: 't21', label: '21', company: false, left: 65.00, top: 7.8, width: 5.8, height: 2.85, placement: 'bottom' as const },
+  { strokeColor: '#c9a063', id: 't22', label: '22', company: false, left: 68.20, top: 4.2, width: 5.8, height: 2.85, placement: 'bottom' as const },
 ];
 
 const hoveredBuilding = ref<string | null>(null);
@@ -204,13 +204,25 @@ onMounted(() => {
                 }"
               >
                 <TentItem
-                  :tent-no="t.tentNo"
-                  :company="t.company"
-                  :events="getEventsByTentNo(t.tentNo)"
+                  :label="t.label"
+                  :stroke-color="t.strokeColor"
+                  :events="getEventsByTentNo(t.label)"
                   :placement="t.placement"
                   class="w-full h-full"
                 />
               </div>
+            </div>
+
+            <div class="map-tents-layer">
+              <TentItem 
+              label="本部"
+              stroke-color="#000000"
+              :interactive="false"
+              :showCardOnHover="false"
+              :style="{ left: '53%', top: '80%', width: '8%', height: '5%' }"
+              class="tent-pos-wrapper">
+
+              </TentItem>
             </div>
           </div>
         </div>

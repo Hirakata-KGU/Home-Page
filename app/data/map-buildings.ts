@@ -140,13 +140,12 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
 };
 
 // テント番号から該当イベントを検索するヘルパー
-export const getEventsByTentNo = (tentNo: string | number): EventItem[] => {
-  const targetStr = String(tentNo);
+export const getEventsByTentNo = (label: string): EventItem[] => {
   return allEvents.filter((e) => {
     if (e.category !== 'food') return false;
     const t = String(e.tentNo || '');
-    if (t === targetStr) return true;
-    if (targetStr === '11' || targetStr === '12') {
+    if (t === label) return true;
+    if (label === '11' || label === '12') {
       if (t.includes('11') || t.includes('12')) return true;
     }
     return false;
