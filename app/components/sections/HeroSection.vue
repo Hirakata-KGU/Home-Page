@@ -134,9 +134,9 @@ const leaves: LeafItem[] = [
     </div>
 
     <!-- 4 Layers of Green Hills & Sprout Leaves (bottom) -->
-    <div class="absolute bottom-0 left-0 w-full h-fit pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
+    <div class="absolute -bottom-[2px] left-0 w-full h-fit pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
       <!-- Hill -->
-      <SvgWave class="w-full mt-10" preserveAspectRatio="none"></SvgWave>
+      <SvgWave class="w-full mt-10 transform translate-y-[1px]" preserveAspectRatio="none"></SvgWave>
       <div
       v-for="leaf in leaves"
       :key="leaf.id"

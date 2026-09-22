@@ -303,8 +303,8 @@ const visitorGuidelines = [
     <!-- 1. Top (Hero Section) -->
     <SectionsHeroSection />
 
-    <!-- 2. 企画セクション (背景: #437C62) -->
-    <section class="w-full bg-sprout-moss py-12 sm:py-16 px-0 relative z-[5] overflow-hidden" id="events">
+    <!-- 2. 企画セクション (背景: #437C62: -mt-[2px]でHeroSection最下部の波と確実にオーバーラップさせて隙間線を防止) -->
+    <section class="w-full bg-sprout-moss py-12 sm:py-16 px-0 relative z-[5] overflow-hidden -mt-[2px]" id="events">
       <div class="w-full flex flex-col items-center">
         <!-- Title -->
         <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
@@ -482,10 +482,10 @@ const visitorGuidelines = [
     </section>
 
     <!-- 3〜5. 下部コンテンツ群 (ご案内・ご来場にあたって・アクセス：共通ラッパーでセクション境界の途切れを防止) -->
-    <div class="w-full bg-sprout-bg relative z-[6] overflow-hidden">
-      <!-- 反転した4層の波 (rotate 180deg) -->
-      <div class="w-full h-fit leading-none pb-16 relative z-10" aria-hidden="true">
-        <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
+    <div class="w-full bg-sprout-bg relative z-[6] overflow-hidden -mt-[2px]">
+      <!-- 反転した4層の波 (rotate 180deg: -mt-[2px]およびtranslateで上の企画セクションと同色オーバーラップ) -->
+      <div class="w-full h-fit leading-none pb-16 relative z-10 -mt-[2px]" aria-hidden="true">
+        <SvgWave class="w-full block rotate-180 transform scale-y-[1.02] -translate-y-[1px]" preserveAspectRatio="none" />
       </div>
 
       <!-- 背景幾何学装飾 (HeroSection風: 巨大な三重八角形を左右交互に3箇所のみダイナミックに配置) -->

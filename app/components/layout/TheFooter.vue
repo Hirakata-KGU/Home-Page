@@ -39,12 +39,12 @@ const footerSections = [
 </script>
 
 <template>
-  <footer class="w-full relative overflow-hidden mt-0 p-0">
-    <svg width="1248" height="105" viewBox="0 0 1248 105" fill="#1B3A24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+  <footer class="w-full relative overflow-hidden mt-0 p-0 leading-none">
+    <svg width="1248" height="105" viewBox="0 0 1248 105" fill="#1B3A24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full -mb-[2px] transform translate-y-[1px] relative z-10 bg-[var(--theme-bg)]">
     <path d="M0 105L29.64 90.9879C59.41 77.2453 118.69 49.2212 178.1 30.8978C237.51 12.5743 296.79 3.41257 356.2 1.25687C415.61 -0.898831 438.83 -0.394002 498.5 3.64794C558.04 7.68988 653.9 22.6283 713.44 34.7541C773.11 46.8799 832.39 59.9998 891.8 70.5088C951.21 80.7484 1010.49 80.7484 1069.9 74.5508C1129.31 68.0837 1188.59 55.6883 1218.36 49.2212L1248 43.0236V105H1218.36C1188.59 105 1129.31 105 1069.9 105C1010.49 105 951.21 105 891.8 105C832.39 105 773.11 105 713.44 105C653.9 105 594.1 105 534.56 105C474.89 105 415.61 105 356.2 105C296.79 105 237.51 105 178.1 105C118.69 105 59.41 105 29.64 105H0Z"/>
     </svg>
 
-    <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark">
+    <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark relative z-9">
       <div class="flex flex-col items-center gap-8 w-full max-w-[var(--max-width)]">
         <!-- Navigation Columns -->
         <div class="flex flex-col items-center lg:flex-row justify-between w-full gap-8">
