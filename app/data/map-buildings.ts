@@ -117,7 +117,7 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
     scc: {
       id: 'scc',
       name: '屋内ステージ（SCC）',
-      subName: 'SCC (Student Community Center) / Indoor Stage',
+      subName: 'SCC (Science and Culture Center) / Indoor Stage',
       description: 'オーケストラ、吹奏楽、合唱、そして豪華ゲストトークショーが開催される屋内ステージです。',
       floors: [
         {

@@ -45,7 +45,7 @@ export const mapData: MapData = {
     {
       id: 'indoor-stage',
       name: '屋内ステージ（SCC 4F）',
-      location: 'SCC（学生センター）4階ホール',
+      location: 'SCC（Science and Culture Center）4階ホール',
       description: '音響・照明完備の屋内ホール。オープニングセレモニー、ゲストライブ、お笑い企画、グランドフィナーレ等を開催。',
       icon: '',
       eventId: 'special-guest-live',
