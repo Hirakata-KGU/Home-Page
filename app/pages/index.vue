@@ -304,7 +304,7 @@ const visitorGuidelines = [
     <SectionsHeroSection />
 
     <!-- 2. 企画セクション (背景: #437C62: -mt-[2px]でHeroSection最下部の波と確実にオーバーラップさせて隙間線を防止) -->
-    <section class="w-full bg-sprout-moss py-12 sm:py-16 px-0 relative z-[5] overflow-hidden -mt-[2px]" id="events">
+    <section class="w-full bg-sprout-moss py-8 px-0 relative z-[5] overflow-hidden -mt-[2px]" id="events">
       <div class="w-full flex flex-col items-center">
         <!-- Title -->
         <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
