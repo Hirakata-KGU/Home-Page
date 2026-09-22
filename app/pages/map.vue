@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { getBuildingDataList } from '~/data/map-buildings';
 import CampusOverallMap from '~/components/map/CampusOverallMap.vue';
 import EventCard from '~/components/ui/EventCard.vue';
@@ -31,11 +32,11 @@ const setTab = (key: TabKey) => {
 };
 
 const tabs: { key: TabKey; label: string; sub: string }[] = [
-  { key: 'all', label: '全体マップ', sub: 'Campus & Tents' },
-  { key: 'no3', label: '3号館', sub: 'No.3' },
-  { key: 'no6', label: '6号館', sub: 'No.6' },
-  { key: 'no7', label: '7号館', sub: 'Music Hall' },
-  { key: 'no8', label: '8号館', sub: 'Culture Hall' },
+  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店' },
+  { key: 'no3', label: '3号館', sub: '研究・展示' },
+  { key: 'no6', label: '6号館', sub: '天文部' },
+  { key: 'no7', label: '7号館', sub: '音楽館' },
+  { key: 'no8', label: '8号館', sub: '文化館' },
   { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F' },
 ];
 
@@ -48,9 +49,8 @@ const currentBuilding = computed(() => {
 
 const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' | 'scc') => {
   setTab(buildingId);
-  // 画面トップまたはセクショントップへスムーズスクロール
   if (typeof window !== 'undefined') {
-    window.scrollTo({ top: 280, behavior: 'smooth' });
+    window.scrollTo({ top: 260, behavior: 'smooth' });
   }
 };
 </script>
@@ -64,9 +64,9 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
     />
 
     <div class="page-container">
-      <!-- ナビゲーションタブ -->
-      <section class="section nav-section">
-        <div class="tab-list-wrapper" role="tablist" aria-label="場内エリア切り替え">
+      <!-- 1. マップ選択box（マップ本体と横幅を完全統一：max-width: 820px） -->
+      <nav class="map-nav-wrapper" aria-label="場内エリア切り替え">
+        <div class="tab-grid" role="tablist">
           <button
             v-for="t in tabs"
             :key="t.key"
@@ -80,31 +80,32 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
             <span class="tab-sub-label">{{ t.sub }}</span>
           </button>
         </div>
-      </section>
+      </nav>
 
-      <!-- 1. 全体マップタブ -->
+      <!-- 2. 全体マップタブ -->
       <Transition name="fade-fast" mode="out-in">
         <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section">
-          <div class="section-heading text-center mb-6">
-            <h2 class="text-2xl sm:text-3xl font-black text-[#2f5b34]">
+          <!-- その下の文字（横幅をマップ本体と完全統一） -->
+          <div class="section-heading-box">
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
               キャンパス全体 ＆ 模擬店エリア
             </h2>
-            <p class="text-sm sm:text-base text-[#6b7280] mt-1 font-medium">
+            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium">
               Overall Campus & Food Stalls Map
             </p>
           </div>
 
-          <!-- 全体マップ本体 -->
+          <!-- 地図説明 ＆ 地図（CampusOverallMap内部も max-width: 820px） -->
           <CampusOverallMap @select-building="handleSelectBuildingFromMap" />
 
-          <!-- 模擬店テント一覧クイックリスト -->
-          <div class="stalls-quick-list mt-12 pt-8 border-t border-gray-200">
-            <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <!-- 模擬店テント一覧クイックリスト（横幅統一） -->
+          <div class="stalls-quick-list">
+            <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
               <div>
-                <h3 class="text-xl font-extrabold text-[#2f5b34]">
+                <h3 class="text-lg sm:text-xl font-extrabold text-[#2f5b34]">
                   模擬店テント出店一覧（全22店舗 ＋ 企業ブース）
                 </h3>
-                <p class="text-xs sm:text-sm text-[#6b7280] mt-0.5">
+                <p class="text-xs text-[#6b7280] mt-0.5">
                   マップ上のテント、または下記の一覧から企画詳細をご確認いただけます。
                 </p>
               </div>
@@ -124,7 +125,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
               >
                 <NuxtLink :to="`/events/${stall.id}`" class="stall-link">
                   <div class="stall-tent-badge">
-                    {{ stall.tentNo ? (String(stall.tentNo).includes('テント') ? stall.tentNo : `テントNo.${stall.tentNo}`) : '模擬店' }}
+                    {{ stall.tentNo ? (String(stall.tentNo).includes('テント') ? stall.tentNo : `No.${stall.tentNo}`) : '模擬店' }}
                   </div>
                   <div class="stall-info">
                     <h4 class="stall-item-title">{{ stall.item }}</h4>
@@ -157,17 +158,17 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
           </div>
         </section>
 
-        <!-- 2. 建物別タブ（3号館、6号館、7号館、8号館、SCC） -->
+        <!-- 3. 建物別タブ（3号館、6号館、7号館、8号館、SCC） -->
         <section v-else-if="currentBuilding" :key="`tab-${currentBuilding.id}`" class="building-detail-section">
-          <!-- 建物案内ヘッダー -->
+          <!-- 建物案内ヘッダー（max-width: 820px で統一） -->
           <div class="building-header-card">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div class="building-badge-pill">{{ currentBuilding.subName }}</div>
-                <h2 class="text-2xl sm:text-3xl font-black text-[#2f5b34] mt-2">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34] mt-2">
                   {{ currentBuilding.name }} フロア案内
                 </h2>
-                <p class="text-sm sm:text-base text-[#4b5563] mt-2 leading-relaxed max-w-2xl">
+                <p class="text-xs sm:text-sm text-[#4b5563] mt-2 leading-relaxed max-w-2xl">
                   {{ currentBuilding.description }}
                 </p>
               </div>
@@ -183,7 +184,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
           </div>
 
           <!-- 階層（フロア）ごとの企画カード一覧 -->
-          <div class="floors-container mt-8 space-y-10">
+          <div class="floors-container mt-6 space-y-8">
             <div
               v-for="fl in currentBuilding.floors"
               :key="fl.floor"
@@ -193,10 +194,10 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
               <div class="floor-heading-row">
                 <div class="floor-badge-tag">{{ fl.floor }}</div>
                 <div>
-                  <h3 class="text-lg sm:text-xl font-extrabold text-[#2f5b34]">
+                  <h3 class="text-base sm:text-lg font-extrabold text-[#2f5b34]">
                     {{ fl.floorLabel }}
                   </h3>
-                  <p v-if="fl.description" class="text-xs sm:text-sm text-[#6b7280] mt-0.5">
+                  <p v-if="fl.description" class="text-xs text-[#6b7280] mt-0.5">
                     {{ fl.description }}
                   </p>
                 </div>
@@ -211,7 +212,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
                 />
               </div>
               <div v-else class="empty-floor-box mt-4">
-                <p class="text-sm text-[#9ca3af]">このフロアの一般公開企画はありません。</p>
+                <p class="text-xs sm:text-sm text-[#9ca3af]">このフロアの一般公開企画はありません。</p>
               </div>
             </div>
           </div>
@@ -222,40 +223,45 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 </template>
 
 <style scoped>
+.map-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ページ全体の共通コンテナ */
 .page-container {
-  max-width: var(--max-width, 1200px);
+  max-width: 820px; /* マップ選択box、見出し、地図、説明すべてこの幅に統一 */
   margin: -32px auto 80px;
   padding: 0 16px;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 1. マップ選択box: 画面幅ピッタリ、はみ出し・見切れゼロ */
+.map-nav-wrapper {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.tab-grid {
   display: grid;
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr); /* スマホは3列×2行でピッタリ収まる */
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
-  .page-container {
-    padding: 0 24px;
-    gap: 32px;
-  }
-}
-
-.nav-section {
-  padding: 8px 0;
-}
-
-.tab-list-wrapper {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  scrollbar-width: thin;
-  justify-content: flex-start;
-}
-
-@media (min-width: 768px) {
-  .tab-list-wrapper {
-    justify-content: center;
-    gap: 12px;
+  .tab-grid {
+    grid-template-columns: repeat(6, 1fr); /* PC・タブレットは6列均等 */
+    gap: 10px;
   }
 }
 
@@ -264,14 +270,14 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 18px;
+  padding: 10px 6px;
   border-radius: 12px;
   border: 1.5px solid var(--border, #e5e5e5);
   background: white;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.25s ease;
-  min-width: 100px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
@@ -285,121 +291,59 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   background: linear-gradient(135deg, var(--olive, #2f5b34) 0%, var(--olive-light, #4a7f52) 100%);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 12px rgba(47, 91, 52, 0.25);
+  box-shadow: 0 3px 10px rgba(47, 91, 52, 0.25);
 }
 
 .tab-main-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
+  line-height: 1.2;
 }
 
 .tab-sub-label {
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 600;
   opacity: 0.75;
+  margin-top: 2px;
+  white-space: nowrap;
 }
 
 .is-active .tab-sub-label {
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
-/* 建物ヘッダーカード */
-.building-header-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f6faed 100%);
-  border: 1px solid var(--border, #e5e5e5);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-}
-
-.building-badge-pill {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--olive, #2f5b34);
-  background: rgba(47, 91, 52, 0.1);
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-
-.back-to-map-btn {
-  align-self: flex-start;
-  padding: 10px 18px;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--olive, #2f5b34);
-  background: white;
-  border: 1.5px solid var(--olive, #2f5b34);
-  border-radius: 50px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-}
-
-.back-to-map-btn:hover {
-  background: var(--olive, #2f5b34);
-  color: white;
-}
-
-/* フロアブロック */
-.floor-block {
-  background: white;
-  border: 1px solid var(--border, #e5e5e5);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}
-
-@media (min-width: 640px) {
-  .floor-block {
-    padding: 28px;
-  }
-}
-
-.floor-heading-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 14px;
-  border-bottom: 1.5px solid #f0f0f0;
-}
-
-.floor-badge-tag {
-  background: linear-gradient(135deg, var(--olive, #2f5b34) 0%, #4a7f52 100%);
-  color: white;
-  font-size: 18px;
-  font-weight: 900;
-  padding: 6px 14px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(47, 91, 52, 0.2);
-}
-
-.events-grid-responsive {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-@media (min-width: 640px) {
-  .events-grid-responsive {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-  }
-}
-
-.empty-floor-box {
-  background: #fdfbf7;
-  padding: 24px;
+/* 2. その下の文字（見出し） */
+.section-heading-box {
   text-align: center;
-  border-radius: 8px;
-  border: 1px dashed #e5e5e5;
+  margin: 4px auto 16px;
+  width: 100%;
+  max-width: 820px;
+}
+
+/* 全体マップセクション */
+.map-content-section {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* 模擬店クイックリスト */
+.stalls-quick-list {
+  width: 100%;
+  max-width: 820px;
+  margin: 32px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
 .stalls-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .stall-item-card {
@@ -419,11 +363,12 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 .stall-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
+  gap: 10px;
+  padding: 10px 12px;
   text-decoration: none;
   color: inherit;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .stall-tent-badge {
@@ -433,7 +378,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   color: #c9a063;
   background: #fbf8f2;
   border: 1px solid #c9a063;
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 6px;
 }
 
@@ -449,7 +394,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 }
 
 .stall-item-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   color: #1f2937;
   white-space: nowrap;
@@ -466,9 +411,102 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 }
 
 .stall-arrow {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--olive, #2f5b34);
+}
+
+/* 3. 建物詳細セクション（max-width: 820px 統一） */
+.building-detail-section {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.building-header-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f6faed 100%);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.building-badge-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--olive, #2f5b34);
+  background: rgba(47, 91, 52, 0.1);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.back-to-map-btn {
+  align-self: flex-start;
+  padding: 8px 16px;
   font-size: 12px;
   font-weight: 800;
   color: var(--olive, #2f5b34);
+  background: white;
+  border: 1.5px solid var(--olive, #2f5b34);
+  border-radius: 50px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.back-to-map-btn:hover {
+  background: var(--olive, #2f5b34);
+  color: white;
+}
+
+.floor-block {
+  background: white;
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .floor-block {
+    padding: 24px;
+  }
+}
+
+.floor-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid #f0f0f0;
+}
+
+.floor-badge-tag {
+  background: linear-gradient(135deg, var(--olive, #2f5b34) 0%, #4a7f52 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(47, 91, 52, 0.2);
+}
+
+.events-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+}
+
+.empty-floor-box {
+  background: #fdfbf7;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px dashed #e5e5e5;
 }
 
 /* トランジション */

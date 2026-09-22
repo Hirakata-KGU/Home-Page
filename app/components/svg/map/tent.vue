@@ -51,15 +51,15 @@ const displayText = computed(() => {
   return String(props.tentNo);
 });
 
-// フォントサイズ調整
+// フォントサイズ
 const fontSize = computed(() => {
   if (props.company) {
-    return '4px';
+    return '4.5px';
   }
   const str = String(props.tentNo);
-  if (str.length >= 4) return '4.5px';
-  if (str.length >= 3) return '5.2px';
-  return '6.8px';
+  if (str.length >= 4) return '5px';
+  if (str.length >= 3) return '5.8px';
+  return '7.5px';
 });
 
 // ポップオーバー位置のクラス
@@ -67,7 +67,6 @@ const placementClass = computed(() => {
   if (props.placement !== 'auto') {
     return `placement-${props.placement}`;
   }
-  // auto の場合はデフォルトで top
   return 'placement-top';
 });
 
@@ -79,29 +78,41 @@ const toggleOpen = () => {
   }
 };
 
+// PC（マウス環境）でのホバー操作
 const handleMouseEnter = () => {
+  if (typeof window === 'undefined') return;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!canHover) return;
+
   if (!props.interactive || !props.showCardOnHover || !hasEvents.value) return;
   isOpen.value = true;
 };
 
 const handleMouseLeave = () => {
+  if (typeof window === 'undefined') return;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!canHover) return;
+
   if (!props.interactive || !props.showCardOnHover) return;
   isOpen.value = false;
 };
 
-const handleDocumentClick = (e: MouseEvent) => {
+const handleDocumentClick = (e: MouseEvent | TouchEvent) => {
   if (!isOpen.value) return;
-  if (tentRef.value && !tentRef.value.contains(e.target as Node)) {
+  const target = e.target as Node;
+  if (tentRef.value && !tentRef.value.contains(target)) {
     isOpen.value = false;
   }
 };
 
 onMounted(() => {
   document.addEventListener('click', handleDocumentClick);
+  document.addEventListener('touchstart', handleDocumentClick, { passive: true });
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleDocumentClick);
+  document.removeEventListener('touchstart', handleDocumentClick);
 });
 </script>
 
@@ -130,11 +141,11 @@ onBeforeUnmount(() => {
       @keydown.space.prevent="toggleOpen"
     >
       <rect
-        x="0.9"
-        y="0.9"
-        width="18.986"
-        height="13.296"
-        rx="1.5"
+        x="0.8"
+        y="0.8"
+        width="19.186"
+        height="13.496"
+        rx="2"
         class="tent-rect"
         :class="{ 'company-rect': company }"
       />
@@ -151,7 +162,7 @@ onBeforeUnmount(() => {
       </text>
     </svg>
 
-    <!-- ポップオーバー: EventCard (左 / 右 / 上 / 下) -->
+    <!-- ポップオーバー: EventCard のみを表示 -->
     <Transition name="fade-scale">
       <div
         v-if="isOpen && hasEvents"
@@ -159,20 +170,6 @@ onBeforeUnmount(() => {
         :class="placementClass"
         @click.stop
       >
-        <div class="popover-close-row">
-          <span class="popover-badge">
-            {{ company ? `企業テント ${tentNo}` : `模擬店テント No.${tentNo}` }}
-          </span>
-          <button
-            class="popover-close-btn"
-            type="button"
-            aria-label="閉じる"
-            @click.stop="isOpen = false"
-          >
-            ✕
-          </button>
-        </div>
-
         <div class="popover-cards-wrap">
           <div
             v-for="ev in targetEvents"
@@ -192,10 +189,20 @@ onBeforeUnmount(() => {
   position: relative;
   display: inline-block;
   user-select: none;
+  touch-action: manipulation;
 }
 
 .tent-wrapper.is-clickable {
   cursor: pointer;
+}
+
+/* タップしやすくするための見えないタッチターゲット拡大エリア */
+.tent-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  background: transparent;
+  pointer-events: auto;
 }
 
 .tent-svg {
@@ -209,7 +216,7 @@ onBeforeUnmount(() => {
 .tent-rect {
   fill: #f6faed;
   stroke: #c9a063;
-  stroke-width: 1.4;
+  stroke-width: 1.5;
   transition: fill 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease;
 }
 
@@ -220,15 +227,15 @@ onBeforeUnmount(() => {
 
 .tent-wrapper:hover .tent-svg,
 .tent-wrapper.is-active .tent-svg {
-  transform: scale(1.12);
-  filter: drop-shadow(0 2px 4px rgba(47, 91, 52, 0.3));
+  transform: scale(1.18);
+  filter: drop-shadow(0 2px 5px rgba(47, 91, 52, 0.35));
 }
 
 .tent-wrapper:hover .tent-rect,
 .tent-wrapper.is-active .tent-rect {
   fill: #e8f5e9;
   stroke: var(--olive, #2f5b34);
-  stroke-width: 1.8;
+  stroke-width: 2;
 }
 
 .tent-label-text {
@@ -244,77 +251,59 @@ onBeforeUnmount(() => {
   font-weight: 800;
 }
 
-/* ポップオーバーの配置 */
+/* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示 */
 .tent-card-popover {
   position: absolute;
-  z-index: 100;
-  width: min(320px, 86vw);
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--border, #e5e5e5);
-  padding: 10px;
-}
-
-/* 上配置 (デフォルト) */
-.tent-card-popover.placement-top {
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* 下配置 */
-.tent-card-popover.placement-bottom {
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* 左配置 */
-.tent-card-popover.placement-left {
-  right: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* 右配置 */
-.tent-card-popover.placement-right {
-  left: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.popover-close-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  padding: 0 4px;
-}
-
-.popover-badge {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--olive, #2f5b34);
-  background: rgba(47, 91, 52, 0.1);
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.popover-close-btn {
+  z-index: 200;
+  width: min(300px, 80vw);
   background: transparent;
   border: none;
-  font-size: 14px;
-  color: #888;
-  cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
-  line-height: 1;
+  padding: 0;
+  box-shadow: none;
+  pointer-events: auto;
 }
 
-.popover-close-btn:hover {
-  color: #333;
-  background: #f0f0f0;
+/* PC配置 */
+@media (min-width: 641px) {
+  .tent-card-popover.placement-top {
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tent-card-popover.placement-bottom {
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tent-card-popover.placement-left {
+    right: calc(100% + 6px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .tent-card-popover.placement-right {
+    left: calc(100% + 6px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* スマホ閲覧時: 画面端での見切れを防止するため画面下部にフローティング表示 */
+@media (max-width: 640px) {
+  .tent-card-popover {
+    position: fixed;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    width: auto;
+    max-width: 360px;
+    margin: 0 auto;
+    z-index: 1000;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+  }
 }
 
 .popover-cards-wrap {
@@ -334,26 +323,34 @@ onBeforeUnmount(() => {
 .fade-scale-enter-from,
 .fade-scale-leave-to {
   opacity: 0;
-  transform: scale(0.92);
 }
 
-.placement-top.fade-scale-enter-from,
-.placement-top.fade-scale-leave-to {
-  transform: translateX(-50%) scale(0.92);
+@media (min-width: 641px) {
+  .placement-top.fade-scale-enter-from,
+  .placement-top.fade-scale-leave-to {
+    transform: translateX(-50%) scale(0.94);
+  }
+
+  .placement-bottom.fade-scale-enter-from,
+  .placement-bottom.fade-scale-leave-to {
+    transform: translateX(-50%) scale(0.94);
+  }
+
+  .placement-left.fade-scale-enter-from,
+  .placement-left.fade-scale-leave-to {
+    transform: translateY(-50%) scale(0.94);
+  }
+
+  .placement-right.fade-scale-enter-from,
+  .placement-right.fade-scale-leave-to {
+    transform: translateY(-50%) scale(0.94);
+  }
 }
 
-.placement-bottom.fade-scale-enter-from,
-.placement-bottom.fade-scale-leave-to {
-  transform: translateX(-50%) scale(0.92);
-}
-
-.placement-left.fade-scale-enter-from,
-.placement-left.fade-scale-leave-to {
-  transform: translateY(-50%) scale(0.92);
-}
-
-.placement-right.fade-scale-enter-from,
-.placement-right.fade-scale-leave-to {
-  transform: translateY(-50%) scale(0.92);
+@media (max-width: 640px) {
+  .fade-scale-enter-from,
+  .fade-scale-leave-to {
+    transform: translateY(12px) scale(0.96);
+  }
 }
 </style>
