@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick, onBeforeUnmount } from 'vue';
+import ChickSvg from '~/components/svg/map/chick.vue';
 
 useSeoMeta({
   title: '平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭',
@@ -280,28 +281,33 @@ onBeforeUnmount(() => {
   }
 });
 
-// 2. ご案内カードデータ（電子パンフレット・平潟祭について・よくある質問 ※アイコンSVG提供後に配置予定）
-const guideItems = [
+// 2. ご案内カードデータ（電子パンフレット・平潟祭について・よくある質問）
+interface GuideCardItem {
+  id: string;
+  title: string;
+  to: string;
+  image?: string; // 写真パス（指定時はNuxtImgで表示）
+  isChick?: boolean; // chick.vueを使用
+}
+
+const guideItems: GuideCardItem[] = [
   {
+    id: 'pamphlet',
     title: '電子パンフレット',
-    badge: 'Guidebook',
-    desc: '当日のタイムスケジュール、キャンパスマップ、出店・企画リストが1冊にまとまった公式電子ガイドです。',
     to: '/info/pamphlet',
-    linkText: 'パンフレットを見る',
+    image: '', // 写真未定：後日画像パス（例: '/images/pamphlet.jpg'）を指定すれば即時反映
   },
   {
+    id: 'about',
     title: '平潟祭について',
-    badge: 'About SPROUT',
-    desc: '2026年度テーマ「sprout（スプラウト）」に込められた想いや、平潟祭の歴史・開催概要をご紹介します。',
     to: '/info/about',
-    linkText: '平潟祭を知る',
+    image: '/images/2025/S__41058357_0.jpg',
   },
   {
+    id: 'faq',
     title: 'よくある質問',
-    badge: 'FAQ',
-    desc: '入場方法、事前予約、雨天時の開催、取材申請など、皆様から多く寄せられる質問と回答を掲載しています。',
     to: '/info/faq',
-    linkText: 'よくある質問を見る',
+    isChick: true,
   },
 ];
 
@@ -539,27 +545,65 @@ const visitorGuidelines = [
           <!-- Title -->
           <UiSectionTitle title="ご案内" />
 
-          <!-- 3 Cards Grid (電子パンフレット・平潟祭について・よくある質問 ※絵文字不使用) -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-[1126px] mb-8">
+          <!-- 3 Cards Flex Wrap (電子パンフレット・平潟祭について・よくある質問) -->
+          <div class="flex flex-wrap justify-center gap-[clamp(16px,2.5vw,32px)] w-full max-w-[1140px] mb-8">
             <NuxtLink
-              v-for="(item, idx) in guideItems"
-              :key="idx"
+              v-for="item in guideItems"
+              :key="item.id"
               :to="item.to"
-              class="group bg-white rounded-2xl p-7 min-h-[210px] flex flex-col justify-between no-underline shadow-[0_4px_20px_rgba(46,125,50,0.08)] hover:shadow-[0_12px_32px_rgba(46,125,50,0.18)] border-2 border-sprout-border/20 hover:border-sprout-border transition-all duration-300 hover:-translate-y-1.5"
+              class="group guide-nav-card relative w-[clamp(280px,30vw,300px)] aspect-[4/3] bg-white rounded-2xl flex flex-col justify-end p-[clamp(20px,2.5vw,28px)] no-underline shadow-[0_4px_20px_rgba(46,125,50,0.08)] hover:shadow-[0_12px_32px_rgba(46,125,50,0.18)] border-2 border-sprout-border/20 hover:border-sprout-border transition-all duration-300 hover:-translate-y-1.5 select-none"
             >
-              <div>
-                <div class="inline-block bg-sprout-bg text-sprout-title text-[11px] font-bold px-2.5 py-1 rounded-full mb-3 border border-sprout-border-light">
-                  {{ item.badge }}
+              <!-- 右上: svg8でクリッピングされた写真 / ビジュアル（8角形クリップのみ10度回転・中身の写真は直立維持・カード外はみ出し防止） -->
+              <div
+                class="absolute -top-[clamp(50px,1.5%,16px)] -right-[clamp(30px,2.5%,16px)] w-[clamp(190px,85%,370px)] aspect-square rotate-[10deg] pointer-events-none transition-transform duration-300 group-hover:scale-105 group-hover:rotate-[12deg] will-change-transform"
+                aria-hidden="true"
+              >
+                <!-- svg8形状でクリッピングされた写真領域（8角形のみ10度回転） -->
+                <div class="w-full h-full overflow-hidden bg-sprout-bg flex items-center justify-center guide-svg8-clip">
+                  <!-- 写真・中身コンテナ（拡大を排し、-10度で打ち消して写真は回転させず直立を維持） -->
+                  <div class="w-full h-full -rotate-[10deg] group-hover:-rotate-[12deg] transition-transform duration-300 will-change-transform flex items-center justify-center">
+                    <!-- 1. 写真がある場合（平潟祭について、または電子パンフレットの写真追加時） -->
+                    <NuxtImg
+                      v-if="item.image"
+                      :src="item.image"
+                      :alt="item.title"
+                      loading="lazy"
+                      decoding="async"
+                      class="w-full h-full object-cover select-none pointer-events-none"
+                    />
+                    <!-- 2. よくある質問 (chick.vue + 左上に？) -->
+                    <div
+                      v-else-if="item.isChick"
+                      class="w-full h-full bg-[#fdfbe8] relative flex items-center justify-center p-3 select-none"
+                    >
+                      <!-- アヒルの左上辺りの「？」マーク -->
+                      <span
+                        class="absolute top-[23%] left-[22%] font-sans font-black text-[clamp(18px,3.5vw,26px)] text-[#d86414] -rotate-12 select-none pointer-events-none drop-shadow-sm leading-none"
+                        aria-hidden="true"
+                      >
+                        ?
+                      </span>
+                      <ChickSvg class="w-[48%] h-[48%] drop-shadow-sm select-none" />
+                    </div>
+                    <!-- 3. 写真未定時（電子パンフレット等の準備中プレースホルダー） -->
+                    <div
+                      v-else
+                      class="w-full h-full bg-[#edf4ed] flex flex-col items-center justify-center gap-2 p-3 text-sprout-moss/75 select-none"
+                    >
+                      <svg class="w-[clamp(28px,5vw,38px)] h-[clamp(28px,5vw,38px)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                      <span class="text-[clamp(10px,1.8vw,12px)] font-bold tracking-wider text-sprout-moss/80">準備中</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="flex items-center gap-2 mb-2.5">
-                  <!-- アイコンSVG提供後に配置予定 -->
-                  <h3 class="text-xl font-extrabold text-sprout-title m-0">{{ item.title }}</h3>
-                </div>
-                <p class="text-[13px] leading-relaxed text-text-muted mb-4">{{ item.desc }}</p>
               </div>
-              <div class="flex items-center justify-between text-[13px] font-bold text-sprout-border border-t border-gray-100 pt-3">
-                <span>{{ item.linkText }}</span>
-                <span class="transition-transform group-hover:translate-x-1">→</span>
+
+              <!-- 左下: タイトル（写真が重なっても読みやすい白フチ・外線付き） -->
+              <div class="relative z-20">
+                <h3 class="guide-card-title font-sans font-extrabold text-[clamp(1.15rem,2.1vw,1.45rem)] text-sprout-title tracking-wide transition-colors duration-200 group-hover:text-sprout-border m-0 leading-tight">
+                  {{ item.title }}
+                </h3>
               </div>
             </NuxtLink>
           </div>
@@ -676,8 +720,25 @@ const visitorGuidelines = [
   opacity: 0;
   transform: translateY(4px);
 }
-.event-desc-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-4px);
+/* ご案内カードの8角形クリッピング */
+.guide-svg8-clip {
+  clip-path: polygon(50% 0.12%, 85.27% 14.73%, 99.88% 50%, 85.27% 85.27%, 50% 99.88%, 14.73% 85.27%, 0.12% 50%, 14.73% 14.73%);
+  -webkit-clip-path: polygon(50% 0.12%, 85.27% 14.73%, 99.88% 50%, 85.27% 85.27%, 50% 99.88%, 14.73% 85.27%, 0.12% 50%, 14.73% 14.73%);
+}
+
+/* カード外へのはみ出し描画を確実に防止（Safari対応） */
+.guide-nav-card {
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+/* タイトルが写真に被っても綺麗に文字が浮き立つソフトな白シャドー */
+.guide-card-title {
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.95),
+    0 0 12px rgba(255, 255, 255, 0.9),
+    0 0 24px rgba(255, 255, 255, 0.8),
+    0 2px 6px rgba(255, 255, 255, 0.7);
 }
 </style>
