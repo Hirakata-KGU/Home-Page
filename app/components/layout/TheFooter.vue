@@ -45,7 +45,7 @@ const footerSections = [
     </svg>
 
     <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark">
-      <div class="flex flex-col items-center gap-8 w-full max-w-[1136px]">
+      <div class="flex flex-col items-center gap-8 w-full max-w-[var(--max-width)]">
         <!-- Navigation Columns -->
         <div class="flex flex-col items-center lg:flex-row justify-between w-full gap-8">
           <!-- Col 1: Brand -->
