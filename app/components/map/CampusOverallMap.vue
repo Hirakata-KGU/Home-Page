@@ -6,6 +6,7 @@ import No6Svg from '~/components/svg/map/no6.vue';
 import No7Svg from '~/components/svg/map/no7.vue';
 import No8Svg from '~/components/svg/map/no8.vue';
 import SccSvg from '~/components/svg/map/scc.vue';
+import ChickSvg from '~/components/svg/map/chick.vue';
 import TentItem from '~/components/svg/map/tent.vue';
 import { getEventsByTentNo } from '~/data/map-buildings';
 
@@ -15,6 +16,32 @@ const emit = defineEmits<{
 
 // スクロールコンテナの参照
 const scrollContainerRef = ref<HTMLElement | null>(null);
+
+// アヒル（遊び心）関連の状態
+const isChickSwimming = ref(false);
+const showChickBubble = ref(false);
+const chickQuackText = ref('ぴちゃぴちゃ！');
+let bubbleTimer: ReturnType<typeof setTimeout> | null = null;
+let swimmingTimer: ReturnType<typeof setTimeout> | null = null;
+
+const quackMessages = ['ぴちゃぴちゃ！', 'ピヨッ♪', 'クワッ！', 'すいすい〜', '🐣✨'];
+let quackIndex = 0;
+
+function triggerChickClick() {
+  isChickSwimming.value = true;
+  if (swimmingTimer) clearTimeout(swimmingTimer);
+  swimmingTimer = setTimeout(() => {
+    isChickSwimming.value = false;
+  }, 1200);
+
+  chickQuackText.value = quackMessages[quackIndex % quackMessages.length];
+  quackIndex++;
+  showChickBubble.value = true;
+  if (bubbleTimer) clearTimeout(bubbleTimer);
+  bubbleTimer = setTimeout(() => {
+    showChickBubble.value = false;
+  }, 1500);
+}
 
 // テント配置データ (ViewBox 457.29 x 652.38 基準のパーセント値)
 const tentList = [
@@ -188,6 +215,36 @@ onMounted(() => {
                   <span>屋外ステージ</span>
                 </div>
               </NuxtLink>
+
+              <!-- アヒル（遊び心要素: 6号館左側の池エリア） -->
+              <div
+                class="interactive-chick-wrapper"
+                :class="{ 'is-swimming': isChickSwimming }"
+                style="left: 59.23%; top: 15.75%; width: 6.15%; height: 3.95%;"
+                role="button"
+                tabindex="0"
+                aria-label="水辺のアヒル"
+                title="水辺のアヒル（ホバーやタップでぴちゃぴちゃ動くよ）"
+                @mouseenter="isChickSwimming = true"
+                @mouseleave="isChickSwimming = false"
+                @click="triggerChickClick"
+              >
+                <!-- 水面の波紋エフェクト -->
+                <div class="water-ripple ripple-1" />
+                <div class="water-ripple ripple-2" />
+                <div class="water-splash splash-l" />
+                <div class="water-splash splash-r" />
+
+                <!-- アヒル本体SVG -->
+                <ChickSvg class="chick-svg-element" />
+
+                <!-- クリック/タップ時の吹き出し -->
+                <Transition name="pop-bubble">
+                  <div v-if="showChickBubble" class="chick-bubble">
+                    <span>{{ chickQuackText }}</span>
+                  </div>
+                </Transition>
+              </div>
             </div>
 
             <!-- 3. 模擬店テントオーバーレイレイヤー（24基） -->
@@ -428,6 +485,190 @@ onMounted(() => {
 .tent-pos-wrapper {
   position: absolute;
   pointer-events: auto;
+}
+
+/* アヒル（遊び心要素） */
+.interactive-chick-wrapper {
+  position: absolute;
+  z-index: 15;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.chick-svg-element {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: 50% 85%;
+  animation: duckFloat 2.4s ease-in-out infinite alternate;
+  filter: drop-shadow(0 2px 3px rgba(0, 50, 100, 0.25));
+  transition: transform 0.15s ease;
+}
+
+/* 通常時の水面ぷかぷか */
+@keyframes duckFloat {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(1px) rotate(-2deg);
+  }
+}
+
+/* ホバー時 / タップ時: ぴちゃぴちゃ動く */
+.interactive-chick-wrapper:hover .chick-svg-element,
+.interactive-chick-wrapper.is-swimming .chick-svg-element {
+  animation: pichaPicha 0.25s ease-in-out infinite alternate !important;
+}
+
+@keyframes pichaPicha {
+  0% {
+    transform: translateY(-4px) rotate(-10deg) scale(1.06, 0.94);
+  }
+  50% {
+    transform: translateY(2px) rotate(3deg) scale(0.95, 1.05);
+  }
+  100% {
+    transform: translateY(-5px) rotate(10deg) scale(1.08, 0.92);
+  }
+}
+
+/* 水面の波紋 */
+.interactive-chick-wrapper .water-ripple {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 40%);
+  width: 140%;
+  height: 70%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(56, 189, 248, 0.7);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.interactive-chick-wrapper:hover .ripple-1,
+.interactive-chick-wrapper.is-swimming .ripple-1 {
+  animation: pichaRipple 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+.interactive-chick-wrapper:hover .ripple-2,
+.interactive-chick-wrapper.is-swimming .ripple-2 {
+  animation: pichaRipple 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) infinite 0.3s;
+}
+
+@keyframes pichaRipple {
+  0% {
+    transform: translate(-50%, 40%) scale(0.3);
+    opacity: 0.9;
+    border-color: rgba(56, 189, 248, 0.9);
+  }
+  100% {
+    transform: translate(-50%, 40%) scale(2.4);
+    opacity: 0;
+    border-color: rgba(56, 189, 248, 0);
+  }
+}
+
+/* 水しぶき (Splash drops) */
+.interactive-chick-wrapper .water-splash {
+  position: absolute;
+  bottom: 20%;
+  width: 4px;
+  height: 4px;
+  background: #38bdf8;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.interactive-chick-wrapper .splash-l {
+  left: 8%;
+}
+
+.interactive-chick-wrapper .splash-r {
+  right: 8%;
+}
+
+.interactive-chick-wrapper:hover .splash-l,
+.interactive-chick-wrapper.is-swimming .splash-l {
+  animation: splashLeft 0.4s ease-out infinite;
+}
+
+.interactive-chick-wrapper:hover .splash-r,
+.interactive-chick-wrapper.is-swimming .splash-r {
+  animation: splashRight 0.4s ease-out infinite 0.15s;
+}
+
+@keyframes splashLeft {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-10px, -12px) scale(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes splashRight {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(10px, -12px) scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* 吹き出し */
+.chick-bubble {
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  color: #b45309;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1.5px solid #fde68a;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.chick-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: #fde68a transparent transparent transparent;
+}
+
+.pop-bubble-enter-active,
+.pop-bubble-leave-active {
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pop-bubble-enter-from,
+.pop-bubble-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(0.7);
 }
 
 @media (max-width: 640px) {
