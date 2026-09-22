@@ -10,6 +10,21 @@ const event = computed(() => {
   return allEvents.find((e) => e.id === eventId.value);
 });
 
+const mapUrl = computed(() => {
+  if (!event.value) return '/map';
+  const ev = event.value;
+  const room = ev.room || '';
+  const loc = ev.locationName || '';
+
+  if (room.startsWith('3-') || loc.includes('3号館')) return '/map?tab=no3';
+  if (room.startsWith('6-') || loc.includes('6号館')) return '/map?tab=no6';
+  if (room.startsWith('7-') || loc.startsWith('7-') || loc.includes('7号館') || loc.includes('音楽館')) return '/map?tab=no7';
+  if (room.startsWith('8-') || loc.startsWith('8-') || loc.includes('8号館') || loc.includes('文化館')) return '/map?tab=no8';
+  if (loc.includes('SCC') || loc.includes('屋内ステージ') || room.includes('SCC') || room.includes('屋内ステージ')) return '/map?tab=scc';
+
+  return '/map';
+});
+
 useSeoMeta({
   title: () => event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026',
   description: () => event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ',
@@ -152,7 +167,7 @@ useSeoMeta({
 
           <!-- アクション導線ボタン -->
           <div class="action-buttons">
-            <NuxtLink to="/map" class="btn btn-primary">
+            <NuxtLink :to="mapUrl" class="btn btn-primary">
               場内マップで場所を確認 →
             </NuxtLink>
             <NuxtLink

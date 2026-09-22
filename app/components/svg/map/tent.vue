@@ -1,70 +1,359 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
+import type { EventItem } from '~/data/events';
+import EventCard from '~/components/ui/EventCard.vue';
 
 interface Props {
-  label?: string
-  company?: boolean
+  tentNo?: string | number;
+  company?: boolean;
+  event?: EventItem | null;
+  events?: EventItem[];
+  placement?: 'top' | 'bottom' | 'left' | 'right' | 'auto';
+  showCardOnHover?: boolean;
+  interactive?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  tent: '1',
-  company: false
-})
+  tentNo: '1',
+  company: false,
+  event: null,
+  events: () => [],
+  placement: 'auto',
+  showCardOnHover: true,
+  interactive: true,
+});
 
-// variant や active に応じた色の切り替え
-const colorClasses = computed(() => {
+const emit = defineEmits<{
+  (e: 'select', tentNo: string | number): void;
+}>();
 
-})
+const isOpen = ref(false);
+const tentRef = ref<HTMLElement | null>(null);
+
+// 表示対象のイベント一覧
+const targetEvents = computed<EventItem[]>(() => {
+  if (props.events && props.events.length > 0) {
+    return props.events;
+  }
+  if (props.event) {
+    return [props.event];
+  }
+  return [];
+});
+
+const hasEvents = computed(() => targetEvents.value.length > 0);
+
+// 表示テキスト
+const displayText = computed(() => {
+  if (props.company) {
+    return `企業${props.tentNo}`;
+  }
+  return String(props.tentNo);
+});
+
+// フォントサイズ調整
+const fontSize = computed(() => {
+  if (props.company) {
+    return '4px';
+  }
+  const str = String(props.tentNo);
+  if (str.length >= 4) return '4.5px';
+  if (str.length >= 3) return '5.2px';
+  return '6.8px';
+});
+
+// ポップオーバー位置のクラス
+const placementClass = computed(() => {
+  if (props.placement !== 'auto') {
+    return `placement-${props.placement}`;
+  }
+  // auto の場合はデフォルトで top
+  return 'placement-top';
+});
+
+const toggleOpen = () => {
+  if (!props.interactive || !hasEvents.value) return;
+  isOpen.value = !isOpen.value;
+  if (isOpen.value) {
+    emit('select', props.tentNo);
+  }
+};
+
+const handleMouseEnter = () => {
+  if (!props.interactive || !props.showCardOnHover || !hasEvents.value) return;
+  isOpen.value = true;
+};
+
+const handleMouseLeave = () => {
+  if (!props.interactive || !props.showCardOnHover) return;
+  isOpen.value = false;
+};
+
+const handleDocumentClick = (e: MouseEvent) => {
+  if (!isOpen.value) return;
+  if (tentRef.value && !tentRef.value.contains(e.target as Node)) {
+    isOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleDocumentClick);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleDocumentClick);
+});
 </script>
 
 <template>
-<svg
-   viewBox="0 0 20.786667 15.096"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1">
-    <color-profile
-       inkscape:label="sRGB IEC61966-2.1"
-       name="sRGB IEC61966-2.1"
-       xlink:href="data:application/vnd.iccprofile;base64,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"
-       id="color-profile2" />
-  </defs>
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1" />
-  <g
-     id="g1"
-     inkscape:groupmode="layer"
-     inkscape:label="1"
-     transform="translate(-549.90375,-336.248)">
-    <g
-       inkscape:groupmode="layer"
-       id="layer4"
-       inkscape:label="Layer 1">
-      <path
-         id="path6424"
-         d="M 0,0 V 14.173 H 9.905 V 0 Z"
-         style="fill:none;stroke:#c9a063;stroke-width:1.417;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-         transform="matrix(0,-1.3333333,-1.3333333,0,569.74575,350.39933)" />
-      <path
-         id="path6425"
-         d="m 332.477,428.754 h 9.905 v -14.173 h -9.905 z"
-         style="fill:#f6faed;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="matrix(0,-1.3333333,-1.3333333,0,1122.52,793.70133)" />
-    </g>
-  </g>
-</svg>
+  <div
+    ref="tentRef"
+    class="tent-wrapper"
+    :class="{
+      'is-active': isOpen,
+      'is-clickable': interactive && hasEvents,
+      'is-company': company
+    }"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+    @click.stop="toggleOpen"
+  >
+    <!-- テント本体 SVG -->
+    <svg
+      viewBox="0 0 20.786667 15.096"
+      xmlns="http://www.w3.org/2000/svg"
+      class="tent-svg"
+      role="button"
+      :aria-label="company ? `企業テント ${tentNo}` : `テント ${tentNo}`"
+      tabindex="0"
+      @keydown.enter="toggleOpen"
+      @keydown.space.prevent="toggleOpen"
+    >
+      <rect
+        x="0.9"
+        y="0.9"
+        width="18.986"
+        height="13.296"
+        rx="1.5"
+        class="tent-rect"
+        :class="{ 'company-rect': company }"
+      />
+      <text
+        x="10.393"
+        y="8.2"
+        text-anchor="middle"
+        dominant-baseline="central"
+        class="tent-label-text"
+        :class="{ 'company-text': company }"
+        :style="{ fontSize }"
+      >
+        {{ displayText }}
+      </text>
+    </svg>
 
+    <!-- ポップオーバー: EventCard (左 / 右 / 上 / 下) -->
+    <Transition name="fade-scale">
+      <div
+        v-if="isOpen && hasEvents"
+        class="tent-card-popover"
+        :class="placementClass"
+        @click.stop
+      >
+        <div class="popover-close-row">
+          <span class="popover-badge">
+            {{ company ? `企業テント ${tentNo}` : `模擬店テント No.${tentNo}` }}
+          </span>
+          <button
+            class="popover-close-btn"
+            type="button"
+            aria-label="閉じる"
+            @click.stop="isOpen = false"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="popover-cards-wrap">
+          <div
+            v-for="ev in targetEvents"
+            :key="ev.id"
+            class="popover-card-item"
+          >
+            <EventCard :event="ev" />
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </div>
 </template>
 
-<style>
+<style scoped>
+.tent-wrapper {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
 
+.tent-wrapper.is-clickable {
+  cursor: pointer;
+}
+
+.tent-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease;
+}
+
+.tent-rect {
+  fill: #f6faed;
+  stroke: #c9a063;
+  stroke-width: 1.4;
+  transition: fill 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+.tent-rect.company-rect {
+  fill: #f1f8f2;
+  stroke: #4a7f52;
+}
+
+.tent-wrapper:hover .tent-svg,
+.tent-wrapper.is-active .tent-svg {
+  transform: scale(1.12);
+  filter: drop-shadow(0 2px 4px rgba(47, 91, 52, 0.3));
+}
+
+.tent-wrapper:hover .tent-rect,
+.tent-wrapper.is-active .tent-rect {
+  fill: #e8f5e9;
+  stroke: var(--olive, #2f5b34);
+  stroke-width: 1.8;
+}
+
+.tent-label-text {
+  fill: #2f5b34;
+  font-family: inherit;
+  font-weight: 900;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+
+.tent-label-text.company-text {
+  fill: #1e3d26;
+  font-weight: 800;
+}
+
+/* ポップオーバーの配置 */
+.tent-card-popover {
+  position: absolute;
+  z-index: 100;
+  width: min(320px, 86vw);
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border, #e5e5e5);
+  padding: 10px;
+}
+
+/* 上配置 (デフォルト) */
+.tent-card-popover.placement-top {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 下配置 */
+.tent-card-popover.placement-bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 左配置 */
+.tent-card-popover.placement-left {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 右配置 */
+.tent-card-popover.placement-right {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.popover-close-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.popover-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--olive, #2f5b34);
+  background: rgba(47, 91, 52, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.popover-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.popover-close-btn:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+.popover-cards-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+/* トランジション */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.placement-top.fade-scale-enter-from,
+.placement-top.fade-scale-leave-to {
+  transform: translateX(-50%) scale(0.92);
+}
+
+.placement-bottom.fade-scale-enter-from,
+.placement-bottom.fade-scale-leave-to {
+  transform: translateX(-50%) scale(0.92);
+}
+
+.placement-left.fade-scale-enter-from,
+.placement-left.fade-scale-leave-to {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.placement-right.fade-scale-enter-from,
+.placement-right.fade-scale-leave-to {
+  transform: translateY(-50%) scale(0.92);
+}
 </style>

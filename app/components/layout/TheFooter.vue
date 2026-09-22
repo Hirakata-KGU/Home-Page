@@ -15,9 +15,11 @@ const footerSections = [
       ],
       [
         { label: '全体・模擬店マップ', to: '/map' },
-        { label: '音楽館マップ', to: '/map' },
-        { label: '文化館マップ', to: '/map' },
-        { label: '3号館マップ', to: '/map' }
+        { label: '3号館マップ', to: '/map?tab=no3' },
+        { label: '6号館マップ', to: '/map?tab=no6' },
+        { label: '音楽館（7号館）', to: '/map?tab=no7' },
+        { label: '文化館（8号館）', to: '/map?tab=no8' },
+        { label: '屋内ステージ（SCC）', to: '/map?tab=scc' }
       ]
     ]
   },
