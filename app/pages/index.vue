@@ -21,7 +21,7 @@ const featuredEvents: FeaturedEventItem[] = [
   {
     id: 'geino',
     title: '芸能ステージ',
-    badge: 'SCC 4F メインアリーナ',
+    badge: 'SCC 4F ベンネットホール',
     image: '/images/events/stage-geino-miyase.jpg',
     desc: '',
     to: '/events/stage-geino-miyase',
