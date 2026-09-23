@@ -71,6 +71,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 <template>
   <div class="map-page">
     <LayoutPageHeader
+      class="w-full"
       title="場内マップ・施設案内"
       sub-title="Campus & Building Maps"
       :breadcrumbs="[{ name: '場内マップ' }]"
@@ -173,7 +174,6 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 
 /* ページ全体の共通コンテナ */
 .page-container {
-  max-width: 1400px;
   padding: 0 16px;
   position: relative;
   z-index: 10;

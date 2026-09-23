@@ -15,8 +15,8 @@ defineProps<Props>();
 </script>
 
 <template>
-  <div class="flex flex-col text-white relative">
-    <div class="flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center">
+  <div class="w-full flex flex-col text-white relative">
+    <div class="w-full flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center">
       <div class="w-full max-w-[1136px] justify-start">
         <nav v-if="breadcrumbs && breadcrumbs.length" class="breadcrumb" aria-label="パンくずリスト">
           <NuxtLink to="/">ホーム</NuxtLink>
