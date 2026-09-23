@@ -10,10 +10,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       'Noto+Sans+JP': [400, 700],
-      'Noto+Serif+JP': {
-        wght: [700],
-        text: '平潟祭 2026', // タイトルロゴ用の文字だけに限定
-      },
+      'Noto+Serif+JP': [700],
     },
     display: 'swap',
     download: true, // 重要：フォント本体を _nuxt/ 内に保存して配信（外部依存を完全排除）
