@@ -13,8 +13,7 @@ export default defineNuxtConfig({
       'Noto+Serif+JP': [700],
     },
     display: 'swap',
-    download: true, // 重要：フォント本体を _nuxt/ 内に保存して配信（外部依存を完全排除）
-    inject: true,
+    download: true,
   },
 
   tailwindcss: {
