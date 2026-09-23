@@ -109,24 +109,6 @@ img {
     @apply text-[13px] text-text-muted leading-relaxed m-0;
   }
 
-  /* Schedule Highlights */
-  .schedule-preview-card {
-    @apply p-7 rounded-[18px] text-white flex flex-col shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 border bg-gradient-to-br;
-  }
-  .schedule-preview-badge {
-    @apply inline-block self-start bg-white/20 px-3 py-1 rounded-full text-xs font-bold mb-3;
-  }
-  .schedule-preview-link {
-    @apply text-sm font-extrabold text-sprout-accent no-underline hover:underline;
-  }
-
-  /* Hero Section Components */
-  .hero-deco-frame {
-    @apply box-border absolute border border-sprout-border top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
-  }
-
-
-
   /* Pill Buttons */
   .btn-pill-green {
     @apply inline-flex justify-center items-center px-7 py-3.5 min-w-[160px] h-[52px] bg-sprout-border hover:bg-[#356b48] text-white rounded-full no-underline shadow-[0_2px_8px_rgba(66,132,90,0.25)] hover:shadow-[0_4px_14px_rgba(66,132,90,0.35)] transition-all hover:-translate-y-0.5 font-sans font-normal text-[19px] leading-[24px];
@@ -153,20 +135,6 @@ img {
   border-bottom: 2px solid var(--sprout-bg);
 }
 
-.section-icon {
-  width: 54px;
-  height: 54px;
-  background: linear-gradient(135deg, var(--sprout-light) 0%, var(--sprout) 100%);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  color: white;
-  box-shadow: var(--shadow-sm);
-  flex-shrink: 0;
-}
-
 .section-title {
   flex: 1;
 }
@@ -187,17 +155,6 @@ img {
 }
 
 /* Keyframe animations */
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -206,37 +163,6 @@ img {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.03);
-    opacity: 1;
   }
 }
 

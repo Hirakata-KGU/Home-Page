@@ -15,7 +15,6 @@
   - アヒル（遊び心要素）: [`app/components/svg/map/chick.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/components/svg/map/chick.vue)
 - **データ管理:**
   - 建物・フロア企画データ: [`app/data/map-buildings.ts`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/data/map-buildings.ts)
-  - キャンパス施設データ: [`app/data/maps.ts`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/data/maps.ts)
 
 ---
 
