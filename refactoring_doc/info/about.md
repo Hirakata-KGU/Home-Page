@@ -52,42 +52,50 @@
 - 写真スライドショーの画像タグを通常の `<img>` から `@nuxt/image` の `<NuxtImg>` コンポーネントへ置き換え。
 - 次世代フォーマット `format="webp"` と、デバイス幅に応じた配信解像度 `sizes="xs:100vw sm:100vw md:1000px"` を指定し、SSGプリレンダリング時の最適化（IPX生成）とロード高速化を実現。
 
+### ⑥ 要件5: 委員長公式挨拶文の反映 & 写真・名前・内枠の削除
+- 委員長からの正式な挨拶文（テーマ「SPROUT」に込められた想いや来場者へのメッセージ）を反映。
+- 「写真は一旦なし」「名前もなし」「見出しの下に文字だけで書き始め、無駄な枠は不要」という要望に基づき、写真プレースホルダー枠や役職・名前表示、カード状の内枠（`.greeting-card`）をすべて撤去。
+- 「委員長挨拶」の見出し直下に、読みやすい行間（`line-height: 2.1`）と段落マージンを持つ `.greeting-text` としてテキストを直接展開する極めてミニマルな構成に最適化。
+
 ---
 
 ## 3. 実装詳細 & 設計仕様
 
-### ① 委員長挨拶セクション（`.greeting-card`）
+### ① 委員長挨拶セクション（`.greeting-text`）
 ```vue
-<div class="greeting-card">
-  <!-- 写真スペース -->
-  <div class="greeting-photo-wrapper">
-    <!-- 写真確定時は以下のNuxtImgタグを使用 -->
-    <!-- <NuxtImg src="/images/greeting/leader.jpg" alt="第77回 平潟祭実行委員長" format="webp" class="greeting-photo" /> -->
-    <div class="greeting-photo-placeholder">
-      <svg class="w-12 h-12 text-sprout/40 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-      </svg>
-      <span class="placeholder-text">写真スペース</span>
-      <span class="placeholder-subtext">（委員長近影）</span>
+<section class="section">
+  <div class="section-header">
+    <div class="section-title">
+      <h2>委員長挨拶</h2>
+      <p>Chairman Greeting</p>
     </div>
   </div>
 
-  <!-- 文章スペース -->
-  <div class="greeting-content">
-    <div class="greeting-header">
-      <span class="greeting-role">第77回 平潟祭実行委員会</span>
-      <h3 class="greeting-name">実行委員長 〇〇 〇〇</h3>
-    </div>
-    <div class="greeting-body">
-      <p>ここに実行委員長からの挨拶文が入ります。</p>
-      <p>平潟祭への想いや、ご来場いただく皆様へのメッセージを掲載できます。</p>
-    </div>
+  <div class="greeting-text">
+    <p>
+      第77回平潟祭にご来場いただき、誠にありがとうございます。<br>
+      また、平潟祭にご協力いただいた関係者の皆様に厚くお礼申し上げます。
+    </p>
+    <p>第77回の平潟祭のテーマは「SPROUT」です。</p>
+    <p>「SPROUT」には「芽吹く」という意味があります。</p>
+    <p>
+      これまでの76回の平潟祭の開催を通して、先輩方が積み上げてきた経験や想いを大切に受け継ぎ、その土台の上に、今年度の私たちだからこそ生み出せる新たなものを芽吹かせたいという思いから、このテーマに決定いたしました。
+    </p>
+    <p>
+      そして、目まぐるしく変化していく時代に合わせ、私たち自身も変化していくとともに、これまで先輩方が築き上げてきたものを受け継ぎながら、これからの時代に当たり前となる新たなものを芽吹かせるという意味も込められています。
+    </p>
+    <p>
+      団体による様々な模擬店や演奏、展示に加え、芸能ステージなど、盛りだくさんの内容となっています！
+    </p>
+    <p>
+      ぜひ、77回目の平潟祭をお楽しみください！
+    </p>
   </div>
-</div>
+</section>
 ```
-- **レスポンシブ:**
-  - PC: 横並び（写真幅 190px × 高さ 250px、右側に文章）。
-  - スマホ（`<= 680px`）: 縦並び中央揃え（写真幅 160px × 高さ 210px、下部に文章・左揃え）。
+- **タイポグラフィ & レスポンシブ:**
+  - PC: `font-size: 16px; line-height: 2.1; gap: 20px; max-width: 860px;` で広々とした可読性を確保。
+  - スマホ（`<= 680px`）: `font-size: 15px; line-height: 1.9; gap: 16px;` で画面幅に自然に収まる設計。
 
 ### ② 大判写真スライドショー（`.memories-slideshow-container`）
 - **タイマー管理とSSG/ライフサイクル保護:**

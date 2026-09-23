@@ -155,35 +155,29 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <div class="greeting-card">
-          <!-- 写真スペース（写真配置用プレースホルダー） -->
-          <div class="greeting-photo-wrapper">
-            <!-- 写真を用意した際は以下のNuxtImgタグを使用してください -->
-            <!-- <NuxtImg src="/images/greeting/leader.jpg" alt="第77回 平潟祭実行委員長" format="webp" class="greeting-photo" /> -->
-            <div class="greeting-photo-placeholder">
-              <svg class="w-12 h-12 text-sprout/40 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span class="placeholder-text">写真スペース</span>
-              <span class="placeholder-subtext">（委員長近影）</span>
-            </div>
-          </div>
-
-          <!-- 文章スペース -->
-          <div class="greeting-content">
-            <div class="greeting-header">
-              <span class="greeting-role">第77回 平潟祭実行委員会</span>
-              <h3 class="greeting-name">実行委員長 〇〇 〇〇</h3>
-            </div>
-            <div class="greeting-body">
-              <p>
-                ここに実行委員長からの挨拶文が入ります。
-              </p>
-              <p>
-                平潟祭への想いや、ご来場いただく皆様へのメッセージを掲載できます。
-              </p>
-            </div>
-          </div>
+        <div class="greeting-text">
+          <p>
+            第77回平潟祭にご来場いただき、誠にありがとうございます。<br>
+            また、平潟祭にご協力いただいた関係者の皆様に厚くお礼申し上げます。
+          </p>
+          <p>
+            第77回の平潟祭のテーマは「SPROUT」です。
+          </p>
+          <p>
+            「SPROUT」には「芽吹く」という意味があります。
+          </p>
+          <p>
+            これまでの76回の平潟祭の開催を通して、先輩方が積み上げてきた経験や想いを大切に受け継ぎ、その土台の上に、今年度の私たちだからこそ生み出せる新たなものを芽吹かせたいという思いから、このテーマに決定いたしました。
+          </p>
+          <p>
+            そして、目まぐるしく変化していく時代に合わせ、私たち自身も変化していくとともに、これまで先輩方が築き上げてきたものを受け継ぎながら、これからの時代に当たり前となる新たなものを芽吹かせるという意味も込められています。
+          </p>
+          <p>
+            団体による様々な模擬店や演奏、展示に加え、芸能ステージなど、盛りだくさんの内容となっています！
+          </p>
+          <p>
+            ぜひ、77回目の平潟祭をお楽しみください！
+          </p>
         </div>
       </section>
 
@@ -258,97 +252,19 @@ onBeforeUnmount(() => {
   gap: 40px;
 }
 
-/* 委員長挨拶カード */
-.greeting-card {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 36px;
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-left: 6px solid var(--sprout);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-sm);
-}
-
-.greeting-photo-wrapper {
-  width: 190px;
-  height: 250px;
-  flex-shrink: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--sprout-bg);
-  border: 1px solid var(--sprout-pale);
-}
-
-.greeting-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.greeting-photo-placeholder {
-  width: 100%;
-  height: 100%;
+/* 委員長挨拶テキスト */
+.greeting-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--sprout-bg) 0%, #ffffff 100%);
-  border: 2px dashed var(--sprout-pale);
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-}
-
-.placeholder-text {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--sprout-dark);
-}
-
-.placeholder-subtext {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.greeting-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.greeting-header {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 12px;
-}
-
-.greeting-role {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--sprout);
-  margin-bottom: 4px;
-}
-
-.greeting-name {
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--sprout-dark);
-  margin: 0;
-  letter-spacing: 0.5px;
-}
-
-.greeting-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font-size: 15px;
-  line-height: 1.85;
+  gap: 20px;
+  font-size: 16px;
+  line-height: 2.1;
   color: var(--text);
+  max-width: 860px;
+}
+
+.greeting-text p {
+  margin: 0;
 }
 
 /* 写真スライドショー（枠・見出しなし、1枚ずつ大きく順番に表示） */
@@ -525,33 +441,10 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 680px) {
-  .greeting-card {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 24px 20px;
-    gap: 24px;
-  }
-
-  .greeting-photo-wrapper {
-    width: 160px;
-    height: 210px;
-  }
-
-  .greeting-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .greeting-name {
-    font-size: 20px;
-  }
-
-  .greeting-body {
-    text-align: left;
-    font-size: 14px;
+  .greeting-text {
+    font-size: 15px;
+    line-height: 1.9;
+    gap: 16px;
   }
 
   .outline-table th,
