@@ -62,12 +62,6 @@ const pamphletHighlights = [
 
             <!-- Download / Viewer Actions -->
             <div class="action-box">
-              <div class="status-notice">
-                <span class="pulse-dot"></span>
-                <span class="text-xs sm:text-sm font-bold text-sprout-dark">
-                  2026年度版パンフレットは学祭直前に公開予定です
-                </span>
-              </div>
               <div class="flex flex-wrap gap-3 mt-4">
                 <button
                   type="button"
@@ -81,9 +75,6 @@ const pamphletHighlights = [
                   Web版 企画一覧を見る →
                 </NuxtLink>
               </div>
-              <p class="text-xs text-text-light mt-3">
-                ※公開開始後は、ここからPDFのダウンロードおよびブラウザでのプレビュー閲覧が可能になります。
-              </p>
             </div>
           </div>
         </div>
