@@ -43,21 +43,40 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
 
-        // 1. 本文用 Noto Sans JP（ウェイトを 400 と 700 に限定して全文字対応）
+        // 1. 本文用 Noto Sans JP（preload + media="print" でレンダリングブロックを完全排除）
+        {
+          rel: 'preload',
+          as: 'style',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap',
+        },
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap',
+          media: 'print',
+          onload: "this.media='all'",
         },
-        // 2. タイトルロゴ用 Noto Serif JP（使用する「平潟祭 2026」の文字だけに限定して超軽量配信）
+        // 2. タイトルロゴ用 Noto Serif JP（preload + media="print" で非同期軽量読み込み）
+        {
+          rel: 'preload',
+          as: 'style',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&text=%E5%B9%B3%E6%BD%9F%E7%A5%AD%202026&display=swap',
+        },
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&text=%E5%B9%B3%E6%BD%9F%E7%A5%AD%202026&display=swap',
+          media: 'print',
+          onload: "this.media='all'",
         },
 
         // ファビコン・アプリアイコン
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      ],
+      noscript: [
+        {
+          children: '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&text=%E5%B9%B3%E6%BD%9F%E7%A5%AD%202026&display=swap">',
+        },
       ],
     },
   },
