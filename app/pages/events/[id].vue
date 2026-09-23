@@ -83,6 +83,8 @@ useSeoMeta({
               class="ambient-bg"
               aria-hidden="true"
               loading="lazy"
+              format="webp"
+              quality="60"
             />
             <!-- 芸能写真の場合は再エンコード・圧縮を回避し、元画像の高精細な生データをそのまま表示 -->
             <img
@@ -103,6 +105,8 @@ useSeoMeta({
               fetchpriority="high"
               decoding="async"
               sizes="sm:100vw md:900px"
+              format="webp"
+              quality="80"
             />
           </div>
 

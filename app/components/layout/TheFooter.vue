@@ -52,7 +52,16 @@ const footerSections = [
           <div class="w-fit lg:w-[280px] shrink-0 items-center">
             <div class="flex flex-col items-center gap-2">
               <div class="w-20 h-20 bg-sprout-light rounded-full flex items-center justify-center p-2.5 shadow-md">
-                <img src="/images/hirakata-logo.png" alt="平潟祭ロゴ" class="w-full h-full object-contain" />
+                <NuxtImg
+                  src="/images/hirakata-logo.png"
+                  alt="平潟祭ロゴ"
+                  width="80"
+                  height="80"
+                  format="webp"
+                  densities="x1 x2"
+                  loading="lazy"
+                  class="w-full h-full object-contain"
+                />
               </div>
               <span class="font-serif font-bold text-2xl leading-[34px] text-white">平潟祭 2026</span>
               <span class="text-xs text-white/70">関東学院大学 金沢八景キャンパス</span>

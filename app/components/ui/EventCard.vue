@@ -23,6 +23,8 @@ defineProps<{
           class="card-ambient-bg"
           aria-hidden="true"
           loading="lazy"
+          format="webp"
+          quality="60"
         />
         <NuxtImg
           :src="event.imageUrl"
@@ -30,6 +32,8 @@ defineProps<{
           loading="lazy"
           decoding="async"
           sizes="sm:100vw md:50vw lg:380px"
+          format="webp"
+          quality="80"
           class="card-img"
         />
       </div>

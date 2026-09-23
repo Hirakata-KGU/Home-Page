@@ -34,7 +34,17 @@ const guideSubItems = [
       <!-- Left: Brand -->
       <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[80px] no-underline shrink-0" @click="closeMobileMenu">
         <div class="w-[68px] h-[68px] flex items-center justify-center">
-          <img src="/images/hirakata-logo.png" alt="平潟祭ロゴ" class="w-full h-full object-contain" />
+          <NuxtImg
+            src="/images/hirakata-logo.png"
+            alt="平潟祭ロゴ"
+            width="68"
+            height="68"
+            format="webp"
+            densities="x1 x2"
+            loading="eager"
+            fetchpriority="high"
+            class="w-full h-full object-contain"
+          />
         </div>
         <div class="flex flex-col justify-center items-start">
           <span class="font-sans font-light text-[17px] leading-[20px] text-black">第77回</span>

@@ -28,6 +28,8 @@ import { eventItems } from '~/data/events';
               :src="event.imageUrl"
               aria-hidden="true"
               loading="lazy"
+              format="webp"
+              quality="60"
               class="absolute inset-0 w-full h-full object-cover filter blur-[20px] scale-125 opacity-60 pointer-events-none select-none"
             />
             <NuxtImg
@@ -36,6 +38,8 @@ import { eventItems } from '~/data/events';
               loading="lazy"
               decoding="async"
               sizes="sm:100vw md:350px"
+              format="webp"
+              quality="80"
               class="relative z-10 w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </template>

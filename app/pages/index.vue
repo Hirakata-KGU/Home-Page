@@ -382,6 +382,8 @@ const visitorGuidelines = [
                   aria-hidden="true"
                   loading="lazy"
                   draggable="false"
+                  format="webp"
+                  quality="60"
                   class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none transform-gpu"
                 />
 
@@ -393,6 +395,8 @@ const visitorGuidelines = [
                   decoding="async"
                   draggable="false"
                   sizes="xs:260px sm:280px md:300px"
+                  format="webp"
+                  quality="80"
                   class="relative z-10 w-full h-full object-contain drop-shadow transition-transform duration-300 pointer-events-none select-none transform-gpu"
                   :class="{ 'hover:scale-105': activeIndex === idx }"
                 />
@@ -569,6 +573,8 @@ const visitorGuidelines = [
                       :alt="item.title"
                       loading="lazy"
                       decoding="async"
+                      format="webp"
+                      quality="80"
                       class="w-full h-full object-cover select-none pointer-events-none"
                     />
                     <!-- 2. よくある質問 (chick.vue + 左上に？) -->
