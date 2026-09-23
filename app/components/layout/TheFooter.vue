@@ -108,7 +108,7 @@ const footerSections = [
                     <!-- Social Icons Row -->
         <div class="flex gap-3 self-start">
           <a
-            href="https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w"
+            href="https://x.com/shin_hirakata"
             target="_blank"
             rel="noopener noreferrer"
             class="footer-social-btn"
@@ -117,7 +117,7 @@ const footerSections = [
             <SvgX class="w-4 h-4 fill-white" />
           </a>
           <a
-            href="https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg=="
+            href="https://www.instagram.com/hirakatasai"
             target="_blank"
             rel="noopener noreferrer"
             class="footer-social-btn"

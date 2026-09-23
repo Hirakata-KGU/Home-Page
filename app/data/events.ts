@@ -219,7 +219,7 @@ export const allEvents: EventItem[] = [
       timeRange,
       organizer: pf.groupName,
       description: pf.pr || '',
-      salesInfo: null,
+      salesInfo: isGeino ? '一般 1,500円 / 学内生・教職員 500円' : null,
       tentNo: null,
       room: pf.venueRoom || null,
       photoNo: pf.photoNo || null,

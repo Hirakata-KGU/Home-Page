@@ -122,7 +122,7 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
       floors: [
         {
           floor: '4F',
-          floorLabel: '4階 ベネットホール（屋内メインステージ）',
+          floorLabel: '4階 ベンネットホール（屋内メインステージ）',
           events: scc_4F,
         },
       ],

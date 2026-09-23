@@ -49,7 +49,7 @@ export type VenueCategory = 'outdoor' | 'indoor' | 'chapel' | 'gym' | 'bldg1';
 
 export const getVenueCategory = (venueName: string): VenueCategory => {
   if (venueName.includes('屋外')) return 'outdoor';
-  if (venueName.includes('屋内') || venueName.includes('SCC') || venueName.includes('ベネット')) return 'indoor';
+  if (venueName.includes('屋内') || venueName.includes('SCC') || venueName.includes('ベンネット') || venueName.includes('ベネット')) return 'indoor';
   if (venueName.includes('チャペル')) return 'chapel';
   if (venueName.includes('体育館')) return 'gym';
   if (venueName.includes('1号館')) return 'bldg1';

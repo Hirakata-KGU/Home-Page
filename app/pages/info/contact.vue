@@ -8,14 +8,14 @@ const contactSns = [
   {
     name: 'X (旧Twitter)',
     id: '@shin_hirakata',
-    url: 'https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w',
+    url: 'https://x.com/shin_hirakata',
     type: 'x',
     gradient: 'linear-gradient(135deg, #111111 0%, #333333 100%)',
   },
   {
     name: 'Instagram',
     id: '@hirakatasai',
-    url: 'https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg==',
+    url: 'https://www.instagram.com/hirakatasai',
     type: 'instagram',
     gradient: 'linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)',
   },
