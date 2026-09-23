@@ -37,23 +37,27 @@ export default defineNuxtConfig({
         { name: 'twitter:site', content: '@shin_hirakata' },
       ],
       link: [
+        // フォント接続の超高速化（ブラウザが最優先でDNS解決 & TCP/TLSハンドシェイクを確立）
+        { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
+        { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
+
+        // 1. 本文用 Noto Sans JP（ウェイトを 400 と 700 に限定して全文字対応）
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap',
+        },
+        // 2. タイトルロゴ用 Noto Serif JP（使用する「平潟祭 2026」の文字だけに限定して超軽量配信）
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&text=%E5%B9%B3%E6%BD%9F%E7%A5%AD%202026&display=swap',
+        },
+
+        // ファビコン・アプリアイコン
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'preload',
-          as: 'style',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@700&display=swap',
-        },
-        // 2. media="print" で読み込み、ロード完了時に all に切り替えて適用（描画をブロックしない）
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@700&display=swap',
-          media: 'print',
-          onload: "this.media='all'",
-        },
       ],
     },
   },

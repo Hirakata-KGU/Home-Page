@@ -108,6 +108,10 @@ const onPointerDown = (e: PointerEvent) => {
   const container = scrollContainer.value;
   if (!container) return;
 
+  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
+    updateCardMetrics();
+  }
+
   stopAutoPlay();
   isPointerDown = true;
   hasDragged = false;
@@ -277,15 +281,52 @@ const handleCardClick = (index: number, to: string) => {
   }
 };
 
+// Google Maps 遅延ロード（初期化時の約400KiBのJS読み込みとリフローを完全防止）
+const mapContainerRef = ref<HTMLElement | null>(null);
+const isMapLoaded = ref(false);
+let mapObserver: IntersectionObserver | null = null;
+
+const loadMap = () => {
+  isMapLoaded.value = true;
+  if (mapObserver) {
+    mapObserver.disconnect();
+    mapObserver = null;
+  }
+};
+
 onMounted(() => {
-  nextTick(() => {
-    updateCardMetrics();
-    scrollToItem(0);
-    startAutoPlay();
-  });
   if (import.meta.client) {
+    // 1. カルーセル: 初期マウント時の同期的ジオメトリ計測を避け、描画完了後のアイドル時に安全にキャッシュ＆自動再生開始
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => {
+        updateCardMetrics();
+        startAutoPlay();
+      }, { timeout: 1200 });
+    } else {
+      setTimeout(() => {
+        updateCardMetrics();
+        startAutoPlay();
+      }, 300);
+    }
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('resize', updateCardMetrics, { passive: true });
+
+    // 2. Google Maps: アクセスセクション付近（300px手前）までスクロールした際に初めてiframeをロード
+    if ('IntersectionObserver' in window && mapContainerRef.value) {
+      mapObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) {
+            loadMap();
+          }
+        },
+        { rootMargin: '300px' }
+      );
+      mapObserver.observe(mapContainerRef.value);
+    } else {
+      // IntersectionObserver非対応環境フォールバック
+      isMapLoaded.value = true;
+    }
   }
 });
 
@@ -296,6 +337,10 @@ onBeforeUnmount(() => {
   }
   if (scrollTimer) {
     clearTimeout(scrollTimer);
+  }
+  if (mapObserver) {
+    mapObserver.disconnect();
+    mapObserver = null;
   }
   if (import.meta.client) {
     document.removeEventListener('visibilitychange', handleVisibilityChange);
@@ -705,14 +750,34 @@ const visitorGuidelines = [
               </div>
 
               <!-- Map Column -->
-              <div class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex">
+              <div
+                ref="mapContainerRef"
+                class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex relative bg-gray-50"
+              >
+                <!-- 遅延マウントされる Google Maps iframe -->
                 <iframe
+                  v-if="isMapLoaded"
                   class="w-full h-full min-h-[340px] sm:min-h-[420px] border-0"
                   src="https://www.google.com/maps?q=35.323287,139.623311&z=15&output=embed"
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
                   title="関東学院大学 金沢八景キャンパス 地図"
                 />
+                <!-- 未ロード時のプレースホルダー（軽量スケルトン表示） -->
+                <div
+                  v-else
+                  class="w-full h-full min-h-[340px] sm:min-h-[420px] flex flex-col items-center justify-center p-6 text-center bg-sprout-bg/30 cursor-pointer group"
+                  @click="loadMap"
+                >
+                  <div class="w-12 h-12 rounded-full bg-sprout-forest/10 flex items-center justify-center text-sprout-forest mb-3 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-bold text-sprout-forest mb-1">Google マップを読み込み中...</p>
+                  <p class="text-xs text-text-muted">（タップして今すぐ表示）</p>
+                </div>
               </div>
             </div>
           </div>
