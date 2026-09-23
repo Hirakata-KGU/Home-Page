@@ -404,11 +404,11 @@ const visitorGuidelines = [
                   aria-hidden="true"
                   loading="lazy"
                   draggable="false"
-                  width="120"
-                  height="160"
+                  width="30"
+                  height="40"
                   format="webp"
-                  quality="1"
-                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none"
+                  quality="10"
+                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none"
                 />
 
                 <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
