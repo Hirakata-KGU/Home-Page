@@ -22,7 +22,7 @@ const featuredEvents: FeaturedEventItem[] = [
     id: 'geino',
     title: '芸能ステージ',
     badge: 'SCC 4F ベンネットホール',
-    image: '/images/events/stage-geino-miyase.jpg',
+    image: '/images/events/stage-geino-miyase.png',
     desc: '宮世琉弥トークショー（全席指定・有料チケット制）',
     to: '/events/stage-geino-miyase',
   },
