@@ -24,7 +24,7 @@ defineProps<{
           aria-hidden="true"
           loading="lazy"
           format="webp"
-          quality="60"
+          quality="1"
         />
         <NuxtImg
           :src="event.imageUrl"
@@ -159,9 +159,9 @@ defineProps<{
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(20px);
+  filter: blur(10px);
   transform: scale(1.25);
-  opacity: 0.6;
+  opacity: 0.8;
   pointer-events: none;
   user-select: none;
 }

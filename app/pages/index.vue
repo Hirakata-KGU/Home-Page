@@ -179,36 +179,50 @@ const onPointerUp = (e: PointerEvent) => {
   startAutoPlay();
 };
 
-// スクロール時に最も中央に近いカードを判定（チラつき防止ロジック付き）
+// カード位置キャッシュ（スクロールごとのoffsetLeft再計算によるリフロー/カクつきを完全防止）
+let cardMetrics: { center: number; width: number }[] = [];
+
+const updateCardMetrics = () => {
+  cardMetrics = cardRefs.value.map((el) => {
+    if (!el) return { center: 0, width: 300 };
+    return {
+      center: el.offsetLeft + el.offsetWidth / 2,
+      width: el.offsetWidth,
+    };
+  });
+};
+
+// スクロール時に最も中央に近いカードを判定（チラつき防止＆レイアウト再計算なしで高速化）
 const updateActiveIndex = () => {
   const container = scrollContainer.value;
   if (!container) return;
   const center = container.scrollLeft + container.clientWidth / 2;
 
+  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
+    updateCardMetrics();
+  }
+
   // 目標カードへ移動中は、目標が中央近く（カード幅の45%以内）に来るまで切り替えない（チラつき防止）
-  if (targetIndex !== null) {
-    const targetEl = cardRefs.value[targetIndex];
-    if (targetEl) {
-      const targetCenter = targetEl.offsetLeft + targetEl.offsetWidth / 2;
-      if (Math.abs(center - targetCenter) < targetEl.offsetWidth * 0.45) {
-        activeIndex.value = targetIndex;
-        targetIndex = null;
-      }
-      return;
+  if (targetIndex !== null && cardMetrics[targetIndex]) {
+    const { center: targetCenter, width: targetWidth } = cardMetrics[targetIndex];
+    if (Math.abs(center - targetCenter) < targetWidth * 0.45) {
+      activeIndex.value = targetIndex;
+      targetIndex = null;
     }
+    return;
   }
 
   let minDiff = Infinity;
   let closest = activeIndex.value;
-  cardRefs.value.forEach((el, i) => {
-    if (!el) return;
-    const elCenter = el.offsetLeft + el.offsetWidth / 2;
-    const diff = Math.abs(center - elCenter);
+  for (let i = 0; i < cardMetrics.length; i++) {
+    const metric = cardMetrics[i];
+    if (!metric) continue;
+    const diff = Math.abs(center - metric.center);
     if (diff < minDiff) {
       minDiff = diff;
       closest = i;
     }
-  });
+  }
   activeIndex.value = closest;
 };
 
@@ -224,15 +238,20 @@ const onScroll = () => {
 const scrollToItem = (index: number) => {
   if (index < 0 || index >= featuredEvents.length) return;
   const container = scrollContainer.value;
-  const el = cardRefs.value[index];
-  if (!container || !el) return;
+  if (!container) return;
 
   targetIndex = index;
   if (scrollTimer) {
     clearTimeout(scrollTimer);
   }
 
-  const targetLeft = el.offsetLeft + el.offsetWidth / 2 - container.clientWidth / 2;
+  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
+    updateCardMetrics();
+  }
+
+  const metric = cardMetrics[index];
+  const targetCenter = metric ? metric.center : (cardRefs.value[index]?.offsetLeft ?? 0) + (cardRefs.value[index]?.offsetWidth ?? 0) / 2;
+  const targetLeft = targetCenter - container.clientWidth / 2;
   container.scrollTo({
     left: targetLeft,
     behavior: 'smooth',
@@ -260,11 +279,13 @@ const handleCardClick = (index: number, to: string) => {
 
 onMounted(() => {
   nextTick(() => {
+    updateCardMetrics();
     scrollToItem(0);
     startAutoPlay();
   });
   if (import.meta.client) {
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('resize', updateCardMetrics, { passive: true });
   }
 });
 
@@ -278,6 +299,7 @@ onBeforeUnmount(() => {
   }
   if (import.meta.client) {
     document.removeEventListener('visibilitychange', handleVisibilityChange);
+    window.removeEventListener('resize', updateCardMetrics);
   }
 });
 
@@ -366,7 +388,7 @@ const visitorGuidelines = [
               role="button"
               tabindex="0"
               :aria-label="item.title"
-              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent will-change-transform"
+              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
               :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
               @click="handleCardClick(idx, item.to)"
               @keydown.enter="handleCardClick(idx, item.to)"
@@ -376,18 +398,20 @@ const visitorGuidelines = [
                 class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
                 :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
               >
-                <!-- ぼかした背景写真（枠いっぱいに伸ばす） -->
+                <!-- ぼかした背景写真（軽量サムネイルをぼかしてFirefox等の描画負荷を大幅軽減） -->
                 <NuxtImg
                   :src="item.image"
                   aria-hidden="true"
                   loading="lazy"
                   draggable="false"
+                  width="120"
+                  height="160"
                   format="webp"
-                  quality="60"
-                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none transform-gpu"
+                  quality="1"
+                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-75 pointer-events-none select-none"
                 />
 
-                <!-- 前面写真（枠外にはみ出ないよう object-contain で配置） -->
+                <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
                 <NuxtImg
                   :src="item.image"
                   :alt="item.title"
@@ -397,13 +421,13 @@ const visitorGuidelines = [
                   sizes="xs:260px sm:280px md:300px"
                   format="webp"
                   quality="80"
-                  class="relative z-10 w-full h-full object-contain drop-shadow transition-transform duration-300 pointer-events-none select-none transform-gpu"
+                  class="relative z-10 w-full h-full object-contain transition-transform duration-300 pointer-events-none select-none"
                   :class="{ 'hover:scale-105': activeIndex === idx }"
                 />
 
                 <!-- バッジ（左上） -->
                 <div class="absolute top-3 left-3 z-30">
-                  <span class="inline-block bg-sprout-dark/85 backdrop-blur-md text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
+                  <span class="inline-block bg-sprout-dark/95 text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
                     {{ item.badge }}
                   </span>
                 </div>
@@ -413,16 +437,16 @@ const visitorGuidelines = [
                   v-if="activeIndex === idx"
                   class="absolute bottom-3 right-3 z-30"
                 >
-                  <span class="inline-flex items-center gap-1 bg-sprout-dark/85 backdrop-blur-md text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
+                  <span class="inline-flex items-center gap-1 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
                     <span>詳細を見る</span>
                     <span>→</span>
                   </span>
                 </div>
 
-                <!-- 真ん中以外のものは薄く白くするオーバーレイ -->
+                <!-- 真ん中以外のものは薄く白くするオーバーレイ（backdrop-filterを使わず軽量化） -->
                 <div
                   class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
-                  :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/55 backdrop-brightness-110 opacity-100'"
+                  :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
                 />
               </div>
             </div>

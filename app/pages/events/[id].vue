@@ -84,7 +84,7 @@ useSeoMeta({
               aria-hidden="true"
               loading="lazy"
               format="webp"
-              quality="60"
+              quality="1"
             />
             <!-- 芸能写真の場合は再エンコード・圧縮を回避し、元画像の高精細な生データをそのまま表示 -->
             <img
@@ -355,9 +355,9 @@ useSeoMeta({
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(28px);
+  filter: blur(20px);
   transform: scale(1.25);
-  opacity: 0.6;
+  opacity: 0.8;
   pointer-events: none;
   user-select: none;
 }
