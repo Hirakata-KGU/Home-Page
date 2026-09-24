@@ -205,8 +205,8 @@ export const allEvents: EventItem[] = [
 
     return {
       id: pf.id,
-      title: pf.title,
-      groupName: pf.groupName,
+      title: isGeino ? '芸能人トークショー' : pf.title,
+      groupName: isGeino ? '芸能ステージ' : pf.groupName,
       category: isGeino ? 'entertainment' : 'music',
       categoryRaw: pf.category || (isGeino ? '芸能' : '音楽館'),
       categoryLabel: isGeino ? '芸能' : '音楽館・ステージ',
@@ -217,13 +217,15 @@ export const allEvents: EventItem[] = [
       dayLabel,
       participationDays,
       timeRange,
-      organizer: pf.groupName,
-      description: pf.pr || '',
-      salesInfo: isGeino ? '一般 1,500円 / 学内生・教職員 500円' : null,
+      organizer: isGeino ? '芸能ステージ' : pf.groupName,
+      description: isGeino
+        ? '豪華ゲストをお招きした芸能人トークショーを開催！出演者等の詳細は近日公開予定です。お楽しみに！'
+        : pf.pr || '',
+      salesInfo: isGeino ? '全席指定・有料チケット制（詳細は後日案内予定）' : null,
       tentNo: null,
       room: pf.venueRoom || null,
       photoNo: pf.photoNo || null,
-      imageUrl: getEventImageUrl(pf.id),
+      imageUrl: isGeino ? '/images/events/geinou-secret.svg' : getEventImageUrl(pf.id),
       gradient: isGeino
         ? 'linear-gradient(135deg, #d48806 0%, #faad14 100%)'
         : 'linear-gradient(135deg, #1e3d26 0%, #2f5b34 100%)',

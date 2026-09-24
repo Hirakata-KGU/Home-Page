@@ -670,7 +670,7 @@ onUnmounted(() => {
   border-left: 3.5px solid #455a64;
 }
 
-/* 注目企画（宮世琉弥トークショーなど） */
+/* 注目企画（芸能ステージなど） */
 .program-block.is-special {
   background: linear-gradient(135deg, #fff9e6 0%, #ffeed1 100%);
   border: 2px solid #e5ad35;

@@ -22,10 +22,16 @@ export interface TimetableSlot {
 }
 
 // タイムテーブル実データ（全33件）
-export const timetable: TimetableSlot[] = (rawTimetable as any[]).map((t) => ({
-  ...t,
-  isSpecial: t.category?.includes('芸能'),
-}));
+export const timetable: TimetableSlot[] = (rawTimetable as any[]).map((t) => {
+  const isSpecial = t.id === 'geinou' || t.id === 'stage-geinou' || t.category?.includes('芸能') || t.title?.includes('宮世');
+  return {
+    ...t,
+    title: isSpecial ? '芸能人トークショー' : t.title,
+    groupName: isSpecial ? '芸能ステージ' : t.groupName,
+    detail: isSpecial ? '全席指定（開場・開演等詳細は後日公開）' : t.detail,
+    isSpecial,
+  };
+});
 
 // イベントIDごとに紐付けられたスロットマップ
 export const timetableByEventId = new Map<string, TimetableSlot[]>();
