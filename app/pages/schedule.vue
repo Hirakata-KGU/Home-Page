@@ -141,7 +141,7 @@ const applyRouteParams = async () => {
   let targetSlot: TimetableSlot | undefined;
 
   if (eventParam) {
-    // スロットID (tt-d1-01 など) または イベントID (stage-geino-miyase など) で検索
+    // スロットID (tt-d1-01 など) または イベントID (geinou など) で検索
     targetSlot = timetable.find((s) => s.slotId === eventParam || s.id === eventParam);
   }
 
