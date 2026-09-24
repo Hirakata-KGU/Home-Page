@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import {
-  parallelScheduleData,
-  getVenueCategory,
-  timetable,
-  type VenueCategory,
-  type TimetableSlot,
-} from '~/data/schedule';
+import { daySchedules, timetable, type TimetableSlot } from '~/data/timetable';
 
 useSeoMeta({
   title: 'タイムテーブル｜平潟祭 2026',
@@ -20,13 +14,13 @@ const router = useRouter();
 const activeDayId = ref<'day1' | 'day2'>('day1');
 const highlightedSlotId = ref<string | null>(null);
 
-// 5会場の定義
-const venueLanes: { key: VenueCategory; label: string; sub: string; colClass: string }[] = [
-  { key: 'outdoor', label: '屋外ステージ', sub: '', colClass: 'outdoor-col' },
-  { key: 'indoor', label: '屋内ステージ', sub: 'SCC 4F', colClass: 'indoor-col' },
-  { key: 'chapel', label: 'チャペル', sub: '', colClass: 'chapel-col' },
-  { key: 'gym', label: '体育館', sub: '', colClass: 'gym-col' },
-  { key: 'bldg1', label: '1号館前', sub: '', colClass: 'bldg1-col' },
+// 5会場の定義（locationId に直接紐付け）
+const venueLanes = [
+  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '', key: 'outdoor' },
+  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F', key: 'indoor' },
+  { locationId: 'loc-chapel', label: 'チャペル', sub: '', key: 'chapel' },
+  { locationId: 'loc-gym', label: '体育館', sub: '', key: 'gym' },
+  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '', key: 'bldg1' },
 ];
 
 // タップ（クリック）で展開・固定されているスロットID（スマホ用）
@@ -60,9 +54,9 @@ const getSlotHeight = (slot: TimetableSlot): number => {
   return Math.max(34, durMin * MINUTE_HEIGHT - 6);
 };
 
-// 会場ごとのスロット分類
-const getSlotsForVenue = (slots: TimetableSlot[], venueKey: VenueCategory): TimetableSlot[] => {
-  return slots.filter((s) => getVenueCategory(s.venue) === venueKey);
+// 会場ごとのスロット分類（locationId で直接判定）
+const getSlotsForVenue = (slots: TimetableSlot[], locationId: string): TimetableSlot[] => {
+  return slots.filter((s) => s.locationId === locationId);
 };
 
 // カードクリック時のハンドラー
@@ -138,11 +132,14 @@ const applyRouteParams = async () => {
     (route.query.slot as string) ||
     (route.hash ? route.hash.replace(/^#/, '').replace(/^slot-/, '') : undefined);
 
+  const venueParam = route.query.venue as string | undefined;
+
   let targetSlot: TimetableSlot | undefined;
 
   if (eventParam) {
-    // スロットID (tt-d1-01 など) または イベントID (geinou など) で検索
     targetSlot = timetable.find((s) => s.slotId === eventParam || s.id === eventParam);
+  } else if (venueParam) {
+    targetSlot = timetable.find((s) => s.locationId === venueParam || s.venue.includes(venueParam));
   }
 
   if (targetSlot) {
@@ -173,7 +170,7 @@ onMounted(() => {
 });
 
 watch(
-  () => [route.query.day, route.query.event, route.query.slot, route.hash],
+  () => [route.query.day, route.query.event, route.query.slot, route.query.venue, route.hash],
   () => {
     applyRouteParams();
   }
@@ -202,7 +199,7 @@ onUnmounted(() => {
           <!-- 日程タブ -->
           <div class="day-tabs" role="tablist">
             <button
-              v-for="day in parallelScheduleData"
+              v-for="day in daySchedules"
               :key="day.id"
               class="tab-btn"
               :class="{ active: activeDayId === day.id }"
@@ -231,7 +228,7 @@ onUnmounted(() => {
       <!-- タイムグリッド表（全5会場並列・横スクロール可能） -->
       <div class="grid-view-wrapper">
         <section
-          v-for="day in parallelScheduleData"
+          v-for="day in daySchedules"
           v-show="activeDayId === day.id"
           :key="day.id"
           class="section timetable-grid-section shadow-sm"
@@ -244,9 +241,9 @@ onUnmounted(() => {
                 <div class="time-header-cell">時間</div>
                 <div
                   v-for="venue in venueLanes"
-                  :key="venue.key"
+                  :key="venue.locationId"
                   class="venue-header-cell"
-                  :class="venue.colClass"
+                  :class="venue.key + '-col'"
                 >
                   <h3>{{ venue.label }}</h3>
                   <p>{{ venue.sub }}</p>
@@ -288,12 +285,12 @@ onUnmounted(() => {
                 <!-- 各会場レーン（5列） -->
                 <div
                   v-for="venue in venueLanes"
-                  :key="venue.key"
+                  :key="venue.locationId"
                   class="venue-lane"
                   :class="venue.key + '-lane'"
                 >
                   <div
-                    v-for="slot in getSlotsForVenue(day.allSlots, venue.key)"
+                    v-for="slot in getSlotsForVenue(day.allSlots, venue.locationId)"
                     :key="slot.slotId"
                     :id="`slot-${slot.slotId}`"
                     class="program-block"

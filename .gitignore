@@ -23,9 +23,11 @@ logs
 .env.*
 !.env.example
 .aider*
-app/data/exhibitions.json
-app/data/food-booths.json
-app/data/performances.json
+app/data/mogiten.json
+app/data/culture.json
+app/data/music.json
+app/data/geinou.json
+app/data/location.json
 app/data/timetable.json
-app/data/hirakata_festival_data.json
 app/data/event-images.json
+~$*.xlsx

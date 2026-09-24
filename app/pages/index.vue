@@ -22,9 +22,9 @@ const featuredEvents: FeaturedEventItem[] = [
     id: 'geino',
     title: '芸能ステージ',
     badge: 'SCC 4F ベンネットホール',
-    image: '/images/events/geinou.png',
+    image: '/images/events/celeb.png',
     desc: '宮世琉弥トークショー（全席指定・有料チケット制）',
-    to: '/events/geinou',
+    to: '/events/celeb',
   },
   {
     id: 'stage',

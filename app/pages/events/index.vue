@@ -112,11 +112,10 @@ const filteredEvents = computed(() => {
       const matchDesc = event.description.toLowerCase().includes(q);
       const matchOrg = event.organizer.toLowerCase().includes(q);
       const matchLoc = event.locationName.toLowerCase().includes(q);
-      const matchSub = event.subCategory.toLowerCase().includes(q);
       const matchSales = event.salesInfo ? event.salesInfo.toLowerCase().includes(q) : false;
       const matchTags = event.tags.some((t) => t.toLowerCase().includes(q));
 
-      if (!matchTitle && !matchDesc && !matchOrg && !matchLoc && !matchSub && !matchSales && !matchTags) {
+      if (!matchTitle && !matchDesc && !matchOrg && !matchLoc && !matchSales && !matchTags) {
         return false;
       }
     }

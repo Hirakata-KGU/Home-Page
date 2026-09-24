@@ -42,29 +42,14 @@ export default defineNuxtModule<ModuleOptions>({
         return XLSX.utils.sheet_to_json<T>(sheet);
       };
 
-      // 1. 模擬店データベース (Food_Booths)
-      const foodBooths = getSheetData('Food_Booths');
-      const foodBoothsPath = resolve(outputDirFullPath, 'food-booths.json');
-      writeFileSync(foodBoothsPath, JSON.stringify(foodBooths, null, 2), 'utf-8');
-      console.log(`[festival-data] Saved ${foodBoothsPath} (${foodBooths.length} items)`);
-
-      // 2. 文化館・展示データベース (Exhibitions)
-      const exhibitions = getSheetData('Exhibitions');
-      const exhibitionsPath = resolve(outputDirFullPath, 'exhibitions.json');
-      writeFileSync(exhibitionsPath, JSON.stringify(exhibitions, null, 2), 'utf-8');
-      console.log(`[festival-data] Saved ${exhibitionsPath} (${exhibitions.length} items)`);
-
-      // 3. 音楽館・ステージデータベース (Performances)
-      const performances = getSheetData('Performances');
-      const performancesPath = resolve(outputDirFullPath, 'performances.json');
-      writeFileSync(performancesPath, JSON.stringify(performances, null, 2), 'utf-8');
-      console.log(`[festival-data] Saved ${performancesPath} (${performances.length} items)`);
-
-      // 4. タイムテーブルデータベース (Timetable)
-      const timetable = getSheetData('Timetable');
-      const timetablePath = resolve(outputDirFullPath, 'timetable.json');
-      writeFileSync(timetablePath, JSON.stringify(timetable, null, 2), 'utf-8');
-      console.log(`[festival-data] Saved ${timetablePath} (${timetable.length} items)`);
+      // 6つのシートをJSONとして出力
+      const sheets = ['mogiten', 'culture', 'music', 'geinou', 'location', 'timetable'];
+      for (const sheetName of sheets) {
+        const data = getSheetData(sheetName);
+        const jsonPath = resolve(outputDirFullPath, `${sheetName}.json`);
+        writeFileSync(jsonPath, JSON.stringify(data, null, 2), 'utf-8');
+        console.log(`[festival-data] Saved ${jsonPath} (${data.length} items)`);
+      }
     };
 
     // public/images/events 内の写真を自動スキャンして event-images.json を生成
@@ -85,25 +70,6 @@ export default defineNuxtModule<ModuleOptions>({
           const baseName = basename(file, ext);
           imageMap[baseName] = `/images/events/${file}`;
         }
-      }
-
-      // 表記揺れ（長音等）のエイリアス補正
-      if (imageMap['stage-konsei-gasshou-bu'] && !imageMap['stage-konsei-gassho-bu']) {
-        imageMap['stage-konsei-gassho-bu'] = imageMap['stage-konsei-gasshou-bu'];
-      }
-      if (imageMap['stage-suisougaku-bu'] && !imageMap['stage-suisogaku-bu']) {
-        imageMap['stage-suisogaku-bu'] = imageMap['stage-suisougaku-bu'];
-      }
-
-      // 同一団体で展示と模擬店の両方に出店している場合のフォールバック紐付け
-      if (imageMap['exhibit-shashin-bu'] && !imageMap['food-shashin-bu']) {
-        imageMap['food-shashin-bu'] = imageMap['exhibit-shashin-bu'];
-      }
-      if (imageMap['exhibit-oystars'] && !imageMap['food-oystars']) {
-        imageMap['food-oystars'] = imageMap['exhibit-oystars'];
-      }
-      if (imageMap['food-kannai-sukayutopia'] && !imageMap['stage-kannai-sukayutopia']) {
-        imageMap['stage-kannai-sukayutopia'] = imageMap['food-kannai-sukayutopia'];
       }
 
       const eventImagesPath = resolve(outputDirFullPath, 'event-images.json');

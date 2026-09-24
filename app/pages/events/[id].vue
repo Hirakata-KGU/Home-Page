@@ -13,14 +13,15 @@ const event = computed(() => {
 const mapUrl = computed(() => {
   if (!event.value) return '/map';
   const ev = event.value;
-  const room = ev.room || '';
-  const loc = ev.locationName || '';
+  const room = String(ev.room || '');
+  const loc = String(ev.locationName || '');
+  const bldg = String(ev.building || '');
 
-  if (room.startsWith('3-') || loc.includes('3号館')) return '/map?tab=no3';
-  if (room.startsWith('6-') || loc.includes('6号館')) return '/map?tab=no6';
-  if (room.startsWith('7-') || loc.startsWith('7-') || loc.includes('7号館') || loc.includes('音楽館')) return '/map?tab=no7';
-  if (room.startsWith('8-') || loc.startsWith('8-') || loc.includes('8号館') || loc.includes('文化館')) return '/map?tab=no8';
-  if (loc.includes('SCC') || loc.includes('屋内ステージ') || room.includes('SCC') || room.includes('屋内ステージ')) return '/map?tab=scc';
+  if (room.startsWith('3-') || bldg.includes('3') || loc.includes('3号館')) return '/map?tab=no3';
+  if (room.startsWith('6-') || bldg.includes('6') || loc.includes('6号館')) return '/map?tab=no6';
+  if (room.startsWith('7-') || bldg.includes('7') || loc.includes('7号館') || loc.includes('音楽館')) return '/map?tab=no7';
+  if (room.startsWith('8-') || bldg.includes('8') || loc.includes('8号館') || loc.includes('文化館')) return '/map?tab=no8';
+  if (bldg.includes('SCC') || loc.includes('SCC') || loc.includes('ベネット')) return '/map?tab=scc';
 
   return '/map';
 });
@@ -52,17 +53,11 @@ useSeoMeta({
             <span class="category-badge" :class="'cat-' + event.category">
               {{ event.categoryLabel }}
             </span>
-            <span v-if="event.subCategory" class="sub-badge">
-              {{ event.subCategory }}
-            </span>
             <span class="day-badge">
               {{ event.dayLabel }}
             </span>
-            <span v-if="event.tentNo" class="tent-badge">
-              テントNo.{{ event.tentNo }}
-            </span>
-            <span v-if="event.room" class="room-badge">
-              教室: {{ event.room }}
+            <span v-if="event.locationName" class="location-badge-top">
+              {{ event.locationName }}
             </span>
           </div>
 
@@ -139,7 +134,7 @@ useSeoMeta({
 
             <div class="info-item">
               <span class="info-label">カテゴリ区分</span>
-              <span class="info-value">{{ event.categoryRaw }} / {{ event.subCategory }}</span>
+              <span class="info-value">{{ event.categoryLabel }}</span>
             </div>
           </div>
 
@@ -272,16 +267,6 @@ useSeoMeta({
   background: linear-gradient(135deg, #d48806 0%, #b37400 100%);
 }
 
-.sub-badge {
-  background: var(--accent);
-  color: var(--text);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  border: 1px solid var(--border);
-}
-
 .day-badge {
   background: #f0f0f0;
   color: var(--text);
@@ -291,7 +276,7 @@ useSeoMeta({
   font-weight: 700;
 }
 
-.tent-badge, .room-badge {
+.location-badge-top {
   background: #eef5ee;
   color: var(--olive);
   border: 1px solid rgba(47, 91, 52, 0.25);
