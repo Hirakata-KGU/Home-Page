@@ -4,8 +4,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
 
 useSeoMeta({
-  title: '企画・模擬店・展示一覧｜平潟祭 2026',
-  description: '平潟祭2026の全59企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  title: '企画一覧｜平潟祭 2026',
+  description: '平潟祭2026の全5企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
 });
 
 const route = useRoute();

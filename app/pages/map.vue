@@ -7,8 +7,8 @@ import EventCard from '~/components/ui/EventCard.vue';
 import { foodBooths } from '~/data/events';
 
 useSeoMeta({
-  title: '場内マップ・模擬店・施設案内｜平潟祭 2026',
-  description: '平潟祭2026のキャンパス全体マップ、模擬店エリア（全24テント）、3号館、6号館、7号館（音楽館）、8号館（文化館）、屋内ステージ（SCC）の配置および各階企画案内。',
+  title: '場内マップ｜平潟祭 2026',
+  description: '平潟祭2026のキャンパス全体マップ、模擬店エリア、社会連携館 (3号館)、文化館 (6号館)、文化館 (8号館)、音楽館 (7号館)、屋内ステージ（SCC）の配置および各階企画案内。',
 });
 
 type TabKey = 'all' | 'no3' | 'no6' | 'no7' | 'no8' | 'scc';
