@@ -90,6 +90,7 @@ export const allEvents: EventItem[] = [
     categoryLabel: cat.label,
     locationId: raw.locationId,
     locationName: loc?.name || '',
+    buildingId: loc?.buildingId,
     building: loc?.building,
     floor: loc?.floor,
     locationTab: loc?.building?.includes('7') ? 'music' : loc?.building?.includes('8') ? 'culture' : 'campus',

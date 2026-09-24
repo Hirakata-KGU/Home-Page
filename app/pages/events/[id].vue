@@ -11,19 +11,8 @@ const event = computed(() => {
 });
 
 const mapUrl = computed(() => {
-  if (!event.value) return '/map';
-  const ev = event.value;
-  const room = String(ev.room || '');
-  const loc = String(ev.locationName || '');
-  const bldg = String(ev.building || '');
-
-  if (room.startsWith('3-') || bldg.includes('3') || loc.includes('3号館')) return '/map?tab=no3';
-  if (room.startsWith('6-') || bldg.includes('6') || loc.includes('6号館')) return '/map?tab=no6';
-  if (room.startsWith('7-') || bldg.includes('7') || loc.includes('7号館') || loc.includes('音楽館')) return '/map?tab=no7';
-  if (room.startsWith('8-') || bldg.includes('8') || loc.includes('8号館') || loc.includes('文化館')) return '/map?tab=no8';
-  if (bldg.includes('SCC') || loc.includes('SCC') || loc.includes('ベネット')) return '/map?tab=scc';
-
-  return '/map';
+  const bId = event.value?.buildingId;
+  return bId ? `/map?tab=${bId}` : '/map';
 });
 
 useSeoMeta({
