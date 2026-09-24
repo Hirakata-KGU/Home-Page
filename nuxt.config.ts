@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       'Noto+Sans+JP': [400, 700],
-      'Noto+Serif+JP': [700],
+      'Noto+Serif+JP': [400],
     },
     display: 'swap',
     download: true, // 重要：フォント本体を _nuxt/ 内に保存して配信（外部依存を完全排除）

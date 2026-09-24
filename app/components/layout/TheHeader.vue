@@ -48,7 +48,7 @@ const guideSubItems = [
         </div>
         <div class="flex flex-col justify-center items-start">
           <span class="font-sans font-light text-[17px] leading-[20px] text-black">第77回</span>
-          <span class="font-serif font-semibold text-[30px] leading-[28px] text-black tracking-[1px]">平潟祭</span>
+          <span class="font-serif font-light text-[30px] leading-[28px] text-black tracking-[1px]">平潟祭</span>
         </div>
       </NuxtLink>
 
