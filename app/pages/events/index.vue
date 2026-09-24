@@ -4,8 +4,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
 
 useSeoMeta({
-  title: '企画・模擬店・展示一覧｜平潟祭 2026',
-  description: '平潟祭2026の全59企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  title: '企画一覧｜平潟祭 2026',
+  description: '平潟祭2026の全5企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
 });
 
 const route = useRoute();
@@ -35,11 +35,6 @@ const normalizeDay = (day: unknown): 'all' | EventDay => {
 const selectedCategory = ref<'all' | EventCategory>(
   normalizeCategory(route.query.category || route.query.cat)
 );
-const selectedSubCategory = ref<string>(
-  (typeof (route.query.subCategory || route.query.sub) === 'string'
-    ? (route.query.subCategory || route.query.sub) as string
-    : 'all')
-);
 const selectedDay = ref<'all' | EventDay>(normalizeDay(route.query.day));
 const searchQuery = ref<string>(
   typeof (route.query.q || route.query.search) === 'string'
@@ -63,9 +58,6 @@ const syncUrlQuery = (debounce = false) => {
     if (selectedCategory.value !== 'all') {
       query.category = selectedCategory.value;
     }
-    if (selectedSubCategory.value !== 'all') {
-      query.sub = selectedSubCategory.value;
-    }
     if (selectedDay.value !== 'all') {
       query.day = selectedDay.value;
     }
@@ -82,31 +74,10 @@ const syncUrlQuery = (debounce = false) => {
   }
 };
 
-// カテゴリ変更時にサブカテゴリをリセット
+// カテゴリ変更
 const onSelectCategory = (catKey: 'all' | EventCategory) => {
   selectedCategory.value = catKey;
-  selectedSubCategory.value = 'all';
 };
-
-// 現在選択されているカテゴリに応じたサブカテゴリのリスト
-const availableSubCategories = computed(() => {
-  const eventsInCat = selectedCategory.value === 'all'
-    ? allEvents
-    : allEvents.filter(e => e.category === selectedCategory.value);
-
-  const map = new Map<string, number>();
-  for (const ev of eventsInCat) {
-    if (ev.subCategory) {
-      map.set(ev.subCategory, (map.get(ev.subCategory) || 0) + 1);
-    }
-  }
-
-  const items: { name: string; count: number }[] = [];
-  for (const [name, count] of map.entries()) {
-    items.push({ name, count });
-  }
-  return items;
-});
 
 // 各メインカテゴリの件数（categoryListに基づいて動的集計）
 const categoryCounts = computed(() => {
@@ -124,11 +95,6 @@ const filteredEvents = computed(() => {
   return allEvents.filter((event) => {
     // カテゴリフィルター
     if (selectedCategory.value !== 'all' && event.category !== selectedCategory.value) {
-      return false;
-    }
-
-    // サブカテゴリフィルター
-    if (selectedSubCategory.value !== 'all' && event.subCategory !== selectedSubCategory.value) {
       return false;
     }
 
@@ -162,13 +128,12 @@ const filteredEvents = computed(() => {
 // 全条件リセット
 const resetFilters = () => {
   selectedCategory.value = 'all';
-  selectedSubCategory.value = 'all';
   selectedDay.value = 'all';
   searchQuery.value = '';
 };
 
 // フィルター変更の監視（URLへ同期）
-watch([selectedCategory, selectedSubCategory, selectedDay], () => {
+watch([selectedCategory, selectedDay], () => {
   syncUrlQuery(false);
 });
 
@@ -182,16 +147,12 @@ watch(
   (newQuery) => {
     isSyncingFromRoute = true;
     const nextCat = normalizeCategory(newQuery.category || newQuery.cat);
-    const nextSub = (typeof (newQuery.subCategory || newQuery.sub) === 'string'
-      ? (newQuery.subCategory || newQuery.sub) as string
-      : 'all');
     const nextDay = normalizeDay(newQuery.day);
     const nextQ = typeof (newQuery.q || newQuery.search) === 'string'
       ? ((newQuery.q || newQuery.search) as string)
       : '';
 
     if (selectedCategory.value !== nextCat) selectedCategory.value = nextCat;
-    if (selectedSubCategory.value !== nextSub) selectedSubCategory.value = nextSub;
     if (selectedDay.value !== nextDay) selectedDay.value = nextDay;
     if (searchQuery.value !== nextQ) searchQuery.value = nextQ;
 
@@ -255,29 +216,6 @@ watch(
           </div>
         </div>
 
-        <!-- サブカテゴリ（絞り込みチップ） -->
-        <div v-if="availableSubCategories.length > 1" class="filter-group sub-category-group">
-          <div class="filter-label">ジャンル / 形態:</div>
-          <div class="sub-chip-list">
-            <button
-              class="sub-chip"
-              :class="{ active: selectedSubCategory === 'all' }"
-              @click="selectedSubCategory = 'all'"
-            >
-              すべて
-            </button>
-            <button
-              v-for="sub in availableSubCategories"
-              :key="sub.name"
-              class="sub-chip"
-              :class="{ active: selectedSubCategory === sub.name }"
-              @click="selectedSubCategory = sub.name"
-            >
-              {{ sub.name }} ({{ sub.count }})
-            </button>
-          </div>
-        </div>
-
         <!-- 日程フィルター -->
         <div class="filter-group day-filter-group">
           <div class="filter-label">開催日:</div>
@@ -312,7 +250,7 @@ watch(
             該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 59 件
           </div>
           <button
-            v-if="selectedCategory !== 'all' || selectedSubCategory !== 'all' || selectedDay !== 'all' || searchQuery"
+            v-if="selectedCategory !== 'all' || selectedDay !== 'all' || searchQuery"
             class="reset-text-btn"
             @click="resetFilters"
           >
@@ -323,60 +261,11 @@ watch(
 
       <!-- 企画一覧グリッド -->
       <div v-if="filteredEvents.length > 0" class="events-grid">
-        <NuxtLink
+        <UiEventCard
           v-for="event in filteredEvents"
           :key="event.id"
-          :to="`/events/${event.id}`"
-          class="event-card"
-        >
-          <!-- カード上部ヘッダー（グラデーションバー） -->
-          <div
-            class="event-card-header"
-            :style="{ background: event.gradient || 'linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%)' }"
-          >
-            <div class="header-badges">
-              <span class="category-chip">{{ event.categoryLabel }}</span>
-              <span class="sub-chip-header">{{ event.subCategory }}</span>
-            </div>
-            <span class="day-chip">{{ event.dayLabel }}</span>
-          </div>
-
-          <!-- カードコンテンツ -->
-          <div class="event-content">
-            <div class="event-organizer-row">
-              <span class="organizer-badge">{{ event.organizer }}</span>
-            </div>
-
-            <h3 class="event-title">{{ event.title }}</h3>
-
-            <p class="event-desc">{{ event.description }}</p>
-
-            <!-- 模擬店の販売メニュー情報プレビュー -->
-            <div v-if="event.salesInfo" class="event-sales-preview">
-              <div class="sales-preview-label">メニュー・価格:</div>
-              <div class="sales-preview-text">{{ event.salesInfo }}</div>
-            </div>
-
-            <!-- タイムテーブル連携枠プレビュー -->
-            <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="event-tt-preview">
-              <span class="tt-tag">
-                タイムテーブル出演あり ({{ event.timetableSlots.length }}枠)
-              </span>
-            </div>
-
-            <!-- フッター情報 -->
-            <div class="event-footer">
-              <div class="event-location">
-                <svg class="w-3.5 h-3.5 inline-block mr-1 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>{{ event.locationName }}</span>
-              </div>
-              <span class="event-more-link">詳細を見る →</span>
-            </div>
-          </div>
-        </NuxtLink>
+          :event="event"
+        />
       </div>
 
       <!-- 検索該当なしの場合 -->
@@ -513,34 +402,6 @@ watch(
   color: white;
 }
 
-.sub-chip-list {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.sub-chip {
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--accent);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sub-chip:hover {
-  border-color: var(--olive);
-}
-
-.sub-chip.active {
-  background: var(--olive-light, #4a7f52);
-  color: white;
-  border-color: var(--olive-light, #4a7f52);
-}
-
 .day-filter {
   display: flex;
   align-items: center;
@@ -605,171 +466,6 @@ watch(
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px;
-}
-
-.event-card {
-  background: white;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--olive);
-  box-shadow: var(--shadow-md);
-}
-
-.event-card-header {
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-}
-
-.header-badges {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.category-chip {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(4px);
-  letter-spacing: 0.02em;
-}
-
-.sub-chip-header {
-  font-size: 11px;
-  font-weight: 600;
-  opacity: 0.9;
-}
-
-.day-chip {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.event-content {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.event-organizer-row {
-  margin-bottom: 8px;
-}
-
-.organizer-badge {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--olive);
-  background: rgba(47, 91, 52, 0.08);
-  padding: 3px 10px;
-  border-radius: 6px;
-}
-
-.event-title {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-
-.event-desc {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--muted);
-  margin-bottom: 14px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex: 1;
-}
-
-.event-sales-preview {
-  background: #fdfbf7;
-  border: 1px dashed rgba(201, 168, 90, 0.5);
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-}
-
-.sales-preview-label {
-  font-size: 11px;
-  font-weight: 800;
-  color: #997825;
-  margin-bottom: 2px;
-}
-
-.sales-preview-text {
-  font-size: 12px;
-  color: #555;
-  white-space: pre-line;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.event-tt-preview {
-  margin-bottom: 12px;
-}
-
-.tt-tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  color: #1e3d26;
-  background: #eaf3eb;
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(47, 91, 52, 0.2);
-}
-
-.event-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-  margin-top: auto;
-}
-
-.event-location {
-  font-weight: 700;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-}
-
-.event-more-link {
-  font-weight: 800;
-  color: var(--olive);
-  transition: transform 0.2s ease;
-}
-
-.event-card:hover .event-more-link {
-  transform: translateX(4px);
 }
 
 .no-results {

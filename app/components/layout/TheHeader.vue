@@ -21,10 +21,10 @@ const mainNavItems = [
 
 // ご案内メニュー（ホバーでドロップダウン展開、アクセスは index.vue#access に遷移）
 const guideSubItems = [
-  { name: '電子パンフレット', to: '/info/pamphlet', desc: 'デジタル版公式パンフレット' },
-  { name: '平潟祭について', to: '/info/about', desc: '開催概要・テーマ「sprout」' },
-  { name: 'よくある質問', to: '/info/faq', desc: 'FAQ・各種お問い合わせ' },
-  { name: 'アクセス', to: '/#access', desc: '金沢八景駅からのルート' },
+  { name: '電子パンフレット', to: '/info/pamphlet'},
+  { name: '平潟祭について', to: '/info/about'},
+  { name: 'よくある質問', to: '/info/faq'},
+  { name: 'アクセス', to: '/#access'},
 ];
 </script>
 
@@ -34,11 +34,21 @@ const guideSubItems = [
       <!-- Left: Brand -->
       <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[80px] no-underline shrink-0" @click="closeMobileMenu">
         <div class="w-[68px] h-[68px] flex items-center justify-center">
-          <img src="/images/hirakata-logo.png" alt="平潟祭ロゴ" class="w-full h-full object-contain" />
+          <NuxtImg
+            src="/images/hirakata-logo.png"
+            alt="平潟祭ロゴ"
+            width="68"
+            height="68"
+            format="webp"
+            densities="x1 x2"
+            loading="eager"
+            fetchpriority="high"
+            class="w-full h-full object-contain"
+          />
         </div>
         <div class="flex flex-col justify-center items-start">
           <span class="font-sans font-light text-[17px] leading-[20px] text-black">第77回</span>
-          <span class="font-serif font-semibold text-[30px] leading-[28px] text-black tracking-[1px]">平潟祭</span>
+          <span class="font-serif font-light text-[30px] leading-[28px] text-black tracking-[1px]">平潟祭</span>
         </div>
       </NuxtLink>
 
@@ -65,11 +75,11 @@ const guideSubItems = [
         </NuxtLink>
 
         <!-- ご案内 (ホバーでドロップダウン展開、アクセスは index.vue#access に遷移) -->
-        <div class="relative group flex flex-col items-center justify-center gap-1 h-[80px]">
+        <div class="group flex flex-col items-center justify-center gap-1 no-underline h-[80px] relative transition-opacity">
           <button
             type="button"
-            class="flex items-center gap-1.5 bg-transparent border-none p-0 cursor-pointer text-sprout-forest hover:text-sprout-border transition-colors font-sans text-[15px] leading-[22px]"
-            :class="{ 'font-bold text-sprout-border': ['/info/about', '/info/pamphlet', '/info/faq'].includes($route.path) }"
+            class="flex items-center gap-1.5 bg-transparent border-none p-0 cursor-pointer text-sprout-forest transition-colors font-sans text-[15px] leading-[22px]"
+            :class="['/info/about', '/info/pamphlet', '/info/faq'].includes($route.path) ? 'font-bold text-sprout-border' : 'font-medium group-hover:text-sprout-border'"
           >
             <span>ご案内</span>
             <!-- CSS chevron arrow (絵文字不使用) -->
@@ -96,7 +106,6 @@ const guideSubItems = [
                 <!-- アイコン用スロット（※アイコンSVG提供後に配置予定） -->
                 <div class="flex flex-col">
                   <span class="dropdown-item-title">{{ sub.name }}</span>
-                  <span class="dropdown-item-desc">{{ sub.desc }}</span>
                 </div>
               </NuxtLink>
             </div>
@@ -161,7 +170,6 @@ const guideSubItems = [
               @click="closeMobileMenu"
             >
               <span class="font-bold">{{ sub.name }}</span>
-              <span class="text-xs text-text-muted">{{ sub.desc }}</span>
             </NuxtLink>
           </div>
         </div>

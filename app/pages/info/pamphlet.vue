@@ -62,12 +62,6 @@ const pamphletHighlights = [
 
             <!-- Download / Viewer Actions -->
             <div class="action-box">
-              <div class="status-notice">
-                <span class="pulse-dot"></span>
-                <span class="text-xs sm:text-sm font-bold text-sprout-dark">
-                  2026年度版パンフレットは学祭直前に公開予定です
-                </span>
-              </div>
               <div class="flex flex-wrap gap-3 mt-4">
                 <button
                   type="button"
@@ -81,53 +75,7 @@ const pamphletHighlights = [
                   Web版 企画一覧を見る →
                 </NuxtLink>
               </div>
-              <p class="text-xs text-text-light mt-3">
-                ※公開開始後は、ここからPDFのダウンロードおよびブラウザでのプレビュー閲覧が可能になります。
-              </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contents Overview -->
-      <section class="section">
-        <div class="section-header">
-          <!-- アイコンSVG提供後に配置予定 -->
-          <div class="section-title">
-            <h2>パンフレット収録コンテンツ</h2>
-            <p>What's Inside</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div
-            v-for="(item, idx) in pamphletHighlights"
-            :key="idx"
-            class="p-5 rounded-xl bg-sprout-bg border border-sprout-border/30 flex items-start gap-4"
-          >
-            <!-- アイコンSVG提供後に配置予定 -->
-            <div>
-              <h3 class="font-extrabold text-sprout-title text-base mb-1">{{ item.title }}</h3>
-              <p class="text-sm text-text-muted leading-relaxed m-0">{{ item.desc }}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Quick Navigation links -->
-      <section class="section quick-nav-section">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 class="font-bold text-xl text-sprout-title mb-2">Webサイトでも最新情報を公開中！</h3>
-            <p class="text-sm text-text-muted">タイムテーブルやマップはWebページ上でも随時ご確認いただけます。</p>
-          </div>
-          <div class="flex gap-3 flex-wrap">
-            <NuxtLink to="/schedule" class="btn btn-primary">
-              タイムテーブル →
-            </NuxtLink>
-            <NuxtLink to="/map" class="btn btn-secondary">
-              場内マップ →
-            </NuxtLink>
           </div>
         </div>
       </section>

@@ -42,15 +42,31 @@ const leaves: LeafItem[] = [
 <template>
   <section class="relative w-full min-h-fit h-[calc(100dvh-60px)] max-h-[1200px] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
     <!-- Top Geometric Border Decorations (Group 3: top-right) -->
-    <div class="absolute pointer-events-none opacity-40 -top-40 -right-28 w-[650px] h-[650px] z-[1]" aria-hidden="true">
-      <div v-for="size in [650, 600, 550]" :key="size" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" :style="{ width: `${size}px`, height: `${size}px` }">
+    <div
+      class="absolute pointer-events-none z-[1] -top-24 -right-20 w-[340px] h-[340px] opacity-25 sm:-top-32 sm:-right-24 sm:w-[480px] sm:h-[480px] sm:opacity-35 lg:-top-40 lg:-right-28 lg:w-[650px] lg:h-[650px] lg:opacity-40 transition-all duration-300"
+      aria-hidden="true"
+    >
+      <div
+        v-for="scale in [1, 0.92, 0.84]"
+        :key="scale"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
+      >
         <Svg8 class="w-full h-full"></Svg8>
       </div>
     </div>
 
     <!-- Bottom Geometric Border Decorations (Group 2: bottom-left) -->
-    <div class="absolute pointer-events-none opacity-40 bottom-[-200px] -left-40 w-[680px] h-[680px] z-[1]" aria-hidden="true">
-      <div v-for="size in [650, 600, 550]" :key="size" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" :style="{ width: `${size}px`, height: `${size}px` }">
+    <div
+      class="absolute pointer-events-none z-[1] -bottom-24 -left-24 w-[360px] h-[360px] opacity-25 sm:-bottom-36 sm:-left-32 sm:w-[500px] sm:h-[500px] sm:opacity-35 lg:bottom-[-200px] lg:-left-40 lg:w-[680px] lg:h-[680px] lg:opacity-40 transition-all duration-300"
+      aria-hidden="true"
+    >
+      <div
+        v-for="scale in [1, 0.92, 0.84]"
+        :key="scale"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
+      >
         <Svg8 class="w-full h-full"></Svg8>
       </div>
     </div>
@@ -76,7 +92,7 @@ const leaves: LeafItem[] = [
       </div>
 
       <!-- Date & Badge Block (Group 1: right side) -->
-      <div class="relative w-[calc(480px*0.68)] h-[calc(480px*0.68)] flex items-center justify-center scale-[0.68] sm:w-[calc(480px*0.85)] sm:h-[calc(480px*0.85)] sm:scale-[0.85] lg:w-[calc(480px*0.9)] lg:h-[calc(480px*0.9)] lg:scale-[0.9] xl:w-[480px] xl:h-[480px] xl:scale-100 transition-transform">
+      <div class="relative w-[calc(480px*0.62)] h-[calc(480px*0.62)] flex items-center justify-center scale-[0.62] min-[380px]:w-[calc(480px*0.68)] min-[380px]:h-[calc(480px*0.68)] min-[380px]:scale-[0.68] sm:w-[calc(480px*0.85)] sm:h-[calc(480px*0.85)] sm:scale-[0.85] lg:w-[calc(480px*0.9)] lg:h-[calc(480px*0.9)] lg:scale-[0.9] xl:w-[480px] xl:h-[480px] xl:scale-100 transition-transform">
         <!-- Polygon 1 -->
         <Svg8 :style="{ width: '480px', height: '480px' }" class="absolute -rotate-[22.5deg]"></Svg8>
         <!-- Polygon 2 -->
@@ -118,9 +134,9 @@ const leaves: LeafItem[] = [
     </div>
 
     <!-- 4 Layers of Green Hills & Sprout Leaves (bottom) -->
-    <div class="absolute bottom-0 left-0 w-full h-fit pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
+    <div class="absolute -bottom-[2px] left-0 w-full h-fit pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
       <!-- Hill -->
-      <SvgWave class="w-full mt-10" preserveAspectRatio="none"></SvgWave>
+      <SvgWave class="w-full mt-10 transform translate-y-[1px]" preserveAspectRatio="none"></SvgWave>
       <div
       v-for="leaf in leaves"
       :key="leaf.id"

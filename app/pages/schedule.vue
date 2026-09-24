@@ -11,7 +11,7 @@ import {
 
 useSeoMeta({
   title: 'タイムテーブル｜平潟祭 2026',
-  description: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全33出演プログラムを一覧掲載！',
+  description: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全出演プログラムを一覧掲載',
 });
 
 const route = useRoute();
@@ -330,23 +330,6 @@ onUnmounted(() => {
           </div>
         </section>
       </div>
-
-
-      <!-- フッター案内 -->
-      <section class="section bottom-nav-section" @click.stop>
-        <div class="bottom-nav-grid">
-          <div class="nav-card">
-            <h4>会場の場所を調べる</h4>
-            <p>屋外ステージ、SCC 4階ホール、チャペル、体育館、1号館前の位置をマップで確認できます。</p>
-            <NuxtLink to="/map" class="btn btn-outline">キャンパスマップを見る →</NuxtLink>
-          </div>
-          <div class="nav-card">
-            <h4>全59企画を見る</h4>
-            <p>模擬店・グルメ、文化館展示、音楽館ライブなど全企画をチェック！</p>
-            <NuxtLink to="/events" class="btn btn-primary">企画一覧を見る →</NuxtLink>
-          </div>
-        </div>
-      </section>
     </div>
   </div>
 </template>
@@ -780,35 +763,6 @@ onUnmounted(() => {
   transition: all 0.2s ease;
 }
 
-
-
-/* フッター案内 */
-.bottom-nav-section {
-  padding: 28px;
-  background: #f8faf8;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-}
-
-.bottom-nav-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.nav-card h4 {
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  color: var(--olive);
-}
-
-.nav-card p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
 
 
 @media (max-width: 768px) {

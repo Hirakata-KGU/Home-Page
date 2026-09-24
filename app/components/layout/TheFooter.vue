@@ -15,9 +15,11 @@ const footerSections = [
       ],
       [
         { label: '全体・模擬店マップ', to: '/map' },
-        { label: '音楽館マップ', to: '/map' },
-        { label: '文化館マップ', to: '/map' },
-        { label: '3号館マップ', to: '/map' }
+        { label: '屋内ステージ（SCC）', to: '/map?tab=scc' },
+        { label: '社会連携館', to: '/map?tab=no3' },
+        { label: '音楽館（7号館）', to: '/map?tab=no7' },
+        { label: '文化館（8号館）', to: '/map?tab=no8' },
+        { label: '文化館 (6号館)', to: '/map?tab=no6' },
       ]
     ]
   },
@@ -25,11 +27,11 @@ const footerSections = [
     title: 'ご案内',
     columns: [
       [
-        { label: 'アクセス', to: '/#access' },
         { label: '電子パンフレット', to: '/info/pamphlet' },
         { label: '平潟祭について', to: '/info/about' },
-        { label: 'FAQ', to: '/info/faq' },
-        { label: 'お問い合わせ', to: '/info/contact' }
+        { label: 'よくある質問', to: '/info/faq' },
+        { label: 'アクセス', to: '/#access' },
+        { label: 'お問い合わせ', to: '/info/contact' },
       ]
     ]
   }
@@ -37,20 +39,29 @@ const footerSections = [
 </script>
 
 <template>
-  <footer class="w-full relative overflow-hidden mt-0 p-0">
-    <svg width="1248" height="105" viewBox="0 0 1248 105" fill="#1B3A24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-    <path d="M0 105L29.64 90.9879C59.41 77.2453 118.69 49.2212 178.1 30.8978C237.51 12.5743 296.79 3.41257 356.2 1.25687C415.61 -0.898831 438.83 -0.394002 498.5 3.64794C558.04 7.68988 653.9 22.6283 713.44 34.7541C773.11 46.8799 832.39 59.9998 891.8 70.5088C951.21 80.7484 1010.49 80.7484 1069.9 74.5508C1129.31 68.0837 1188.59 55.6883 1218.36 49.2212L1248 43.0236V105H1218.36C1188.59 105 1129.31 105 1069.9 105C1010.49 105 951.21 105 891.8 105C832.39 105 773.11 105 713.44 105C653.9 105 594.1 105 534.56 105C474.89 105 415.61 105 356.2 105C296.79 105 237.51 105 178.1 105C118.69 105 59.41 105 29.64 105H0Z"/>
+  <footer class="w-full relative overflow-hidden mt-0 p-0 leading-none">
+    <svg width="1248" height="106" viewBox="0 0 1248 106" fill="#1B3A24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full -mb-[2px] transform relative z-10]">
+    <path d="M0 106L29.64 90.9879C59.41 77.2453 118.69 49.2212 178.1 30.8978C237.51 12.5743 296.79 3.41257 356.2 1.25687C415.61 -0.898831 438.83 -0.394002 498.5 3.64794C558.04 7.68988 653.9 22.6283 713.44 34.7541C773.11 46.8799 832.39 59.9998 891.8 70.5088C951.21 80.7484 1010.49 80.7484 1069.9 74.5508C1129.31 68.0837 1188.59 55.6883 1218.36 49.2212L1248 43.0236V106H1218.36C1188.59 106 1129.31 106 1069.9 106C1010.49 106 951.21 106 891.8 106C832.39 106 773.11 106 713.44 106C653.9 106 594.1 106 534.56 106C474.89 106 415.61 106 356.2 106C296.79 106 237.51 106 178.1 106C118.69 106 59.41 106 29.64 106H0Z"/>
     </svg>
 
-    <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark">
-      <div class="flex flex-col items-center gap-8 w-full max-w-[1136px]">
+    <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark relative z-9">
+      <div class="flex flex-col items-center gap-8 w-full max-w-[var(--max-width)]">
         <!-- Navigation Columns -->
         <div class="flex flex-col items-center lg:flex-row justify-between w-full gap-8">
           <!-- Col 1: Brand -->
           <div class="w-fit lg:w-[280px] shrink-0 items-center">
             <div class="flex flex-col items-center gap-2">
               <div class="w-20 h-20 bg-sprout-light rounded-full flex items-center justify-center p-2.5 shadow-md">
-                <img src="/images/hirakata-logo.png" alt="平潟祭ロゴ" class="w-full h-full object-contain" />
+                <NuxtImg
+                  src="/images/hirakata-logo.png"
+                  alt="平潟祭ロゴ"
+                  width="80"
+                  height="80"
+                  format="webp"
+                  densities="x1 x2"
+                  loading="lazy"
+                  class="w-full h-full object-contain"
+                />
               </div>
               <span class="font-serif font-bold text-2xl leading-[34px] text-white">平潟祭 2026</span>
               <span class="text-xs text-white/70">関東学院大学 金沢八景キャンパス</span>
@@ -97,7 +108,7 @@ const footerSections = [
                     <!-- Social Icons Row -->
         <div class="flex gap-3 self-start">
           <a
-            href="https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w"
+            href="https://x.com/shin_hirakata"
             target="_blank"
             rel="noopener noreferrer"
             class="footer-social-btn"
@@ -106,7 +117,7 @@ const footerSections = [
             <SvgX class="w-4 h-4 fill-white" />
           </a>
           <a
-            href="https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg=="
+            href="https://www.instagram.com/hirakatasai"
             target="_blank"
             rel="noopener noreferrer"
             class="footer-social-btn"

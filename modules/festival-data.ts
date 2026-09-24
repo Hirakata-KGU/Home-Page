@@ -1,6 +1,6 @@
 import { defineNuxtModule } from '@nuxt/kit';
-import { resolve } from 'pathe';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { basename, extname, resolve } from 'pathe';
+import { existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import * as XLSX from 'xlsx';
 
 export interface ModuleOptions {
@@ -20,6 +20,7 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const excelFullPath = resolve(nuxt.options.rootDir, options.excelPath || 'app/data/hirakata_festival_data.xlsx');
     const outputDirFullPath = resolve(nuxt.options.rootDir, options.outputDir || 'app/data');
+    const imagesDirFullPath = resolve(nuxt.options.rootDir, 'public/images/events');
 
     const convertExcelToDatabases = () => {
       if (!existsSync(excelFullPath)) {
@@ -66,8 +67,53 @@ export default defineNuxtModule<ModuleOptions>({
       console.log(`[festival-data] Saved ${timetablePath} (${timetable.length} items)`);
     };
 
+    // public/images/events 内の写真を自動スキャンして event-images.json を生成
+    const scanEventImages = () => {
+      if (!existsSync(imagesDirFullPath)) {
+        console.warn(`[festival-data] Images directory not found: ${imagesDirFullPath}`);
+        return;
+      }
+
+      console.log(`[festival-data] Scanning event photos from ${imagesDirFullPath}...`);
+      const files = readdirSync(imagesDirFullPath);
+      const imageMap: Record<string, string> = {};
+
+      for (const file of files) {
+        const ext = extname(file);
+        const lowerExt = ext.toLowerCase();
+        if (['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif'].includes(lowerExt)) {
+          const baseName = basename(file, ext);
+          imageMap[baseName] = `/images/events/${file}`;
+        }
+      }
+
+      // 表記揺れ（長音等）のエイリアス補正
+      if (imageMap['stage-konsei-gasshou-bu'] && !imageMap['stage-konsei-gassho-bu']) {
+        imageMap['stage-konsei-gassho-bu'] = imageMap['stage-konsei-gasshou-bu'];
+      }
+      if (imageMap['stage-suisougaku-bu'] && !imageMap['stage-suisogaku-bu']) {
+        imageMap['stage-suisogaku-bu'] = imageMap['stage-suisougaku-bu'];
+      }
+
+      // 同一団体で展示と模擬店の両方に出店している場合のフォールバック紐付け
+      if (imageMap['exhibit-shashin-bu'] && !imageMap['food-shashin-bu']) {
+        imageMap['food-shashin-bu'] = imageMap['exhibit-shashin-bu'];
+      }
+      if (imageMap['exhibit-oystars'] && !imageMap['food-oystars']) {
+        imageMap['food-oystars'] = imageMap['exhibit-oystars'];
+      }
+      if (imageMap['food-kannai-sukayutopia'] && !imageMap['stage-kannai-sukayutopia']) {
+        imageMap['stage-kannai-sukayutopia'] = imageMap['food-kannai-sukayutopia'];
+      }
+
+      const eventImagesPath = resolve(outputDirFullPath, 'event-images.json');
+      writeFileSync(eventImagesPath, JSON.stringify(imageMap, null, 2), 'utf-8');
+      console.log(`[festival-data] Saved ${eventImagesPath} (${Object.keys(imageMap).length} mapped images)`);
+    };
+
     // 初期起動時およびビルド準備時に変換を実行
     convertExcelToDatabases();
+    scanEventImages();
 
     // 開発サーバー動作時のファイル変更監視（watch）
     nuxt.hook('builder:watch', async (event, path) => {
@@ -75,6 +121,10 @@ export default defineNuxtModule<ModuleOptions>({
       if (normalizedPath.includes('hirakata_festival_data.xlsx')) {
         console.log(`[festival-data] Detected change in ${path}, re-generating databases...`);
         convertExcelToDatabases();
+      }
+      if (normalizedPath.includes('images/events') || normalizedPath.includes('images/event')) {
+        console.log(`[festival-data] Detected event image changes in ${path}, re-scanning event images...`);
+        scanEventImages();
       }
     });
   },

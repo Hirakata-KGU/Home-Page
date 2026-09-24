@@ -8,19 +8,15 @@ const contactSns = [
   {
     name: 'X (旧Twitter)',
     id: '@shin_hirakata',
-    url: 'https://x.com/shin_hirakata?s=21&t=XXyLV91kkOMKW_oin9wA0w',
+    url: 'https://x.com/shin_hirakata',
     type: 'x',
-    desc: '最新情報の速報発信、タイムテーブルの変更案内などを行っています。ダイレクトメッセージ（DM）でのお問い合わせも受け付けております。',
-    btnText: 'Xで問い合わせ・フォロー',
     gradient: 'linear-gradient(135deg, #111111 0%, #333333 100%)',
   },
   {
     name: 'Instagram',
     id: '@hirakatasai',
-    url: 'https://www.instagram.com/hirakatasai?igsh=MWRvYmxxa3FjYnhvcg==',
+    url: 'https://www.instagram.com/hirakatasai',
     type: 'instagram',
-    desc: '当日の様子や企画のハイライト写真を投稿・ストーリーで配信！DMでのお問い合わせやご質問もこちらからどうぞ。',
-    btnText: 'Instagramで問い合わせ・フォロー',
     gradient: 'linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)',
   },
 ];
@@ -31,7 +27,7 @@ const contactSns = [
     <!-- 絵文字不使用（※アイコンSVG提供後に配置予定） -->
     <LayoutPageHeader
       title="お問い合わせ"
-      sub-title="Contact & Official Social Media"
+      sub-title="Contact"
       :breadcrumbs="[{ name: 'お問い合わせ' }]"
     />
 
@@ -41,8 +37,8 @@ const contactSns = [
         <div class="section-header">
           <!-- アイコンSVG提供後に配置予定 -->
           <div class="section-title">
-            <h2>公式SNS・お問い合わせ窓口</h2>
-            <p>Official Social Media & Direct Inquiries</p>
+            <h2>公式SNS・お問い合わせ</h2>
+            <p>Official Social Media & Contact</p>
           </div>
         </div>
 
@@ -51,7 +47,8 @@ const contactSns = [
         </p>
 
         <div class="sns-cards-grid">
-          <div
+          <a 
+            :href="sns.url"
             v-for="sns in contactSns"
             :key="sns.name"
             class="contact-sns-card"
@@ -66,19 +63,7 @@ const contactSns = [
                 <span class="sns-handle">{{ sns.id }}</span>
               </div>
             </div>
-
-            <div class="sns-body-area">
-              <p>{{ sns.desc }}</p>
-              <a
-                :href="sns.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-primary sns-action-btn"
-              >
-                {{ sns.btnText }} →
-              </a>
-            </div>
-          </div>
+          </a>
         </div>
       </section>
     </div>
@@ -113,7 +98,6 @@ const contactSns = [
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  border: 2px solid var(--border);
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-sm);

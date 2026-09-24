@@ -1,6 +1,7 @@
 import rawFoodBooths from './food-booths.json';
 import rawExhibitions from './exhibitions.json';
 import rawPerformances from './performances.json';
+import rawEventImages from './event-images.json';
 import { timetableByEventId, type TimetableSlot } from './schedule';
 
 // ==========================================
@@ -44,6 +45,19 @@ export interface PerformanceItem {
 export const foodBooths: FoodBoothItem[] = rawFoodBooths as FoodBoothItem[];
 export const exhibitions: ExhibitionItem[] = rawExhibitions as ExhibitionItem[];
 export const performances: PerformanceItem[] = rawPerformances as PerformanceItem[];
+export const eventImages: Record<string, string> = rawEventImages as Record<string, string>;
+
+// 写真画像のURL解決ヘルパー（ID一致および表記揺れ対応）
+export const getEventImageUrl = (id: string): string | null => {
+  if (eventImages[id]) return eventImages[id];
+  if (id === 'stage-konsei-gassho-bu' && eventImages['stage-konsei-gasshou-bu']) {
+    return eventImages['stage-konsei-gasshou-bu'];
+  }
+  if (id === 'stage-suisogaku-bu' && eventImages['stage-suisougaku-bu']) {
+    return eventImages['stage-suisougaku-bu'];
+  }
+  return null;
+};
 
 // タイムテーブル関連は schedule.ts から再エクスポート
 export type { TimetableSlot };
@@ -75,6 +89,7 @@ export interface EventItem {
   tentNo?: string | null;
   room?: string | null;
   photoNo?: string | null;
+  imageUrl?: string | null;
   gradient?: string;
   tags: string[];
   timetableSlots?: TimetableSlot[];
@@ -119,6 +134,7 @@ export const allEvents: EventItem[] = [
       tentNo: tentNoStr,
       room: null,
       photoNo: null,
+      imageUrl: getEventImageUrl(fb.id),
       gradient: 'linear-gradient(135deg, #c9a85a 0%, #b89345 100%)',
       tags: ['模擬店', subCategory, tentNoStr ? `テント${tentNoStr}` : '', pDays].filter(Boolean) as string[],
       timetableSlots: [],
@@ -148,6 +164,7 @@ export const allEvents: EventItem[] = [
       tentNo: null,
       room: ex.room || null,
       photoNo: ex.photoNo || null,
+      imageUrl: getEventImageUrl(ex.id),
       gradient: 'linear-gradient(135deg, #2f5b34 0%, #4a7f52 100%)',
       tags: ['文化館', '教室展示・公演', ex.room, '両日参加'].filter(Boolean) as string[],
       timetableSlots: [],
@@ -202,10 +219,11 @@ export const allEvents: EventItem[] = [
       timeRange,
       organizer: pf.groupName,
       description: pf.pr || '',
-      salesInfo: null,
+      salesInfo: isGeino ? '一般 1,500円 / 学内生・教職員 500円' : null,
       tentNo: null,
       room: pf.venueRoom || null,
       photoNo: pf.photoNo || null,
+      imageUrl: getEventImageUrl(pf.id),
       gradient: isGeino
         ? 'linear-gradient(135deg, #d48806 0%, #faad14 100%)'
         : 'linear-gradient(135deg, #1e3d26 0%, #2f5b34 100%)',

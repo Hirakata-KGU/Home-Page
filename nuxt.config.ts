@@ -1,19 +1,28 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { process } from 'std-env'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: [
-    '@nuxtjs/tailwindcss',
-    './modules/festival-data',
-  ],
+  modules: ['@nuxtjs/tailwindcss', './modules/festival-data', '@nuxt/image', '@nuxtjs/google-fonts'],
+
+  googleFonts: {
+    families: {
+      'Noto+Sans+JP': [400, 700],
+      'Noto+Serif+JP': [400],
+    },
+    display: 'swap',
+    download: true, // 重要：フォント本体を _nuxt/ 内に保存して配信（外部依存を完全排除）
+    inject: false,
+  },
 
   tailwindcss: {
     cssPath: '~/assets/css/main.css',
   },
 
   app: {
-    baseURL: '/',
+    baseURL: process.env.NUXT_APP_BASE_URL ?? '/',
     head: {
       htmlAttrs: {
         lang: 'ja',
@@ -38,15 +47,17 @@ export default defineNuxtConfig({
         { name: 'twitter:site', content: '@shin_hirakata' },
       ],
       link: [
+        // ファビコン・アプリアイコン
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&family=Noto+Serif+JP:wght@700&display=swap',
-        },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       ],
     },
+  },
+
+  image: {
+    format: ['webp'],
+    quality: 80,
   },
 
   css: [
