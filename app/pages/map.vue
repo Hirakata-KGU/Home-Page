@@ -181,6 +181,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  max-width: var(--max-width);
   box-sizing: border-box;
 }
 
