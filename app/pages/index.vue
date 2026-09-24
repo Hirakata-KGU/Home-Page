@@ -22,7 +22,7 @@ const featuredEvents: FeaturedEventItem[] = [
     id: 'geino',
     title: '芸能ステージ',
     badge: 'SCC 4F ベンネットホール',
-    image: '/images/events/geinou-secret.svg',
+    image: '/images/events/geinou-secret.png',
     desc: '豪華ゲストをお招きした芸能人トークショーを開催！出演者等の詳細は近日公開予定です。',
     to: '/events/geinou',
   },

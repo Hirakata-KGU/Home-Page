@@ -225,7 +225,7 @@ export const allEvents: EventItem[] = [
       tentNo: null,
       room: pf.venueRoom || null,
       photoNo: pf.photoNo || null,
-      imageUrl: isGeino ? '/images/events/geinou-secret.svg' : getEventImageUrl(pf.id),
+      imageUrl: isGeino ? '/images/events/geinou-secret.png' : getEventImageUrl(pf.id),
       gradient: isGeino
         ? 'linear-gradient(135deg, #d48806 0%, #faad14 100%)'
         : 'linear-gradient(135deg, #1e3d26 0%, #2f5b34 100%)',
