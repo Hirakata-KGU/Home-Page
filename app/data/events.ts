@@ -41,7 +41,6 @@ export interface EventItem {
   locationTab?: 'campus' | 'culture' | 'music';
   day: EventDay;
   dayLabel: string;
-  participationDays: string;
   timeRange: string;
   organizer: string;
   description: string;
@@ -59,16 +58,11 @@ const catMap: Record<string, { key: EventCategory; label: string }> = {
 };
 
 const dayLabelMap: Record<string, string> = {
-  day1: '10/31（土）Day 1',
-  day2: '11/1（日）Day 2',
-  both: '両日開催',
+  day1: '10/31 (土)',
+  day2: '11/1 (日)',
+  both: '10/31 (土), 11/1 (日)',
 };
 
-const dayPMap: Record<string, string> = {
-  day1: '1日目のみ',
-  day2: '2日目のみ',
-  both: '両日参加',
-};
 
 export const allEvents: EventItem[] = [
   ...mogiten,
@@ -96,13 +90,12 @@ export const allEvents: EventItem[] = [
     locationTab: loc?.building?.includes('7') ? 'music' : loc?.building?.includes('8') ? 'culture' : 'campus',
     day,
     dayLabel: dayLabelMap[day] || '両日開催',
-    participationDays: dayPMap[day] || '両日参加',
     timeRange: slots.length > 0 ? slots.map((s) => `${s.day} ${s.time}`).join(' / ') : '10:00 - 17:00',
     organizer: raw.groupName,
     description: raw.pr || '',
     salesInfo: raw.salesInfo || null,
     imageUrl: getEventImageUrl(raw.id),
-    tags: [cat.label, loc?.name || '', dayPMap[day] || ''].filter(Boolean),
+    tags: [cat.label, loc?.name || '', dayLabelMap[day] || ''].filter(Boolean),
     timetableSlots: slots,
   };
 });

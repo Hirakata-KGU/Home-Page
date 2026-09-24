@@ -113,7 +113,7 @@ useSeoMeta({
 
             <div class="info-item">
               <span class="info-label">参加日程</span>
-              <span class="info-value">{{ event.participationDays }}</span>
+              <span class="info-value">{{ event.dayLabel }}</span>
             </div>
 
             <div class="info-item">
