@@ -2,10 +2,6 @@
 name: Deploy to GitHub Pages
 on:
   workflow_dispatch:
-  schedule:
-    # 分 時 日 月 曜日 (すべてUTC指定)
-    # UTC 04:00 25 Sep = JST 13:00 25 Sep
-    - cron: '0 4 25 9 *'
 
 jobs:
   build:

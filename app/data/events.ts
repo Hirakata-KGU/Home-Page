@@ -201,7 +201,7 @@ export const allEvents: EventItem[] = [
       }
     }
 
-    const isGeino = pf.category === '芸能' || pf.id === 'stage-geino-miyase';
+    const isGeino = pf.category === '芸能' || pf.id === 'geinou';
 
     return {
       id: pf.id,
