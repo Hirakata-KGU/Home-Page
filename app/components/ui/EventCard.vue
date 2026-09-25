@@ -44,7 +44,7 @@ defineProps<{
       <div
         v-else
         class="card-fallback-box"
-        :style="{ background: event.gradient || 'linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%)' }"
+        :class="'fallback-' + event.category"
       >
         <div class="fallback-icon-wrap">
           <!-- 模擬店アイコン -->
@@ -80,7 +80,6 @@ defineProps<{
       <div class="card-overlay-badges">
         <div class="header-badges">
           <span class="category-chip" :class="'cat-' + event.category">{{ event.categoryLabel }}</span>
-          <span v-if="event.subCategory" class="sub-chip-header">{{ event.subCategory }}</span>
         </div>
         <span class="day-chip">{{ event.dayLabel }}</span>
       </div>
@@ -195,6 +194,22 @@ defineProps<{
   position: relative;
 }
 
+.card-fallback-box.fallback-food {
+  background: linear-gradient(135deg, #c9a85a 0%, #b89345 100%);
+}
+
+.card-fallback-box.fallback-culture {
+  background: linear-gradient(135deg, #2f5b34 0%, #4a7f52 100%);
+}
+
+.card-fallback-box.fallback-music {
+  background: linear-gradient(135deg, #1e3d26 0%, #2f5b34 100%);
+}
+
+.card-fallback-box.fallback-entertainment {
+  background: linear-gradient(135deg, #d48806 0%, #faad14 100%);
+}
+
 .fallback-icon-wrap {
   opacity: 0.85;
   transition: transform 0.3s ease;
@@ -250,17 +265,6 @@ defineProps<{
 
 .category-chip.cat-entertainment {
   background: #d48806;
-}
-
-.sub-chip-header {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #2b2b2b;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .day-chip {

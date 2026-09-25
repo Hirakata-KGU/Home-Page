@@ -72,7 +72,7 @@ const leaves: LeafItem[] = [
     </div>
 
     <!-- Main Container -->
-    <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-between pb-[300px] lg:pb-[150px]">
+    <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[300px] lg:pb-[150px]">
       <!-- Title Block (left: 163px, top: 288px) -->
       <div class="flex-1 max-w-[824px] text-center lg:text-left">
         <div class="flex items-end justify-center gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
