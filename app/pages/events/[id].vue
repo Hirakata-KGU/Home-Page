@@ -626,13 +626,30 @@ useSeoMeta({
     font-size: 22px;
   }
   .timetable-slot-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+  .slot-day-badge {
+    order: 1;
+    white-space: nowrap;
   }
   .slot-action {
+    order: 2;
+    flex-shrink: 0;
+  }
+  .slot-body {
+    order: 3;
     width: 100%;
-    justify-content: flex-end;
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(47, 91, 52, 0.12);
   }
 }
 </style>
