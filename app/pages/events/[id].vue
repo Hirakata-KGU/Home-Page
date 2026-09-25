@@ -112,7 +112,7 @@ useSeoMeta({
             </div>
 
             <div class="info-item">
-              <span class="info-label">参加日程</span>
+              <span class="info-label">開催日程</span>
               <span class="info-value">{{ event.dayLabel }}</span>
             </div>
 
@@ -167,7 +167,7 @@ useSeoMeta({
                 class="timetable-slot-card is-clickable group"
                 title="タイムテーブルでこの枠を見る"
               >
-                <div class="slot-day-badge">{{ slot.day }}</div>
+                <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
                 <div class="slot-body">
                   <div class="slot-time">{{ slot.time }}</div>
                   <div class="slot-venue">会場: {{ slot.venue }}</div>
@@ -369,6 +369,7 @@ useSeoMeta({
   font-size: 15px;
   font-weight: 700;
   color: var(--text);
+  white-space: pre-line;
 }
 
 .location-link {
@@ -541,6 +542,7 @@ useSeoMeta({
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
   flex-shrink: 0;
 }
 

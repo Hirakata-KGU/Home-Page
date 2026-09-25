@@ -231,14 +231,14 @@ watch(
               :class="{ active: selectedDay === 'day1' }"
               @click="selectedDay = 'day1'"
             >
-              10/31（土）Day 1
+              10/31（土）
             </button>
             <button
               class="day-btn"
               :class="{ active: selectedDay === 'day2' }"
               @click="selectedDay = 'day2'"
             >
-              11/1（日）Day 2
+              11/1（日）
             </button>
           </div>
         </div>

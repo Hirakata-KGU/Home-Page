@@ -143,7 +143,7 @@ const applyRouteParams = async () => {
   }
 
   if (targetSlot) {
-    activeDayId.value = targetSlot.day === 'DAY2' ? 'day2' : 'day1';
+    activeDayId.value = targetSlot.day;
     activeSlotId.value = targetSlot.slotId;
     highlightedSlotId.value = targetSlot.slotId;
 
@@ -207,7 +207,7 @@ onUnmounted(() => {
               :aria-selected="activeDayId === day.id"
               @click="selectDay(day.id)"
             >
-              {{ day.dayName }}（{{ day.dateLabel }}）
+              {{ day.dayName }}
             </button>
           </div>
 

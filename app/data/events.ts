@@ -74,7 +74,7 @@ export const allEvents: EventItem[] = [
   const loc = locationMap.get(raw.locationId);
   const slots = timetableByEventId.get(raw.id) || [];
   const day: EventDay = raw.day || 'both';
-
+  
   return {
     id: raw.id,
     title: raw.title,
@@ -89,8 +89,8 @@ export const allEvents: EventItem[] = [
     floor: loc?.floor,
     locationTab: loc?.building?.includes('7') ? 'music' : loc?.building?.includes('8') ? 'culture' : 'campus',
     day,
-    dayLabel: dayLabelMap[day] || '両日開催',
-    timeRange: slots.length > 0 ? slots.map((s) => `${s.day} ${s.time}`).join(' / ') : '10:00 - 17:00',
+    dayLabel: dayLabelMap[day] || '',
+    timeRange: slots.length > 0 ? slots.map((s) => `${dayLabelMap[s.day] || s.day}  ${s.time}`).join('\n') : '10:00 - 17:00',
     organizer: raw.groupName,
     description: raw.pr || '',
     salesInfo: raw.salesInfo || null,

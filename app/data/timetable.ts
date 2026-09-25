@@ -6,7 +6,7 @@ import rawLocation from './location.json';
 export interface TimetableSlot {
   id: string;
   slotId: string;
-  day: 'DAY1' | 'DAY2';
+  day: 'day1' | 'day2';
   locationId: string;
   venue: string;
   time: string;
@@ -35,7 +35,6 @@ export const timetable: TimetableSlot[] = (rawTimetable as any[]).map((t) => {
   const ev = eventMap.get(t.id);
   return {
     ...t,
-    day: String(t.day) === '2' ? 'DAY2' : 'DAY1',
     venue: locationMap.get(t.locationId) || '',
     title: ev?.title || '',
     groupName: ev?.groupName || '',
@@ -52,7 +51,6 @@ for (const slot of timetable) {
 export interface DaySchedule {
   id: 'day1' | 'day2';
   dayName: string;
-  dateLabel: string;
   allSlots: TimetableSlot[];
 }
 
@@ -60,13 +58,11 @@ export const daySchedules: DaySchedule[] = [
   {
     id: 'day1',
     dayName: '10月31日（土）',
-    dateLabel: 'Day 1',
-    allSlots: timetable.filter((s) => s.day === 'DAY1'),
+    allSlots: timetable.filter((s) => s.day === 'day1'),
   },
   {
     id: 'day2',
     dayName: '11月1日（日）',
-    dateLabel: 'Day 2',
-    allSlots: timetable.filter((s) => s.day === 'DAY2'),
+    allSlots: timetable.filter((s) => s.day === 'day2'),
   },
 ];
