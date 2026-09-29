@@ -433,7 +433,7 @@ const visitorGuidelines = [
               role="button"
               tabindex="0"
               :aria-label="item.title"
-              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
               :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
               @click="handleCardClick(idx, item.to)"
               @keydown.enter="handleCardClick(idx, item.to)"
@@ -799,8 +799,8 @@ const visitorGuidelines = [
 
 /* スワイプコンテナの左右パディング（カードの可変幅に応じて端のカードも正確に中央スナップ） */
 .events-scroll-container {
-  padding-left: calc(50% - clamp(101px, 15dvh, 158px));
-  padding-right: calc(50% - clamp(101px, 15dvh, 158px));
+  padding-left: calc(50% - clamp(101px, 15vh, 158px));
+  padding-right: calc(50% - clamp(101px, 15vh, 158px));
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   touch-action: pan-y pinch-zoom;
