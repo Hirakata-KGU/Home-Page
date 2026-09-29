@@ -1,124 +1,44 @@
 <script lang="ts" setup>
-import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
-import type { EventItem } from '~/data/events';
-import EventCard from '~/components/ui/EventCard.vue';
+import { computed } from 'vue';
 
 interface Props {
   label?: string;
   strokeColor?: string;
-  event?: EventItem | null;
-  events?: EventItem[];
-  placement?: 'top' | 'bottom' | 'left' | 'right' | 'auto';
-  showCardOnHover?: boolean;
+  isActive?: boolean;
   interactive?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: '1',
   strokeColor: '#c9a063',
-  event: null,
-  events: () => [],
-  placement: 'auto',
-  showCardOnHover: true,
+  isActive: false,
   interactive: true,
 });
 
 const emit = defineEmits<{
-  (e: 'select', tentNo: string | number): void;
+  (e: 'select'): void;
+  (e: 'hover-enter'): void;
+  (e: 'hover-leave'): void;
 }>();
 
-const isOpen = ref(false);
-const tentRef = ref<HTMLElement | null>(null);
-
-// 表示対象のイベント一覧
-const targetEvents = computed<EventItem[]>(() => {
-  if (props.events && props.events.length > 0) {
-    return props.events;
-  }
-  if (props.event) {
-    return [props.event];
-  }
-  return [];
-});
-
-const hasEvents = computed(() => targetEvents.value.length > 0);
-
-
-// フォントサイズ
+// フォントサイズ (SVG viewBox基準)
 const fontSize = computed(() => {
-  const str = String(props.label);
-  if (str.length >= 4) return '5px';
-  if (str.length >= 3) return '5.8px';
-  return '7.5px';
-});
-
-// ポップオーバー位置のクラス
-const placementClass = computed(() => {
-  if (props.placement !== 'auto') {
-    return `placement-${props.placement}`;
-  }
-  return 'placement-top';
-});
-
-const toggleOpen = () => {
-  if (!props.interactive || !hasEvents.value) return;
-  isOpen.value = !isOpen.value;
-  if (isOpen.value) {
-    emit('select', props.label);
-  }
-};
-
-// PC（マウス環境）でのホバー操作
-const handleMouseEnter = () => {
-  if (typeof window === 'undefined') return;
-  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (!canHover) return;
-
-  if (!props.interactive || !props.showCardOnHover || !hasEvents.value) return;
-  isOpen.value = true;
-};
-
-const handleMouseLeave = () => {
-  if (typeof window === 'undefined') return;
-  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (!canHover) return;
-
-  if (!props.interactive || !props.showCardOnHover) return;
-  isOpen.value = false;
-};
-
-const handleDocumentClick = (e: MouseEvent | TouchEvent) => {
-  if (!isOpen.value) return;
-  const target = e.target as Node;
-  if (tentRef.value && !tentRef.value.contains(target)) {
-    isOpen.value = false;
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('click', handleDocumentClick);
-  document.addEventListener('touchstart', handleDocumentClick, { passive: true });
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('click', handleDocumentClick);
-  document.removeEventListener('touchstart', handleDocumentClick);
+  const len = String(props.label).length;
+  return len >= 4 ? '5px' : len >= 3 ? '5.8px' : '7.5px';
 });
 </script>
 
 <template>
   <div
-    ref="tentRef"
     class="tent-wrapper"
     :class="{
-      'is-active': isOpen,
-      'is-clickable': interactive && hasEvents,
+      'is-active': isActive,
+      'is-clickable': interactive,
     }"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-    @click.stop="toggleOpen"
+    @mouseenter="emit('hover-enter')"
+    @mouseleave="emit('hover-leave')"
+    @click.stop="interactive && emit('select')"
   >
-    <!-- テント本体 SVG -->
     <svg
       viewBox="0 0 20.786667 15.096"
       xmlns="http://www.w3.org/2000/svg"
@@ -126,8 +46,8 @@ onBeforeUnmount(() => {
       role="button"
       :aria-label="props.label"
       tabindex="0"
-      @keydown.enter="toggleOpen"
-      @keydown.space.prevent="toggleOpen"
+      @keydown.enter="interactive && emit('select')"
+      @keydown.space.prevent="interactive && emit('select')"
     >
       <rect
         x="0.8"
@@ -149,26 +69,6 @@ onBeforeUnmount(() => {
         {{ props.label }}
       </text>
     </svg>
-
-    <!-- ポップオーバー: EventCard のみを表示 -->
-    <Transition name="fade-scale">
-      <div
-        v-if="isOpen && hasEvents"
-        class="tent-card-popover"
-        :class="placementClass"
-        @click.stop
-      >
-        <div class="popover-cards-wrap">
-          <div
-            v-for="ev in targetEvents"
-            :key="ev.id"
-            class="popover-card-item"
-          >
-            <EventCard :event="ev" />
-          </div>
-        </div>
-      </div>
-    </Transition>
   </div>
 </template>
 
@@ -178,13 +78,14 @@ onBeforeUnmount(() => {
   display: inline-block;
   user-select: none;
   touch-action: manipulation;
+  width: 100%;
+  height: 100%;
 }
 
 .tent-wrapper.is-clickable {
   cursor: pointer;
 }
 
-/* タップしやすくするための見えないタッチターゲット拡大エリア */
 .tent-wrapper::after {
   content: '';
   position: absolute;
@@ -207,7 +108,6 @@ onBeforeUnmount(() => {
   transition: fill 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease;
 }
 
-
 .tent-wrapper:hover .tent-svg,
 .tent-wrapper.is-active .tent-svg {
   transform: scale(1.18);
@@ -226,108 +126,5 @@ onBeforeUnmount(() => {
   font-family: inherit;
   font-weight: 900;
   pointer-events: none;
-}
-
-/* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示 */
-.tent-card-popover {
-  position: absolute;
-  z-index: 200;
-  width: min(300px, 80vw);
-  background: transparent;
-  border: none;
-  padding: 0;
-  box-shadow: none;
-  pointer-events: auto;
-}
-
-/* PC配置 */
-@media (min-width: 641px) {
-  .tent-card-popover.placement-top {
-    bottom: calc(100% + 6px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .tent-card-popover.placement-bottom {
-    top: calc(100% + 6px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .tent-card-popover.placement-left {
-    right: calc(100% + 6px);
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .tent-card-popover.placement-right {
-    left: calc(100% + 6px);
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
-/* スマホ閲覧時: 画面端での見切れを防止するため画面下部にフローティング表示 */
-@media (max-width: 640px) {
-  .tent-card-popover {
-    position: fixed;
-    bottom: 24px;
-    left: 16px;
-    right: 16px;
-    top: auto;
-    width: auto;
-    max-width: 360px;
-    margin: 0 auto;
-    z-index: 1000;
-    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
-  }
-}
-
-.popover-cards-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 380px;
-  overflow-y: auto;
-}
-
-/* トランジション */
-.fade-scale-enter-active,
-.fade-scale-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.fade-scale-enter-from,
-.fade-scale-leave-to {
-  opacity: 0;
-}
-
-@media (min-width: 641px) {
-  .placement-top.fade-scale-enter-from,
-  .placement-top.fade-scale-leave-to {
-    transform: translateX(-50%) scale(0.94);
-  }
-
-  .placement-bottom.fade-scale-enter-from,
-  .placement-bottom.fade-scale-leave-to {
-    transform: translateX(-50%) scale(0.94);
-  }
-
-  .placement-left.fade-scale-enter-from,
-  .placement-left.fade-scale-leave-to {
-    transform: translateY(-50%) scale(0.94);
-  }
-
-  .placement-right.fade-scale-enter-from,
-  .placement-right.fade-scale-leave-to {
-    transform: translateY(-50%) scale(0.94);
-  }
-}
-
-@media (max-width: 640px) {
-  .fade-scale-enter-from,
-  .fade-scale-leave-to {
-    transform: translateY(12px) scale(0.96);
-  }
 }
 </style>

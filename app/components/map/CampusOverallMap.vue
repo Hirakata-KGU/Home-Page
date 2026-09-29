@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
+import { onClickOutside, useMediaQuery } from '@vueuse/core';
 import MapBase from '~/components/svg/map/map-base.vue';
 import No3Svg from '~/components/svg/map/no3.vue';
 import No6Svg from '~/components/svg/map/no6.vue';
@@ -9,6 +10,7 @@ import SccSvg from '~/components/svg/map/scc.vue';
 import ChickSvg from '~/components/svg/map/chick.vue';
 import TentItem from '~/components/svg/map/tent.vue';
 import { getEventsByTentNo } from '~/data/map-buildings';
+import EventCard from '~/components/ui/EventCard.vue';
 
 const emit = defineEmits<{
   (e: 'select-building', buildingId: 'no3' | 'no6' | 'no7' | 'no8' | 'scc'): void;
@@ -72,6 +74,41 @@ const tentList = [
 ];
 
 const hoveredBuilding = ref<string | null>(null);
+
+// 選択中またはホバー中のテントポップオーバー管理（24個の個別保持を1つに集約）
+type TentItemType = typeof tentList[number];
+const activeTent = ref<TentItemType | null>(null);
+const activeTentPopoverRef = ref<HTMLElement | null>(null);
+
+const activeTentEvents = computed(() => {
+  if (!activeTent.value) return [];
+  return getEventsByTentNo(activeTent.value.label);
+});
+
+const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
+
+const toggleTent = (tent: TentItemType) => {
+  const events = getEventsByTentNo(tent.label);
+  if (events.length === 0) return;
+  activeTent.value = activeTent.value?.id === tent.id ? null : tent;
+};
+
+const handleTentMouseEnter = (tent: TentItemType) => {
+  if (canHover.value) {
+    const events = getEventsByTentNo(tent.label);
+    if (events.length > 0) activeTent.value = tent;
+  }
+};
+
+const handleTentMouseLeave = (tent: TentItemType) => {
+  if (canHover.value && activeTent.value?.id === tent.id) {
+    activeTent.value = null;
+  }
+};
+
+onClickOutside(activeTentPopoverRef, () => {
+  activeTent.value = null;
+});
 
 // スマホで開いた際に中央のメインストリートが見えるよう初期スクロール
 onMounted(() => {
@@ -263,23 +300,56 @@ onMounted(() => {
                 <TentItem
                   :label="t.label"
                   :stroke-color="t.strokeColor"
-                  :events="getEventsByTentNo(t.label)"
-                  :placement="t.placement"
+                  :is-active="activeTent?.id === t.id"
                   class="w-full h-full"
+                  @select="toggleTent(t)"
+                  @hover-enter="handleTentMouseEnter(t)"
+                  @hover-leave="handleTentMouseLeave(t)"
                 />
               </div>
             </div>
 
             <div class="map-tents-layer">
               <TentItem 
-              label="本部"
-              stroke-color="#000000"
-              :interactive="false"
-              :showCardOnHover="false"
-              :style="{ left: '53%', top: '80%', width: '8%', height: '5%' }"
-              class="tent-pos-wrapper">
+                label="本部"
+                stroke-color="#000000"
+                :interactive="false"
+                :style="{ left: '53%', top: '80%', width: '8%', height: '5%' }"
+                class="tent-pos-wrapper"
+              />
+            </div>
 
-              </TentItem>
+            <!-- 単一のポップオーバーレイヤー（デザイン・位置・アニメーションは完全同一） -->
+            <div
+              v-if="activeTent && activeTentEvents.length > 0"
+              ref="activeTentPopoverRef"
+              class="tent-pos-wrapper"
+              :style="{
+                left: `${activeTent.left}%`,
+                top: `${activeTent.top}%`,
+                width: `${activeTent.width}%`,
+                height: `${activeTent.height}%`,
+                pointerEvents: 'none'
+              }"
+            >
+              <Transition name="fade-scale" appear>
+                <div
+                  class="tent-card-popover"
+                  :class="`placement-${activeTent.placement}`"
+                  style="pointer-events: auto;"
+                  @click.stop
+                >
+                  <div class="popover-cards-wrap">
+                    <div
+                      v-for="ev in activeTentEvents"
+                      :key="ev.id"
+                      class="popover-card-item"
+                    >
+                      <EventCard :event="ev" />
+                    </div>
+                  </div>
+                </div>
+              </Transition>
             </div>
           </div>
         </div>
@@ -677,6 +747,103 @@ onMounted(() => {
     gap: 8px;
     padding: 8px 12px;
     border-radius: 12px;
+  }
+}
+
+/* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示（以前と完全同一デザイン） */
+.tent-card-popover {
+  position: absolute;
+  z-index: 200;
+  width: min(300px, 80vw);
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  pointer-events: auto;
+}
+
+/* PC配置 */
+@media (min-width: 641px) {
+  .tent-card-popover.placement-top {
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tent-card-popover.placement-bottom {
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tent-card-popover.placement-left {
+    right: calc(100% + 6px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .tent-card-popover.placement-right {
+    left: calc(100% + 6px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* スマホ閲覧時: 画面端での見切れを防止するため画面下部にフローティング表示 */
+@media (max-width: 640px) {
+  .tent-card-popover {
+    position: fixed;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    width: auto;
+    max-width: 360px;
+    margin: 0 auto;
+    z-index: 1000;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+  }
+}
+
+.popover-cards-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+/* トランジション */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+}
+
+@media (min-width: 641px) {
+  .placement-top.fade-scale-enter-from,
+  .placement-top.fade-scale-leave-to,
+  .placement-bottom.fade-scale-enter-from,
+  .placement-bottom.fade-scale-leave-to {
+    transform: translateX(-50%) scale(0.94);
+  }
+
+  .placement-left.fade-scale-enter-from,
+  .placement-left.fade-scale-leave-to,
+  .placement-right.fade-scale-enter-from,
+  .placement-right.fade-scale-leave-to {
+    transform: translateY(-50%) scale(0.94);
+  }
+}
+
+@media (max-width: 640px) {
+  .fade-scale-enter-from,
+  .fade-scale-leave-to {
+    transform: translateY(12px) scale(0.96);
   }
 }
 </style>
