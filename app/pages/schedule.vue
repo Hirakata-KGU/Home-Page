@@ -27,7 +27,7 @@ const venueLanes = [
 const activeSlotId = ref<string | null>(null);
 
 // マウス操作可能か（ホバー対応端末かどうか）
-const isHoverDevice = ref(false);
+const isHoverDevice = useMediaQuery('(hover: hover) and (pointer: fine)');
 
 // タイムグリッドの基本設定（1時間ごと）
 const START_HOUR = 10; // 10:00
@@ -163,8 +163,6 @@ const applyRouteParams = async () => {
 
 onMounted(() => {
   if (import.meta.client) {
-    isHoverDevice.value = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    window.addEventListener('click', closeActiveSlot);
     applyRouteParams();
   }
 });
@@ -176,11 +174,7 @@ watch(
   }
 );
 
-onUnmounted(() => {
-  if (import.meta.client) {
-    window.removeEventListener('click', closeActiveSlot);
-  }
-});
+useEventListener('click', closeActiveSlot);
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperClass } from 'swiper';
@@ -88,42 +88,21 @@ const goToSlide = (index: number) => {
 // Google Maps 遅延ロード（初期化時の約400KiBのJS読み込みとリフローを完全防止）
 const mapContainerRef = ref<HTMLElement | null>(null);
 const isMapLoaded = ref(false);
-let mapObserver: IntersectionObserver | null = null;
 
 const loadMap = () => {
   isMapLoaded.value = true;
-  if (mapObserver) {
-    mapObserver.disconnect();
-    mapObserver = null;
-  }
 };
 
-onMounted(() => {
-  if (import.meta.client) {
-    // Google Maps: アクセスセクション付近（300px手前）までスクロールした際に初めてiframeをロード
-    if ('IntersectionObserver' in window && mapContainerRef.value) {
-      mapObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting) {
-            loadMap();
-          }
-        },
-        { rootMargin: '300px' }
-      );
-      mapObserver.observe(mapContainerRef.value);
-    } else {
-      // IntersectionObserver非対応環境フォールバック
-      isMapLoaded.value = true;
+const { stop: stopMapObserver } = useIntersectionObserver(
+  mapContainerRef,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      loadMap();
+      stopMapObserver();
     }
-  }
-});
-
-onBeforeUnmount(() => {
-  if (mapObserver) {
-    mapObserver.disconnect();
-    mapObserver = null;
-  }
-});
+  },
+  { rootMargin: '300px' }
+);
 
 // 2. ご案内カードデータ（電子パンフレット・平潟祭について・よくある質問）
 interface GuideCardItem {
