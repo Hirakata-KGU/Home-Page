@@ -99,9 +99,9 @@ defineProps<Props>();
 }
 
 .header-icon {
-  font-size: 36px;
-  width: 68px;
-  height: 68px;
+  font-size: clamp(26px, 3.5vw, 36px);
+  width: clamp(52px, 6.5vw, 68px);
+  height: clamp(52px, 6.5vw, 68px);
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -113,7 +113,7 @@ defineProps<Props>();
 }
 
 h1 {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 3.2vw + 0.5rem, 2rem);
   font-weight: 900;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -130,16 +130,6 @@ h1 {
 @media (max-width: 768px) {
   .page-header {
     padding: 32px 0 48px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-
-  .header-icon {
-    width: 52px;
-    height: 52px;
-    font-size: 26px;
   }
 }
 </style>

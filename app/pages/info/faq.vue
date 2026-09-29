@@ -77,12 +77,12 @@ const faqCategories = [
         <section
           v-for="(cat, cIdx) in faqCategories"
           :key="cIdx"
-          class="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-sprout-border/20"
+          class="bg-white rounded-2xl p-[clamp(1.5rem,3vw,2.5rem)] shadow-sm border border-sprout-border/20"
         >
           <!-- Category Header -->
           <div class="flex items-center gap-3 pb-4 mb-6 border-b-2 border-sprout-bg">
             <!-- アイコンSVG提供後に配置予定 -->
-            <h2 class="text-xl sm:text-2xl font-extrabold text-sprout-title m-0">
+            <h2 class="text-fluid-h3 font-extrabold text-sprout-title m-0">
               {{ cat.category }}
             </h2>
           </div>
@@ -92,13 +92,13 @@ const faqCategories = [
             <div
               v-for="(item, iIdx) in cat.items"
               :key="iIdx"
-              class="bg-sprout-bg/60 rounded-xl p-5 sm:p-6 border-l-4 border-sprout-border bg-sprout-bg shadow-md"
+              class="bg-sprout-bg/60 rounded-xl p-[clamp(1.25rem,2vw,1.5rem)] border-l-4 border-sprout-border bg-sprout-bg shadow-md"
             >
-              <h3 class="text-base sm:text-lg font-bold text-sprout-title mb-2.5 flex items-start gap-2.5">
+              <h3 class="text-[clamp(1rem,1.5vw,1.125rem)] font-bold text-sprout-title mb-2.5 flex items-start gap-2.5">
                 <span class="text-sprout-border font-black shrink-0">Q.</span>
                 <span>{{ item.q }}</span>
               </h3>
-              <div class="text-sm sm:text-base text-text-muted leading-relaxed pl-6 flex items-start gap-2.5">
+              <div class="text-[clamp(0.875rem,1vw,1rem)] text-text-muted leading-relaxed pl-6 flex items-start gap-2.5">
                 <span class="text-amber-600 font-black shrink-0 -ml-6">A.</span>
                 <p class="m-0">{{ item.a }}</p>
               </div>

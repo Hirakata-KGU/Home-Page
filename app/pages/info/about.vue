@@ -196,9 +196,9 @@ const memories2025 = [
 .greeting-text {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  font-size: 16px;
-  line-height: 2.1;
+  gap: clamp(16px, 2vw, 20px);
+  font-size: clamp(15px, 1.1vw, 16px);
+  line-height: clamp(1.9, 2.1vw, 2.1);
   color: var(--text);
   max-width: 860px;
 }
@@ -226,14 +226,14 @@ const memories2025 = [
 
 .outline-table th,
 .outline-table td {
-  padding: 16px 20px;
+  padding: clamp(12px, 1.5vw, 16px) clamp(14px, 2vw, 20px);
   border-bottom: 1px solid var(--border);
-  font-size: 14px;
+  font-size: clamp(13px, 1.1vw, 14px);
   text-align: left;
 }
 
 .outline-table th {
-  width: 25%;
+  width: clamp(25%, 30vw, 32%);
   background: var(--sprout-bg);
   color: var(--sprout-title);
   font-weight: 800;
@@ -243,25 +243,5 @@ const memories2025 = [
 .outline-table td {
   color: var(--text);
   line-height: 1.7;
-}
-
-
-
-@media (max-width: 680px) {
-  .greeting-text {
-    font-size: 15px;
-    line-height: 1.9;
-    gap: 16px;
-  }
-
-  .outline-table th,
-  .outline-table td {
-    padding: 12px 14px;
-    font-size: 13px;
-  }
-
-  .outline-table th {
-    width: 32%;
-  }
 }
 </style>

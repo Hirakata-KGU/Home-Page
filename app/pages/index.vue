@@ -279,10 +279,10 @@ const visitorGuidelines = [
         <div class="text-center flex flex-col items-center gap-2.5 max-w-[800px] px-6 min-h-[110px]">
           <Transition name="event-desc-fade" mode="out-in">
             <div :key="currentFeaturedEvent.id" class="flex flex-col items-center gap-2.5">
-              <h3 class="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-wide m-0">
+              <h3 class="font-sans font-extrabold text-fluid-h2 text-white tracking-wide m-0">
                 {{ currentFeaturedEvent.title }}
               </h3>
-              <p class="font-sans font-medium text-sm sm:text-base lg:text-lg leading-relaxed text-white/95 max-w-[650px] m-0">
+              <p class="font-sans font-medium text-fluid-lead leading-relaxed text-white/95 max-w-[650px] m-0">
                 {{ currentFeaturedEvent.desc }}
               </p>
             </div>
@@ -293,7 +293,7 @@ const visitorGuidelines = [
         <div class="flex flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 mt-6 w-full max-w-[800px] px-6">
           <NuxtLink
             to="/map"
-            class="flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
+            class="flex-1 min-w-[clamp(130px,18vw,180px)] max-w-[210px] h-[clamp(46px,5vw,50px)] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-[clamp(0.875rem,1.1vw,1rem)] rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-sprout-border shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
@@ -305,7 +305,7 @@ const visitorGuidelines = [
 
           <NuxtLink
             to="/schedule"
-            class="flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
+            class="flex-1 min-w-[clamp(130px,18vw,180px)] max-w-[210px] h-[clamp(46px,5vw,50px)] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-[clamp(0.875rem,1.1vw,1rem)] rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-sprout-border shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
@@ -316,7 +316,7 @@ const visitorGuidelines = [
 
           <NuxtLink
             to="/events"
-            class="btn-gold flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] flex items-center justify-center gap-2 no-underline transition-all duration-200 hover:-translate-y-0.5"
+            class="btn-gold flex-1 min-w-[clamp(130px,18vw,180px)] max-w-[210px] h-[clamp(46px,5vw,50px)] font-sans font-bold text-[clamp(0.875rem,1.1vw,1rem)] rounded-full shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] flex items-center justify-center gap-2 no-underline transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <rect x="3" y="3" width="7" height="7"></rect>
@@ -470,13 +470,13 @@ const visitorGuidelines = [
           <!-- Title -->
           <UiSectionTitle title="アクセス" />
 
-          <div class="w-full max-w-[1121px] bg-white rounded-2xl p-6 sm:p-10 shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
+          <div class="w-full max-w-[1121px] bg-white rounded-2xl p-[clamp(1.5rem,3.5vw,2.5rem)] shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
               <!-- Access Info Column -->
               <div class="flex flex-col gap-6">
                 <div>
                   <span class="inline-block bg-sprout-bg text-sprout-title text-xs font-bold px-3 py-1 rounded-full border border-sprout-border mb-2">会場</span>
-                  <h3 class="text-xl sm:text-2xl font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
+                  <h3 class="text-fluid-h3 font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
                   <p class="text-text-muted text-sm">〒236-8501 神奈川県横浜市金沢区六浦東1-50-1</p>
                 </div>
 
@@ -516,12 +516,12 @@ const visitorGuidelines = [
               <!-- Map Column -->
               <div
                 ref="mapContainerRef"
-                class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex relative bg-gray-50"
+                class="w-full h-full min-h-[clamp(340px,38vw,420px)] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex relative bg-gray-50"
               >
                 <!-- 遅延マウントされる Google Maps iframe -->
                 <iframe
                   v-if="isMapLoaded"
-                  class="w-full h-full min-h-[340px] sm:min-h-[420px] border-0"
+                  class="w-full h-full min-h-[clamp(340px,38vw,420px)] border-0"
                   src="https://www.google.com/maps?q=35.323287,139.623311&z=15&output=embed"
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -530,7 +530,7 @@ const visitorGuidelines = [
                 <!-- 未ロード時のプレースホルダー（軽量スケルトン表示） -->
                 <div
                   v-else
-                  class="w-full h-full min-h-[340px] sm:min-h-[420px] flex flex-col items-center justify-center p-6 text-center bg-sprout-bg/30 cursor-pointer group"
+                  class="w-full h-full min-h-[clamp(340px,38vw,420px)] flex flex-col items-center justify-center p-6 text-center bg-sprout-bg/30 cursor-pointer group"
                   @click="loadMap"
                 >
                   <div class="w-12 h-12 rounded-full bg-sprout-forest/10 flex items-center justify-center text-sprout-forest mb-3 group-hover:scale-110 transition-transform">

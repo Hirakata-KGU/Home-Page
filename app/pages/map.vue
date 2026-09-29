@@ -100,11 +100,11 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
       <Transition name="fade-fast" mode="out-in">
         <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section">
           <!-- その下の文字 -->
-          <div class="section-heading-box pb-4 sm:pb-6">
-            <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
+          <div class="section-heading-box pb-[clamp(1rem,2vw,1.5rem)]">
+            <h2 class="text-fluid-h2 font-black text-[#2f5b34]">
               {{ currentTabInfo?.title }}
             </h2>
-            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium">
+            <p class="text-fluid-caption text-[#6b7280] mt-1 font-medium">
               キャンパス ＆ 模擬店エリア
             </p>
           </div>
@@ -116,11 +116,11 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
         <!-- 3. 建物別タブ（3号館、6号館、7号館、8号館、SCC） -->
         <section v-else-if="currentBuilding" :key="`tab-${currentBuilding.id}`" class="building-detail-section">
           <!-- 建物案内見出し（ボタン表記と統一） -->
-          <div class="section-heading-box pb-4 sm:pb-6">
-            <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
+          <div class="section-heading-box pb-[clamp(1rem,2vw,1.5rem)]">
+            <h2 class="text-fluid-h2 font-black text-[#2f5b34]">
               {{ currentTabInfo?.title }}
             </h2>
-            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium mx-auto">
+            <p class="text-fluid-caption text-[#6b7280] mt-1 font-medium mx-auto">
               {{ currentBuilding.description }}
             </p>
           </div>
@@ -136,7 +136,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
               <div class="floor-heading-row">
                 <div class="floor-badge-tag">{{ fl.floor }}</div>
                 <div>
-                  <h3 class="text-base sm:text-lg font-extrabold text-[#2f5b34]">
+                  <h3 class="text-[clamp(1rem,1.5vw,1.125rem)] font-extrabold text-[#2f5b34]">
                     {{ fl.floorLabel }}
                   </h3>
                 </div>
@@ -151,7 +151,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
                 />
               </div>
               <div v-else class="empty-floor-box mt-4">
-                <p class="text-xs sm:text-sm text-[#9ca3af]">このフロアの一般公開企画はありません。</p>
+                <p class="text-fluid-caption text-[#9ca3af]">このフロアの一般公開企画はありません。</p>
               </div>
             </div>
           </div>

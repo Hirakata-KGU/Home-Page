@@ -52,10 +52,10 @@ const pamphletHighlights = [
             <div class="inline-flex items-center gap-2 bg-sprout-bg text-sprout-forest text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-border mb-3">
               <span>PDF形式 / スマートフォン対応</span>
             </div>
-            <h2 class="text-2xl lg:text-3xl font-extrabold text-sprout-title mb-4">
+            <h2 class="text-fluid-h2 font-extrabold text-sprout-title mb-4">
               平潟祭公式パンフレットを<br class="hidden sm:inline">スマホで持ち歩こう
             </h2>
-            <p class="text-text-muted text-sm sm:text-base leading-relaxed mb-6">
+            <p class="text-text-muted text-fluid-lead leading-relaxed mb-6">
               当日のキャンパスマップ、企画タイムスケジュール、模擬店一覧、参加団体紹介などが1冊にまとまった公式ガイドブックです。
               ペーパーレスでいつでも快適にご覧いただけます。
             </p>
