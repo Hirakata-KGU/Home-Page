@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay } from 'swiper/modules';
+import type { Swiper as SwiperClass } from 'swiper';
+import 'swiper/css';
 import ChickSvg from '~/components/svg/map/chick.vue';
 
 useSeoMeta({
@@ -52,233 +56,33 @@ const featuredEvents: FeaturedEventItem[] = [
   },
 ];
 
-// カルーセル状態管理
+// カルーセル状態管理（Swiper）
 const activeIndex = ref(0);
-const scrollContainer = ref<HTMLElement | null>(null);
-const cardRefs = ref<HTMLElement[]>([]);
-const isDragging = ref(false);
+let swiperInstance: SwiperClass | null = null;
 
 const currentFeaturedEvent = computed(() => {
   return featuredEvents[activeIndex.value] || featuredEvents[0];
 });
 
-// ポインタースクロール / ドラッグ制御
-let isPointerDown = false;
-let hasDragged = false;
-let startX = 0;
-let scrollStart = 0;
-let lastX = 0;
-let lastTime = 0;
-let velocity = 0;
-let targetIndex: number | null = null;
-let scrollRaf: number | null = null;
-let scrollTimer: ReturnType<typeof setTimeout> | null = null;
-
-// 自動切り替えタイマー（6秒ごと）
-const AUTO_PLAY_INTERVAL = 6000;
-let autoPlayTimer: ReturnType<typeof setTimeout> | null = null;
-
-const stopAutoPlay = () => {
-  if (autoPlayTimer) {
-    clearTimeout(autoPlayTimer);
-    autoPlayTimer = null;
-  }
+const onSwiper = (swiper: SwiperClass) => {
+  swiperInstance = swiper;
 };
 
-const startAutoPlay = () => {
-  stopAutoPlay();
-  if (!import.meta.client) return;
-  autoPlayTimer = setTimeout(() => {
-    const nextIndex = (activeIndex.value + 1) % featuredEvents.length;
-    scrollToItem(nextIndex);
-    startAutoPlay();
-  }, AUTO_PLAY_INTERVAL);
-};
-
-const handleVisibilityChange = () => {
-  if (document.hidden) {
-    stopAutoPlay();
-  } else {
-    startAutoPlay();
-  }
-};
-
-const onPointerDown = (e: PointerEvent) => {
-  if (e.button !== 0 && e.pointerType === 'mouse') return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
-    updateCardMetrics();
-  }
-
-  stopAutoPlay();
-  isPointerDown = true;
-  hasDragged = false;
-  startX = e.clientX;
-  lastX = e.clientX;
-  lastTime = performance.now();
-  scrollStart = container.scrollLeft;
-  velocity = 0;
-  targetIndex = null;
-};
-
-const onPointerMove = (e: PointerEvent) => {
-  if (!isPointerDown) return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  const dx = e.clientX - startX;
-  if (!hasDragged && Math.abs(dx) > 5) {
-    hasDragged = true;
-    isDragging.value = true;
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch {}
-    container.style.scrollSnapType = 'none';
-    container.style.scrollBehavior = 'auto';
-  }
-
-  if (hasDragged) {
-    container.scrollLeft = scrollStart - dx;
-    const now = performance.now();
-    const dt = now - lastTime;
-    if (dt > 0) {
-      velocity = (e.clientX - lastX) / dt;
-    }
-    lastX = e.clientX;
-    lastTime = now;
-  }
-};
-
-const onPointerUp = (e: PointerEvent) => {
-  if (!isPointerDown) return;
-  isPointerDown = false;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  if (hasDragged) {
-    try {
-      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-    } catch {}
-
-    container.style.scrollSnapType = 'x mandatory';
-    container.style.scrollBehavior = 'smooth';
-
-    if (velocity < -0.25 && activeIndex.value < featuredEvents.length - 1) {
-      scrollToItem(activeIndex.value + 1);
-    } else if (velocity > 0.25 && activeIndex.value > 0) {
-      scrollToItem(activeIndex.value - 1);
-    } else {
-      updateActiveIndex();
-      scrollToItem(activeIndex.value);
-    }
-    setTimeout(() => {
-      hasDragged = false;
-      isDragging.value = false;
-    }, 60);
-  } else {
-    isDragging.value = false;
-  }
-  startAutoPlay();
-};
-
-// カード位置キャッシュ（スクロールごとのoffsetLeft再計算によるリフロー/カクつきを完全防止）
-let cardMetrics: { center: number; width: number }[] = [];
-
-const updateCardMetrics = () => {
-  cardMetrics = cardRefs.value.map((el) => {
-    if (!el) return { center: 0, width: 300 };
-    return {
-      center: el.offsetLeft + el.offsetWidth / 2,
-      width: el.offsetWidth,
-    };
-  });
-};
-
-// スクロール時に最も中央に近いカードを判定（チラつき防止＆レイアウト再計算なしで高速化）
-const updateActiveIndex = () => {
-  const container = scrollContainer.value;
-  if (!container) return;
-  const center = container.scrollLeft + container.clientWidth / 2;
-
-  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
-    updateCardMetrics();
-  }
-
-  // 目標カードへ移動中は、目標が中央近く（カード幅の45%以内）に来るまで切り替えない（チラつき防止）
-  if (targetIndex !== null && cardMetrics[targetIndex]) {
-    const { center: targetCenter, width: targetWidth } = cardMetrics[targetIndex];
-    if (Math.abs(center - targetCenter) < targetWidth * 0.45) {
-      activeIndex.value = targetIndex;
-      targetIndex = null;
-    }
-    return;
-  }
-
-  let minDiff = Infinity;
-  let closest = activeIndex.value;
-  for (let i = 0; i < cardMetrics.length; i++) {
-    const metric = cardMetrics[i];
-    if (!metric) continue;
-    const diff = Math.abs(center - metric.center);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = i;
-    }
-  }
-  activeIndex.value = closest;
-};
-
-const onScroll = () => {
-  if (scrollRaf !== null) return;
-  scrollRaf = requestAnimationFrame(() => {
-    updateActiveIndex();
-    scrollRaf = null;
-  });
-};
-
-// 指定したカードを中央へスムーズスクロール
-const scrollToItem = (index: number) => {
-  if (index < 0 || index >= featuredEvents.length) return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  targetIndex = index;
-  if (scrollTimer) {
-    clearTimeout(scrollTimer);
-  }
-
-  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
-    updateCardMetrics();
-  }
-
-  const metric = cardMetrics[index];
-  const targetCenter = metric ? metric.center : (cardRefs.value[index]?.offsetLeft ?? 0) + (cardRefs.value[index]?.offsetWidth ?? 0) / 2;
-  const targetLeft = targetCenter - container.clientWidth / 2;
-  container.scrollTo({
-    left: targetLeft,
-    behavior: 'smooth',
-  });
-
-  // スクロール完了時（または到着時）に確実にアクティブを同期
-  scrollTimer = setTimeout(() => {
-    targetIndex = null;
-    activeIndex.value = index;
-    scrollTimer = null;
-  }, 350);
+const onSlideChange = (swiper: SwiperClass) => {
+  activeIndex.value = swiper.realIndex;
 };
 
 // カードクリック時の処理
 const handleCardClick = (index: number, to: string) => {
-  if (hasDragged) return;
-
-  startAutoPlay();
   if (activeIndex.value !== index) {
-    scrollToItem(index);
+    swiperInstance?.slideTo(index);
   } else {
     navigateTo(to);
   }
+};
+
+const goToSlide = (index: number) => {
+  swiperInstance?.slideTo(index);
 };
 
 // Google Maps 遅延ロード（初期化時の約400KiBのJS読み込みとリフローを完全防止）
@@ -296,23 +100,7 @@ const loadMap = () => {
 
 onMounted(() => {
   if (import.meta.client) {
-    // 1. カルーセル: 初期マウント時の同期的ジオメトリ計測を避け、描画完了後のアイドル時に安全にキャッシュ＆自動再生開始
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => {
-        updateCardMetrics();
-        startAutoPlay();
-      }, { timeout: 1200 });
-    } else {
-      setTimeout(() => {
-        updateCardMetrics();
-        startAutoPlay();
-      }, 300);
-    }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('resize', updateCardMetrics, { passive: true });
-
-    // 2. Google Maps: アクセスセクション付近（300px手前）までスクロールした際に初めてiframeをロード
+    // Google Maps: アクセスセクション付近（300px手前）までスクロールした際に初めてiframeをロード
     if ('IntersectionObserver' in window && mapContainerRef.value) {
       mapObserver = new IntersectionObserver(
         (entries) => {
@@ -331,20 +119,9 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  stopAutoPlay();
-  if (scrollRaf !== null) {
-    cancelAnimationFrame(scrollRaf);
-  }
-  if (scrollTimer) {
-    clearTimeout(scrollTimer);
-  }
   if (mapObserver) {
     mapObserver.disconnect();
     mapObserver = null;
-  }
-  if (import.meta.client) {
-    document.removeEventListener('visibilitychange', handleVisibilityChange);
-    window.removeEventListener('resize', updateCardMetrics);
   }
 });
 
@@ -412,90 +189,98 @@ const visitorGuidelines = [
 
         <!-- 4 Cards Horizontal Swipeable Carousel (3:4 Vertical Photos with Blurred Backdrop) -->
         <div class="relative w-full mt-4 mb-6">
-          <!-- Scroll / Swipe Container (マウス長押しドラッグ・タッチスワイプ対応) -->
-          <div
-            ref="scrollContainer"
-            class="events-scroll-container flex flex-row items-center gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory py-4 no-scrollbar select-none"
-            :class="isDragging ? 'cursor-grabbing' : 'cursor-grab'"
-            @scroll.passive="onScroll"
-            @pointerdown="onPointerDown"
-            @pointermove="onPointerMove"
-            @pointerup="onPointerUp"
-            @pointercancel="onPointerUp"
-            @mouseenter="stopAutoPlay"
-            @mouseleave="startAutoPlay"
-            @dragstart.prevent
+          <Swiper
+            :modules="[Autoplay]"
+            :slides-per-view="'auto'"
+            :centered-slides="true"
+            :space-between="16"
+            :breakpoints="{
+              640: {
+                spaceBetween: 24,
+              },
+            }"
+            :autoplay="{
+              delay: 6000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }"
+            :grab-cursor="true"
+            class="events-swiper w-full py-4 select-none"
+            @swiper="onSwiper"
+            @slide-change="onSlideChange"
           >
-            <div
+            <SwiperSlide
               v-for="(item, idx) in featuredEvents"
               :key="item.id"
-              :ref="(el) => { if (el) cardRefs[idx] = el as HTMLElement; }"
-              role="button"
-              tabindex="0"
-              :aria-label="item.title"
-              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
-              :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
-              @click="handleCardClick(idx, item.to)"
-              @keydown.enter="handleCardClick(idx, item.to)"
-              @dragstart.prevent
+              class="!w-auto flex items-center justify-center"
             >
               <div
-                class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
-                :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
+                role="button"
+                tabindex="0"
+                :aria-label="item.title"
+                class="cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+                :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
+                @click="handleCardClick(idx, item.to)"
+                @keydown.enter="handleCardClick(idx, item.to)"
               >
-                <!-- ぼかした背景写真（軽量サムネイルをぼかしてFirefox等の描画負荷を大幅軽減） -->
-                <NuxtImg
-                  :src="item.image"
-                  aria-hidden="true"
-                  loading="lazy"
-                  draggable="false"
-                  width="30"
-                  height="40"
-                  format="webp"
-                  quality="10"
-                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none"
-                />
-
-                <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
-                <NuxtImg
-                  :src="item.image"
-                  :alt="item.title"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                  sizes="xs:260px sm:280px md:300px"
-                  format="webp"
-                  quality="80"
-                  class="relative z-10 w-full h-full object-contain transition-transform duration-300 pointer-events-none select-none"
-                  :class="{ 'hover:scale-105': activeIndex === idx }"
-                />
-
-                <!-- バッジ（左上） -->
-                <div class="absolute top-3 left-3 z-30">
-                  <span class="inline-block bg-sprout-dark/95 text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
-                    {{ item.badge }}
-                  </span>
-                </div>
-
-                <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示） -->
                 <div
-                  v-if="activeIndex === idx"
-                  class="absolute bottom-3 right-3 z-30"
+                  class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
+                  :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
                 >
-                  <span class="inline-flex items-center gap-1 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
-                    <span>詳細を見る</span>
-                    <span>→</span>
-                  </span>
-                </div>
+                  <!-- ぼかした背景写真（軽量サムネイルをぼかしてFirefox等の描画負荷を大幅軽減） -->
+                  <NuxtImg
+                    :src="item.image"
+                    aria-hidden="true"
+                    loading="lazy"
+                    draggable="false"
+                    width="30"
+                    height="40"
+                    format="webp"
+                    quality="10"
+                    class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none"
+                  />
 
-                <!-- 真ん中以外のものは薄く白くするオーバーレイ（backdrop-filterを使わず軽量化） -->
-                <div
-                  class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
-                  :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
-                />
+                  <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
+                  <NuxtImg
+                    :src="item.image"
+                    :alt="item.title"
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                    sizes="xs:260px sm:280px md:300px"
+                    format="webp"
+                    quality="80"
+                    class="relative z-10 w-full h-full object-contain transition-transform duration-300 pointer-events-none select-none"
+                    :class="{ 'hover:scale-105': activeIndex === idx }"
+                  />
+
+                  <!-- バッジ（左上） -->
+                  <div class="absolute top-3 left-3 z-30">
+                    <span class="inline-block bg-sprout-dark/95 text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
+                      {{ item.badge }}
+                    </span>
+                  </div>
+
+                  <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示） -->
+                  <div
+                    v-if="activeIndex === idx"
+                    class="absolute bottom-3 right-3 z-30"
+                  >
+                    <span class="inline-flex items-center gap-1 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
+                      <span>詳細を見る</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+
+                  <!-- 真ん中以外のものは薄く白くするオーバーレイ（backdrop-filterを使わず軽量化） -->
+                  <div
+                    class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
+                    :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
+                  />
+                </div>
               </div>
-            </div>
-          </div>
+            </SwiperSlide>
+          </Swiper>
 
           <!-- Indicator Dots -->
           <div class="flex items-center justify-center gap-2 mt-4">
@@ -506,7 +291,7 @@ const visitorGuidelines = [
               class="h-2 rounded-full transition-all duration-300 border-none cursor-pointer p-0"
               :class="activeIndex === idx ? 'w-8 bg-sprout-accent shadow-sm' : 'w-2 bg-white/40 hover:bg-white/70'"
               :aria-label="`${item.title}を表示`"
-              @click="scrollToItem(idx); startAutoPlay();"
+              @click="goToSlide(idx)"
             />
           </div>
         </div>
@@ -788,22 +573,9 @@ const visitorGuidelines = [
 </template>
 
 <style scoped>
-/* カルーセルのスクロールバー非表示 */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* スワイプコンテナの左右パディング（カードの可変幅に応じて端のカードも正確に中央スナップ） */
-.events-scroll-container {
-  padding-left: calc(50% - clamp(101px, 15vh, 158px));
-  padding-right: calc(50% - clamp(101px, 15vh, 158px));
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: pan-y pinch-zoom;
+/* Swiperコンテナのカード影・拡大用のはみ出し表示許可 */
+:deep(.events-swiper) {
+  overflow: visible;
 }
 
 /* 企画説明文の切り替えアニメーション（スムーズ＆高速） */
