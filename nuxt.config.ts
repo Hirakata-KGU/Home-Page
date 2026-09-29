@@ -61,6 +61,10 @@ export default defineNuxtConfig({
   },
 
   css: [
+    'swiper/css',
+    'swiper/css/effect-fade',
+    'swiper/css/navigation',
+    'swiper/css/pagination',
     '~/assets/css/variables.css',
     '~/assets/css/main.css',
   ],
