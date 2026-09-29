@@ -29,8 +29,8 @@ const guideSubItems = [
 </script>
 
 <template>
-  <header class="sticky top-0 w-full h-[80px] bg-white shadow-header z-[1000] flex justify-center items-center">
-    <div class="w-full max-w-[1920px] h-full px-6 lg:px-[51px] flex flex-row justify-between items-center gap-8">
+  <header class="sticky top-0 w-full bg-white shadow-header z-[1000] flex justify-center items-center pt-[env(safe-area-inset-top,0px)]">
+    <div class="w-full max-w-[1920px] h-[80px] px-6 lg:px-[51px] flex flex-row justify-between items-center gap-8">
       <!-- Left: Brand -->
       <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[80px] no-underline shrink-0" @click="closeMobileMenu">
         <div class="w-[68px] h-[68px] flex items-center justify-center">
@@ -141,7 +141,7 @@ const guideSubItems = [
     <transition name="drawer">
       <nav
         v-if="isMobileMenuOpen"
-        class="lg:hidden flex flex-col bg-white absolute top-[80px] left-0 w-full px-6 py-6 shadow-[0_12px_24px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-2 max-h-[calc(100vh-80px)] overflow-y-auto"
+        class="lg:hidden flex flex-col bg-white absolute top-full left-0 w-full px-6 py-6 shadow-[0_12px_24px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-2 max-h-[calc(100vh-80px)] overflow-y-auto"
         aria-label="モバイルナビゲーション"
       >
         <NuxtLink
