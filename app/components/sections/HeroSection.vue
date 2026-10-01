@@ -40,7 +40,7 @@ const leaves: LeafItem[] = [
 </script>
 
 <template>
-  <section class="relative w-full min-h-fit h-[calc(100dvh-60px)] max-h-[1200px] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
+  <section class="relative w-full min-h-fit h-auto lg:h-[calc(100vh-80px)] max-h-[1200px] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
     <!-- Top Geometric Border Decorations (Group 3: top-right) -->
     <div
       class="absolute pointer-events-none z-[1] -top-24 -right-20 w-[340px] h-[340px] opacity-25 sm:-top-32 sm:-right-24 sm:w-[480px] sm:h-[480px] sm:opacity-35 lg:-top-40 lg:-right-28 lg:w-[650px] lg:h-[650px] lg:opacity-40 transition-all duration-300"
@@ -75,9 +75,9 @@ const leaves: LeafItem[] = [
     <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[300px] lg:pb-[150px]">
       <!-- Title Block (left: 163px, top: 288px) -->
       <div class="flex-1 max-w-[824px] text-center lg:text-left">
-        <div class="flex items-end justify-center gap-6 font-sans font-bold text-2xl lg:text-[32px] leading-tight text-sprout-title mb-2">
+        <div class="flex items-end justify-center gap-6 font-sans font-bold text-[16px] lg:text-[32px] leading-tight text-sprout-title mb-2">
           <span>第77回</span>
-          <h1 class="font-sans font-bold text-[48px] sm:text-[64px] xl:text-[72px] leading-[1.15] text-sprout-title m-0 tracking-tight">
+          <h1 class="font-sans font-bold text-[40px] sm:text-[64px] xl:text-[72px] leading-[1.15] text-sprout-title m-0 tracking-tight">
           平潟祭 2026
           </h1>
         </div>
