@@ -7,8 +7,61 @@ import 'swiper/css';
 import ChickSvg from '~/components/svg/map/chick.vue';
 
 useSeoMeta({
-  title: '平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭',
-  description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。',
+  title: '第77回 平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭 公式サイト',
+  description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。音楽ライブ、模擬店、展示、ステージパフォーマンスなど多数開催。',
+});
+
+// TOPページ専用の構造化データ（WebSite & Event）
+const topStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.hirakatasai.net/#website',
+      'url': 'https://www.hirakatasai.net/',
+      'name': '第77回 平潟祭 2026',
+      'alternateName': ['平潟祭', '平潟祭 2026', 'Hirakata Festival', '関東学院大学 平潟祭'],
+      'description': '関東学院大学 金沢八景キャンパスの学園祭「平潟祭」公式サイト。',
+      'inLanguage': 'ja',
+    },
+    {
+      '@type': 'Event',
+      '@id': 'https://www.hirakatasai.net/#event',
+      'name': '第77回 平潟祭 『SPROUT』',
+      'description': '2026年10月31日(土)・11月1日(日)開催！関東学院大学 金沢八景キャンパスの学園祭「平潟祭」。音楽ライブ、模擬店、展示、ステージパフォーマンスなど盛りだくさん。',
+      'startDate': '2026-10-31T10:00:00+09:00',
+      'endDate': '2026-11-01T18:00:00+09:00',
+      'eventStatus': 'https://schema.org/EventScheduled',
+      'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+      'location': {
+        '@type': 'Place',
+        'name': '関東学院大学 金沢八景キャンパス',
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': '金沢区六浦東1-50-1',
+          'addressLocality': '横浜市',
+          'addressRegion': '神奈川県',
+          'postalCode': '236-8501',
+          'addressCountry': 'JP',
+        },
+      },
+      'image': 'https://www.hirakatasai.net/images/hirakata-logo.png',
+      'organizer': {
+        '@type': 'Organization',
+        'name': '平潟祭実行委員会',
+        'url': 'https://www.hirakatasai.net/',
+      },
+    },
+  ],
+};
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(topStructuredData),
+    },
+  ],
 });
 
 // 1. 企画カードデータ（芸能ステージ・ステージパフォーマンス・模擬店グルメ・文化館展示の4つ）

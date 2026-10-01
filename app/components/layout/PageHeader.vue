@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 interface Breadcrumb {
   name: string;
   path?: string;
@@ -11,7 +13,56 @@ interface Props {
   icon?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const route = useRoute();
+const siteUrl = 'https://www.hirakatasai.net';
+
+// パンくずリスト構造化データ（JSON-LD）
+const breadcrumbLd = computed(() => {
+  const itemList = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'ホーム',
+      item: `${siteUrl}/`,
+    },
+  ];
+
+  if (props.breadcrumbs && props.breadcrumbs.length > 0) {
+    props.breadcrumbs.forEach((crumb, index) => {
+      const crumbPath = crumb.path
+        ? (crumb.path.startsWith('/') ? crumb.path : `/${crumb.path}`)
+        : route.path;
+      const cleanPath = crumbPath === '/' ? '' : crumbPath.replace(/\/$/, '');
+      const itemUrl = `${siteUrl}${cleanPath || '/'}`;
+
+      itemList.push({
+        '@type': 'ListItem',
+        position: index + 2,
+        name: crumb.name,
+        item: itemUrl,
+      });
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: itemList,
+  };
+});
+
+useHead(() => {
+  if (!props.breadcrumbs || props.breadcrumbs.length === 0) return {};
+  return {
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify(breadcrumbLd.value),
+      },
+    ],
+  };
+});
 </script>
 
 <template>

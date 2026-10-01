@@ -5,7 +5,37 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/tailwindcss', './modules/festival-data', '@nuxt/image', '@nuxtjs/google-fonts', '@vueuse/nuxt'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    './modules/festival-data',
+    '@nuxt/image',
+    '@nuxtjs/google-fonts',
+    '@vueuse/nuxt',
+    '@nuxtjs/sitemap',
+  ],
+
+  site: {
+    url: 'https://www.hirakatasai.net',
+    name: '第77回 平潟祭 2026',
+  },
+
+  sitemap: {
+    strictNuxtContentPaths: false,
+    defaults: {
+      changefreq: 'daily',
+      priority: 0.8,
+    },
+    urls: [
+      { loc: '/', priority: 1.0, changefreq: 'daily' },
+      { loc: '/events', priority: 0.9, changefreq: 'daily' },
+      { loc: '/schedule', priority: 0.9, changefreq: 'daily' },
+      { loc: '/map', priority: 0.9, changefreq: 'daily' },
+      { loc: '/info/about', priority: 0.8, changefreq: 'weekly' },
+      { loc: '/info/pamphlet', priority: 0.8, changefreq: 'weekly' },
+      { loc: '/info/faq', priority: 0.7, changefreq: 'weekly' },
+      { loc: '/info/contact', priority: 0.6, changefreq: 'monthly' },
+    ],
+  },
 
   googleFonts: {
     families: {
