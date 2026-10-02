@@ -35,8 +35,8 @@ const fontSize = computed(() => {
       'is-active': isActive,
       'is-clickable': interactive,
     }"
-    @mouseenter="emit('hover-enter')"
-    @mouseleave="emit('hover-leave')"
+    @pointerenter="(e: PointerEvent) => e.pointerType !== 'touch' && emit('hover-enter')"
+    @pointerleave="(e: PointerEvent) => e.pointerType !== 'touch' && emit('hover-leave')"
     @click.stop="interactive && emit('select')"
   >
     <svg

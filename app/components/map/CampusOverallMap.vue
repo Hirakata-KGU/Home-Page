@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
-import { onClickOutside, useMediaQuery } from '@vueuse/core';
+import { useTimeoutFn } from '@vueuse/core';
 import MapBase from '~/components/svg/map/map-base.vue';
 import No3Svg from '~/components/svg/map/no3.vue';
 import No6Svg from '~/components/svg/map/no6.vue';
@@ -23,26 +23,26 @@ const scrollContainerRef = ref<HTMLElement | null>(null);
 const isChickSwimming = ref(false);
 const showChickBubble = ref(false);
 const chickQuackText = ref('ぴちゃぴちゃ！');
-let bubbleTimer: ReturnType<typeof setTimeout> | null = null;
-let swimmingTimer: ReturnType<typeof setTimeout> | null = null;
+
+const { start: startSwimmingTimer } = useTimeoutFn(() => {
+  isChickSwimming.value = false;
+}, 1200, { immediate: false });
+
+const { start: startBubbleTimer } = useTimeoutFn(() => {
+  showChickBubble.value = false;
+}, 1500, { immediate: false });
 
 const quackMessages = ['ぴちゃぴちゃ！', 'ピヨッ♪', 'クワッ！', 'すいすい〜', '🐣✨'];
 let quackIndex = 0;
 
 function triggerChickClick() {
   isChickSwimming.value = true;
-  if (swimmingTimer) clearTimeout(swimmingTimer);
-  swimmingTimer = setTimeout(() => {
-    isChickSwimming.value = false;
-  }, 1200);
+  startSwimmingTimer();
 
   chickQuackText.value = quackMessages[quackIndex % quackMessages.length];
   quackIndex++;
   showChickBubble.value = true;
-  if (bubbleTimer) clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(() => {
-    showChickBubble.value = false;
-  }, 1500);
+  startBubbleTimer();
 }
 
 // テント配置データ (ViewBox 457.29 x 652.38 基準のパーセント値)
@@ -78,37 +78,50 @@ const hoveredBuilding = ref<string | null>(null);
 // 選択中またはホバー中のテントポップオーバー管理（24個の個別保持を1つに集約）
 type TentItemType = typeof tentList[number];
 const activeTent = ref<TentItemType | null>(null);
-const activeTentPopoverRef = ref<HTMLElement | null>(null);
+const isPinned = ref(false);
 
 const activeTentEvents = computed(() => {
   if (!activeTent.value) return [];
   return getEventsByTentNo(activeTent.value.label);
 });
 
-const canHover = useMediaQuery('(hover: hover) and (pointer: fine)');
+const { start: scheduleHide, stop: clearHideTimer } = useTimeoutFn(() => {
+  activeTent.value = null;
+}, 10, { immediate: false });
+
+const closeTent = () => {
+  clearHideTimer();
+  activeTent.value = null;
+  isPinned.value = false;
+};
 
 const toggleTent = (tent: TentItemType) => {
+  clearHideTimer();
   const events = getEventsByTentNo(tent.label);
   if (events.length === 0) return;
-  activeTent.value = activeTent.value?.id === tent.id ? null : tent;
+  if (activeTent.value?.id === tent.id && isPinned.value) {
+    closeTent();
+  } else {
+    activeTent.value = tent;
+    isPinned.value = true;
+  }
 };
 
 const handleTentMouseEnter = (tent: TentItemType) => {
-  if (canHover.value) {
-    const events = getEventsByTentNo(tent.label);
-    if (events.length > 0) activeTent.value = tent;
+  if (isPinned.value) return;
+  clearHideTimer();
+  const events = getEventsByTentNo(tent.label);
+  if (events.length > 0) {
+    activeTent.value = tent;
   }
 };
 
 const handleTentMouseLeave = (tent: TentItemType) => {
-  if (canHover.value && activeTent.value?.id === tent.id) {
-    activeTent.value = null;
+  if (isPinned.value) return;
+  if (activeTent.value?.id === tent.id) {
+    scheduleHide();
   }
 };
-
-onClickOutside(activeTentPopoverRef, () => {
-  activeTent.value = null;
-});
 
 // スマホで開いた際に中央のメインストリートが見えるよう初期スクロール
 onMounted(() => {
@@ -124,6 +137,13 @@ onMounted(() => {
 
 <template>
   <div class="overall-map-container">
+    <!-- PC・スマホ共通：カード固定表示中にどこをタップ/クリックしても解除できる透明バックドロップ -->
+    <div
+      v-if="activeTent && isPinned"
+      class="fixed inset-0 z-[990]"
+      aria-hidden="true"
+      @click="closeTent"
+    />
 
     <!-- 地図の外枠フレーム（画面幅ぴったり、外枠からはみ出る部分はoverflow: hiddenで完全非描画） -->
     <div class="map-outer-frame">
@@ -322,7 +342,6 @@ onMounted(() => {
             <!-- 単一のポップオーバーレイヤー（デザイン・位置・アニメーションは完全同一） -->
             <div
               v-if="activeTent && activeTentEvents.length > 0"
-              ref="activeTentPopoverRef"
               class="tent-pos-wrapper"
               :style="{
                 left: `${activeTent.left}%`,
@@ -337,6 +356,8 @@ onMounted(() => {
                   class="tent-card-popover"
                   :class="`placement-${activeTent.placement}`"
                   style="pointer-events: auto;"
+                  @mouseenter="!isPinned && clearHideTimer()"
+                  @mouseleave="!isPinned && scheduleHide()"
                   @click.stop
                 >
                   <div class="popover-cards-wrap">
@@ -753,7 +774,7 @@ onMounted(() => {
 /* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示（以前と完全同一デザイン） */
 .tent-card-popover {
   position: absolute;
-  z-index: 200;
+  z-index: 1000;
   width: min(300px, 80vw);
   background: transparent;
   border: none;
