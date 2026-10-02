@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
+    zeroRuntime: true,
     strictNuxtContentPaths: false,
     defaults: {
       changefreq: 'daily',
