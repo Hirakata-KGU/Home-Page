@@ -73,7 +73,7 @@ export default defineNuxtConfig({
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: 'https://www.hirakatasai.net/' },
-        { property: 'og:image', content: 'https://www.hirakatasai.net/images/hirakata-logo.png' },
+        { property: 'og:image', content: 'https://www.hirakatasai.net/images/ogp-main.png' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@shin_hirakata' },
       ],

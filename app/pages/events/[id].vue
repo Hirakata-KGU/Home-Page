@@ -23,7 +23,7 @@ const pageDescription = computed(() =>
 );
 const ogImageUrl = computed(() => {
   const img = event.value?.imageUrl;
-  return img ? `https://www.hirakatasai.net${img}` : 'https://www.hirakatasai.net/images/hirakata-logo.png';
+  return img ? `https://www.hirakatasai.net${img}` : undefined;
 });
 
 useSeoMeta({
