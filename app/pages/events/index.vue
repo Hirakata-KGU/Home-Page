@@ -284,7 +284,7 @@ watch(
 }
 
 .filter-section {
-  padding: 24px;
+  padding: clamp(16px, 3vw, 24px);
   background: white;
   border-radius: 16px;
   border: 1px solid var(--border);
@@ -485,9 +485,6 @@ watch(
 @media (max-width: 640px) {
   .events-grid {
     grid-template-columns: 1fr;
-  }
-  .filter-section {
-    padding: 16px;
   }
 }
 </style>

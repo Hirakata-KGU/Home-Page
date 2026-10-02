@@ -30,7 +30,7 @@ const guideSubItems = [
 
 <template>
   <header class="sticky top-0 w-full bg-white shadow-header z-[1000] flex justify-center items-center pt-[env(safe-area-inset-top,0px)]">
-    <div class="w-full max-w-[1920px] h-[80px] px-6 lg:px-[51px] flex flex-row justify-between items-center gap-8">
+    <div class="w-full max-w-[1920px] h-[80px] px-[clamp(1.5rem,2.7vw,3.1875rem)] flex flex-row justify-between items-center gap-8">
       <!-- Left: Brand -->
       <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[80px] no-underline shrink-0" @click="closeMobileMenu">
         <div class="w-[68px] h-[68px] flex items-center justify-center">

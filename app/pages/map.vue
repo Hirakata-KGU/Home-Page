@@ -79,7 +79,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 
     <div class="page-container pb-20">
       <!-- 1. マップ選択box -->
-      <nav class="map-nav-wrapper pb-6 sm:pb-8" aria-label="場内エリア切り替え">
+      <nav class="map-nav-wrapper pb-[clamp(1.5rem,2.5vw,2rem)]" aria-label="場内エリア切り替え">
         <div class="tab-grid" role="tablist">
           <button
             v-for="t in tabs"
@@ -283,15 +283,9 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   background: white;
   border: 1px solid var(--border, #e5e5e5);
   border-radius: 16px;
-  padding: 16px;
+  padding: clamp(16px, 2.5vw, 24px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   box-sizing: border-box;
-}
-
-@media (min-width: 640px) {
-  .floor-block {
-    padding: 24px;
-  }
 }
 
 .floor-heading-row {

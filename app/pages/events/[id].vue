@@ -219,7 +219,7 @@ useSeoMeta({
 }
 
 .detail-main-card {
-  padding: 40px;
+  padding: clamp(24px, 3.5vw, 40px) clamp(16px, 3vw, 40px);
   background: white;
   border-radius: 20px;
   border: 1px solid var(--border);
@@ -293,7 +293,7 @@ useSeoMeta({
 }
 
 .detail-title {
-  font-size: 30px;
+  font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 900;
   color: var(--text);
   margin-bottom: 20px;
@@ -515,7 +515,7 @@ useSeoMeta({
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 20px;
+  padding: clamp(14px, 2vw, 16px) clamp(16px, 2.5vw, 20px);
   background: #f4f8f5;
   border: 1px solid rgba(47, 91, 52, 0.2);
   border-radius: 12px;
@@ -619,19 +619,12 @@ useSeoMeta({
 }
 
 @media (max-width: 640px) {
-  .detail-main-card {
-    padding: 24px 16px;
-  }
-  .detail-title {
-    font-size: 22px;
-  }
   .timetable-slot-card {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding: 14px 16px;
   }
   .slot-day-badge {
     order: 1;
