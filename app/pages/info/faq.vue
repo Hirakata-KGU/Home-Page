@@ -1,7 +1,10 @@
 <script setup lang="ts">
 useSeoMeta({
   title: 'よくあるご質問（FAQ）｜平潟祭 2026',
+  ogTitle: 'よくあるご質問（FAQ）｜平潟祭 2026',
   description: '平潟祭2026に関するよくあるご質問。アクセス・駐車場、キャンパス内の施設などについてご案内します。',
+  ogDescription: '平潟祭2026に関するよくあるご質問。アクセス・駐車場、キャンパス内の施設などについてご案内します。',
+  ogUrl: 'https://www.hirakatasai.net/info/faq',
 });
 
 // FAQカテゴリと質問一覧（絵文字不使用）

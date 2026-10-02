@@ -8,7 +8,10 @@ import { foodBooths } from '~/data/events';
 
 useSeoMeta({
   title: '場内マップ｜平潟祭 2026',
+  ogTitle: '場内マップ｜平潟祭 2026',
   description: '平潟祭2026のキャンパス全体マップ、模擬店エリア、社会連携館 (3号館)、文化館 (6号館)、文化館 (8号館)、音楽館 (7号館)、屋内ステージ（SCC）の配置および各階企画案内。',
+  ogDescription: '平潟祭2026のキャンパス全体マップ、模擬店エリア、社会連携館 (3号館)、文化館 (6号館)、文化館 (8号館)、音楽館 (7号館)、屋内ステージ（SCC）の配置および各階企画案内。',
+  ogUrl: 'https://www.hirakatasai.net/map',
 });
 
 type TabKey = 'all' | 'no3' | 'no6' | 'no7' | 'no8' | 'scc';

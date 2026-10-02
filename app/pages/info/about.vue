@@ -4,7 +4,10 @@ import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 useSeoMeta({
   title: '平潟祭について｜第77回 平潟祭 2026',
+  ogTitle: '平潟祭について｜第77回 平潟祭 2026',
   description: '第77回 平潟祭の委員長挨拶、昨年度（2025年度）の様子、開催概要をご紹介します。',
+  ogDescription: '第77回 平潟祭の委員長挨拶、昨年度（2025年度）の様子、開催概要をご紹介します。',
+  ogUrl: 'https://www.hirakatasai.net/info/about',
 });
 
 // 2025年度 学園祭の写真データ

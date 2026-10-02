@@ -1,7 +1,10 @@
 <script setup lang="ts">
 useSeoMeta({
   title: '電子パンフレット｜平潟祭 2026',
+  ogTitle: '電子パンフレット｜平潟祭 2026',
   description: '第77回 平潟祭の公式電子パンフレット。企画一覧、タイムテーブル、キャンパスマップをスマートフォンやPCからいつでもご確認いただけます。',
+  ogDescription: '第77回 平潟祭の公式電子パンフレット。企画一覧、タイムテーブル、キャンパスマップをスマートフォンやPCからいつでもご確認いただけます。',
+  ogUrl: 'https://www.hirakatasai.net/info/pamphlet',
 });
 
 // ※アイコンSVG提供後に配置予定

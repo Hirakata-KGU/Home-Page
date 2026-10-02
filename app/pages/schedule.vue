@@ -5,7 +5,10 @@ import { daySchedules, timetable, type TimetableSlot } from '~/data/timetable';
 
 useSeoMeta({
   title: 'タイムテーブル｜平潟祭 2026',
+  ogTitle: 'タイムテーブル｜平潟祭 2026',
   description: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全出演プログラムを一覧掲載',
+  ogDescription: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全出演プログラムを一覧掲載',
+  ogUrl: 'https://www.hirakatasai.net/schedule',
 });
 
 const route = useRoute();

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 useSeoMeta({
   title: 'お問い合わせ・SNS｜平潟祭 2026',
+  ogTitle: 'お問い合わせ・SNS｜平潟祭 2026',
   description: '平潟祭2026に関するお問い合わせ、公式SNS（X / Instagram）のご案内。実行委員会へのお問い合わせはこちらから。',
+  ogDescription: '平潟祭2026に関するお問い合わせ、公式SNS（X / Instagram）のご案内。実行委員会へのお問い合わせはこちらから。',
+  ogUrl: 'https://www.hirakatasai.net/info/contact',
 });
 
 const contactSns = [

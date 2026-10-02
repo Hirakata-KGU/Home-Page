@@ -15,9 +15,24 @@ const mapUrl = computed(() => {
   return bId ? `/map?tab=${bId}` : '/map';
 });
 
+const pageTitle = computed(() =>
+  event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026'
+);
+const pageDescription = computed(() =>
+  event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ'
+);
+const ogImageUrl = computed(() => {
+  const img = event.value?.imageUrl;
+  return img ? `https://www.hirakatasai.net${img}` : 'https://www.hirakatasai.net/images/hirakata-logo.png';
+});
+
 useSeoMeta({
-  title: () => event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026',
-  description: () => event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ',
+  title: pageTitle,
+  ogTitle: pageTitle,
+  description: pageDescription,
+  ogDescription: pageDescription,
+  ogImage: ogImageUrl,
+  ogUrl: () => `https://www.hirakatasai.net/events/${eventId.value}`,
 });
 </script>
 

@@ -5,7 +5,10 @@ import { allEvents, categoryList, type EventCategory, type EventDay, type EventI
 
 useSeoMeta({
   title: '企画一覧｜平潟祭 2026',
-  description: '平潟祭2026の全5企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogTitle: '企画一覧｜平潟祭 2026',
+  description: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogDescription: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogUrl: 'https://www.hirakatasai.net/events',
 });
 
 const route = useRoute();

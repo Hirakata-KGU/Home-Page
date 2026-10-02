@@ -8,7 +8,10 @@ import ChickSvg from '~/components/svg/map/chick.vue';
 
 useSeoMeta({
   title: '第77回 平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭 公式サイト',
+  ogTitle: '第77回 平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭 公式サイト',
   description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。音楽ライブ、模擬店、展示、ステージパフォーマンスなど多数開催。',
+  ogDescription: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。音楽ライブ、模擬店、展示、ステージパフォーマンスなど多数開催。',
+  ogUrl: 'https://www.hirakatasai.net/',
 });
 
 // TOPページ専用の構造化データ（WebSite & Event）
