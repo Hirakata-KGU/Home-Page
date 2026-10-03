@@ -435,7 +435,8 @@ onMounted(() => {
                 top: `${activeTent.top}%`,
                 width: `${activeTent.width}%`,
                 height: `${activeTent.height}%`,
-                pointerEvents: 'none'
+                pointerEvents: 'none',
+                zIndex: 1000
               }"
             >
               <Transition name="fade-scale" appear>
@@ -604,6 +605,11 @@ onMounted(() => {
   left: 65.5%;
 }
 
+.building-tearoom {
+  position: absolute;
+  z-index: 995;
+}
+
 .pin-tearoom {
   top: 100%;
   left: 50%;
@@ -681,6 +687,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 995;
 }
 
 .tent-pos-wrapper {
