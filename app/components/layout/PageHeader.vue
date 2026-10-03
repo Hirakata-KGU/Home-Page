@@ -67,7 +67,7 @@ useHead(() => {
 
 <template>
   <div class="w-full flex flex-col text-white relative">
-    <div class="w-full flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center">
+    <div class="w-full flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center z-20">
       <div class="w-full max-w-[1136px] justify-start">
         <nav v-if="breadcrumbs && breadcrumbs.length" class="breadcrumb" aria-label="パンくずリスト">
           <NuxtLink to="/">ホーム</NuxtLink>
@@ -87,31 +87,14 @@ useHead(() => {
         </div>
       </div>
     </div>
-          <!-- 反転した4層の波 (rotate 180deg) -->
-    <div class="w-full h-[100px] leading-none -translate-y-10" aria-hidden="true">
+    <!-- 反転した4層の波 (rotate 180deg: 緑の四角の背面に潜り込ませて隙間線を防止) -->
+    <div class="w-full h-[120px] leading-none -mt-7" aria-hidden="true">
       <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
     </div>
   </div>
 </template>
 
 <style scoped>
-.page-header {
-  background: linear-gradient(135deg, rgba(27, 94, 32, 0.96) 0%, rgba(46, 125, 50, 0.92) 100%);
-  color: white;
-  padding: 44px 0 60px;
-  position: relative;
-  overflow: hidden;
-}
-
-.page-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at top right, rgba(165, 214, 167, 0.3) 0%, transparent 60%),
-    radial-gradient(circle at bottom left, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
-}
-
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -176,11 +159,5 @@ h1 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-}
-
-@media (max-width: 768px) {
-  .page-header {
-    padding: 32px 0 48px;
-  }
 }
 </style>
