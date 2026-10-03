@@ -608,6 +608,19 @@ onMounted(() => {
   top: 100%;
   left: 50%;
   transform: translate(-50%, 6px);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.pin-tearoom::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -8px;
+  right: -8px;
+  bottom: -6px;
+  background: transparent;
+  pointer-events: auto;
 }
 
 .interactive-building:hover .pin-badge,
@@ -910,6 +923,17 @@ onMounted(() => {
     right: calc(100% + 2px);
     top: 0;
     transform: none;
+  }
+
+  .tent-card-popover.placement-bottom-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 14px;
+    height: 100%;
+    background: transparent;
+    pointer-events: auto;
   }
 }
 
