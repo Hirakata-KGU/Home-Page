@@ -928,19 +928,18 @@ onMounted(() => {
   }
 }
 
-/* スマホ閲覧時: 画面端での見切れを防止するため画面下部にフローティング表示 */
+/* スマホ閲覧時: 画面端での見切れを防止するため画面下部にフローティング表示（dvwによる動的スケーリング） */
 @media (max-width: 640px) {
   .tent-card-popover {
     position: fixed;
-    bottom: 24px;
-    left: 16px;
-    right: 16px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     top: auto;
-    width: auto;
-    max-width: 360px;
-    margin: 0 auto;
+    width: clamp(240px, 72dvw, 300px);
+    margin: 0;
     z-index: 1000;
-    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.22));
   }
 }
 
@@ -987,7 +986,7 @@ onMounted(() => {
 @media (max-width: 640px) {
   .fade-scale-enter-from,
   .fade-scale-leave-to {
-    transform: translateY(12px) scale(0.96);
+    transform: translate(-50%, 12px) scale(0.96);
   }
 }
 </style>
