@@ -286,18 +286,18 @@ const visitorGuidelines = [
       </div>
 
       <!-- Main Container -->
-      <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[280px] lg:pb-[150px]">
+      <div class="relative z-10 w-full h-fit max-w-[1600px] px-4 sm:px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[280px] lg:pb-[150px]">
         <!-- Title Block (left: 163px, top: 288px) -->
-        <div class="flex-1 max-w-[824px] text-center lg:text-left">
-          <div class="flex items-end justify-center gap-6 font-sans font-bold text-[clamp(1rem,1.8vw,2rem)] leading-tight text-sprout-title mb-2">
-            <span>第77回</span>
-            <h1 class="font-sans font-bold text-fluid-hero leading-[1.15] text-sprout-title m-0 tracking-tight">
+        <div class="flex-1 w-full max-w-[824px] text-center">
+          <div class="flex items-end justify-center gap-2.5 sm:gap-4 lg:gap-6 font-sans font-bold leading-tight text-sprout-title mb-2">
+            <span class="text-[clamp(1.15rem,4vw,1.6rem)] lg:text-[clamp(1.5rem,1.8vw,2rem)] pb-1 sm:pb-1.5 whitespace-nowrap">第77回</span>
+            <h1 class="font-sans font-bold text-[clamp(2.6rem,10vw,3.9rem)] lg:text-[clamp(3.5rem,4.5vw,4.75rem)] leading-[1.12] text-sprout-title m-0 tracking-tight whitespace-nowrap">
             平潟祭 2026
             </h1>
           </div>
 
-          <!-- Ornament Line -->
-          <UiOrnamentLine color="#42845A" max-width="100%" />
+          <!-- Ornament Line (スマホ時も横幅いっぱいにしっかり長く伸びるようw-fullを確保) -->
+          <UiOrnamentLine color="#42845A" maxWidth="100%" class="w-full my-3 sm:my-4" />
 
           <!-- Tagline & Quick CTA -->
           <div class="mt-6">
