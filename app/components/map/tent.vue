@@ -6,6 +6,7 @@ interface Props {
   strokeColor?: string;
   isActive?: boolean;
   interactive?: boolean;
+  rotate?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
   strokeColor: '#c9a063',
   isActive: false,
   interactive: true,
+  rotate: 0,
 });
 
 const emit = defineEmits<{
@@ -34,6 +36,9 @@ const fontSize = computed(() => {
     :class="{
       'is-active': isActive,
       'is-clickable': interactive,
+    }"
+    :style="{
+      '--tent-rotate': `${props.rotate}deg`,
     }"
     @pointerenter="(e: PointerEvent) => e.pointerType !== 'touch' && emit('hover-enter')"
     @pointerleave="(e: PointerEvent) => e.pointerType !== 'touch' && emit('hover-leave')"
@@ -80,6 +85,8 @@ const fontSize = computed(() => {
   touch-action: manipulation;
   width: 100%;
   height: 100%;
+  transform-origin: center center;
+  transform: rotate(var(--tent-rotate, 0deg));
 }
 
 .tent-wrapper.is-clickable {

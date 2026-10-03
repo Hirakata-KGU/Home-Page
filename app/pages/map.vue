@@ -269,7 +269,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 /* 全体マップセクション（地図は最初の幅 max-width: 820px） */
 .map-content-section {
   width: 100%;
-  max-width: 820px;
+  max-width: 1000px;
   margin: 0 auto;
   box-sizing: border-box;
 }

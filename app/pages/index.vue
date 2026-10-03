@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperClass } from 'swiper';
 import 'swiper/css';
-import ChickSvg from '~/components/svg/map/chick.vue';
+import ChickSvg from '~/components/map/chick.vue';
 
 useSeoMeta({
   title: '第77回 平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭 公式サイト',
