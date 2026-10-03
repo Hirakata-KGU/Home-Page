@@ -792,13 +792,33 @@ const visitorGuidelines = [
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
+/* セクションの共通レイアウト（このページ内で使用） */
+.section-container {
+  @apply w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center;
+}
+
+/* ご来場にあたって */
+.guide-card {
+  @apply bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm;
+}
+.guide-card-desc {
+  @apply text-[13px] text-text-muted leading-relaxed m-0;
+}
+
 /* タイトルが写真に被っても綺麗に文字が浮き立つソフトな白シャドー */
 .guide-card-title {
+  @apply text-base font-extrabold text-sprout-title mb-2;
   text-shadow:
     0 0 5px rgba(255, 255, 255, 0.95),
     0 0 12px rgba(255, 255, 255, 0.9),
     0 0 24px rgba(255, 255, 255, 0.8),
     0 2px 6px rgba(255, 255, 255, 0.7);
+}
+
+/* 開催情報エリアのゴールドボタン */
+.btn-gold {
+  @apply text-white bg-gradient-to-br from-[var(--sun-gold)] to-[var(--sun-gold-light)]
+    hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(245,158,11,0.35)];
 }
 
 /* 葉っぱの輪郭を背景からふんわり浮かび上がらせるソフトな白い影・ブラー */

@@ -3,10 +3,8 @@
   --sprout: #2e7d32;
   --sprout-light: #43a047;
   --sprout-bright: #66bb6a;
-  --sprout-pale: #a5d6a7;
   --sprout-dark: #1b5e20;
   --sprout-bg: #e8f5e9;
-  --sprout-soft: #f1f8e9;
 
   /* Theme Palette */
   --theme-bg: #F8F8ED;
@@ -24,7 +22,6 @@
   /* Olive & Green backwards compatibility */
   --olive: var(--theme-title);
   --olive-light: var(--theme-border);
-  --olive-dark: var(--theme-dark);
   --accent: #f9fbf8;
   --accent-2: #e8f5e9;
 

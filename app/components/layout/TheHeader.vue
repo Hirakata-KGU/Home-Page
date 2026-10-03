@@ -115,7 +115,7 @@ const guideSubItems = [
 
       <!-- Right: お問い合わせボタン（絵文字不使用） -->
       <div class="hidden lg:block shrink-0">
-        <NuxtLink to="/info/contact" class="btn-pill-green">
+        <NuxtLink to="/info/contact" class="btn-pill">
           <span>お問い合わせ</span>
         </NuxtLink>
       </div>
@@ -190,6 +190,14 @@ const guideSubItems = [
 </template>
 
 <style scoped>
+/* お問い合わせ用ピルボタン */
+.btn-pill {
+  @apply inline-flex justify-center items-center px-7 py-3.5 min-w-[160px] h-[52px]
+    bg-sprout-border hover:bg-[#356b48] text-white rounded-full no-underline
+    shadow-[0_2px_8px_rgba(66,132,90,0.25)] hover:shadow-[0_4px_14px_rgba(66,132,90,0.35)]
+    transition-all hover:-translate-y-0.5 font-sans font-normal text-[19px] leading-[24px];
+}
+
 /* ドロップダウンメニューの共通スタイリング */
 .dropdown-menu {
   @apply absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-200 ease-out z-[1100];
