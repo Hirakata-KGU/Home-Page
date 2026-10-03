@@ -8,7 +8,10 @@ import { foodBooths } from '~/data/events';
 
 useSeoMeta({
   title: '場内マップ｜平潟祭 2026',
+  ogTitle: '場内マップ｜平潟祭 2026',
   description: '平潟祭2026のキャンパス全体マップ、模擬店エリア、社会連携館 (3号館)、文化館 (6号館)、文化館 (8号館)、音楽館 (7号館)、屋内ステージ（SCC）の配置および各階企画案内。',
+  ogDescription: '平潟祭2026のキャンパス全体マップ、模擬店エリア、社会連携館 (3号館)、文化館 (6号館)、文化館 (8号館)、音楽館 (7号館)、屋内ステージ（SCC）の配置および各階企画案内。',
+  ogUrl: 'https://www.hirakatasai.net/map',
 });
 
 type TabKey = 'all' | 'no3' | 'no6' | 'no7' | 'no8' | 'scc';
@@ -79,7 +82,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 
     <div class="page-container pb-20">
       <!-- 1. マップ選択box -->
-      <nav class="map-nav-wrapper pb-6 sm:pb-8" aria-label="場内エリア切り替え">
+      <nav class="map-nav-wrapper pb-[clamp(1.5rem,2.5vw,2rem)]" aria-label="場内エリア切り替え">
         <div class="tab-grid" role="tablist">
           <button
             v-for="t in tabs"
@@ -100,11 +103,11 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
       <Transition name="fade-fast" mode="out-in">
         <section v-if="currentTab === 'all'" key="tab-all" class="map-content-section">
           <!-- その下の文字 -->
-          <div class="section-heading-box pb-4 sm:pb-6">
-            <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
+          <div class="section-heading-box pb-[clamp(1rem,2vw,1.5rem)]">
+            <h2 class="text-fluid-h2 font-black text-[#2f5b34]">
               {{ currentTabInfo?.title }}
             </h2>
-            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium">
+            <p class="text-fluid-caption text-[#6b7280] mt-1 font-medium">
               キャンパス ＆ 模擬店エリア
             </p>
           </div>
@@ -116,11 +119,11 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
         <!-- 3. 建物別タブ（3号館、6号館、7号館、8号館、SCC） -->
         <section v-else-if="currentBuilding" :key="`tab-${currentBuilding.id}`" class="building-detail-section">
           <!-- 建物案内見出し（ボタン表記と統一） -->
-          <div class="section-heading-box pb-4 sm:pb-6">
-            <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#2f5b34]">
+          <div class="section-heading-box pb-[clamp(1rem,2vw,1.5rem)]">
+            <h2 class="text-fluid-h2 font-black text-[#2f5b34]">
               {{ currentTabInfo?.title }}
             </h2>
-            <p class="text-xs sm:text-sm text-[#6b7280] mt-1 font-medium mx-auto">
+            <p class="text-fluid-caption text-[#6b7280] mt-1 font-medium mx-auto">
               {{ currentBuilding.description }}
             </p>
           </div>
@@ -136,7 +139,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
               <div class="floor-heading-row">
                 <div class="floor-badge-tag">{{ fl.floor }}</div>
                 <div>
-                  <h3 class="text-base sm:text-lg font-extrabold text-[#2f5b34]">
+                  <h3 class="text-[clamp(1rem,1.5vw,1.125rem)] font-extrabold text-[#2f5b34]">
                     {{ fl.floorLabel }}
                   </h3>
                 </div>
@@ -151,7 +154,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
                 />
               </div>
               <div v-else class="empty-floor-box mt-4">
-                <p class="text-xs sm:text-sm text-[#9ca3af]">このフロアの一般公開企画はありません。</p>
+                <p class="text-fluid-caption text-[#9ca3af]">このフロアの一般公開企画はありません。</p>
               </div>
             </div>
           </div>
@@ -266,7 +269,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
 /* 全体マップセクション（地図は最初の幅 max-width: 820px） */
 .map-content-section {
   width: 100%;
-  max-width: 820px;
+  max-width: 1000px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -283,15 +286,9 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
   background: white;
   border: 1px solid var(--border, #e5e5e5);
   border-radius: 16px;
-  padding: 16px;
+  padding: clamp(16px, 2.5vw, 24px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   box-sizing: border-box;
-}
-
-@media (min-width: 640px) {
-  .floor-block {
-    padding: 24px;
-  }
 }
 
 .floor-heading-row {

@@ -9,10 +9,10 @@
 - **メインページ:** [`app/pages/map.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/pages/map.vue)
 - **主要コンポーネント:**
   - 全体マップレイヤー: [`app/components/map/CampusOverallMap.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/components/map/CampusOverallMap.vue)
-  - 模擬店テント: [`app/components/svg/map/tent.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/components/svg/map/tent.vue)
-  - 建物SVG: `no3.vue`, `no6.vue`, `no7.vue`, `no8.vue`, `scc.vue`
+  - 模擬店テント: [`app/components/map/tent.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/components/map/tent.vue)
+  - 建物SVG: `no3.vue`, `no6.vue`, `no7.vue`, `no8.vue`, `scc.vue`, `gym.vue`, `tearoom.vue`
   - 背景マップSVG: `map-base.vue`
-  - アヒル（遊び心要素）: [`app/components/svg/map/chick.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/components/svg/map/chick.vue)
+  - アヒル（遊び心要素）: [`app/components/map/chick.vue`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/components/map/chick.vue)
 - **データ管理:**
   - 建物・フロア企画データ: [`app/data/map-buildings.ts`](file:///c:/Users/tkytw/Desktop/github/Home-Page/app/data/map-buildings.ts)
 
@@ -44,7 +44,7 @@
 - **ページ全体・タブ・建物詳細フロア企画一覧:**
   - PC大画面で広々と表示できるよう **`max-width: 1400px`** を採用。フロア内の企画カードグリッド（`.events-grid-responsive`）が多列で綺麗に展開。
 - **キャンパス全体マップ（`.map-content-section`, `.overall-map-container`）:**
-  - 縦長のアスペクト比（457.29 : 652.38）であるため、1400pxまで広げると縦スクロールが長くなりすぎる問題を防止。
+  - 縦長のアスペクト比（385 : 580、約 1 : 1.5065、`padding-bottom: 150.65%`）であるため、1400pxまで広げると縦スクロールが長くなりすぎる問題を防止。
   - 全体マップのコンテンツ枠のみ最初の最大幅 **`max-width: 820px`** を維持。
 
 ### ⑤ `pb`（padding-bottom）による下方向余白設計
@@ -53,15 +53,17 @@
   - 見出しエリア（`.section-heading-box`）: `pb-4 sm:pb-6`
   - ページ最下部コンテナ: `pb-20`（フッターとの間の十分な余白）
 
-### ⑥ キャンパス全体マップのレイヤー構造とスマホ操作性
+### ⑥ キャンパス全体マップのレイヤー構造とスマホ操作性（場内マップ2026v2.svg対応）
 - **レイヤー重ね合わせ構成:**
-  1. 背景レイヤー: `MapBase`（道、樹木、池、その他の建物）
-  2. 建物レイヤー: `No3Svg`, `No6Svg`, `No7Svg`, `No8Svg`, `SccSvg`、チャペル・屋外ステージリンクピン、アヒル
+  1. 背景レイヤー: `MapBase`（道、樹木、池、新設の12号館・工学本館・EF館・栽培実習室等を含む背景SVG）
+  2. 建物レイヤー: `No3Svg`, `No6Svg`, `No7Svg`, `No8Svg`, `SccSvg`, `GymSvg`（体育館/クリックでタイムテーブル連携）, `TearoomSvg`（茶室/ホバー・タップでイベントカード出現）、チャペル・屋外ステージリンクピン、アヒル
   3. テントレイヤー: 24基の `TentItem`（パーセント座標管理）
+- **座標変換と手動微調整値の継承:**
+  - `場内マップ2026v2.svg`（viewBox: `0 0 385 580`）へのアップグレードにあたり、開発者が手動で微調整した配置位置を保つため数理的アフィン変換（$X_{v2} = 0.7493 \times X_{v1} + 36.54$, $Y_{v2} = 0.7493 \times Y_{v1} + 93.43$）を適用してパーセント座標を再算出し、手動微調整の品質を完全継承。
 - **外枠マスク & 内部スクロール:**
   - `.map-outer-frame` に `overflow: hidden` を指定し、スマホ等で枠外へのはみ出しを防止。
   - `.map-scroll-viewport` で左右スクロール可能にしつつ、`.map-canvas` に `min-width: 700px` を持たせることで、画面幅が狭くなっても地図本体が豆粒のように縮小せず、鮮明に閲覧・タップ可能。
-  - 初期マウント時（`onMounted`）にメインストリート付近（約42%位置）へ自動スクロール。
+  - 初期マウント時（`onMounted`）にメインストリート付近（約46%位置）へ自動スクロール。
 
 ### ⑦ 模擬店テント（`tent.vue`）の仕様
 - テント番号（通常:「1」「2」…、企業テント:「企業1」「企業2」…）を描画。

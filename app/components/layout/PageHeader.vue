@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 interface Breadcrumb {
   name: string;
   path?: string;
@@ -11,12 +13,61 @@ interface Props {
   icon?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const route = useRoute();
+const siteUrl = 'https://www.hirakatasai.net';
+
+// パンくずリスト構造化データ（JSON-LD）
+const breadcrumbLd = computed(() => {
+  const itemList = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'ホーム',
+      item: `${siteUrl}/`,
+    },
+  ];
+
+  if (props.breadcrumbs && props.breadcrumbs.length > 0) {
+    props.breadcrumbs.forEach((crumb, index) => {
+      const crumbPath = crumb.path
+        ? (crumb.path.startsWith('/') ? crumb.path : `/${crumb.path}`)
+        : route.path;
+      const cleanPath = crumbPath === '/' ? '' : crumbPath.replace(/\/$/, '');
+      const itemUrl = `${siteUrl}${cleanPath || '/'}`;
+
+      itemList.push({
+        '@type': 'ListItem',
+        position: index + 2,
+        name: crumb.name,
+        item: itemUrl,
+      });
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: itemList,
+  };
+});
+
+useHead(() => {
+  if (!props.breadcrumbs || props.breadcrumbs.length === 0) return {};
+  return {
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify(breadcrumbLd.value),
+      },
+    ],
+  };
+});
 </script>
 
 <template>
   <div class="w-full flex flex-col text-white relative">
-    <div class="w-full flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center">
+    <div class="w-full flex flex-col bg-sprout-moss pt-5 px-5 items-center justify-center z-20">
       <div class="w-full max-w-[1136px] justify-start">
         <nav v-if="breadcrumbs && breadcrumbs.length" class="breadcrumb" aria-label="パンくずリスト">
           <NuxtLink to="/">ホーム</NuxtLink>
@@ -36,31 +87,14 @@ defineProps<Props>();
         </div>
       </div>
     </div>
-          <!-- 反転した4層の波 (rotate 180deg) -->
-    <div class="w-full h-[100px] leading-none -translate-y-10" aria-hidden="true">
+    <!-- 反転した4層の波 (rotate 180deg: 緑の四角の背面に潜り込ませて隙間線を防止) -->
+    <div class="w-full h-[120px] leading-none -mt-7" aria-hidden="true">
       <SvgWave class="w-full rotate-180" preserveAspectRatio="none" />
     </div>
   </div>
 </template>
 
 <style scoped>
-.page-header {
-  background: linear-gradient(135deg, rgba(27, 94, 32, 0.96) 0%, rgba(46, 125, 50, 0.92) 100%);
-  color: white;
-  padding: 44px 0 60px;
-  position: relative;
-  overflow: hidden;
-}
-
-.page-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at top right, rgba(165, 214, 167, 0.3) 0%, transparent 60%),
-    radial-gradient(circle at bottom left, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
-}
-
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -99,9 +133,9 @@ defineProps<Props>();
 }
 
 .header-icon {
-  font-size: 36px;
-  width: 68px;
-  height: 68px;
+  font-size: clamp(26px, 3.5vw, 36px);
+  width: clamp(52px, 6.5vw, 68px);
+  height: clamp(52px, 6.5vw, 68px);
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -113,7 +147,7 @@ defineProps<Props>();
 }
 
 h1 {
-  font-size: 32px;
+  font-size: clamp(1.5rem, 3.2vw + 0.5rem, 2rem);
   font-weight: 900;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -125,21 +159,5 @@ h1 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-}
-
-@media (max-width: 768px) {
-  .page-header {
-    padding: 32px 0 48px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-
-  .header-icon {
-    width: 52px;
-    height: 52px;
-    font-size: 26px;
-  }
 }
 </style>

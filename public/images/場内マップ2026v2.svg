@@ -1,0 +1,2467 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   viewBox="0 0 385 579.99999"
+   id="svg343"
+   sodipodi:docname="場内マップ2026v2 - コピー.svg"
+   width="385"
+   height="580"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview343"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="16.764114"
+     inkscape:cx="365.09535"
+     inkscape:cy="402.97388"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg343" />
+  <defs
+     id="defs4">
+    <style
+       id="style1">
+      .cls-1 {
+        fill: #fdd000;
+        mix-blend-mode: multiply;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10, .cls-11, .cls-12, .cls-13, .cls-14, .cls-15, .cls-16 {
+        fill: none;
+      }
+
+      .cls-17 {
+        mask: url(#mask);
+      }
+
+      .cls-18 {
+        filter: url(#luminosity-invert);
+      }
+
+      .cls-20 {
+        fill: #6f6e6e;
+      }
+
+      .cls-21, .cls-22, .cls-23, .cls-24, .cls-25, .cls-26 {
+        fill: #fff;
+      }
+
+      .cls-21, .cls-27, .cls-28, .cls-29, .cls-30, .cls-31 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3, .cls-5, .cls-6, .cls-8, .cls-9, .cls-12, .cls-14, .cls-15, .cls-20 {
+        stroke-linejoin: round;
+      }
+
+      .cls-3, .cls-8 {
+        stroke: #6f6e6e;
+        stroke-width: 3.84px;
+      }
+
+      .cls-3, .cls-8, .cls-22, .cls-26 {
+        font-family: HiraginoSans-W6-83pv-RKSJ-H, 'Hiragino Sans';
+      }
+
+      .cls-3, .cls-22 {
+        font-size: 13.02px;
+        letter-spacing: -.01em;
+      }
+
+      .cls-32, .cls-4, .cls-7, .cls-33, .cls-10, .cls-11, .cls-13, .cls-16 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-32, .cls-7, .cls-33, .cls-12 {
+        stroke: #a0a0a0;
+        stroke-width: .58px;
+      }
+
+      .cls-32, .cls-34 {
+        fill: #e6e6e5;
+      }
+
+      .cls-4 {
+        stroke: #e72d29;
+        stroke-width: 1.7px;
+      }
+
+      .cls-5 {
+        stroke-width: 4.39px;
+      }
+
+      .cls-5, .cls-6 {
+        stroke: #6c6d6c;
+      }
+
+      .cls-5, .cls-6, .cls-9, .cls-12, .cls-16 {
+        stroke-linecap: round;
+      }
+
+      .cls-35 {
+        fill: #88a162;
+      }
+
+      .cls-6 {
+        stroke-width: 6.59px;
+      }
+
+      .cls-36 {
+        fill: #b5b4b4;
+      }
+
+      .cls-8, .cls-37, .cls-38, .cls-26, .cls-14 {
+        font-size: 9.65px;
+      }
+
+      .cls-8, .cls-26 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-33 {
+        fill: #54c3f1;
+      }
+
+      .cls-27 {
+        fill: #f4d844;
+      }
+
+      .cls-39 {
+        fill: #fffbed;
+      }
+
+      .cls-40 {
+        isolation: isolate;
+      }
+
+      .cls-23 {
+        font-family: HiraginoSans-W7-83pv-RKSJ-H, 'Hiragino Sans';
+        glyph-orientation-vertical: 0deg;
+        letter-spacing: .13em;
+        text-orientation: upright;
+        writing-mode: tb;
+      }
+
+      .cls-23, .cls-25 {
+        font-size: 9.92px;
+      }
+
+      .cls-41 {
+        fill: #e72d29;
+      }
+
+      .cls-42 {
+        clip-path: url(#clippath-1);
+      }
+
+      .cls-43 {
+        clip-path: url(#clippath-3);
+      }
+
+      .cls-44 {
+        clip-path: url(#clippath-4);
+      }
+
+      .cls-45 {
+        clip-path: url(#clippath-2);
+      }
+
+      .cls-46 {
+        fill: #a0a0a0;
+      }
+
+      .cls-47 {
+        fill: #fbfbfc;
+      }
+
+      .cls-9 {
+        stroke-width: .96px;
+      }
+
+      .cls-9, .cls-11, .cls-14 {
+        stroke: #fff;
+      }
+
+      .cls-48 {
+        fill: #9aad75;
+      }
+
+      .cls-10 {
+        stroke: #b5b4b4;
+        stroke-width: 9.59px;
+      }
+
+      .cls-11 {
+        stroke-width: .83px;
+      }
+
+      .cls-49 {
+        fill: #dddcdc;
+      }
+
+      .cls-50 {
+        fill: #7e318e;
+      }
+
+      .cls-25 {
+        font-family: HiraKakuStdN-W7-83pv-RKSJ-H, 'Hiragino Kaku Gothic StdN';
+        letter-spacing: -.02em;
+      }
+
+      .cls-37, .cls-38, .cls-14 {
+        font-family: HiraginoSans-W4-83pv-RKSJ-H, 'Hiragino Sans';
+      }
+
+      .cls-37, .cls-51 {
+        fill: #1d2088;
+      }
+
+      .cls-38 {
+        fill: #231815;
+      }
+
+      .cls-28 {
+        fill: #f4c326;
+      }
+
+      .cls-29 {
+        fill: #302c1c;
+      }
+
+      .cls-52 {
+        fill: #b0bd8f;
+      }
+
+      .cls-30 {
+        fill: #d96414;
+      }
+
+      .cls-13 {
+        stroke: #e94820;
+        stroke-width: 1.45px;
+      }
+
+      .cls-53 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-54 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-55 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-14 {
+        stroke-width: 1.93px;
+      }
+
+      .cls-56 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-57 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-58 {
+        letter-spacing: -.12em;
+      }
+
+      .cls-59 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-60 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-61 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-62 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-15, .cls-20 {
+        stroke: #231815;
+        stroke-width: .96px;
+      }
+
+      .cls-19, .cls-63 {
+        fill: #8c8786;
+      }
+
+      .cls-64 {
+        fill: #e8e7e6;
+      }
+
+      .cls-65 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-31 {
+        fill: #ec8a25;
+      }
+
+      .cls-16 {
+        stroke: #7e318e;
+        stroke-width: 1.42px;
+      }
+    </style>
+    <clipPath
+       id="clippath-1">
+      <rect
+         class="cls-2"
+         x="78.370003"
+         y="314.37"
+         width="11.63"
+         height="9.9399996"
+         id="rect1" />
+    </clipPath>
+    <clipPath
+       id="clippath-2">
+      <rect
+         class="cls-2"
+         x="69.300003"
+         y="338.10999"
+         width="45.290001"
+         height="17.389999"
+         id="rect2" />
+    </clipPath>
+    <clipPath
+       id="clippath-3">
+      <rect
+         class="cls-2"
+         x="117.96"
+         y="338.10999"
+         width="18.280001"
+         height="17.719999"
+         id="rect3" />
+    </clipPath>
+    <clipPath
+       id="clippath-4">
+      <rect
+         class="cls-2"
+         x="69.300003"
+         y="314.37"
+         width="10.11"
+         height="17.219999"
+         id="rect4" />
+    </clipPath>
+    <filter
+       id="luminosity-invert"
+       x="148.2"
+       y="225.87"
+       width="52.560001"
+       height="329.28"
+       color-interpolation-filters="sRGB"
+       filterUnits="userSpaceOnUse">
+      <feColorMatrix
+         result="cm"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0"
+         id="feColorMatrix4" />
+    </filter>
+    <mask
+       id="mask"
+       x="148.2"
+       y="225.87"
+       width="52.56"
+       height="329.28"
+       maskUnits="userSpaceOnUse">
+      <g
+         class="cls-18"
+         id="g4">
+        <image
+           width="219"
+           height="1372"
+           transform="matrix(0.24,0,0,0.24,148.2,225.87)"
+           xlink:href="data:image/png;base64,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IEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoOgTwtsGIbP+lHwxzCCQZDAIOhTAntkemgKyVf0fGBCgYe9GdjQ97/iecAfyT4YBH08MDNGuOmhwIZhsEgB72CKCEF3A+tXCxz1KLY5ohnkYOFdI9gUl2kj3Pd0YKKCx719HGxc4LgVVj/0FkHghpuBdV13fWcV273g1n8GvqqHFzm2glrfN++bTasd4uKLe2iKOIU2lOsp4zAMVg/hhscPNJdLXH1/vd91azQbb3zKk4V/m5uB9X2/CGlrv2u+vxjNYMub+2Bbkb21P2ZFEc7ujmDdGFjfdWUYQ+uHYV5NnAgKtt0N7PXnz8UIdm8027ocymrGKES+mJuBHU+n8v3Hj9J33XKq+MiU0WmKUEq5E9hpDOx0Ol2PXGW9Sng+9vXMVNG0kq/g7iLH6XSaA7s1PbxaWdwYq6TEV/XmKmJXH/NaRTUfgN6KbTBKwZsHmh9d5KgJC84efrvKrajmA83TXev1DrHxhT02glVTwXvEBEtPjWDz5Rvv/xrKsLnYsf5Z8Kd7+GTf+nLr+29+jICo+II+9KlSj04ZfYYHX9XdwLrxLI6Fe6uHjnjBwsMj2FVoI6MS3Jb/54sEyBf2VGD33rVsegjXnlpFfPSxPsYNznw2PQQ9/8m+xcIGPOrdI9h7IxMnX8nnThG1Awv2wSAoGpjpIF/dhwMTEdxmighBAoMggUGQwCDocwKzzgGbjGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEtBtFJ8AAA/USURBVBgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDAIEhgECQyCBAZBAoMggUGQwCBIYBAkMAgSGAQJDIIEBkECgyCBQZDAIEhgECQwCBIYBAkMggQGQQKDIIFBkMAgSGAQJDCoDMPwqT9PYBAkMAgSGAQJDIIEBkGfFthnr77An8AIBkECgyCBQdCHArPfBff9mhFsGIoU+YpMESFIYBAkMAj69MCGMhQ7XHD2cGBWDOF58SmiLPnKYoEZ8fhdPLotJrZZixx8aemB4KnAjEl8JZ8R3y8dwUwb+Wo+NTAB8bv71VvouwIbhkFM8IAPj2D3QhMhf4J6O352m346sK1f0A/9sz8GfmufNTj4TA4IchyML2kY3n/ObN91Dz/289/RPLw9mhnt+BVubWdX99/ZHG/9jL5/bLcoN4KNz2sY3808PVFp8TtKvef+zcAeLbUUIxO/n+HG9ct9718hfMSnLNMLi9/dZ2yj7/kZDwW2/sHDMFyPbA/8biHyT3tmG/zI8a/Jcyf7boS29Zh+6GNzWnjWW4txyRf+p9/R/PSZG8Nw+YLfVCq2T9sH2xqxTAn5rdwYydbXH5mpPerdgd09xnDjWNhwfsCbPwM+3TAsLocyPHSK30e30XefTf/I/fMxsPf8EninxXa48anSm9vpA/e9x9OLHI/EtXUaylt/SUjbPA5WbYf90H/6Yaf374PdqH55xypKx8z4Ra62zepy3ibrfa4bm2W9+PGe+B4KrO/75Qi1egL1Qkd9ufVE19chaahWsG9NBevri5BW+23v8e73g9VPduvVYChVaOPXsPrzkHTzRX1cGFhsy//EuYh93y/O2NiKY+v61bC6+rnSIm0Zz3zn1Uzr6rEbX/VjnvX4geYxtHtP5upVYTF9fHuIhs8073dtzaDK9fZaX9bWpwWeTqeHn8NzU8TVq8J6iF3sf9Xr86tpYvngqwLccrVEPwd1e4Sat90bg8Pmz37Q0yf7DsMwj2alXBZA5iG3Wjm8RFf19s7VGHjU1YJc9QI/f39YhrTeb1nvGs3xPfH2rVKePBfx1opLfXsKbhHe1lSx+g8hNj7TeiWwfoG/GrnWg8LV4t3Hts03A+tWxd5+IhtDcH9jSF6/msAnWI9c8wt535+/qu2vH/rzNttf3v2xOSiU68HkGQ9PEW+trkxPquu7m3Pb+TjanZ8jND5D/QLej7sz0+g1B9Sfv+qg1nGVG9vm9NhHfeiTfbemg/XpJtNf5PK9y6tCffBaZHzUetTp+36xcjis1grG5bbzdthf9sG6rlv8nPUu0LPePYJtjkbTK8PQl37oS9d35+BWrxZDFWZf/8wiMp63jmAYt6t5BKu3s364HsHKeQbWV4ei+vX2/k77e9/s+37xGXD3pnnnWPo5qMVfZOjHV4q+9Ltd2e1286rOru/L0Fw63+12ZRiG82PgDetdlc1tc9o+x6/phX/+ujNV/Oh+2N3A6r/E1rRwGk7rJz/dXz/u8hfry65pzq8qY0jTq0azEdl0HdauRq36hX56Me+v45mC6rvVQLAV10ZspVwv/N3zUGDrv0ipLtehTfth0ytF0zel7dtFaLtSStntyq6U0jdNKeMT3jVNacbftRtHuvoVQ2xf23r02J5FDZfp4XjZdV3pu1VY4/3zaLYxIKx/9tZzeMubgZ1Op0XJi79Ev/HEun7xl+nbc2i7flf6ri/drpsDK2XcCRxHtWYYSmmaUna7ObTzQ69j2yLAf7+3/h+v99fnZfh621zNqOZp4cY0cQqt3pa7rpsHj6vVxSe9awRbrwqun3jXd6XrutK2bem6rjS7pjS75hxXvyvdbjcHNtmN9w3DUJqmKf14e1f9/sVj13+2WCD5k9T/LzdHrvOV5ULZKrCu6xbx9N1l92UeCLp+8fit6WWpf3719Yg3A1svp09LoP34ZOq/QP0Xml8xur70zfl7u92udLvqg/OHyyksu3Hk2jVNGcbH1l+llDm49f7Zs2EZ6f4Z73kBnLe98435vukFvqxe6Ov1gWlqOF2fts1Td5qnh9N22m1sz3VU66nio961yFHvSM5P+nQqh8Nh8UpxOp3Kbrc7L2DsplFq+XPb8T/ebhjK0DRlV+1/7aYRbLycwlhfzu6EU3/HSPfPuvtff2PkWr/Al3pqOF2upohTXHNMp+5mdHVc86rjKtqhGmieiezNwLr1quF6tFo9wemr6ZrSNV1pmuYS2LSZj6dVtU07TwnbppkXN5pperiK7HxxmTbWQW2l9dGRykj3mI+8YF1N/5bfnO+bH7eOq5oarvenpm3xdDwtts05uvq+02m5DY+3t1Yin/HQCDaNVovly+mXr4bk6S/QdE05Naeya3aLDXUYT59qh7YM7VCa4RxgP4Y47X/dGsXKdP1WXBtRCOX3sxllPXqtH3dn9Oqrkabv+sW0bxq5TqdTOXWncjwey+l0utxXhTSFtd7Xqmdu3RP7X6U8cqC5/iX1PHUYSjdODetXgbZt51CaXXO9cY8nhvVDX9qhPY9izVD6pj8/fgyyaZrrwDZGs1I2Rq+tyB7+T0La5nj3QFzzgkMpy+nb1sphd/2iX49k9Sh2PB6rtYPVPtvG73nGQ4scW3+ReRjtunI6Hst+vy+n06ns9/s5tmbXXO1zTX9+OjbWNefVximuOrL1IsfW7VLuj2DPjl5C/LhHJ4xXo9gqsq2Dyevb5xlVdRC5W64IriM6no7zyLWeIk6P6VYriVsj2aMemiJ2/Wq18GpKeBm9jsfjYvSZ/mvV/yGmJ9p0TWnapvRdf358sytt086hTQsjV5GVy2LJYqr4YEymjP+MR/bV1gsb0wcoTfetwxrK+XKaFs6xjauF00JHPS08Ho+Lrzm206l0p1M5HY/lVA0g9QnAz04TnxrBFsuYVfn78UnV08P6P1g/9OUwHObrXd+VfbsvbduWXbcrfXsJrNt15xGs7C4j2rj6OMV1WbYfL+aRbL2qePvvJbJf62ZcQ31149jX9OJcfRTFtB3VgU2j1zCMsW2sFE6hTWG9vr4urp/GwWK9uniZdnZPjV6lPBHY4mDcGFa9o9i0bdm9vi5HrrJ8a8u+35d9uy9N25wPRDfV/tr4td7/mlYf17dLKVehNbvlmwPuRqSvX+tWX1V4i8+KHy7fHzY+iqIMl+XyaXo49OMq4hjbdMJDV22v03Tx9fV13nbnbfl4LKdpmjhOFaftvV+dd/uoNxc5ulW93fRExwWO/X4/TwunMOr/eNMT2u/352G7Of+ZtmnLqTktpoTTZR3aVWBle1q4iGkjnqvR7QFGucc9s1Q/bNVWj2TraWJZTQ/L9Qm6c2DjG3/fCmyaGh6Px3J8fZ2nhXN0x+M8S1vvHn3qPth0EHmKq17gOB2P5ThNC9v2aoNcL9+3bVvatl2sNrZNW5q2mfe5FquHu91ioWQ9RXzrwPPNQHTzz9hcmb8+DWp9eTmb4zJNnN/YO04T5/2v4fbZRdMixhTW6XQqx3Ga+DqFNgW2Wsafj5U9OU18KLB6kWN6Bdjv96Xd70t7Ol0taswH/15eStu2c6T7/X6OrB7x2jHOadRarCSWamq4XugoZRHLIwse7xnJ+Dxbo9fmeYfD8vFzaNU+Wd+fP1ej/riKq92ZeoCoRrLX19d5Wvh6PJbXnz8vCx+vr5eZWj3ynU7l9fV1buIRDwX2+vPncmlzvN4ej6WpRpthGEo/nS41Pom2bcvhcChN01wfJ2ua+XYd2BTHOtx1QPXtxf7X1hTxndM908S3PXsmx/ZB5svVaV9sazSbLqepYSmX82W3FuPWl8fj8bz9TvtcXTePYlNcx9NlMWRxOOp0euq9YKW8Edg03zyeTuVYL2FW+11XCxr1Uv7pVNrx+Fg7TiP3+/3mwsZ6cWM9VZysj4mt7791+3fwuz2n3+WczGemifXt6dSoUm5HNj2mG+OYB4gpsCqm4+treR0XOo7j5WIRpLr+qIdPlbpaNVytGE5xdfv9YgGk3e9LO41U1ejVNs35DZbVVynL4143DyzfWexYX+ffYWuaeO/y1tf6nNnpDZfTield3y9WCufAppFrWrYfp4xTZK/VyPa5J/uOT+Ln62t5fX0t+8OhHDfimkat/TglnEeuOqopsmlfaxql6uX5Uo1O1e+oR8u3AnuGGLM+Mn28NTWc75uiWgVW6n2xYVgszg19vzjWVR9UnkayOa5pmjjO4F5//rysqn/GPtg0ch1Pp/Lj+/fy86+/ysvLy2Jjn37Z4XAo+64rXduW4+lU9mNY+/1+MXKdFzFWUU3TwmmxY/z9b41gj5wWJbxf5zP2xRb3PTKC1bdXpzNtnd63PtRUH9M91tPDMajT8Vh+/vxZfvz4UX6Oq4zPeGiKOA2P33/8KPv9fl7QqJ/86Xgs+8NhXik81gsYVVjTSFY29rOuvqYn8MTI9VYYwvnnvBXg5mpiuQ6sDJe1yFvTxHo9oB7NFsd062Nk9S5QtQ/28+fP8v3Hj/L9+/fFsv2jHj6T4/uPH+Uw7k+VUsq38ej2vt7XWp0u1Y6xrc/QWJ6pcR3V1kLGYsWwqVcMPz5qiS7jqYPPmyuL1Vke/fXK4uJ6WcZWhuWCx9ZIdvVexvrMjtNpEdfP19fyc1za//TAphXD//2//3deien78vryUv7+66/y0nXn0WpcHZyOc60XMBarg+uDyasFjun61uX6+tbtR7/HP+tegI+OZuvg6qnhetp4FdtqJJuCm2ZsP6q4vv/4MZ9e9YyH3tF8Gg8m17e/vbyU79+/l2/fvpX9fl/2+305jJd1SPeW3ndPhvXI7VuE9nt5Zrq4dd/dMz6qsG6FV59bOK0zzCuK4/7XtM81LfD9/PnzqYPMpZwPyd79mzZNUw7Vsatv377NixdTUPVjXr59Ox/z2viappf1snw9etWXV9eb7U/5/oxwxJfxkeNst/5s/e9z3QuuXulbnFO7+poWOl5fX+fBYzqgvD4GNh0TfmIVcffQIsdxHMHappl/8PpsjPV9UzjtRkzry+lxteZGUPv9w580d1czPmd+jfoj2N9ja2q23sjrkaWOa33ZVdfrr1LK4jzG+jHTz3/27SpvjmCTrQ1+fd86klt/7pnvJ/wTv5PnPo0p+bu2vree9t3680/+HXYPBwY8beelHIIEBkECgyCBQZDAIEhgECQwCBIYAP9O/z8Z5MaurCvn0QAAAABJRU5ErkJggg=="
+           id="image4" />
+      </g>
+    </mask>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.8, SVG Export Plug-In . SVG Version: 1.2.0 Build 200)  -->
+  <g
+     id="_地図"
+     data-name="地図"
+     transform="translate(36.245671,2.7813827)"
+     style="isolation:isolate">
+    <g
+       id="g397"
+       inkscape:label="背景">
+      <title
+         id="title398">背景</title>
+      <polygon
+         class="cls-34"
+         points="17.31,189.33 -22.89,179.86 -36.66,165.48 -39.27,557.11 374.77,557.18 374.77,346.76 343.78,2.28 223.37,45.38 198.72,80.11 141.15,103.72 143.65,114.08 120.73,128.68 113.73,160.8 "
+         id="polygon4"
+         inkscape:label="背景"
+         sodipodi:insensitive="true">
+        <title
+           id="title376">背景</title>
+      </polygon>
+      <polygon
+         class="cls-52"
+         points="332.15,-32.27 332.15,103.63 141.15,103.78 287.95,-9.38 "
+         id="polygon5"
+         inkscape:label="背景緑"
+         style="isolation:isolate">
+        <title
+           id="title396">背景緑</title>
+      </polygon>
+    </g>
+    <g
+       id="g370"
+       inkscape:label="通路"
+       style="isolation:isolate"
+       sodipodi:insensitive="true">
+      <title
+         id="title371">通路</title>
+      <polygon
+         class="cls-47"
+         points="88.4,448.9 135.26,384.94 135.54,396.65 93.4,452.66 "
+         id="polygon164"
+         inkscape:label="通路">
+        <title
+           id="title368">通路</title>
+      </polygon>
+      <polygon
+         class="cls-47"
+         points="67.16,411.28 221.5,466.49 219.2,471.9 64.87,416.69 "
+         id="polygon212"
+         inkscape:label="通路">
+        <title
+           id="title369">通路</title>
+      </polygon>
+      <path
+         class="cls-36"
+         d="m -40.94,354.36 1.37,-3.65 7.94,-0.94 c 0,0 -1.52,6.66 1.83,7.5 2.18,0.54 180.49,-0.09 180.49,-0.09 L 150.3,219.8 h 5.94 v -76.22 h 39.75 v -18.83 h 54.6 l -0.23,10.28 c 0,0 -1.6,5.26 -13.25,14.51 -11.65,9.25 -30.1,8.4 -30.1,8.4 0,0 -7.14,8.63 -8.63,8.63 -1.49,0 0,27.3 0,27.3 l 7.88,7.88 h 141.86 l 0.12,10.48 -31.9,0.02 v 136.34 h 37.98 l 4.11,21.39 h -65.46 l -3.78,6.86 H 62.27 v -7.8 H -41.23 Z M 270.46,215.4 h -9.14 l -6.15,-6.15 h -42.28 l -14.17,18.77 v 119.49 l 7.2,8.57 h 65.91 l -2.06,2.63 5.37,6.51 h 4.45 l 4.68,-6.74 h 19.08 l 2.97,-3.43 V 214.2 l -3.88,-3.66 h -28.22 l -3.77,4.87 z"
+         id="path226"
+         inkscape:label="学内道路"
+         sodipodi:insensitive="true">
+        <title
+           id="title362">学内道路</title>
+      </path>
+      <path
+         id="path6281"
+         d="m 151.16637,553.06349 -0.77945,-324.35505 h 48.21643 l -0.004,324.35505 z"
+         style="fill:#fffbed;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.996775"
+         inkscape:label="メインストリート" />
+      <line
+         class="cls-10"
+         x1="-36.66"
+         y1="361.79999"
+         x2="-36.66"
+         y2="165.48"
+         id="line226"
+         inkscape:label="通路">
+        <title
+           id="title370">通路</title>
+      </line>
+      <path
+         class="cls-36"
+         d="m 289.14,374.65 3.83,171.73 h -13.48 v -2.06 h -28.44 l -1.94,-2.63 h -15.19 v -3.03 h -15.31 c 0,0 0.46,-5.31 1.14,-7.48 0.68,-2.17 1.37,-2.4 1.37,-2.4 l 2.51,2.74 9.82,-0.34 v -3.08 h 39.87 c 0,0 6.51,0.69 6.51,-8.11 0,-8.8 -2.06,-143.17 -2.06,-143.17 l 11.36,-2.18 z"
+         id="path227"
+         inkscape:label="通路"
+         sodipodi:insensitive="true">
+        <title
+           id="title363">通路</title>
+      </path>
+    </g>
+    <g
+       id="g388"
+       inkscape:label="一般道付近"
+       style="isolation:isolate">
+      <title
+         id="title389">一般道付近</title>
+      <polygon
+         class="cls-36"
+         points="317.84,553.13 -38.25,553.13 -37.64,578.61 317.84,579.29 "
+         id="polygon226"
+         transform="matrix(1.1032907,0,0,1,3.9508683,0)"
+         inkscape:label="一般道">
+        <title
+           id="title361">一般道</title>
+      </polygon>
+      <g
+         id="g347"
+         inkscape:label="バス停"
+         sodipodi:insensitive="true">
+        <title
+           id="title348">バス停</title>
+        <path
+           class="cls-24"
+           d="m 81.86,536.87 c 0,2.51 -2.04,4.55 -4.55,4.55 -2.51,0 -4.55,-2.04 -4.55,-4.55 0,-2.51 2.04,-4.55 4.55,-4.55 2.51,0 4.55,2.04 4.55,4.55"
+           id="path272" />
+        <path
+           class="cls-51"
+           d="m 80.61,547.51 c -0.15,-0.32 -0.57,-0.58 -0.92,-0.58 h -1.54 v -4.92 c 2.44,-0.4 4.31,-2.52 4.31,-5.08 0,-2.84 -2.31,-5.15 -5.15,-5.15 -2.84,0 -5.15,2.31 -5.15,5.15 0,2.56 1.86,4.68 4.31,5.08 v 4.92 h -1.54 c -0.36,0 -0.77,0.26 -0.92,0.58 l -1.41,2.97 c -0.15,0.32 0.01,0.58 0.37,0.58 h 8.68 c 0.36,0 0.52,-0.26 0.37,-0.58 z m -3.3,-14.37 c 1.52,0 2.83,0.9 3.43,2.19 h -6.86 c 0.6,-1.29 1.91,-2.19 3.43,-2.19 m -3.43,5.37 h 6.86 c -0.6,1.29 -1.91,2.19 -3.43,2.19 -1.52,0 -2.83,-0.9 -3.43,-2.19"
+           id="path273" />
+      </g>
+      <g
+         id="g288"
+         inkscape:label="ポスター"
+         sodipodi:insensitive="true">
+        <title
+           id="title343">ポスター</title>
+        <rect
+           class="cls-41"
+           x="141.14"
+           y="531.77002"
+           width="11.58"
+           height="13.65"
+           rx="0.47999999"
+           ry="0.47999999"
+           id="rect287" />
+        <line
+           class="cls-4"
+           x1="146.92999"
+           y1="551.07001"
+           x2="146.92999"
+           y2="539.70001"
+           id="line287" />
+        <line
+           class="cls-11"
+           x1="142.83"
+           y1="534.75"
+           x2="151.03"
+           y2="534.75"
+           id="line288" />
+      </g>
+      <g
+         id="g289"
+         inkscape:label="正門文字"
+         sodipodi:insensitive="true">
+        <title
+           id="title344">正門文字</title>
+        <text
+           class="cls-25"
+           transform="translate(160.56,568.77)"
+           id="text288"><tspan
+             x="0"
+             y="0"
+             id="tspan288">▲正門</tspan></text>
+      </g>
+      <text
+         class="cls-37"
+         id="text304"
+         inkscape:label="関東学院正門文字"
+         sodipodi:insensitive="true"
+         x="83.830002"
+         y="548.48999"><title
+           id="title346">関東学院正門文字</title><tspan
+           class="cls-57"
+           x="83.830002"
+           y="548.48999"
+           id="tspan299">関</tspan><tspan
+           class="cls-61"
+           x="92.93"
+           y="548.48999"
+           id="tspan300">東</tspan><tspan
+           class="cls-55"
+           x="102.19"
+           y="548.48999"
+           id="tspan301">学</tspan><tspan
+           class="cls-60"
+           x="111.17"
+           y="548.48999"
+           id="tspan302">院</tspan><tspan
+           class="cls-54"
+           x="120.38"
+           y="548.48999"
+           id="tspan303">正</tspan><tspan
+           class="cls-62"
+           x="129.31"
+           y="548.48999"
+           id="tspan304">門</tspan></text>
+    </g>
+    <g
+       id="g390"
+       inkscape:label="12号館">
+      <title
+         id="title391">12号館</title>
+      <rect
+         class="cls-19"
+         x="288.72"
+         y="43.080002"
+         width="43.43"
+         height="48.139999"
+         id="rect29" />
+      <rect
+         class="cls-19"
+         x="292.54999"
+         y="33.509998"
+         width="35.77"
+         height="11.5"
+         id="rect30" />
+    </g>
+    <rect
+       class="cls-19"
+       x="255.44788"
+       y="180.78786"
+       width="26.879999"
+       height="138.53"
+       transform="rotate(-36.42)"
+       id="rect31"
+       inkscape:label="工学部実験棟">
+      <title
+         id="title390">工学部実験棟</title>
+    </rect>
+    <g
+       id="g396"
+       inkscape:label="上部">
+      <title
+         id="title397">上部</title>
+      <g
+         id="g391"
+         inkscape:label="草木">
+        <title
+           id="title392">草木</title>
+        <path
+           class="cls-35"
+           d="m 253.5,35.76 c 0.07,1.09 1.65,2.25 1.46,3.28 -0.2,1.06 -0.88,2.12 -1.33,3.07 -0.45,0.96 -1.54,1.54 -2.21,2.34 -0.67,0.8 -1.64,1.12 -2.5,1.72 -0.84,0.59 -1.24,2.17 -2.22,2.52 -0.95,0.34 -2.17,-0.26 -3.22,-0.19 -1.05,0.07 -2.24,1.14 -3.23,0.94 -1.02,-0.21 -2.04,-1.03 -2.95,-1.5 -0.93,-0.48 -1.52,-1.59 -2.29,-2.3 -0.77,-0.7 -2.05,-1.07 -2.63,-1.96 -0.57,-0.88 -0.18,-2.33 -0.52,-3.35 -0.33,-0.99 -0.76,-1.94 -0.83,-3.03 -0.07,-1.09 0.16,-2.1 0.35,-3.13 0.2,-1.06 1.04,-1.73 1.48,-2.68 0.45,-0.96 0,-2.47 0.68,-3.27 0.67,-0.8 1.37,-1.77 2.23,-2.37 0.84,-0.59 2.05,-0.67 3.03,-1.01 0.95,-0.34 2,-0.28 3.05,-0.35 1.05,-0.07 2.07,-0.21 3.06,0 1.02,0.21 2.37,-0.21 3.28,0.26 0.93,0.47 1.43,1.85 2.2,2.55 0.77,0.7 0.82,1.97 1.4,2.86 0.57,0.88 2.03,1.27 2.37,2.29 0.33,0.99 -0.73,2.23 -0.66,3.32"
+           id="path5" />
+        <path
+           class="cls-35"
+           d="m 282.02,89.07 c 0,1.01 1.37,2.17 1.13,3.1 -0.25,0.96 -0.94,1.89 -1.41,2.73 -0.48,0.85 -1.5,1.32 -2.17,2.01 -0.66,0.69 -1.57,0.93 -2.39,1.42 -0.81,0.49 -1.27,1.92 -2.19,2.17 -0.89,0.25 -1.98,-0.38 -2.94,-0.38 -0.96,0 -2.12,0.9 -3.01,0.66 -0.92,-0.26 -1.81,-1.08 -2.61,-1.56 -0.82,-0.49 -1.29,-1.56 -1.96,-2.25 -0.66,-0.69 -1.81,-1.11 -2.29,-1.96 -0.47,-0.84 -0.02,-2.14 -0.27,-3.1 -0.24,-0.93 -0.58,-1.82 -0.58,-2.83 0,-1.01 0.28,-1.92 0.52,-2.84 0.25,-0.96 1.06,-1.52 1.53,-2.36 0.47,-0.85 0.16,-2.26 0.82,-2.96 0.66,-0.69 1.37,-1.54 2.19,-2.03 0.81,-0.49 1.92,-0.49 2.84,-0.74 0.89,-0.25 1.85,-0.13 2.82,-0.13 0.97,0 1.91,-0.06 2.81,0.19 0.92,0.26 2.18,-0.04 2.99,0.44 0.82,0.49 1.19,1.79 1.86,2.48 0.66,0.69 0.63,1.85 1.1,2.7 0.47,0.84 1.78,1.29 2.03,2.25 0.24,0.93 -0.81,2 -0.81,3.01"
+           id="path6" />
+        <path
+           class="cls-35"
+           d="m 267.71,24.11 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.97,1.46 -1.67,1.65 -0.68,0.19 -1.5,-0.29 -2.24,-0.29 -0.74,0 -1.62,0.69 -2.3,0.5 -0.7,-0.2 -1.38,-0.82 -1.99,-1.19 -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.2 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.36,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path7" />
+        <path
+           class="cls-35"
+           d="m 298.51,-5.71 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.96,1.46 -1.67,1.65 -0.68,0.19 -1.5,-0.29 -2.24,-0.29 -0.74,0 -1.62,0.69 -2.3,0.5 -0.7,-0.2 -1.38,-0.82 -1.99,-1.19 -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.2 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.36,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path8" />
+        <path
+           class="cls-35"
+           d="m 286.24,38.05 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.97,1.46 -1.67,1.65 -0.68,0.19 -1.5,-0.29 -2.24,-0.29 -0.74,0 -1.62,0.69 -2.3,0.5 -0.7,-0.2 -1.38,-0.82 -1.99,-1.19 -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.19 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.35,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path9" />
+        <path
+           class="cls-35"
+           d="m 284.88,53.49 c 0,0.94 1.04,2.03 0.86,2.91 -0.19,0.9 -0.72,1.77 -1.07,2.56 -0.36,0.8 -1.15,1.23 -1.65,1.88 -0.5,0.65 -1.2,0.87 -1.82,1.33 -0.62,0.46 -0.97,1.8 -1.67,2.04 -0.68,0.23 -1.5,-0.35 -2.24,-0.35 -0.74,0 -1.62,0.85 -2.3,0.62 -0.7,-0.24 -1.38,-1.01 -1.99,-1.46 -0.62,-0.46 -0.99,-1.46 -1.49,-2.11 -0.51,-0.65 -1.38,-1.04 -1.74,-1.84 -0.35,-0.79 -0.02,-2.01 -0.2,-2.91 -0.18,-0.87 -0.44,-1.71 -0.44,-2.65 0,-0.94 0.21,-1.8 0.4,-2.67 0.19,-0.9 0.81,-1.43 1.16,-2.22 0.36,-0.8 0.12,-2.13 0.63,-2.77 0.51,-0.64 1.04,-1.45 1.67,-1.91 0.62,-0.46 1.46,-0.45 2.16,-0.7 0.68,-0.23 1.41,-0.12 2.15,-0.12 0.74,0 1.46,-0.06 2.14,0.18 0.7,0.24 1.66,-0.04 2.28,0.42 0.62,0.46 0.91,1.68 1.41,2.33 0.5,0.65 0.48,1.74 0.84,2.54 0.36,0.79 1.36,1.21 1.55,2.11 0.18,0.87 -0.62,1.88 -0.62,2.82"
+           id="path10" />
+        <path
+           class="cls-35"
+           d="m 245.46,90.98 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.96,1.46 -1.67,1.65 -0.68,0.19 -1.5,-0.29 -2.24,-0.29 -0.74,0 -1.62,0.69 -2.3,0.5 -0.7,-0.2 -1.38,-0.82 -1.99,-1.19 -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.2 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.36,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path11" />
+        <path
+           class="cls-35"
+           d="m 268.86,78.43 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.96,1.46 -1.67,1.65 -0.68,0.19 -1.5,-0.29 -2.24,-0.29 -0.74,0 -1.62,0.69 -2.3,0.5 -0.7,-0.2 -1.38,-0.82 -1.99,-1.19 -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.2 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.36,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path12" />
+        <path
+           class="cls-35"
+           d="m 255.83,85.45 c -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.2 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.36,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path13" />
+        <path
+           class="cls-35"
+           d="m 267.71,77.72 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.97,1.46 -1.67,1.65"
+           id="path14" />
+        <path
+           class="cls-35"
+           d="m 285.64,72.28 c 0,0.77 1.04,1.65 0.86,2.36 -0.19,0.73 -0.72,1.44 -1.07,2.08 -0.36,0.65 -1.15,1 -1.65,1.53 -0.5,0.53 -1.2,0.71 -1.82,1.08 -0.62,0.37 -0.97,1.46 -1.67,1.65 -0.68,0.19 -1.5,-0.29 -2.24,-0.29 -0.74,0 -1.62,0.69 -2.3,0.5 -0.7,-0.2 -1.38,-0.82 -1.99,-1.19 -0.62,-0.37 -0.99,-1.18 -1.49,-1.71 -0.51,-0.53 -1.38,-0.84 -1.74,-1.49 -0.35,-0.64 -0.02,-1.63 -0.2,-2.36 -0.18,-0.71 -0.44,-1.39 -0.44,-2.15 0,-0.76 0.21,-1.46 0.4,-2.17 0.19,-0.73 0.81,-1.16 1.16,-1.8 0.36,-0.65 0.12,-1.72 0.63,-2.25 0.51,-0.53 1.04,-1.17 1.67,-1.55 0.62,-0.37 1.46,-0.37 2.16,-0.56 0.68,-0.19 1.41,-0.1 2.15,-0.1 0.74,0 1.46,-0.05 2.14,0.14 0.7,0.2 1.66,-0.03 2.28,0.34 0.62,0.38 0.91,1.36 1.41,1.89 0.51,0.53 0.48,1.41 0.84,2.06 0.36,0.64 1.36,0.98 1.55,1.71 0.18,0.71 -0.62,1.52 -0.62,2.29"
+           id="path15" />
+        <path
+           class="cls-35"
+           d="m 199.61,72.36 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.24 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.65,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 -0.12,-0.47 -0.29,-0.92 -0.29,-1.42 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path16" />
+        <path
+           class="cls-35"
+           d="m 197.5,91.06 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.24 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.65,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 C 187.17,92 187,91.55 187,91.05 c 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path17" />
+        <path
+           class="cls-35"
+           d="m 276.44,23.12 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.25 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.65,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 -0.12,-0.47 -0.29,-0.92 -0.29,-1.42 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path18" />
+        <path
+           class="cls-35"
+           d="m 308.72,0.11 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.24 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 C 301.66,5.86 301.21,5.45 300.8,5.2 300.39,4.95 300.14,4.42 299.81,4.07 299.47,3.72 298.89,3.51 298.65,3.08 298.41,2.66 298.64,2 298.51,1.52 298.39,1.05 298.22,0.6 298.22,0.1 c 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path19" />
+        <path
+           class="cls-35"
+           d="m 311.3,-11.42 c 0,0.77 1.06,1.66 0.87,2.37 -0.19,0.73 -0.73,1.44 -1.09,2.09 -0.37,0.65 -1.16,1 -1.67,1.53 -0.51,0.53 -1.21,0.71 -1.85,1.09 -0.62,0.37 -0.98,1.46 -1.69,1.66 -0.69,0.19 -1.52,-0.29 -2.27,-0.29 -0.75,0 -1.64,0.69 -2.33,0.5 -0.71,-0.19 -1.39,-0.82 -2.02,-1.19 -0.63,-0.38 -1,-1.19 -1.51,-1.72 -0.51,-0.53 -1.4,-0.85 -1.77,-1.5 -0.36,-0.64 -0.02,-1.64 -0.21,-2.37 -0.18,-0.71 -0.44,-1.39 -0.44,-2.16 0,-0.77 0.22,-1.47 0.4,-2.17 0.19,-0.73 0.82,-1.16 1.18,-1.81 0.37,-0.65 0.12,-1.73 0.64,-2.26 0.51,-0.53 1.06,-1.18 1.69,-1.55 0.62,-0.37 1.48,-0.37 2.19,-0.57 0.69,-0.19 1.43,-0.1 2.17,-0.1 0.74,0 1.48,-0.05 2.16,0.14 0.71,0.19 1.68,-0.03 2.31,0.34 0.63,0.38 0.92,1.37 1.43,1.89 0.51,0.52 0.48,1.42 0.85,2.07 0.36,0.64 1.38,0.99 1.57,1.72 0.19,0.71 -0.63,1.53 -0.63,2.3"
+           id="path20" />
+        <path
+           class="cls-35"
+           d="m 319,-16.74 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.25 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.65,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 -0.12,-0.47 -0.29,-0.92 -0.29,-1.42 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path21" />
+        <path
+           class="cls-35"
+           d="m 275.44,69.11 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.25 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.66,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 -0.12,-0.47 -0.29,-0.92 -0.29,-1.42 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path22" />
+        <path
+           class="cls-35"
+           d="m 232.58,91.06 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.24 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.66,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 -0.12,-0.47 -0.29,-0.92 -0.29,-1.42 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path23" />
+        <path
+           class="cls-35"
+           d="m 223.8,89.23 c 0,0.51 0.69,1.09 0.57,1.56 -0.12,0.48 -0.48,0.95 -0.72,1.37 -0.24,0.43 -0.76,0.66 -1.1,1.01 -0.34,0.35 -0.8,0.46 -1.21,0.71 -0.41,0.25 -0.64,0.96 -1.11,1.09 -0.45,0.12 -1,-0.19 -1.49,-0.19 -0.49,0 -1.08,0.45 -1.53,0.33 -0.47,-0.13 -0.92,-0.54 -1.33,-0.79 -0.41,-0.25 -0.65,-0.78 -0.99,-1.13 -0.34,-0.35 -0.92,-0.56 -1.16,-0.99 -0.24,-0.42 -0.01,-1.08 -0.14,-1.56 -0.12,-0.47 -0.29,-0.92 -0.29,-1.42 0,-0.5 0.14,-0.96 0.26,-1.43 0.13,-0.48 0.54,-0.77 0.78,-1.19 0.24,-0.43 0.08,-1.14 0.42,-1.48 0.34,-0.35 0.69,-0.78 1.11,-1.02 0.41,-0.24 0.97,-0.24 1.44,-0.37 0.45,-0.12 0.94,-0.06 1.43,-0.06 0.49,0 0.97,-0.03 1.42,0.09 0.47,0.13 1.11,-0.02 1.52,0.22 0.42,0.25 0.61,0.9 0.94,1.25 0.34,0.35 0.32,0.93 0.56,1.36 0.24,0.42 0.91,0.65 1.03,1.13 0.12,0.47 -0.41,1.01 -0.41,1.51"
+           id="path24" />
+        <path
+           class="cls-35"
+           d="m 193.85,81.16 c 0,0.71 0.96,1.52 0.79,2.17 -0.17,0.67 -0.66,1.32 -0.99,1.91 -0.33,0.6 -1.05,0.92 -1.52,1.4 -0.47,0.49 -1.1,0.65 -1.68,0.99 -0.57,0.34 -0.89,1.34 -1.53,1.52 -0.63,0.17 -1.38,-0.26 -2.06,-0.26 -0.68,0 -1.49,0.63 -2.11,0.46 -0.65,-0.18 -1.27,-0.75 -1.83,-1.09 -0.57,-0.34 -0.91,-1.09 -1.37,-1.57 -0.47,-0.48 -1.27,-0.78 -1.6,-1.37 -0.33,-0.59 -0.01,-1.5 -0.19,-2.17 -0.17,-0.65 -0.4,-1.28 -0.4,-1.98 0,-0.7 0.2,-1.34 0.36,-1.99 0.17,-0.67 0.74,-1.07 1.07,-1.65 0.33,-0.6 0.11,-1.59 0.58,-2.07 0.47,-0.48 0.96,-1.08 1.53,-1.42 0.57,-0.34 1.34,-0.34 1.99,-0.52 0.63,-0.17 1.3,-0.09 1.97,-0.09 0.67,0 1.34,-0.04 1.97,0.13 0.65,0.18 1.53,-0.03 2.09,0.31 0.57,0.34 0.84,1.25 1.3,1.74 0.47,0.48 0.44,1.3 0.77,1.89 0.33,0.59 1.25,0.9 1.42,1.57 0.17,0.65 -0.57,1.4 -0.57,2.11"
+           id="path25" />
+        <path
+           class="cls-35"
+           d="m 237.21,46.98 c 0,0.71 0.96,1.52 0.79,2.17 -0.17,0.67 -0.66,1.32 -0.99,1.91 -0.33,0.6 -1.05,0.92 -1.52,1.4 -0.47,0.49 -1.1,0.65 -1.68,0.99 -0.57,0.34 -0.89,1.34 -1.53,1.52 -0.63,0.17 -1.38,-0.26 -2.06,-0.26 -0.68,0 -1.49,0.63 -2.11,0.46 -0.65,-0.18 -1.27,-0.75 -1.83,-1.09 -0.57,-0.34 -0.91,-1.09 -1.37,-1.57 -0.47,-0.48 -1.27,-0.78 -1.6,-1.37 -0.33,-0.59 -0.01,-1.5 -0.19,-2.17 -0.17,-0.65 -0.4,-1.28 -0.4,-1.98 0,-0.7 0.2,-1.34 0.36,-1.99 0.17,-0.67 0.74,-1.07 1.07,-1.65 0.33,-0.6 0.11,-1.59 0.58,-2.07 0.47,-0.48 0.96,-1.08 1.53,-1.42 0.57,-0.34 1.34,-0.34 1.99,-0.52 0.63,-0.17 1.3,-0.09 1.97,-0.09 0.67,0 1.34,-0.04 1.97,0.13 0.65,0.18 1.53,-0.03 2.09,0.31 0.57,0.34 0.84,1.25 1.3,1.74 0.47,0.48 0.44,1.3 0.77,1.89 0.33,0.59 1.25,0.9 1.42,1.57 0.17,0.65 -0.57,1.4 -0.57,2.11"
+           id="path26" />
+        <path
+           class="cls-35"
+           d="m 259.72,90.99 c 0,0.71 0.96,1.52 0.79,2.17 -0.17,0.67 -0.66,1.32 -0.99,1.91 -0.33,0.6 -1.05,0.92 -1.52,1.4 -0.47,0.49 -1.1,0.65 -1.68,0.99 -0.57,0.34 -0.89,1.34 -1.53,1.52 -0.63,0.17 -1.38,-0.26 -2.06,-0.26 -0.68,0 -1.49,0.63 -2.11,0.46 -0.65,-0.18 -1.27,-0.75 -1.83,-1.09 -0.57,-0.34 -0.91,-1.09 -1.37,-1.57 -0.47,-0.48 -1.27,-0.78 -1.6,-1.37 -0.33,-0.59 -0.01,-1.5 -0.19,-2.17 -0.17,-0.65 -0.4,-1.28 -0.4,-1.98 0,-0.7 0.2,-1.34 0.36,-1.99 0.17,-0.67 0.74,-1.07 1.07,-1.65 0.33,-0.6 0.11,-1.59 0.58,-2.07 0.46,-0.48 0.96,-1.08 1.53,-1.42 0.57,-0.34 1.34,-0.34 1.99,-0.52 0.63,-0.17 1.3,-0.09 1.97,-0.09 0.67,0 1.34,-0.04 1.97,0.13 0.65,0.18 1.53,-0.03 2.09,0.31 0.57,0.34 0.84,1.25 1.3,1.74 0.47,0.48 0.44,1.3 0.77,1.89 0.33,0.59 1.25,0.9 1.42,1.57 0.17,0.65 -0.57,1.4 -0.57,2.11"
+           id="path27" />
+        <path
+           class="cls-35"
+           d="m 211.56,90.66 c 0,0.71 0.96,1.52 0.79,2.17 -0.17,0.67 -0.66,1.32 -0.99,1.91 -0.33,0.6 -1.05,0.92 -1.52,1.4 -0.47,0.49 -1.1,0.65 -1.68,0.99 -0.57,0.34 -0.89,1.34 -1.53,1.52 -0.63,0.17 -1.38,-0.26 -2.06,-0.26 -0.68,0 -1.49,0.63 -2.11,0.46 -0.65,-0.18 -1.27,-0.75 -1.83,-1.09 -0.57,-0.34 -0.91,-1.09 -1.37,-1.57 -0.47,-0.48 -1.27,-0.78 -1.6,-1.37 -0.33,-0.59 -0.01,-1.5 -0.19,-2.17 -0.17,-0.65 -0.4,-1.28 -0.4,-1.98 0,-0.7 0.2,-1.34 0.36,-1.99 0.17,-0.67 0.74,-1.07 1.07,-1.65 0.33,-0.6 0.11,-1.59 0.58,-2.07 0.46,-0.48 0.96,-1.08 1.53,-1.42 0.57,-0.34 1.34,-0.34 1.99,-0.52 0.63,-0.17 1.3,-0.09 1.97,-0.09 0.67,0 1.34,-0.04 1.97,0.13 0.65,0.18 1.53,-0.03 2.09,0.31 0.57,0.34 0.84,1.25 1.3,1.74 0.47,0.48 0.44,1.3 0.77,1.89 0.33,0.59 1.25,0.9 1.42,1.57 0.17,0.65 -0.57,1.4 -0.57,2.11"
+           id="path28" />
+      </g>
+      <g
+         id="g394"
+         inkscape:label="上部孤島">
+        <title
+           id="title395">上部孤島</title>
+        <rect
+           class="cls-19"
+           x="303.76001"
+           y="7.8899999"
+           width="11.38"
+           height="19.23"
+           id="rect32" />
+        <polygon
+           class="cls-19"
+           points="286.1,21.36 286.1,11.68 288.72,11.68 288.72,6.71 296.04,6.71 296.04,21.36 "
+           id="polygon32"
+           inkscape:label="茶室">
+          <title
+             id="title393">茶室</title>
+        </polygon>
+        <polygon
+           class="cls-19"
+           points="263.13,4.63 280.47,3.23 280.83,6.91 279.65,7.05 280.32,12.87 263.8,14.55 "
+           id="polygon33" />
+        <rect
+           class="cls-19"
+           x="134.06633"
+           y="161.67911"
+           width="23.469999"
+           height="11.38"
+           transform="rotate(-33.24)"
+           id="rect33"
+           inkscape:label="栽培実習室">
+          <title
+             id="title394">栽培実習室</title>
+        </rect>
+      </g>
+    </g>
+    <g
+       id="g365"
+       inkscape:label="芝生広場"
+       sodipodi:insensitive="true">
+      <title
+         id="title366">芝生広場</title>
+      <polygon
+         class="cls-52"
+         points="270.61,204.4 309.99,205.62 309.99,369.97 270.61,368.75 "
+         id="polygon59" />
+      <path
+         class="cls-35"
+         d="m 277.79,254.4 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path247" />
+      <path
+         class="cls-35"
+         d="m 277.79,263.42 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path248" />
+      <path
+         class="cls-35"
+         d="m 277.79,272.71 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path249" />
+      <path
+         class="cls-35"
+         d="m 277.79,282 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path250" />
+      <path
+         class="cls-35"
+         d="m 277.79,291.29 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path251" />
+      <path
+         class="cls-35"
+         d="m 277.79,300.57 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path252" />
+      <path
+         class="cls-35"
+         d="m 277.79,309.86 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path253" />
+      <path
+         class="cls-35"
+         d="m 277.79,319.15 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.32 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+         id="path254" />
+    </g>
+    <path
+       class="cls-63"
+       d="M 199.82558,101.9 V 91.16 h -12.94 v 19.19 h -5.79 v 14.39 h 5.79 v 18.83 h 25.4 c 12.3,0 25.64,-11.86 25.64,-18.83 h 12.85 v -22.85 h -50.95 z"
+       id="path264"
+       inkscape:label="11号館"
+       sodipodi:insensitive="true">
+      <title
+         id="title359">11号館</title>
+    </path>
+    <rect
+       class="cls-20"
+       x="199.57001"
+       y="375.37"
+       width="77.639999"
+       height="85.330002"
+       id="rect264"
+       inkscape:label="3号館"
+       sodipodi:insensitive="true">
+      <title
+         id="title358">3号館</title>
+    </rect>
+    <g
+       id="g386"
+       inkscape:label="2号館">
+      <title
+         id="title387">2号館</title>
+      <g
+         id="g381"
+         inkscape:label="2号館背景">
+        <title
+           id="title382">2号館背景</title>
+        <line
+           class="cls-7"
+           x1="202.21001"
+           y1="464.69"
+           x2="202.21001"
+           y2="528.34003"
+           id="line212" />
+        <polyline
+           class="cls-7"
+           points="204.89 528.34 204.89 480.47 210.03 480.47 210.03 468.01"
+           id="polyline212" />
+        <rect
+           class="cls-7"
+           x="233"
+           y="476.29999"
+           width="31.879999"
+           height="11.65"
+           id="rect222" />
+        <rect
+           class="cls-7"
+           x="264.87"
+           y="475.56"
+           width="4.5100002"
+           height="23.27"
+           id="rect223" />
+        <rect
+           class="cls-7"
+           x="269.39001"
+           y="470.48999"
+           width="7.73"
+           height="49.32"
+           id="rect224" />
+        <rect
+           class="cls-7"
+           x="216.55"
+           y="478.20999"
+           width="16.440001"
+           height="16.440001"
+           id="rect225" />
+        <polyline
+           class="cls-7"
+           points="230.94 523.65 233.57 523.65 233.57 530.96 223.51 530.96 217.69 523.65"
+           id="polyline225" />
+        <line
+           class="cls-7"
+           x1="197.58"
+           y1="528.34003"
+           x2="209.23"
+           y2="528.34003"
+           id="line225" />
+      </g>
+      <polygon
+         class="cls-63"
+         points="209.36,481.96 209.36,527.71 212.07,527.71 212.07,529.94 209.36,529.94 209.36,539.07 216.32,539.07 216.32,529.94 214.37,529.94 214.37,527.71 217.06,527.71 217.06,524.34 230.03,524.34 230.03,511.32 233.68,511.32 233.68,524.34 265.55,524.34 265.55,527.71 272.18,527.71 272.18,520.11 277.89,520.11 277.89,508.8 272.18,508.8 272.18,504.69 276.29,504.69 276.29,481.96 269.89,481.96 269.89,496.35 265.55,496.35 265.55,488.12 233.68,488.12 233.68,492.35 230.03,492.35 230.03,485.04 217.06,485.04 217.06,481.96 "
+         id="polygon264"
+         inkscape:label="2号館"
+         sodipodi:insensitive="true">
+        <title
+           id="title357">2号館</title>
+      </polygon>
+    </g>
+    <g
+       id="g385"
+       inkscape:label="1号館">
+      <title
+         id="title386">1号館</title>
+      <g
+         id="g380"
+         inkscape:label="1号館背景">
+        <title
+           id="title381">1号館背景</title>
+        <rect
+           class="cls-7"
+           x="62.779999"
+           y="477.95999"
+           width="55.75"
+           height="27.190001"
+           id="rect214" />
+        <rect
+           class="cls-7"
+           x="130.23"
+           y="477.95999"
+           width="9.5"
+           height="4.8699999"
+           id="rect215" />
+        <line
+           class="cls-7"
+           x1="118.53"
+           y1="479.79001"
+           x2="130.23"
+           y2="479.79001"
+           id="line215" />
+        <line
+           class="cls-7"
+           x1="118.53"
+           y1="481.73001"
+           x2="130.23"
+           y2="481.73001"
+           id="line216" />
+        <rect
+           class="cls-7"
+           x="63.27"
+           y="509.14999"
+           width="4.1999998"
+           height="26.389999"
+           id="rect216" />
+        <rect
+           class="cls-7"
+           x="70.349998"
+           y="532.65997"
+           width="24.84"
+           height="2.8699999"
+           id="rect217" />
+        <rect
+           class="cls-7"
+           x="98.589996"
+           y="525.04999"
+           width="15.56"
+           height="10.48"
+           id="rect218" />
+        <polygon
+           class="cls-7"
+           points="136.81,530.29 132.58,535.53 117.4,535.53 117.4,524 136.81,524 "
+           id="polygon218" />
+      </g>
+      <g
+         id="g379"
+         inkscape:label="1号館前"
+         sodipodi:insensitive="true">
+        <title
+           id="title380">1号館前</title>
+        <path
+           class="cls-64"
+           d="m 135.26,386.36 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path164" />
+        <path
+           class="cls-7"
+           d="m 135.26,386.36 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path165" />
+        <path
+           class="cls-64"
+           d="m 135.26,422.35 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path166" />
+        <path
+           class="cls-7"
+           d="m 135.26,422.35 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path167" />
+        <path
+           class="cls-64"
+           d="m 86.29,440.34 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path168" />
+        <path
+           class="cls-7"
+           d="m 86.29,440.34 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path169" />
+        <path
+           class="cls-64"
+           d="m 102.4,458.33 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path170" />
+        <path
+           class="cls-7"
+           d="m 102.4,458.33 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path171" />
+        <path
+           class="cls-64"
+           d="m 86.29,458.33 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path172" />
+        <path
+           class="cls-7"
+           d="m 86.29,458.33 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path173" />
+        <path
+           class="cls-64"
+           d="m 124.15,416.29 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path174" />
+        <path
+           class="cls-7"
+           d="m 124.15,416.29 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path175" />
+        <path
+           class="cls-64"
+           d="m 102.4,440.34 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path176" />
+        <path
+           class="cls-7"
+           d="m 102.4,440.34 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path177" />
+        <rect
+           class="cls-7"
+           x="135.25999"
+           y="375.37"
+           width="17.459999"
+           height="105.69"
+           id="rect177" />
+        <rect
+           class="cls-52"
+           x="79.080002"
+           y="437.64001"
+           width="5.54"
+           height="5.54"
+           id="rect187" />
+        <rect
+           class="cls-52"
+           x="128.06"
+           y="419.57999"
+           width="5.54"
+           height="5.54"
+           id="rect188" />
+        <rect
+           class="cls-52"
+           x="128.06"
+           y="383.59"
+           width="5.54"
+           height="5.54"
+           id="rect189" />
+        <rect
+           class="cls-52"
+           x="79.080002"
+           y="455.56"
+           width="5.54"
+           height="5.54"
+           id="rect190" />
+        <rect
+           class="cls-52"
+           x="95.190002"
+           y="455.56"
+           width="5.54"
+           height="5.54"
+           id="rect191" />
+        <rect
+           class="cls-7"
+           x="111.86"
+           y="455.56"
+           width="5.54"
+           height="5.54"
+           id="rect192" />
+        <path
+           class="cls-64"
+           d="m 92.14,390.8 c 0,3.23 -2.62,5.85 -5.85,5.85 -3.23,0 -5.86,-2.62 -5.86,-5.85 0,-3.23 2.62,-5.85 5.86,-5.85 3.24,0 5.85,2.62 5.85,5.85"
+           id="path192" />
+        <path
+           class="cls-7"
+           d="m 92.14,390.8 c 0,3.23 -2.62,5.85 -5.85,5.85 -3.23,0 -5.86,-2.62 -5.86,-5.85 0,-3.23 2.62,-5.85 5.86,-5.85 3.24,0 5.85,2.62 5.85,5.85 z"
+           id="path193" />
+        <path
+           class="cls-52"
+           d="m 115.87,380.51 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path194" />
+        <path
+           class="cls-52"
+           d="m 79.26,380.51 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path195" />
+        <path
+           class="cls-52"
+           d="m 135.26,404.36 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path196" />
+        <path
+           class="cls-52"
+           d="m 119.06,458.33 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path197" />
+        <path
+           class="cls-52"
+           d="m 133.34,458.33 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43"
+           id="path198" />
+        <path
+           class="cls-64"
+           d="m 155.07,404.36 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05"
+           id="path199" />
+        <path
+           class="cls-7"
+           d="m 155.07,404.36 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05 z"
+           id="path200" />
+        <path
+           class="cls-64"
+           d="m 155.07,422.35 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05"
+           id="path201" />
+        <path
+           class="cls-7"
+           d="m 155.07,422.35 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05 z"
+           id="path202" />
+        <path
+           class="cls-64"
+           d="m 99.03,421.53 c 0,5.97 -4.84,10.8 -10.8,10.8 -5.96,0 -10.8,-4.84 -10.8,-10.8 0,-5.96 4.84,-10.8 10.8,-10.8 5.96,0 10.8,4.84 10.8,10.8"
+           id="path203" />
+        <path
+           class="cls-7"
+           d="m 99.03,421.53 c 0,5.97 -4.84,10.8 -10.8,10.8 -5.96,0 -10.8,-4.84 -10.8,-10.8 0,-5.96 4.84,-10.8 10.8,-10.8 5.96,0 10.8,4.84 10.8,10.8 z"
+           id="path204" />
+        <path
+           class="cls-52"
+           d="m 97.04,421.53 c 0,4.87 -3.95,8.82 -8.82,8.82 -4.87,0 -8.82,-3.95 -8.82,-8.82 0,-4.87 3.95,-8.82 8.82,-8.82 4.87,0 8.82,3.95 8.82,8.82"
+           id="path205" />
+        <path
+           class="cls-64"
+           d="m 155.07,440.34 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05"
+           id="path206" />
+        <path
+           class="cls-64"
+           d="m 155.07,386.36 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05"
+           id="path207" />
+        <path
+           class="cls-7"
+           d="m 155.07,386.36 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05 z"
+           id="path208" />
+        <path
+           class="cls-52"
+           d="m 104.25,381.37 c 0,1.97 -1.6,3.57 -3.57,3.57 -1.97,0 -3.57,-1.6 -3.57,-3.57 0,-1.97 1.6,-3.57 3.57,-3.57 1.97,0 3.57,1.6 3.57,3.57"
+           id="path209" />
+        <rect
+           class="cls-52"
+           x="82.589996"
+           y="387.10001"
+           width="7.3899999"
+           height="7.3899999"
+           id="rect209" />
+        <rect
+           class="cls-52"
+           x="145.32001"
+           y="382.67001"
+           width="7.3899999"
+           height="7.3899999"
+           id="rect210" />
+        <rect
+           class="cls-52"
+           x="145.32001"
+           y="400.66"
+           width="7.3899999"
+           height="7.3899999"
+           id="rect211" />
+        <rect
+           class="cls-52"
+           x="145.32001"
+           y="418.64999"
+           width="7.3899999"
+           height="7.3899999"
+           id="rect212" />
+        <path
+           class="cls-7"
+           d="m 155.07,440.34 c 0,3.34 -2.71,6.05 -6.05,6.05 -3.34,0 -6.05,-2.71 -6.05,-6.05 0,-3.34 2.71,-6.05 6.05,-6.05 3.34,0 6.05,2.71 6.05,6.05 z"
+           id="path212" />
+        <rect
+           class="cls-52"
+           x="145.32001"
+           y="436.64001"
+           width="7.3899999"
+           height="7.3899999"
+           id="rect213" />
+        <line
+           class="cls-7"
+           x1="135.25999"
+           y1="477.95999"
+           x2="135.25999"
+           y2="375.37"
+           id="line218" />
+        <rect
+           class="cls-52"
+           x="95.190002"
+           y="437.64001"
+           width="5.54"
+           height="5.54"
+           id="rect219" />
+        <path
+           class="cls-7"
+           d="m 117.62,440.34 c 0,2.45 -1.98,4.43 -4.43,4.43 -2.45,0 -4.43,-1.98 -4.43,-4.43 0,-2.45 1.99,-4.43 4.43,-4.43 2.44,0 4.43,1.98 4.43,4.43 z"
+           id="path219" />
+        <rect
+           class="cls-52"
+           x="110.42"
+           y="437.64001"
+           width="5.54"
+           height="5.54"
+           id="rect220" />
+        <rect
+           class="cls-52"
+           x="116.95"
+           y="413.53"
+           width="5.54"
+           height="5.54"
+           id="rect221" />
+      </g>
+      <polygon
+         class="cls-63"
+         points="147.55,527.61 147.55,523.65 147.55,484.7 147.55,481.07 140.41,481.07 140.41,484.7 129.62,484.7 129.62,483.13 80.51,483.13 80.51,484.7 66.9,484.7 66.9,523.65 80.51,523.65 80.51,525.05 129.62,525.05 129.62,523.65 140.41,523.65 140.41,527.61 "
+         id="polygon265"
+         inkscape:label="1号館"
+         sodipodi:insensitive="true">
+        <title
+           id="title356">1号館</title>
+      </polygon>
+    </g>
+    <rect
+       class="cls-63"
+       x="40.799999"
+       y="435.23001"
+       width="22.469999"
+       height="21.48"
+       id="rect265"
+       inkscape:label="セブン"
+       sodipodi:insensitive="true">
+      <title
+         id="title355">セブン</title>
+    </rect>
+    <polygon
+       class="cls-19"
+       points="201.47,347.5 221,347.5 222.26,347.5 230.25,347.5 233.68,347.5 239.41,347.5 243.28,347.5 250.13,347.5 258.24,347.5 267,347.5 267,327.5 258.24,327.5 258.24,322.21 250.13,322.21 250.13,327.5 243.28,327.5 239.41,327.5 233.68,327.5 233.68,325.34 222.26,325.34 222.26,316.51 264.87,320.18 264.87,257.37 222.26,261.24 222.26,258.63 225.91,258.63 225.91,251.09 240.76,251.09 240.76,228.01 225.91,228.01 222.26,228.01 216.09,228.01 201.47,228.01 "
+       id="polygon266"
+       inkscape:label="7号館"
+       sodipodi:insensitive="true">
+      <title
+         id="title354">7号館</title>
+    </polygon>
+    <g
+       id="g384"
+       inkscape:label="SCC">
+      <title
+         id="title385">SCC</title>
+      <g
+         id="g383"
+         inkscape:label="SCC草木">
+        <title
+           id="title384">SCC草木</title>
+        <path
+           class="cls-48"
+           d="m 144.06,127.8 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+           id="path246" />
+        <path
+           class="cls-48"
+           d="m 153.35,117.22 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+           id="path256" />
+        <path
+           class="cls-48"
+           d="m 136.52,135.05 c 0,0.64 0.88,1.39 0.72,1.99 -0.16,0.61 -0.61,1.21 -0.91,1.75 -0.3,0.55 -0.96,0.84 -1.39,1.28 -0.43,0.44 -1.01,0.59 -1.53,0.91 -0.52,0.31 -0.81,1.23 -1.41,1.39 -0.57,0.16 -1.27,-0.24 -1.89,-0.24 -0.62,0 -1.36,0.58 -1.93,0.42 -0.59,-0.17 -1.16,-0.69 -1.68,-1 -0.53,-0.32 -0.83,-1 -1.26,-1.44 -0.43,-0.44 -1.16,-0.71 -1.47,-1.26 -0.3,-0.54 -0.01,-1.37 -0.17,-1.99 -0.15,-0.6 -0.37,-1.17 -0.37,-1.81 0,-0.64 0.18,-1.23 0.33,-1.82 0.16,-0.62 0.68,-0.98 0.98,-1.52 0.3,-0.55 0.1,-1.45 0.53,-1.9 0.43,-0.44 0.88,-0.99 1.4,-1.3 0.52,-0.31 1.23,-0.31 1.82,-0.47 0.57,-0.16 1.19,-0.08 1.81,-0.08 0.62,0 1.23,-0.04 1.8,0.12 0.59,0.17 1.4,-0.03 1.92,0.29 0.53,0.32 0.77,1.15 1.19,1.59 0.43,0.44 0.4,1.19 0.71,1.73 0.3,0.54 1.15,0.83 1.3,1.44 0.15,0.59 -0.52,1.28 -0.52,1.93"
+           id="path259" />
+        <path
+           class="cls-48"
+           d="m 135.9,149.55 c 0,0.62 0.84,1.33 0.69,1.89 -0.15,0.59 -0.58,1.15 -0.86,1.67 -0.29,0.52 -0.92,0.8 -1.33,1.23 -0.41,0.42 -0.96,0.57 -1.46,0.87 -0.49,0.3 -0.78,1.17 -1.34,1.33 -0.55,0.15 -1.21,-0.23 -1.8,-0.23 -0.59,0 -1.3,0.55 -1.84,0.4 -0.56,-0.16 -1.11,-0.66 -1.6,-0.95 -0.5,-0.3 -0.79,-0.95 -1.2,-1.37 -0.41,-0.42 -1.11,-0.68 -1.4,-1.2 -0.29,-0.51 -0.01,-1.31 -0.16,-1.9 -0.15,-0.57 -0.35,-1.11 -0.35,-1.73 0,-0.62 0.17,-1.17 0.32,-1.74 0.15,-0.59 0.65,-0.93 0.93,-1.44 0.29,-0.52 0.1,-1.39 0.51,-1.81 0.41,-0.42 0.84,-0.94 1.34,-1.24 0.49,-0.3 1.17,-0.3 1.74,-0.45 0.55,-0.15 1.13,-0.08 1.72,-0.08 0.59,0 1.17,-0.04 1.72,0.11 0.56,0.16 1.34,-0.03 1.83,0.27 0.5,0.3 0.73,1.09 1.14,1.52 0.41,0.42 0.38,1.13 0.67,1.65 0.29,0.51 1.09,0.79 1.24,1.37 0.15,0.57 -0.5,1.23 -0.5,1.84"
+           id="path260" />
+      </g>
+      <polygon
+         class="cls-20"
+         points="73.52,174.49 73.52,219.56 76.72,219.56 76.72,224.13 80.38,224.13 80.38,228.01 149.37,228.01 149.37,223.9 153.49,223.9 153.49,219.78 157.83,219.78 157.83,204.25 162.4,204.25 162.4,174.49 156,174.49 156,161.75 98.2,161.75 "
+         id="polygon268"
+         inkscape:label="SCC"
+         sodipodi:insensitive="true">
+        <title
+           id="title353">SCC</title>
+      </polygon>
+    </g>
+    <g
+       id="g373"
+       inkscape:label="図書館"
+       sodipodi:insensitive="true">
+      <title
+         id="title374">図書館</title>
+      <g
+         id="g371"
+         inkscape:label="図書館背景"
+         sodipodi:insensitive="true">
+        <title
+           id="title372">図書館背景</title>
+        <rect
+           class="cls-12"
+           x="-19.639999"
+           y="310.09"
+           width="17.309999"
+           height="2.9100001"
+           id="rect139" />
+        <rect
+           class="cls-12"
+           x="0.95999998"
+           y="304.35999"
+           width="61.66"
+           height="8.6400003"
+           id="rect140" />
+        <path
+           class="cls-48"
+           d="m 10.54,197.51 c 0,0.52 0.7,1.12 0.58,1.59 -0.13,0.49 -0.48,0.97 -0.72,1.4 -0.24,0.44 -0.77,0.68 -1.12,1.03 -0.34,0.36 -0.81,0.48 -1.23,0.73 -0.42,0.25 -0.65,0.99 -1.13,1.12 -0.46,0.13 -1.02,-0.19 -1.51,-0.19 -0.49,0 -1.09,0.46 -1.55,0.34 -0.47,-0.13 -0.93,-0.55 -1.35,-0.8 -0.42,-0.25 -0.67,-0.8 -1.01,-1.16 -0.34,-0.36 -0.93,-0.57 -1.18,-1.01 -0.24,-0.43 -0.01,-1.1 -0.14,-1.6 -0.12,-0.48 -0.3,-0.94 -0.3,-1.45 0,-0.51 0.14,-0.99 0.27,-1.46 0.13,-0.49 0.55,-0.78 0.79,-1.21 0.24,-0.44 0.08,-1.17 0.42,-1.52 0.34,-0.36 0.7,-0.79 1.12,-1.04 0.42,-0.25 0.99,-0.25 1.46,-0.38 0.46,-0.13 0.95,-0.07 1.45,-0.07 0.5,0 0.98,-0.03 1.44,0.1 0.47,0.13 1.12,-0.02 1.54,0.23 0.42,0.25 0.61,0.92 0.96,1.27 0.34,0.36 0.32,0.95 0.56,1.39 0.24,0.43 0.92,0.66 1.04,1.16 0.12,0.48 -0.42,1.03 -0.42,1.55"
+           id="path262" />
+      </g>
+      <g
+         id="g372"
+         inkscape:label="図書館木々">
+        <title
+           id="title373">図書館木々</title>
+        <path
+           class="cls-48"
+           d="m -15.31,185.72 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+           id="path255" />
+        <path
+           class="cls-48"
+           d="m 34.83,196.23 c 0,0.55 0.76,1.19 0.63,1.7 -0.14,0.53 -0.52,1.04 -0.78,1.5 -0.26,0.47 -0.84,0.72 -1.2,1.1 -0.37,0.38 -0.87,0.51 -1.33,0.78 -0.45,0.27 -0.7,1.05 -1.22,1.2 -0.5,0.14 -1.1,-0.21 -1.64,-0.21 -0.54,0 -1.18,0.5 -1.67,0.36 -0.51,-0.14 -1,-0.59 -1.45,-0.86 -0.46,-0.27 -0.72,-0.86 -1.09,-1.24 -0.37,-0.38 -1.01,-0.61 -1.27,-1.08 -0.26,-0.46 -0.01,-1.18 -0.15,-1.71 -0.13,-0.51 -0.32,-1 -0.32,-1.56 0,-0.56 0.16,-1.05 0.29,-1.57 0.14,-0.53 0.59,-0.84 0.85,-1.3 0.26,-0.47 0.09,-1.25 0.46,-1.63 0.37,-0.38 0.76,-0.85 1.21,-1.12 0.45,-0.27 1.07,-0.27 1.58,-0.41 0.5,-0.14 1.03,-0.07 1.57,-0.07 0.54,0 1.06,-0.03 1.56,0.1 0.51,0.14 1.21,-0.02 1.66,0.24 0.45,0.27 0.66,0.98 1.03,1.36 0.37,0.38 0.35,1.02 0.61,1.49 0.26,0.46 0.99,0.71 1.13,1.24 0.13,0.51 -0.45,1.1 -0.45,1.66"
+           id="path257" />
+        <path
+           class="cls-48"
+           d="m 21.17,197.54 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+           id="path258" />
+        <path
+           class="cls-48"
+           d="m -13.66,197.54 c 0,0.44 0.61,0.95 0.5,1.36 -0.11,0.42 -0.42,0.83 -0.62,1.2 -0.21,0.37 -0.67,0.58 -0.96,0.88 -0.29,0.3 -0.7,0.4 -1.06,0.62 -0.36,0.21 -0.56,0.84 -0.97,0.95 -0.39,0.11 -0.87,-0.17 -1.3,-0.17 -0.43,0 -0.94,0.4 -1.34,0.29 -0.41,-0.11 -0.8,-0.47 -1.16,-0.69 -0.36,-0.22 -0.57,-0.68 -0.87,-0.99 -0.29,-0.3 -0.8,-0.49 -1.01,-0.86 -0.21,-0.37 -0.01,-0.94 -0.12,-1.36 -0.11,-0.41 -0.26,-0.8 -0.26,-1.24 0,-0.44 0.12,-0.84 0.23,-1.25 0.11,-0.42 0.47,-0.67 0.68,-1.04 0.21,-0.37 0.07,-0.99 0.37,-1.3 0.29,-0.3 0.61,-0.68 0.97,-0.89 0.36,-0.21 0.85,-0.21 1.26,-0.33 0.39,-0.11 0.82,-0.06 1.25,-0.06 0.43,0 0.85,-0.03 1.24,0.08 0.41,0.11 0.97,-0.02 1.33,0.2 0.36,0.22 0.53,0.78 0.82,1.09 0.29,0.3 0.28,0.81 0.49,1.19 0.21,0.37 0.79,0.57 0.9,0.99 0.11,0.41 -0.36,0.88 -0.36,1.32"
+           id="path261" />
+        <path
+           class="cls-48"
+           d="m -0.75,194.68 c 0,0.62 0.84,1.33 0.69,1.89 -0.15,0.59 -0.58,1.15 -0.86,1.67 -0.29,0.52 -0.92,0.8 -1.33,1.23 -0.41,0.42 -0.96,0.57 -1.46,0.87 -0.49,0.3 -0.78,1.17 -1.34,1.33 -0.55,0.15 -1.21,-0.23 -1.8,-0.23 -0.59,0 -1.3,0.55 -1.84,0.4 -0.56,-0.16 -1.11,-0.66 -1.6,-0.95 -0.5,-0.3 -0.79,-0.95 -1.2,-1.37 -0.41,-0.42 -1.11,-0.68 -1.4,-1.2 -0.29,-0.51 -0.01,-1.31 -0.16,-1.9 -0.15,-0.57 -0.35,-1.11 -0.35,-1.73 0,-0.62 0.17,-1.17 0.32,-1.74 0.15,-0.59 0.65,-0.93 0.93,-1.44 0.29,-0.52 0.1,-1.39 0.51,-1.81 0.41,-0.42 0.84,-0.94 1.34,-1.24 0.49,-0.3 1.17,-0.3 1.74,-0.45 0.55,-0.15 1.13,-0.08 1.72,-0.08 0.59,0 1.17,-0.04 1.72,0.11 0.56,0.16 1.34,-0.03 1.83,0.27 0.5,0.3 0.73,1.09 1.14,1.52 0.41,0.42 0.38,1.13 0.67,1.65 0.29,0.51 1.09,0.79 1.24,1.37 0.15,0.57 -0.5,1.23 -0.5,1.84"
+           id="path263" />
+      </g>
+      <polygon
+         class="cls-63"
+         points="-21.29,254.51 -21.29,302.95 -21.29,303.86 -21.29,309.57 -2.33,309.57 -2.33,303.86 61.41,303.86 61.41,254.51 68.94,254.51 68.94,229.61 61.41,229.61 61.41,205.16 -21.29,205.16 -21.29,219.56 -24.26,219.56 -24.26,254.51 "
+         id="polygon269"
+         inkscape:label="図書館"
+         sodipodi:insensitive="true">
+        <title
+           id="title352">図書館</title>
+      </polygon>
+    </g>
+    <g
+       id="g387"
+       inkscape:label="フォーサイト">
+      <title
+         id="title388">フォーサイト</title>
+      <g
+         id="g382"
+         inkscape:label="フィーサイト草木">
+        <title
+           id="title383">フォーサイト草木</title>
+        <path
+           class="cls-48"
+           d="m -35.76,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.07,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.27,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path237" />
+        <path
+           class="cls-48"
+           d="m -24.43,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.06,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.28,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path238" />
+        <path
+           class="cls-48"
+           d="m -13.11,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.07,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.27,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path239" />
+        <path
+           class="cls-48"
+           d="m -1.78,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.07,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.27,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path240" />
+        <path
+           class="cls-48"
+           d="m 9.55,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.06,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.28,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path241" />
+        <path
+           class="cls-48"
+           d="m 20.88,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.07,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.27,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path242" />
+        <path
+           class="cls-48"
+           d="m 32.2,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.07,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.27,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path244" />
+        <path
+           class="cls-48"
+           d="m 43.53,369.33 c 0,0.42 0.56,0.9 0.47,1.28 -0.1,0.39 -0.39,0.78 -0.58,1.12 -0.2,0.35 -0.62,0.54 -0.9,0.83 -0.27,0.28 -0.65,0.38 -0.99,0.59 -0.33,0.2 -0.52,0.79 -0.9,0.9 -0.37,0.1 -0.82,-0.15 -1.21,-0.15 -0.39,0 -0.88,0.37 -1.24,0.27 -0.38,-0.11 -0.75,-0.44 -1.08,-0.64 -0.34,-0.2 -0.53,-0.64 -0.81,-0.93 -0.28,-0.29 -0.75,-0.46 -0.94,-0.81 -0.19,-0.35 0,-0.88 -0.11,-1.28 -0.1,-0.38 -0.24,-0.75 -0.24,-1.17 0,-0.42 0.12,-0.79 0.21,-1.17 0.1,-0.39 0.44,-0.63 0.63,-0.97 0.2,-0.35 0.07,-0.93 0.34,-1.22 0.27,-0.29 0.56,-0.63 0.9,-0.84 0.33,-0.2 0.79,-0.2 1.17,-0.31 0.37,-0.1 0.76,-0.05 1.16,-0.05 0.4,0 0.79,-0.03 1.16,0.08 0.38,0.11 0.9,-0.02 1.23,0.18 0.34,0.2 0.49,0.74 0.77,1.02 0.27,0.29 0.26,0.77 0.45,1.12 0.19,0.35 0.74,0.53 0.84,0.93 0.1,0.38 -0.34,0.83 -0.34,1.24"
+           id="path245" />
+      </g>
+      <g
+         id="g366"
+         inkscape:label="フォーサイト下通路"
+         style="isolation:isolate">
+        <title
+           id="title367">フォーサイト下通路</title>
+        <rect
+           class="cls-7"
+           x="-62.439999"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect178" />
+        <rect
+           class="cls-7"
+           x="-48.560001"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect179" />
+        <rect
+           class="cls-7"
+           x="-34.68"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect180" />
+        <rect
+           class="cls-7"
+           x="-20.799999"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect181" />
+        <rect
+           class="cls-7"
+           x="-6.9299998"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect182" />
+        <rect
+           class="cls-7"
+           x="6.9499998"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect183" />
+        <rect
+           class="cls-7"
+           x="20.83"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect184" />
+        <rect
+           class="cls-7"
+           x="34.709999"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect185" />
+        <rect
+           class="cls-7"
+           x="48.59"
+           y="421.53"
+           width="3.9100001"
+           height="3.9100001"
+           id="rect186" />
+        <line
+           class="cls-7"
+           x1="-71.900002"
+           y1="429.95001"
+           x2="29.540001"
+           y2="429.95001"
+           id="line192" />
+      </g>
+      <rect
+         class="cls-63"
+         x="-66.760002"
+         y="372.29001"
+         width="129.03"
+         height="41.119999"
+         id="rect271"
+         inkscape:label="フォーサイト"
+         sodipodi:insensitive="true">
+        <title
+           id="title350">フォーサイト</title>
+      </rect>
+    </g>
+    <polygon
+       class="cls-63"
+       points="-65.9,435.91 -65.9,444.26 -62.62,444.26 -62.62,523.43 -65.9,523.43 -65.9,531.78 -58.36,531.78 -58.36,527.88 22,527.88 22,531.78 29.54,531.78 29.54,523.43 26.83,523.43 26.83,444.26 29.54,444.26 29.54,435.91 22,435.91 22,438.43 -58.36,438.43 -58.36,435.91 "
+       id="polygon272"
+       inkscape:label="体育館"
+       sodipodi:insensitive="true">
+      <title
+         id="title349">体育館</title>
+    </polygon>
+    <g
+       id="g378"
+       inkscape:label="屋外ステージ付近">
+      <title
+         id="title379">屋外ステージ付近</title>
+      <polygon
+         class="cls-52"
+         points="102.11,256.28 128.16,256.28 140.46,270.32 151.32,281.84 151.32,248.64 144.69,242.58 113.68,242.58 "
+         id="polygon60" />
+      <rect
+         class="cls-52"
+         x="69.300003"
+         y="314.41"
+         width="44.549999"
+         height="17.18"
+         id="rect60" />
+      <rect
+         class="cls-12"
+         x="69.300003"
+         y="314.41"
+         width="44.549999"
+         height="17.18"
+         id="rect61" />
+      <rect
+         class="cls-52"
+         x="69.290001"
+         y="338.20999"
+         width="44.990002"
+         height="17.18"
+         id="rect62" />
+      <rect
+         class="cls-12"
+         x="69.290001"
+         y="338.20999"
+         width="44.990002"
+         height="17.18"
+         id="rect63" />
+      <rect
+         class="cls-52"
+         x="117.96"
+         y="338.20999"
+         width="18.6"
+         height="17.18"
+         id="rect64" />
+      <rect
+         class="cls-12"
+         x="117.96"
+         y="338.20999"
+         width="18.6"
+         height="17.18"
+         id="rect65" />
+      <rect
+         class="cls-52"
+         x="117.96"
+         y="314.41"
+         width="18.6"
+         height="17.18"
+         id="rect66" />
+      <rect
+         class="cls-12"
+         x="117.96"
+         y="314.41"
+         width="18.6"
+         height="17.18"
+         id="rect67" />
+      <path
+         class="cls-12"
+         d="m 151.32,288.64 c 0,0 -2.29,4.57 -5.83,8.94 -1.93,2.39 -3.64,5.03 -8.87,8.87 -4.04,2.97 -9.35,4.84 -9.35,4.84 h 24.05 v -62.64 l -6.63,-6.07 h -35.47 l -4.45,4.46 h -8.23 l 0.51,2.57 -2.57,4.63 H 83.17 l -1.71,2.23 h 1.71 v 4.8 c 0,0 -8.4,-0.51 -9.6,0 v 16.28 H 62.6 v 36.84 h 41.12 c 0,0 -0.12,2.35 0.48,3.85 0.84,2.1 1.8,2.89 1.8,2.89"
+         id="path67" />
+      <path
+         class="cls-52"
+         d="M 103.22,311.29 H 69.29 v -22.96 l 8.4,-4.46 c 0,0 3.77,12.11 8.6,17.39 6.36,6.96 16.94,10.02 16.94,10.02"
+         id="path68" />
+      <path
+         class="cls-12"
+         d="M 103.22,311.29 H 69.29 v -22.96 l 8.4,-4.46 c 0,0 3.77,12.11 8.6,17.39 6.36,6.96 16.94,10.02 16.94,10.02 z"
+         id="path69" />
+      <path
+         class="cls-52"
+         d="m 94.31,274.96 -13.88,7.03 c 0,0 1.52,9.25 8.89,18.01 4.53,5.38 14.41,9.06 14.41,9.06 0,0 1.25,-3.57 4.13,-5.52 2.98,-2.02 5.81,-2.23 5.81,-2.23 v -19.83 c 0,0 -13.2,-0.51 -19.36,-6.51"
+         id="path70" />
+      <path
+         class="cls-12"
+         d="m 94.31,274.96 -13.88,7.03 c 0,0 1.52,9.25 8.89,18.01 4.53,5.38 14.41,9.06 14.41,9.06 0,0 1.25,-3.57 4.13,-5.52 2.98,-2.02 5.81,-2.23 5.81,-2.23 v -19.83 c 0,0 -13.2,-0.51 -19.36,-6.51 z"
+         id="path71" />
+      <path
+         class="cls-9"
+         d="m 112.11,284.03 c 0,0 -13.62,-1.12 -19.79,-7.12"
+         id="path72" />
+      <path
+         class="cls-9"
+         d="m 110.84,286.18 c 0,0 -9.24,-0.61 -15.75,-4.3"
+         id="path73" />
+      <path
+         class="cls-9"
+         d="m 109.72,288.64 c 0,0 -8.18,-0.42 -14.08,-3.84"
+         id="path74" />
+      <path
+         class="cls-9"
+         d="m 108.37,291.24 c 0,0 -6.84,-0.34 -13.07,-4.44"
+         id="path75" />
+      <path
+         class="cls-9"
+         d="m 108.36,293.2 c 0,0 -7.28,0.34 -14.05,-4.15"
+         id="path76" />
+      <path
+         class="cls-12"
+         d="m 150.69,261.25 c 0,3.71 -3.01,6.71 -6.71,6.71 -3.7,0 -6.72,-3 -6.72,-6.71 0,-3.71 3.01,-6.71 6.72,-6.71 3.71,0 6.71,3 6.71,6.71 z"
+         id="path77" />
+      <path
+         class="cls-24"
+         d="m 124.46,311.81 c 0,2.59 -2.1,4.69 -4.69,4.69 -2.59,0 -4.69,-2.1 -4.69,-4.69 0,-2.59 2.1,-4.69 4.69,-4.69 2.59,0 4.69,2.1 4.69,4.69"
+         id="path78" />
+      <path
+         class="cls-12"
+         d="m 124.46,311.81 c 0,2.59 -2.1,4.69 -4.69,4.69 -2.59,0 -4.69,-2.1 -4.69,-4.69 0,-2.59 2.1,-4.69 4.69,-4.69 2.59,0 4.69,2.1 4.69,4.69 z"
+         id="path79" />
+      <path
+         class="cls-52"
+         d="m 123.1,311.81 c 0,1.85 -1.5,3.34 -3.34,3.34 -1.84,0 -3.34,-1.5 -3.34,-3.34 0,-1.84 1.5,-3.34 3.34,-3.34 1.84,0 3.34,1.5 3.34,3.34"
+         id="path80" />
+      <polygon
+         class="cls-12"
+         points="103.34,242.14 104.77,247.03 112.13,238.46 101.42,235.55 "
+         id="polygon80" />
+      <polyline
+         class="cls-12"
+         points="110.93 242.58 114.87 237.43 99.63 233.58 101.42 242.06 103.34 242.14"
+         id="polyline80" />
+      <polyline
+         class="cls-12"
+         points="113.68 242.58 102.11 256.28 97.05 249.6"
+         id="polyline81" />
+      <line
+         class="cls-12"
+         x1="108.36"
+         y1="256.28"
+         x2="120.1"
+         y2="243"
+         id="line81" />
+      <path
+         class="cls-52"
+         d="m 151.32,281.24 c 0,0 -1.6,6.51 -8.34,15.76 -5.3,7.27 -16.19,12.05 -16.19,12.05 0,0 -0.94,-2.57 -3.43,-4.97 -2.48,-2.4 -6,-2.87 -6,-2.87 v -19.84 c 0,0 7.8,-0.77 12.94,-2.91 5.14,-2.14 10.62,-7.62 10.62,-7.62"
+         id="path81" />
+      <path
+         class="cls-9"
+         d="m 118.54,284.27 c 0,0 6.24,-0.33 11.21,-2.62 4.97,-2.29 7.5,-4.27 7.5,-4.27"
+         id="path82" />
+      <path
+         class="cls-9"
+         d="m 119.76,286.62 c 0,0 5.69,-0.68 10.59,-2.59 4.51,-1.76 8.54,-4.6 8.54,-4.6"
+         id="path83" />
+      <path
+         class="cls-9"
+         d="m 121.01,289.02 c 0,0 5.24,-0.78 9.63,-2.4 4.07,-1.5 7.87,-3.59 7.87,-3.59"
+         id="path84" />
+      <path
+         class="cls-9"
+         d="m 122.16,291.24 c 0,0 5.48,-0.85 9.05,-2.19 6.05,-2.26 7.69,-3.81 7.69,-3.81"
+         id="path85" />
+      <path
+         class="cls-9"
+         d="m 122.16,293.21 c 0,0 5.62,0 10.25,-2.08 4.81,-2.16 7.55,-3.97 7.55,-3.97"
+         id="path86" />
+      <g
+         class="cls-42"
+         clip-path="url(#clippath-1)"
+         id="g89">
+        <path
+           class="cls-24"
+           d="m 89.93,312.98 c 0,3.24 -2.63,5.87 -5.87,5.87 -3.24,0 -5.87,-2.63 -5.87,-5.87 0,-3.24 2.63,-5.87 5.87,-5.87 3.24,0 5.87,2.63 5.87,5.87"
+           id="path87" />
+        <path
+           class="cls-12"
+           d="m 89.93,312.98 c 0,3.24 -2.63,5.87 -5.87,5.87 -3.24,0 -5.87,-2.63 -5.87,-5.87 0,-3.24 2.63,-5.87 5.87,-5.87 3.24,0 5.87,2.63 5.87,5.87 z"
+           id="path88" />
+        <path
+           class="cls-52"
+           d="m 88.59,312.99 c 0,2.5 -2.02,4.52 -4.52,4.52 -2.5,0 -4.52,-2.02 -4.52,-4.52 0,-2.5 2.02,-4.52 4.52,-4.52 2.5,0 4.52,2.02 4.52,4.52"
+           id="path89" />
+      </g>
+      <g
+         class="cls-45"
+         clip-path="url(#clippath-2)"
+         id="g99">
+        <path
+           class="cls-24"
+           d="m 122.05,353.08 c 0,5.56 -4.51,10.07 -10.07,10.07 -5.56,0 -10.07,-4.51 -10.07,-10.07 0,-5.56 4.51,-10.07 10.07,-10.07 5.56,0 10.07,4.51 10.07,10.07"
+           id="path90" />
+        <path
+           class="cls-12"
+           d="m 122.05,353.08 c 0,5.56 -4.51,10.07 -10.07,10.07 -5.56,0 -10.07,-4.51 -10.07,-10.07 0,-5.56 4.51,-10.07 10.07,-10.07 5.56,0 10.07,4.51 10.07,10.07 z"
+           id="path91" />
+        <path
+           class="cls-24"
+           d="m 90.68,346.72 c -0.29,0 -0.58,0.02 -0.87,0.04 1.15,-1.7 1.82,-3.75 1.82,-5.95 0,-5.87 -4.76,-10.62 -10.62,-10.62 -5.86,0 -10.62,4.76 -10.62,10.62 0,5.86 4.76,10.62 10.62,10.62 0.26,0 0.51,-0.02 0.77,-0.04 -1.21,1.74 -1.92,3.86 -1.92,6.14 0,5.98 4.84,10.82 10.82,10.82 5.98,0 10.82,-4.84 10.82,-10.82 0,-5.98 -4.84,-10.82 -10.82,-10.82"
+           id="path92" />
+        <path
+           class="cls-12"
+           d="m 90.68,346.72 c -0.29,0 -0.58,0.02 -0.87,0.04 1.15,-1.7 1.82,-3.75 1.82,-5.95 0,-5.87 -4.76,-10.62 -10.62,-10.62 -5.86,0 -10.62,4.76 -10.62,10.62 0,5.86 4.76,10.62 10.62,10.62 0.26,0 0.51,-0.02 0.77,-0.04 -1.21,1.74 -1.92,3.86 -1.92,6.14 0,5.98 4.84,10.82 10.82,10.82 5.98,0 10.82,-4.84 10.82,-10.82 0,-5.98 -4.84,-10.82 -10.82,-10.82 z"
+           id="path93" />
+        <path
+           class="cls-49"
+           d="m 120.49,352.95 c 0,4.77 -3.86,8.63 -8.63,8.63 -4.77,0 -8.63,-3.86 -8.63,-8.63 0,-4.77 3.86,-8.63 8.63,-8.63 4.77,0 8.63,3.86 8.63,8.63"
+           id="path94" />
+        <path
+           class="cls-12"
+           d="m 120.49,352.95 c 0,4.77 -3.86,8.63 -8.63,8.63 -4.77,0 -8.63,-3.86 -8.63,-8.63 0,-4.77 3.86,-8.63 8.63,-8.63 4.77,0 8.63,3.86 8.63,8.63 z"
+           id="path95" />
+        <path
+           class="cls-52"
+           d="m 118.54,353.31 c 0,3.5 -2.84,6.34 -6.34,6.34 -3.5,0 -6.34,-2.84 -6.34,-6.34 0,-3.5 2.84,-6.34 6.34,-6.34 3.5,0 6.34,2.84 6.34,6.34"
+           id="path96" />
+        <path
+           class="cls-12"
+           d="m 118.54,353.31 c 0,3.5 -2.84,6.34 -6.34,6.34 -3.5,0 -6.34,-2.84 -6.34,-6.34 0,-3.5 2.84,-6.34 6.34,-6.34 3.5,0 6.34,2.84 6.34,6.34 z"
+           id="path97" />
+        <path
+           class="cls-52"
+           d="m 98.36,357.55 c 0,4.24 -3.44,7.68 -7.68,7.68 -4.24,0 -7.69,-3.44 -7.69,-7.68 0,-4.24 3.44,-7.68 7.69,-7.68 4.25,0 7.68,3.44 7.68,7.68"
+           id="path98" />
+        <path
+           class="cls-52"
+           d="m 88.55,340.83 c 0,4.17 -3.38,7.55 -7.55,7.55 -4.17,0 -7.55,-3.38 -7.55,-7.55 0,-4.17 3.38,-7.55 7.55,-7.55 4.17,0 7.55,3.38 7.55,7.55"
+           id="path99" />
+      </g>
+      <g
+         class="cls-43"
+         clip-path="url(#clippath-3)"
+         id="g103">
+        <path
+           class="cls-24"
+           d="m 132.79,341.57 c 0,5.98 -4.84,10.82 -10.82,10.82 -5.98,0 -10.82,-4.84 -10.82,-10.82 0,-5.98 4.84,-10.82 10.82,-10.82 5.98,0 10.82,4.84 10.82,10.82"
+           id="path100" />
+        <path
+           class="cls-12"
+           d="m 132.79,341.57 c 0,5.98 -4.84,10.82 -10.82,10.82 -5.98,0 -10.82,-4.84 -10.82,-10.82 0,-5.98 4.84,-10.82 10.82,-10.82 5.98,0 10.82,4.84 10.82,10.82 z"
+           id="path101" />
+        <path
+           class="cls-52"
+           d="m 129.65,341.58 c 0,4.24 -3.44,7.68 -7.68,7.68 -4.24,0 -7.69,-3.44 -7.69,-7.68 0,-4.24 3.44,-7.68 7.69,-7.68 4.25,0 7.68,3.44 7.68,7.68"
+           id="path102" />
+        <path
+           class="cls-12"
+           d="m 129.65,341.58 c 0,4.24 -3.44,7.68 -7.68,7.68 -4.24,0 -7.69,-3.44 -7.69,-7.68 0,-4.24 3.44,-7.68 7.69,-7.68 4.25,0 7.68,3.44 7.68,7.68 z"
+           id="path103" />
+      </g>
+      <g
+         class="cls-44"
+         clip-path="url(#clippath-4)"
+         id="g112">
+        <path
+           class="cls-24"
+           d="m 78.62,322.27 c 0,11.07 -8.97,20.04 -20.04,20.04 -11.07,0 -20.04,-8.97 -20.04,-20.04 0,-11.07 8.97,-20.04 20.04,-20.04 11.07,0 20.04,8.97 20.04,20.04"
+           id="path111" />
+        <circle
+           class="cls-12"
+           cx="58.580002"
+           cy="322.26999"
+           r="20.040001"
+           transform="rotate(-9.22,58.529875,322.14661)"
+           id="circle111" />
+        <path
+           class="cls-52"
+           d="m 77.08,322.3 c 0,10.22 -8.28,18.5 -18.5,18.5 -10.22,0 -18.51,-8.28 -18.51,-18.5 0,-10.22 8.28,-18.5 18.51,-18.5 10.23,0 18.5,8.28 18.5,18.5"
+           id="path112" />
+      </g>
+      <polyline
+         class="cls-12"
+         points="151.32 331.59 69.29 331.59 69.29 314.37"
+         id="polyline112" />
+      <path
+         class="cls-52"
+         d="m 136.41,274.74 3.65,2.16 c 0,0 -1.18,1.83 -1.49,3.82 -0.63,4.07 1.45,7.61 4.05,8.74 3.03,1.31 4.66,0.71 4.66,0.71"
+         id="path113" />
+      <path
+         class="cls-12"
+         d="m 136.41,274.74 3.65,2.16 c 0,0 -1.18,1.83 -1.49,3.82 -0.63,4.07 1.45,7.61 4.05,8.74 3.03,1.31 4.66,0.71 4.66,0.71"
+         id="path114" />
+      <path
+         class="cls-52"
+         d="m 95.49,285.24 c 0,3.74 -3.03,6.77 -6.77,6.77 -3.74,0 -6.77,-3.03 -6.77,-6.77 0,-3.74 3.03,-6.77 6.77,-6.77 3.74,0 6.77,3.03 6.77,6.77"
+         id="path115" />
+      <path
+         class="cls-12"
+         d="m 95.49,285.24 c 0,3.74 -3.03,6.77 -6.77,6.77 -3.74,0 -6.77,-3.03 -6.77,-6.77 0,-3.74 3.03,-6.77 6.77,-6.77 3.74,0 6.77,3.03 6.77,6.77 z"
+         id="path116" />
+      <polyline
+         class="cls-52"
+         points="117.62 300.64 122.16 293.64 122.16 291.24 117.36 281.99"
+         id="polyline116" />
+      <polyline
+         class="cls-12"
+         points="117.62 300.64 122.16 293.64 122.16 291.24 117.36 281.99"
+         id="polyline117" />
+      <polyline
+         class="cls-52"
+         points="113.32 301.26 108.36 293.64 108.37 291.24 113.17 281.99"
+         id="polyline118" />
+      <polyline
+         class="cls-12"
+         points="113.32 301.26 108.36 293.64 108.37 291.24 113.17 281.99"
+         id="polyline119" />
+      <line
+         class="cls-12"
+         x1="63.810001"
+         y1="314.79999"
+         x2="63.810001"
+         y2="357.54999"
+         id="line135" />
+      <line
+         class="cls-12"
+         x1="143.89"
+         y1="332.07999"
+         x2="143.89"
+         y2="338.10001"
+         id="line140" />
+      <line
+         class="cls-12"
+         x1="145.83"
+         y1="332.07999"
+         x2="145.83"
+         y2="338.10001"
+         id="line141" />
+      <line
+         class="cls-12"
+         x1="147.78"
+         y1="332.07999"
+         x2="147.78"
+         y2="338.10001"
+         id="line142" />
+      <line
+         class="cls-12"
+         x1="149.72"
+         y1="332.07999"
+         x2="149.72"
+         y2="338.10001"
+         id="line143" />
+      <line
+         class="cls-12"
+         x1="151.32001"
+         y1="308.39001"
+         x2="151.32001"
+         y2="314.41"
+         id="line144" />
+      <polyline
+         class="cls-12"
+         points="151.32 338.1 69.29 338.1 69.29 355.33"
+         id="polyline144" />
+      <polyline
+         class="cls-12"
+         points="103.22 256.28 128.15 256.28 140.92 270.85"
+         id="polyline226" />
+    </g>
+    <g
+       id="g377"
+       inkscape:label="チャペル"
+       style="isolation:isolate">
+      <title
+         id="title378">チャペル</title>
+      <polygon
+         class="cls-63"
+         points="19.37,325.45 15.83,325.45 15.83,323.64 13.32,323.64 13.32,322.14 -13.41,322.14 -13.41,323.64 -17.18,323.64 -17.18,325.45 -20.04,325.45 -20.04,327.97 -22.55,327.97 -22.55,342.36 -20.04,342.36 -20.04,344.42 -17.18,344.42 -17.18,346.13 -13.41,346.13 -13.41,347.73 13.32,347.73 13.32,346.13 15.83,346.13 15.83,344.42 19.37,344.42 19.37,342.36 22.34,342.36 22.34,327.97 19.37,327.97 "
+         id="polygon270"
+         inkscape:label="チャペル"
+         sodipodi:insensitive="true">
+        <title
+           id="title351">チャペル</title>
+      </polygon>
+      <g
+         id="g376"
+         inkscape:label="チャペル背景"
+         sodipodi:insensitive="true">
+        <title
+           id="title377">チャペル背景</title>
+        <g
+           id="g111">
+          <path
+             class="cls-24"
+             d="m 99.62,339.96 c 2.14,0 4.11,-0.7 5.73,-1.86 H 93.88 c 1.62,1.16 3.59,1.86 5.73,1.86"
+             id="path104" />
+          <path
+             class="cls-12"
+             d="m 99.62,339.96 c 2.14,0 4.11,-0.7 5.73,-1.86 H 93.88 c 1.62,1.16 3.59,1.86 5.73,1.86 z"
+             id="path105" />
+          <path
+             class="cls-24"
+             d="m 105.35,322.01 c -1.68,-1.3 -3.44,-1.83 -5.73,-1.83 -5.46,0 -9.89,4.43 -9.89,9.89 0,0.52 0.07,1.02 0.15,1.52 h 2.88 c -0.11,-0.49 -0.17,-0.99 -0.17,-1.51 0,-3.88 3.15,-7.02 7.03,-7.02 3.88,0 7.03,3.14 7.03,7.02 0,0.52 -0.06,1.02 -0.17,1.51 h 2.88 c 0.08,-0.5 0.15,-1 0.15,-1.52 0,-2.29 -0.78,-4.4 -2.08,-6.07"
+             id="path106" />
+          <path
+             class="cls-12"
+             d="m 105.35,322.01 c -1.68,-1.3 -3.44,-1.83 -5.73,-1.83 -5.46,0 -9.89,4.43 -9.89,9.89 0,0.52 0.07,1.02 0.15,1.52 h 2.88 c -0.11,-0.49 -0.17,-0.99 -0.17,-1.51 0,-3.88 3.15,-7.02 7.03,-7.02 3.88,0 7.03,3.14 7.03,7.02 0,0.52 -0.06,1.02 -0.17,1.51 h 2.88 c 0.08,-0.5 0.15,-1 0.15,-1.52 0,-2.29 -0.78,-4.4 -2.08,-6.07"
+             id="path107" />
+          <path
+             class="cls-52"
+             d="m 99.62,322.77 c -4.01,0 -7.27,3.25 -7.27,7.27 0,0.53 0.07,1.05 0.18,1.56 h 14.18 c 0.11,-0.5 0.18,-1.02 0.18,-1.56 0,-4.02 -3.26,-7.27 -7.27,-7.27"
+             id="path108" />
+          <polyline
+             class="cls-12"
+             points="114.28 344.66 114.28 338.11 117.96 338.11 117.96 348.14"
+             id="polyline108" />
+          <polyline
+             class="cls-12"
+             points="117.96 351.61 117.96 355.49 114.28 355.49 114.28 347.5"
+             id="polyline109" />
+          <line
+             class="cls-12"
+             x1="106.02"
+             y1="321.10999"
+             x2="105.35"
+             y2="322.01001"
+             id="line109" />
+          <path
+             class="cls-12"
+             d="m 13.18,347.36 v 10.2 h 50.63 l 87.51,0.46 v -43.64 h -23.36 c 0,0 0.17,4.11 -3.04,8.11 -2.56,3.19 -6.96,4.11 -6.96,4.11 v 5 h -4 v -5 c -3.94,-0.51 -6.05,-3.43 -6.05,-3.43 l -0.48,0.83"
+             id="path109" />
+          <path
+             class="cls-12"
+             d="m 63.81,355.33 c 0,0 72.05,0.37 72.43,0 0.37,-0.37 0,-17.22 0,-17.22"
+             id="path110" />
+          <polyline
+             class="cls-12"
+             points="143.89 338.1 143.89 355.83 151.32 355.83"
+             id="polyline110" />
+          <line
+             class="cls-12"
+             x1="136.39999"
+             y1="314.37"
+             x2="136.39999"
+             y2="331.59"
+             id="line110" />
+          <line
+             class="cls-12"
+             x1="143.89"
+             y1="314.37"
+             x2="143.89"
+             y2="331.59"
+             id="line111" />
+        </g>
+        <line
+           class="cls-12"
+           x1="40.16"
+           y1="320.70999"
+           x2="44.450001"
+           y2="315.14999"
+           id="line119" />
+        <line
+           class="cls-12"
+           x1="40.709999"
+           y1="324.91"
+           x2="51.049999"
+           y2="315.14999"
+           id="line120" />
+        <line
+           class="cls-12"
+           x1="63.380001"
+           y1="323.45001"
+           x2="44.07"
+           y2="330.31"
+           id="line121" />
+        <line
+           class="cls-12"
+           x1="44.07"
+           y1="333.73999"
+           x2="63.380001"
+           y2="330.91"
+           id="line122" />
+        <line
+           class="cls-12"
+           x1="44.07"
+           y1="337.63"
+           x2="63.810001"
+           y2="338.88"
+           id="line123" />
+        <line
+           class="cls-12"
+           x1="44.07"
+           y1="340.35999"
+           x2="63.810001"
+           y2="346.32999"
+           id="line124" />
+        <line
+           class="cls-12"
+           x1="44.07"
+           y1="343.64001"
+           x2="63.810001"
+           y2="352.5"
+           id="line125" />
+        <line
+           class="cls-12"
+           x1="42.119999"
+           y1="346.07001"
+           x2="54.900002"
+           y2="357.20999"
+           id="line126" />
+        <line
+           class="cls-12"
+           x1="39.849998"
+           y1="348.87"
+           x2="46.68"
+           y2="357.20999"
+           id="line127" />
+        <line
+           class="cls-12"
+           x1="37.470001"
+           y1="351.69"
+           x2="39.84"
+           y2="357.20999"
+           id="line128" />
+        <polyline
+           class="cls-12"
+           points="22.69 327.5 22.69 324.31 40.17 324.31 42.22 327.19 44.07 329.97 44.07 344.02 41.19 346.07 30.74 338.88 22.94 338.88"
+           id="polyline128" />
+        <polyline
+           class="cls-12"
+           points="19.26 325.89 19.26 320.71 40.71 320.71 40.71 324.91"
+           id="polyline129" />
+        <rect
+           class="cls-12"
+           x="19.26"
+           y="325.89001"
+           width="3.4300001"
+           height="1.61"
+           id="rect129" />
+        <rect
+           class="cls-12"
+           x="22.690001"
+           y="333.14001"
+           width="2.0599999"
+           height="4.1100001"
+           id="rect130" />
+        <polyline
+           class="cls-12"
+           points="32.63 357.21 41.11 346.97 41.19 346.07"
+           id="polyline130" />
+        <polyline
+           class="cls-12"
+           points="32.63 330.31 34.34 332.32 34.34 339.3 33.48 340.76"
+           id="polyline131" />
+        <polyline
+           class="cls-12"
+           points="36.6 328.93 38.11 331.34 38.11 341.45 36.91 343.12"
+           id="polyline132" />
+        <polyline
+           class="cls-12"
+           points="40.71 328.17 42.12 330.31 42.12 342.65 40.16 344.96"
+           id="polyline133" />
+        <line
+           class="cls-12"
+           x1="-12.44"
+           y1="348.07001"
+           x2="-12.44"
+           y2="357.20999"
+           id="line133" />
+        <line
+           class="cls-12"
+           x1="-12.44"
+           y1="349.76001"
+           x2="13.18"
+           y2="349.76001"
+           id="line134" />
+        <polyline
+           class="cls-12"
+           points="-12.44 351.3 -8.93 351.3 -8.93 354.45 9.58 354.45 9.58 351.3 13.18 351.3"
+           id="polyline134" />
+        <polyline
+           class="cls-12"
+           points="13.18 357.55 -27.78 357.55 -30.6 354.45 -31.29 314.8 54.9 315.12 63.04 315.15 42.22 327.19 30.23 330.91 22.94 330.91"
+           id="polyline135" />
+        <rect
+           class="cls-46"
+           x="-12.44"
+           y="351.29999"
+           width="3.0799999"
+           height="2.7"
+           id="rect135" />
+        <rect
+           class="cls-46"
+           x="9.6099997"
+           y="351.29999"
+           width="3.5699999"
+           height="2.7"
+           id="rect136" />
+        <polyline
+           class="cls-12"
+           points="-31.29 327.5 -26.32 332.32 -22.89 332.32"
+           id="polyline136" />
+        <polyline
+           class="cls-12"
+           points="-22.89 337.25 -26.66 337.25 -30.43 342.47"
+           id="polyline137" />
+        <line
+           class="cls-12"
+           x1="-24.610001"
+           y1="332.32001"
+           x2="-24.610001"
+           y2="337.25"
+           id="line137" />
+        <line
+           class="cls-12"
+           x1="-26.23"
+           y1="332.70999"
+           x2="-26.23"
+           y2="337.25"
+           id="line138" />
+        <line
+           class="cls-12"
+           x1="-29.700001"
+           y1="329.04001"
+           x2="-29.700001"
+           y2="341.45999"
+           id="line139" />
+        <path
+           class="cls-48"
+           d="m -21.44,351.71 c 0,0.38 0.51,0.82 0.42,1.16 -0.09,0.36 -0.35,0.71 -0.53,1.02 -0.18,0.32 -0.56,0.49 -0.82,0.75 -0.25,0.26 -0.59,0.35 -0.9,0.53 -0.3,0.18 -0.48,0.72 -0.82,0.82 -0.34,0.09 -0.74,-0.14 -1.1,-0.14 -0.36,0 -0.8,0.34 -1.13,0.25 -0.35,-0.1 -0.68,-0.4 -0.98,-0.59 -0.31,-0.18 -0.49,-0.58 -0.74,-0.84 -0.25,-0.26 -0.68,-0.42 -0.86,-0.74 -0.18,-0.31 0,-0.8 -0.1,-1.17 -0.09,-0.35 -0.22,-0.68 -0.22,-1.06 0,-0.38 0.11,-0.72 0.19,-1.07 0.09,-0.36 0.4,-0.57 0.58,-0.89 0.18,-0.32 0.06,-0.85 0.31,-1.11 0.25,-0.26 0.51,-0.58 0.82,-0.76 0.3,-0.18 0.72,-0.18 1.07,-0.28 0.34,-0.09 0.7,-0.05 1.06,-0.05 0.36,0 0.72,-0.02 1.05,0.07 0.35,0.1 0.82,-0.02 1.12,0.17 0.31,0.19 0.45,0.67 0.7,0.93 0.25,0.26 0.23,0.7 0.41,1.02 0.18,0.31 0.67,0.48 0.76,0.84 0.09,0.35 -0.3,0.75 -0.3,1.13"
+           id="path228" />
+        <path
+           class="cls-48"
+           d="m -22.51,319.09 c 0,0.43 0.58,0.92 0.48,1.32 -0.1,0.41 -0.4,0.8 -0.6,1.16 -0.2,0.36 -0.64,0.56 -0.92,0.85 -0.28,0.29 -0.67,0.39 -1.02,0.6 -0.34,0.21 -0.54,0.82 -0.93,0.92 -0.38,0.11 -0.84,-0.16 -1.25,-0.16 -0.41,0 -0.9,0.38 -1.28,0.28 -0.39,-0.11 -0.77,-0.46 -1.11,-0.66 -0.35,-0.21 -0.55,-0.66 -0.83,-0.96 -0.28,-0.29 -0.77,-0.47 -0.97,-0.83 -0.2,-0.36 0,-0.91 -0.11,-1.32 -0.1,-0.39 -0.24,-0.78 -0.24,-1.2 0,-0.42 0.12,-0.82 0.22,-1.21 0.11,-0.41 0.45,-0.65 0.65,-1.01 0.2,-0.36 0.07,-0.96 0.35,-1.26 0.28,-0.29 0.58,-0.66 0.93,-0.86 0.34,-0.21 0.82,-0.21 1.21,-0.32 0.38,-0.11 0.79,-0.05 1.2,-0.05 0.41,0 0.81,-0.03 1.19,0.08 0.39,0.11 0.93,-0.02 1.27,0.19 0.35,0.21 0.51,0.76 0.79,1.05 0.28,0.29 0.27,0.79 0.47,1.15 0.2,0.36 0.76,0.55 0.86,0.96 0.1,0.39 -0.35,0.85 -0.35,1.28"
+           id="path229" />
+        <path
+           class="cls-48"
+           d="m -15.28,352.2 c 0,0.31 0.43,0.68 0.36,0.97 -0.08,0.3 -0.3,0.59 -0.45,0.85 -0.15,0.27 -0.48,0.41 -0.69,0.63 -0.21,0.22 -0.5,0.29 -0.76,0.44 -0.26,0.15 -0.4,0.6 -0.69,0.68 -0.28,0.08 -0.63,-0.12 -0.93,-0.12 -0.3,0 -0.67,0.28 -0.95,0.2 -0.29,-0.08 -0.57,-0.34 -0.83,-0.49 -0.26,-0.15 -0.41,-0.49 -0.62,-0.7 -0.21,-0.22 -0.57,-0.35 -0.72,-0.61 -0.15,-0.26 0,-0.67 -0.09,-0.97 -0.07,-0.29 -0.18,-0.57 -0.18,-0.89 0,-0.32 0.09,-0.6 0.17,-0.89 0.08,-0.3 0.34,-0.48 0.48,-0.74 0.15,-0.27 0.05,-0.71 0.26,-0.93 0.21,-0.22 0.43,-0.48 0.69,-0.64 0.26,-0.15 0.61,-0.15 0.9,-0.23 0.28,-0.08 0.59,-0.04 0.89,-0.04 0.3,0 0.6,-0.02 0.89,0.06 0.29,0.08 0.69,-0.01 0.95,0.14 0.26,0.15 0.38,0.56 0.59,0.78 0.21,0.22 0.2,0.58 0.35,0.85 0.15,0.26 0.56,0.4 0.64,0.7 0.07,0.29 -0.26,0.63 -0.26,0.94"
+           id="path230" />
+        <path
+           class="cls-48"
+           d="m 29.16,348.35 c 0,0.33 0.46,0.72 0.38,1.02 -0.08,0.32 -0.31,0.62 -0.47,0.9 -0.16,0.28 -0.5,0.43 -0.72,0.66 -0.22,0.23 -0.53,0.3 -0.8,0.47 -0.27,0.16 -0.42,0.63 -0.73,0.72 -0.3,0.08 -0.66,-0.12 -0.98,-0.12 -0.32,0 -0.71,0.3 -1.01,0.22 -0.31,-0.09 -0.6,-0.36 -0.87,-0.52 -0.27,-0.16 -0.43,-0.51 -0.65,-0.74 -0.22,-0.23 -0.6,-0.37 -0.76,-0.65 -0.16,-0.28 0,-0.71 -0.09,-1.02 -0.08,-0.31 -0.19,-0.6 -0.19,-0.93 0,-0.33 0.09,-0.63 0.17,-0.94 0.08,-0.32 0.35,-0.5 0.51,-0.78 0.16,-0.28 0.05,-0.75 0.27,-0.98 0.22,-0.23 0.46,-0.51 0.73,-0.67 0.27,-0.16 0.64,-0.16 0.95,-0.24 0.3,-0.08 0.62,-0.04 0.94,-0.04 0.32,0 0.64,-0.02 0.93,0.06 0.31,0.08 0.73,-0.01 1,0.15 0.27,0.16 0.4,0.59 0.62,0.82 0.22,0.23 0.21,0.61 0.37,0.89 0.15,0.28 0.6,0.43 0.68,0.74 0.08,0.31 -0.27,0.66 -0.27,0.99"
+           id="path231" />
+        <path
+           class="cls-48"
+           d="m -22.71,344.71 c 0,0.31 0.43,0.68 0.36,0.97 -0.08,0.3 -0.3,0.59 -0.45,0.85 -0.15,0.27 -0.48,0.41 -0.69,0.63 -0.21,0.22 -0.5,0.29 -0.76,0.44 -0.26,0.15 -0.4,0.6 -0.69,0.68 -0.28,0.08 -0.63,-0.12 -0.93,-0.12 -0.3,0 -0.67,0.28 -0.95,0.2 -0.29,-0.08 -0.57,-0.34 -0.83,-0.49 -0.26,-0.15 -0.41,-0.49 -0.62,-0.7 -0.21,-0.22 -0.57,-0.35 -0.72,-0.61 -0.15,-0.26 0,-0.67 -0.09,-0.97 -0.07,-0.29 -0.18,-0.57 -0.18,-0.89 0,-0.32 0.09,-0.6 0.17,-0.89 0.08,-0.3 0.34,-0.48 0.48,-0.74 0.15,-0.27 0.05,-0.71 0.26,-0.93 0.21,-0.22 0.43,-0.48 0.69,-0.64 0.26,-0.15 0.61,-0.15 0.9,-0.23 0.28,-0.08 0.59,-0.04 0.89,-0.04 0.3,0 0.6,-0.02 0.89,0.06 0.29,0.08 0.69,-0.01 0.95,0.14 0.26,0.15 0.38,0.56 0.59,0.78 0.21,0.22 0.2,0.58 0.35,0.85 0.15,0.26 0.56,0.4 0.64,0.7 0.07,0.29 -0.26,0.63 -0.26,0.94"
+           id="path232" />
+        <path
+           class="cls-48"
+           d="m -22.28,326.6 c 0,0.3 0.41,0.64 0.34,0.92 -0.07,0.28 -0.28,0.56 -0.42,0.81 -0.14,0.25 -0.45,0.39 -0.65,0.59 -0.2,0.2 -0.47,0.27 -0.72,0.42 -0.24,0.14 -0.38,0.57 -0.65,0.64 -0.27,0.07 -0.59,-0.11 -0.88,-0.11 -0.29,0 -0.63,0.27 -0.9,0.19 -0.28,-0.07 -0.54,-0.32 -0.78,-0.46 -0.24,-0.15 -0.39,-0.46 -0.59,-0.67 -0.2,-0.21 -0.54,-0.33 -0.68,-0.58 -0.14,-0.25 0,-0.63 -0.08,-0.92 -0.07,-0.27 -0.17,-0.54 -0.17,-0.84 0,-0.3 0.08,-0.57 0.15,-0.84 0.07,-0.28 0.32,-0.45 0.46,-0.7 0.14,-0.25 0.05,-0.67 0.25,-0.87 0.2,-0.21 0.41,-0.46 0.65,-0.6 0.24,-0.14 0.57,-0.14 0.85,-0.22 0.27,-0.07 0.55,-0.04 0.84,-0.04 0.29,0 0.57,-0.02 0.84,0.06 0.28,0.07 0.65,-0.01 0.89,0.13 0.24,0.15 0.36,0.53 0.55,0.73 0.2,0.2 0.19,0.55 0.33,0.8 0.14,0.25 0.53,0.38 0.61,0.67 0.07,0.27 -0.24,0.59 -0.24,0.89"
+           id="path233" />
+        <path
+           class="cls-48"
+           d="m 18.79,317.84 c 0,0.3 0.41,0.64 0.34,0.92 -0.07,0.28 -0.28,0.56 -0.42,0.81 -0.14,0.25 -0.45,0.39 -0.65,0.59 -0.2,0.2 -0.47,0.27 -0.72,0.42 -0.24,0.14 -0.38,0.57 -0.65,0.64 -0.27,0.07 -0.59,-0.11 -0.88,-0.11 -0.29,0 -0.63,0.27 -0.9,0.19 -0.28,-0.07 -0.54,-0.32 -0.78,-0.46 -0.24,-0.15 -0.39,-0.46 -0.59,-0.67 -0.2,-0.21 -0.54,-0.33 -0.68,-0.58 -0.14,-0.25 0,-0.63 -0.08,-0.92 -0.07,-0.27 -0.17,-0.54 -0.17,-0.84 0,-0.3 0.08,-0.57 0.15,-0.84 0.07,-0.28 0.32,-0.45 0.46,-0.7 0.14,-0.25 0.05,-0.67 0.25,-0.87 0.2,-0.21 0.41,-0.46 0.65,-0.6 0.24,-0.14 0.57,-0.14 0.85,-0.22 0.27,-0.07 0.55,-0.04 0.84,-0.04 0.29,0 0.57,-0.02 0.84,0.06 0.28,0.07 0.65,-0.01 0.89,0.13 0.24,0.15 0.36,0.53 0.55,0.73 0.2,0.21 0.19,0.55 0.33,0.8 0.14,0.25 0.53,0.38 0.61,0.67 0.07,0.27 -0.24,0.59 -0.24,0.89"
+           id="path234" />
+        <path
+           class="cls-48"
+           d="m 12.53,317.84 c 0,0.3 0.41,0.64 0.34,0.92 -0.07,0.28 -0.28,0.56 -0.42,0.81 -0.14,0.25 -0.45,0.39 -0.65,0.59 -0.2,0.2 -0.47,0.27 -0.72,0.42 -0.24,0.14 -0.38,0.57 -0.65,0.64 -0.27,0.07 -0.59,-0.11 -0.88,-0.11 -0.29,0 -0.63,0.27 -0.9,0.19 -0.28,-0.07 -0.54,-0.32 -0.78,-0.46 -0.24,-0.15 -0.39,-0.46 -0.59,-0.67 -0.2,-0.21 -0.54,-0.33 -0.68,-0.58 -0.14,-0.25 0,-0.63 -0.08,-0.92 -0.07,-0.27 -0.17,-0.54 -0.17,-0.84 0,-0.3 0.08,-0.57 0.15,-0.84 0.07,-0.28 0.32,-0.45 0.46,-0.7 0.14,-0.25 0.05,-0.67 0.25,-0.87 0.2,-0.21 0.41,-0.46 0.65,-0.6 0.24,-0.14 0.57,-0.14 0.85,-0.22 0.27,-0.07 0.55,-0.04 0.84,-0.04 0.29,0 0.57,-0.02 0.84,0.06 0.28,0.07 0.65,-0.01 0.89,0.13 0.24,0.15 0.36,0.53 0.56,0.73 0.2,0.21 0.19,0.55 0.33,0.8 0.14,0.25 0.53,0.38 0.61,0.67 0.07,0.27 -0.24,0.59 -0.24,0.89"
+           id="path235" />
+        <path
+           class="cls-48"
+           d="m 39.59,317.84 c 0,0.3 0.41,0.64 0.34,0.92 -0.07,0.28 -0.28,0.56 -0.42,0.81 -0.14,0.25 -0.45,0.39 -0.65,0.59 -0.2,0.2 -0.47,0.27 -0.72,0.42 -0.24,0.14 -0.38,0.57 -0.65,0.64 -0.27,0.07 -0.59,-0.11 -0.88,-0.11 -0.29,0 -0.63,0.27 -0.9,0.19 -0.28,-0.07 -0.54,-0.32 -0.78,-0.46 -0.24,-0.15 -0.39,-0.46 -0.59,-0.67 -0.2,-0.21 -0.54,-0.33 -0.68,-0.58 -0.14,-0.25 0,-0.63 -0.08,-0.92 -0.07,-0.27 -0.17,-0.54 -0.17,-0.84 0,-0.3 0.08,-0.57 0.15,-0.84 0.07,-0.28 0.32,-0.45 0.46,-0.7 0.14,-0.25 0.05,-0.67 0.25,-0.87 0.2,-0.21 0.41,-0.46 0.65,-0.6 0.24,-0.14 0.57,-0.14 0.85,-0.22 0.27,-0.07 0.55,-0.04 0.84,-0.04 0.29,0 0.57,-0.02 0.84,0.06 0.28,0.07 0.65,-0.01 0.89,0.13 0.24,0.15 0.36,0.53 0.55,0.73 0.2,0.21 0.19,0.55 0.33,0.8 0.14,0.25 0.53,0.38 0.61,0.67 0.07,0.27 -0.24,0.59 -0.24,0.89"
+           id="path236" />
+        <path
+           class="cls-48"
+           d="m 24.28,351.25 c 0,0.46 0.63,1 0.52,1.42 -0.11,0.44 -0.43,0.87 -0.65,1.26 -0.22,0.39 -0.69,0.6 -1,0.92 -0.3,0.32 -0.72,0.43 -1.1,0.65 -0.37,0.22 -0.58,0.88 -1.01,1 -0.41,0.11 -0.91,-0.17 -1.35,-0.17 -0.44,0 -0.98,0.42 -1.39,0.3 -0.43,-0.12 -0.83,-0.5 -1.2,-0.72 -0.38,-0.23 -0.6,-0.72 -0.9,-1.03 -0.3,-0.31 -0.84,-0.51 -1.05,-0.9 -0.21,-0.39 0,-0.99 -0.12,-1.43 -0.11,-0.43 -0.27,-0.84 -0.27,-1.3 0,-0.46 0.13,-0.88 0.24,-1.31 0.11,-0.44 0.49,-0.7 0.7,-1.09 0.22,-0.39 0.07,-1.04 0.38,-1.36 0.31,-0.32 0.63,-0.71 1.01,-0.94 0.37,-0.22 0.88,-0.22 1.31,-0.34 0.41,-0.11 0.85,-0.06 1.3,-0.06 0.45,0 0.88,-0.03 1.29,0.09 0.42,0.12 1.01,-0.02 1.38,0.2 0.38,0.23 0.55,0.82 0.85,1.14 0.31,0.32 0.29,0.85 0.51,1.25 0.21,0.39 0.82,0.59 0.94,1.03 0.11,0.43 -0.37,0.92 -0.37,1.38"
+           id="path243" />
+        <polygon
+           class="cls-63"
+           points="-14.33,322.48 -14.33,315.63 -22.89,315.63 -22.89,326.77 -21.29,326.77 -21.29,324.08 -18.44,324.08 -18.44,322.48 "
+           id="polygon271" />
+        <path
+           class="cls-13"
+           d="M 44.45,334.36"
+           id="path274" />
+      </g>
+    </g>
+    <g
+       id="g374"
+       inkscape:label="6・8号館">
+      <title
+         id="title375">6・8号館</title>
+      <polygon
+         class="cls-20"
+         points="267.95,103.59 267.95,101.9 258.58,101.9 258.58,143.57 267.95,143.57 267.95,141.88 336.26,141.88 336.26,143.57 345.63,143.57 345.63,101.9 336.26,101.9 336.26,103.59 "
+         id="polygon263"
+         inkscape:label="8号館"
+         sodipodi:insensitive="true"
+         style="isolation:isolate">
+        <title
+           id="title360">8号館</title>
+      </polygon>
+      <g
+         id="g364"
+         inkscape:label="6号館8号館背景">
+        <title
+           id="title365">6号館8号館背景</title>
+        <rect
+           class="cls-7"
+           x="-7.2206988"
+           y="319.68158"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect147"
+           style="isolation:isolate" />
+        <rect
+           class="cls-7"
+           x="-11.166558"
+           y="319.68427"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect151"
+           style="isolation:isolate" />
+        <rect
+           class="cls-7"
+           x="-11.172286"
+           y="323.30688"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect152"
+           style="isolation:isolate" />
+        <rect
+           class="cls-7"
+           x="-15.117109"
+           y="319.67813"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect155"
+           style="isolation:isolate" />
+        <path
+           class="cls-7"
+           d="m 244.65,143.7 h 23.76 c 0,0 11.75,9.64 33.02,9.71 17.82,0.06 28.44,-10.74 28.44,-10.74"
+           id="path144" />
+        <path
+           class="cls-7"
+           d="m 266.24,150.22 c 0,0 14.39,8.57 34.1,8.57 19.71,0 27.93,-8.57 27.93,-8.57 h 1.6"
+           id="path145" />
+        <rect
+           class="cls-7"
+           x="-7.2264261"
+           y="323.3042"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect148" />
+        <rect
+           class="cls-7"
+           x="-7.2221742"
+           y="326.92682"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect149" />
+        <rect
+           class="cls-7"
+           x="-7.2279015"
+           y="330.53943"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect150" />
+        <rect
+           class="cls-7"
+           x="-11.168003"
+           y="326.91949"
+           width="3.9400001"
+           height="3.6199999"
+           transform="rotate(-61.87)"
+           id="rect153" />
+        <path
+           class="cls-7"
+           d="m 317.13,150.5 v -3.54 c 0,0 3.16,-0.91 4.51,-1.83 2.86,-1.94 3.09,-2.8 3.09,-2.8"
+           id="path162" />
+        <polyline
+           class="cls-7"
+           points="284.9 142.68 284.9 149.36 310.62 149.36 310.62 152.45"
+           id="polyline162" />
+        <rect
+           class="cls-7"
+           x="346.09"
+           y="122.54"
+           width="3.51"
+           height="8.8199997"
+           id="rect163" />
+        <polyline
+           class="cls-7"
+           points="346.43 133.08 349.6 133.08 349.6 144.56 352.34 144.56"
+           id="polyline163" />
+        <polyline
+           class="cls-7"
+           points="352.34 149.7 350.8 149.7 350.8 198.31"
+           id="polyline164" />
+      </g>
+      <polygon
+         class="cls-20"
+         points="265.67,164.78 265.67,149.53 247.39,149.53 247.39,177.06 253.51,177.06 253.51,199.45 330.32,199.45 346.72,199.45 346.72,164.78 346.72,149.53 330.32,149.53 330.32,164.78 "
+         id="polygon275"
+         inkscape:label="6号館"
+         sodipodi:insensitive="true">
+        <title
+           id="title347">6号館</title>
+      </polygon>
+      <g
+         id="g363"
+         inkscape:label="6号館水場"
+         sodipodi:insensitive="true">
+        <title
+           id="title364">6号館水場</title>
+        <path
+           class="cls-7"
+           d="m 242.25,153.41 c 0,0 -15.59,8.45 -20.22,9.65 -4.63,1.2 -20.05,0 -20.05,0"
+           id="path146" />
+        <rect
+           class="cls-7"
+           x="207.62"
+           y="197.67999"
+           width="20.75"
+           height="3.0799999"
+           id="rect146" />
+        <line
+           class="cls-24"
+           x1="223.19"
+           y1="197.14"
+           x2="227.23"
+           y2="197.14"
+           id="line274" />
+        <polyline
+           class="cls-33"
+           points="225.97 169.58 227.71 169.58 227.71 162.15 233.29 162.15 233.29 167.37 234.77 167.38 234.77 158.78 239.74 158.78 239.72 163.54 241.39 163.54 241.39 153.41 247.05 153.41 247.05 192.65 226.04 192.65"
+           id="polyline275" />
+        <rect
+           class="cls-32"
+           x="228.37"
+           y="190.89"
+           width="25.02"
+           height="9.8699999"
+           id="rect275" />
+        <line
+           class="cls-33"
+           x1="239.74001"
+           y1="158.78"
+           x2="239.72"
+           y2="190.71001"
+           id="line280" />
+        <line
+           class="cls-33"
+           x1="233.28999"
+           y1="162.14999"
+           x2="233.28999"
+           y2="190.78"
+           id="line281" />
+        <polygon
+           class="cls-33"
+           points="225.97,164.91 225.98,192.65 201.98,192.65 201.98,164.91 214.32,164.91 "
+           id="polygon281" />
+      </g>
+      <g
+         id="g287"
+         inkscape:label="ひよこ"
+         sodipodi:insensitive="true">
+        <title
+           id="title345">ひよこ</title>
+        <g
+           id="_x30_6">
+          <path
+             class="cls-27"
+             d="m 224.15,177.67 c -0.07,-0.51 -0.19,-1.01 -0.36,-1.49 -0.03,-0.07 -0.06,-0.14 -0.1,-0.21 -0.24,-0.44 -0.5,-0.62 -0.76,-0.67 -0.19,-0.03 -0.52,0.03 -0.91,0.33 -0.04,0.03 -0.07,0.06 -0.1,0.09 -0.09,0.07 -0.18,0.13 -0.27,0.19 -0.25,0.17 -0.51,0.3 -0.7,0.36 -0.18,0.06 -0.37,0.1 -0.59,0.13 -0.49,0.06 -1.1,-0.03 -1.24,-0.06 -1.02,-0.21 -1.95,-0.47 -2.98,-0.63 -0.25,-0.04 -0.5,-0.07 -0.76,-0.09 0.47,-0.42 0.85,-0.93 1.12,-1.5 0.13,-0.29 0.24,-0.6 0.32,-0.93 0.15,-0.63 0.17,-1.27 0.08,-1.89 -0.15,-1.01 -0.63,-1.94 -1.3,-2.64 -1.29,-1.37 -3.08,-1.62 -4.18,-1.59 -1.23,0.04 -2.63,0.45 -3.68,1.45 -0.62,0.59 -1.09,1.33 -1.34,2.13 -0.13,0.4 -0.21,0.87 -0.22,1.44 -0.02,0.53 0.03,0.99 0.13,1.41 0.12,0.53 0.33,1.03 0.6,1.49 l 0.45,0.47 c 0.12,0.1 0.19,0.26 0.18,0.42 0,0.11 -0.05,0.21 -0.12,0.3 -0.09,0.1 -0.17,0.19 -0.26,0.29 -0.21,0.24 -0.55,0.59 -0.72,0.8 -0.54,0.66 -0.93,1.49 -1.09,2.37 -0.16,0.84 -0.11,1.69 0.13,2.46 0.16,0.52 0.4,1.02 0.74,1.49 0.5,0.69 1.26,1.37 2.42,1.88 0.26,0.12 0.61,0.23 0.96,0.34 0.37,0.11 0.77,0.2 1.19,0.28 1.37,0.25 3.42,0.39 5.49,0.23 0.91,-0.07 1.72,-0.2 2.63,-0.49 0.6,-0.2 1.12,-0.42 1.58,-0.69 0.63,-0.36 1.15,-0.77 1.58,-1.2 0.68,-0.68 1.27,-1.59 1.68,-2.73 0.42,-1.18 0.55,-2.4 0.39,-3.54 z"
+             id="path282" />
+        </g>
+        <g
+           id="_x30_5">
+          <path
+             class="cls-28"
+             d="m 220.67,178.64 c 0,-0.06 -0.01,-0.11 -0.02,-0.16 -0.01,-0.07 -0.03,-0.13 -0.06,-0.19 -0.03,-0.09 -0.1,-0.17 -0.18,-0.2 -0.08,-0.03 -0.18,-0.03 -0.26,0 -0.29,0.13 -0.59,0.23 -0.9,0.29 -0.27,0.05 -0.54,0.07 -0.84,0.06 -0.57,-0.01 -0.94,-0.13 -1.49,-0.27 -0.47,-0.11 -0.95,-0.2 -1.29,-0.23 -0.59,-0.04 -1.06,0 -1.47,0.1 -0.57,0.14 -1.04,0.38 -1.29,0.56 -0.57,0.42 -0.9,0.92 -1.03,1.44 -0.06,0.26 -0.08,0.52 -0.06,0.79 0,-0.2 0.04,-0.4 0.1,-0.6 0.21,-0.69 0.73,-1.22 1.29,-1.56 0.28,-0.17 0.58,-0.3 0.94,-0.39 0.56,-0.14 1.53,-0.17 2.68,0.14 0.31,0.09 0.66,0.18 1.05,0.23 0.25,0.03 0.49,0.04 0.71,0.03 0.47,-0.02 0.94,-0.11 1.39,-0.27 0.02,0 0.04,-0.02 0.06,-0.02 0.09,-0.03 0.15,-0.04 0.18,-0.03 0.06,0.02 0.11,0.1 0.13,0.22 0,0.03 0,0.06 0,0.09 0.02,0.36 0,0.72 -0.09,1.08 -0.07,0.31 -0.23,0.71 -0.47,1.13 -0.25,0.45 -0.56,0.83 -0.9,1.14 -0.26,0.24 -0.57,0.47 -0.91,0.66 -1.06,0.6 -2.35,0.8 -3.54,0.58 -0.82,-0.15 -1.42,-0.45 -1.81,-0.73 -0.22,-0.16 -0.42,-0.34 -0.59,-0.54 0.12,0.25 0.29,0.48 0.49,0.68 0.11,0.11 0.25,0.22 0.42,0.33 0.18,0.12 0.38,0.22 0.6,0.31 0.57,0.23 1.49,0.46 2.49,0.35 0.21,-0.02 0.43,-0.06 0.66,-0.11 0.34,-0.08 0.65,-0.18 0.94,-0.31 0.28,-0.12 0.57,-0.28 0.86,-0.47 0.29,-0.19 0.53,-0.39 0.74,-0.59 0.48,-0.46 0.88,-1.05 1.14,-1.7 0.11,-0.28 0.19,-0.54 0.24,-0.8 0.03,-0.14 0.05,-0.4 0.07,-0.63 0,-0.11 0.01,-0.26 0,-0.42 z"
+             id="path283" />
+        </g>
+        <g
+           id="_x30_4">
+          <path
+             class="cls-31"
+             d="m 208.38,173.97 c -0.09,-0.14 -0.23,-0.19 -0.35,-0.23 -0.11,-0.04 -0.22,-0.08 -0.31,-0.11 -0.1,-0.04 -0.19,-0.09 -0.27,-0.14 -0.11,-0.07 -0.21,-0.15 -0.31,-0.25 -0.07,-0.07 -0.13,-0.14 -0.18,-0.23 -0.18,-0.26 -0.34,-0.65 -0.47,-0.84 -0.04,-0.05 -0.09,-0.11 -0.17,-0.14 -0.03,-0.01 -0.07,-0.03 -0.11,-0.03 -0.06,0 -0.1,0 -0.14,0 -0.07,0.01 -0.13,0.05 -0.16,0.07 -0.13,0.1 -0.39,0.3 -0.6,0.42 -0.08,0.05 -0.2,0.09 -0.32,0.14 -0.54,0.18 -1.17,0.19 -1.42,0.2 -0.03,0 -0.1,0 -0.16,0.03 -0.08,0.03 -0.14,0.07 -0.18,0.12 -0.04,0.05 -0.08,0.1 -0.1,0.16 0,0.07 0,0.13 0.02,0.19 0.02,0.04 0.04,0.07 0.06,0.1 0.28,0.22 0.56,0.43 0.84,0.65 -0.03,0.12 -0.02,0.23 0.03,0.33 0.03,0.05 0.06,0.08 0.09,0.1 0.09,0.08 0.41,0.26 0.74,0.36 0.11,0.03 0.24,0.07 0.33,0.1 0.12,0.03 0.24,0.06 0.35,0.08 0.22,0.04 0.48,0.07 0.76,0.09 0.2,0.01 0.4,0.01 0.55,0 0.14,-0.01 0.28,-0.04 0.42,-0.07 0.25,-0.06 0.53,-0.17 0.79,-0.36 0.05,-0.04 0.19,-0.15 0.27,-0.31 0.07,-0.12 0.08,-0.22 0.07,-0.29 0,-0.05 -0.03,-0.1 -0.06,-0.16 z"
+             id="path284" />
+        </g>
+        <g
+           id="_x30_3">
+          <path
+             class="cls-30"
+             d="m 207.95,174.19 c -0.13,0.02 -0.26,0.04 -0.39,0.06 -0.28,0.04 -0.56,0.06 -0.83,0.06 -0.52,0.01 -0.98,-0.01 -1.4,-0.08 -0.36,-0.06 -0.73,-0.16 -1.08,-0.28 -0.19,-0.07 -0.35,-0.14 -0.5,-0.23 -0.08,-0.05 -0.19,-0.12 -0.29,-0.18 -0.08,-0.05 -0.15,-0.11 -0.22,-0.16 -0.05,-0.04 -0.1,-0.04 -0.12,-0.02 -0.01,0.02 0,0.04 0,0.07 0,0.01 0.02,0.03 0.02,0.04 0.02,0.03 0.05,0.06 0.07,0.09 0.09,0.09 0.19,0.18 0.3,0.26 0.15,0.11 0.32,0.21 0.5,0.3 0.71,0.33 1.82,0.46 2.68,0.39 0.13,-0.01 0.32,-0.03 0.48,-0.06 0.13,-0.02 0.25,-0.04 0.37,-0.06 0.08,-0.02 0.17,-0.04 0.25,-0.06 0.05,-0.01 0.1,-0.03 0.14,-0.06 0.04,-0.02 0.1,-0.06 0.1,-0.08 0,-0.01 -0.06,0 -0.1,0 z"
+             id="path285" />
+        </g>
+        <g
+           id="_x30_2">
+          <path
+             class="cls-29"
+             d="m 209.01,170.56 c -0.61,-0.06 -1.01,0.47 -1.07,1.01 -0.05,0.48 0.15,1.09 0.74,1.18 0.55,0.08 0.96,-0.4 1.07,-0.87 0.13,-0.56 -0.12,-1.26 -0.74,-1.33 z"
+             id="path286" />
+        </g>
+        <g
+           id="_x30_1">
+          <path
+             class="cls-21"
+             d="m 208.72,170.97 c -0.17,-0.02 -0.28,0.08 -0.33,0.2 -0.06,0.15 0.01,0.35 0.18,0.4 0.16,0.05 0.34,-0.06 0.38,-0.23 0.04,-0.17 -0.04,-0.35 -0.22,-0.38 z"
+             id="path287" />
+        </g>
+      </g>
+    </g>
+    <rect
+       style="fill:#8c8786;fill-opacity:1"
+       id="rect398"
+       width="31.496"
+       height="133.61876"
+       x="316.41241"
+       y="214.82629"
+       inkscape:label="工学本館">
+      <title
+         id="title399">工学本館</title>
+    </rect>
+    <g
+       id="g405"
+       inkscape:label="EF館">
+      <title
+         id="title406">EF館</title>
+      <g
+         id="g404"
+         inkscape:label="EF館">
+        <title
+           id="title404">EF館</title>
+        <rect
+           style="fill:#8c8786;fill-opacity:1"
+           id="rect399"
+           width="40.562836"
+           height="152.70715"
+           x="298.75565"
+           y="378.50928" />
+        <rect
+           style="fill:#8c8786;fill-opacity:1;stroke-width:0.907317"
+           id="rect400"
+           width="8.8891859"
+           height="9.026475"
+           x="338.72665"
+           y="380.29547" />
+        <rect
+           style="fill:#8c8786;fill-opacity:1;stroke-width:1.03928"
+           id="rect401"
+           width="11.662969"
+           height="37.455654"
+           x="338.45825"
+           y="414.62982" />
+        <rect
+           style="fill:#8c8786;fill-opacity:1;stroke-width:1.23182"
+           id="rect402"
+           width="5.3686104"
+           height="5.7265182"
+           x="338.60266"
+           y="410.48236" />
+      </g>
+      <rect
+         style="fill:#8c8786;fill-opacity:1"
+         id="rect403"
+         width="8.3511724"
+         height="4.5334935"
+         x="306.39099"
+         y="533.60248" />
+      <rect
+         style="fill:#8c8786;fill-opacity:1"
+         id="rect404"
+         width="8.1125669"
+         height="19.326998"
+         x="343.37476"
+         y="515.94574"
+         inkscape:label="自動車工房">
+        <title
+           id="title405">自動車工房</title>
+      </rect>
+    </g>
+  </g>
+</svg>

@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 useSeoMeta({
   title: '平潟祭について｜第77回 平潟祭 2026',
+  ogTitle: '平潟祭について｜第77回 平潟祭 2026',
   description: '第77回 平潟祭の委員長挨拶、昨年度（2025年度）の様子、開催概要をご紹介します。',
+  ogDescription: '第77回 平潟祭の委員長挨拶、昨年度（2025年度）の様子、開催概要をご紹介します。',
+  ogUrl: 'https://www.hirakatasai.net/info/about',
 });
 
 // 2025年度 学園祭の写真データ
@@ -33,52 +37,10 @@ const memories2025 = [
     alt: '2025年度 夕景・ライトアップ',
   },
 ];
-
-// 写真を1枚ずつ大きく表示するスライドショー制御
-const currentSlide = ref(0);
-let slideTimer: ReturnType<typeof setInterval> | null = null;
-
-const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % memories2025.length;
-};
-
-const prevSlide = () => {
-  currentSlide.value = (currentSlide.value - 1 + memories2025.length) % memories2025.length;
-};
-
-const goToSlide = (index: number) => {
-  currentSlide.value = index;
-  resetTimer();
-};
-
-const startTimer = () => {
-  if (typeof window !== 'undefined') {
-    slideTimer = setInterval(() => {
-      nextSlide();
-    }, 6000);
-  }
-};
-
-const resetTimer = () => {
-  if (slideTimer) {
-    clearInterval(slideTimer);
-    startTimer();
-  }
-};
-
-onMounted(() => {
-  startTimer();
-});
-
-onBeforeUnmount(() => {
-  if (slideTimer) {
-    clearInterval(slideTimer);
-  }
-});
 </script>
 
 <template>
-  <div>
+  <div class="w-full overflow-x-hidden">
     <LayoutPageHeader
       title="平潟祭について"
       sub-title="About Hirakata Festival"
@@ -86,64 +48,37 @@ onBeforeUnmount(() => {
     />
 
     <div class="page-container">
-<!-- 写真スライドショー（枠・見出しなし、1枚ずつ大きく順番に表示） -->
-      <div
-        class="memories-slideshow-container"
-        @mouseenter="slideTimer && clearInterval(slideTimer)"
-        @mouseleave="resetTimer"
-      >
-        <div class="slideshow-frame">
-          <transition-group name="fade">
-            <div
-              v-for="(item, idx) in memories2025"
-              v-show="currentSlide === idx"
-              :key="item.src"
-              class="slide-image-wrapper"
-            >
-              <NuxtImg
-                :src="item.src"
-                :alt="item.alt"
-                loading="lazy"
-                format="webp"
-                sizes="xs:100vw sm:100vw md:1000px"
-                class="slide-image"
-              />
-            </div>
-          </transition-group>
-
-          <!-- 矢印ナビゲーション -->
-          <button
-            class="slide-nav-btn prev"
-            aria-label="前の写真"
-            @click="prevSlide(); resetTimer();"
+      <!-- 写真スライドショー -->
+      <section class="w-full min-w-0">
+        <Swiper
+          :modules="[Autoplay, EffectFade, Navigation, Pagination]"
+          :effect="'fade'"
+          :loop="true"
+          :autoplay="{
+            delay: 6000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }"
+          :navigation="true"
+          :pagination="{ clickable: true }"
+          class="memories-swiper w-full aspect-[16/10] max-sm:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg bg-black"
+        >
+          <SwiperSlide
+            v-for="item in memories2025"
+            :key="item.src"
+            class="w-full h-full"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            class="slide-nav-btn next"
-            aria-label="次の写真"
-            @click="nextSlide(); resetTimer();"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          <!-- ドットインジケーター -->
-          <div class="slide-indicators">
-            <button
-              v-for="(_, idx) in memories2025"
-              :key="idx"
-              class="indicator-dot"
-              :class="{ active: currentSlide === idx }"
-              :aria-label="`写真 ${idx + 1} へ`"
-              @click="goToSlide(idx)"
+            <NuxtImg
+              :src="item.src"
+              :alt="item.alt"
+              loading="lazy"
+              format="webp"
+              sizes="xs:100vw sm:100vw md:1000px"
+              class="w-full h-full object-cover"
             />
-          </div>
-        </div>
-      </div>
+          </SwiperSlide>
+        </Swiper>
+      </section>
 
 
       <!-- 委員長挨拶セクション -->
@@ -243,22 +178,30 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .page-container {
+  width: 100%;
   max-width: var(--max-width);
   margin: -32px auto 80px;
   padding: 0 24px;
   position: relative;
   z-index: 10;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 40px;
+  box-sizing: border-box;
+}
+
+.page-container > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* 委員長挨拶テキスト */
 .greeting-text {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  font-size: 16px;
-  line-height: 2.1;
+  gap: clamp(16px, 2vw, 20px);
+  font-size: clamp(15px, 1.1vw, 16px);
+  line-height: clamp(1.9, 2.1vw, 2.1);
   color: var(--text);
   max-width: 860px;
 }
@@ -267,115 +210,10 @@ onBeforeUnmount(() => {
   margin: 0;
 }
 
-/* 写真スライドショー（枠・見出しなし、1枚ずつ大きく順番に表示） */
-.memories-slideshow-container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 4px 0;
-}
-
-.slideshow-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-  background: #000000;
-}
-
-.slide-image-wrapper {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.slide-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* フェード切り替えトランジション */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.8s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* 矢印ナビゲーションボタン */
-.slide-nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: #1a2e1c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.slide-nav-btn:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: translateY(-50%) scale(1.08);
-}
-
-.slide-nav-btn.prev {
-  left: 16px;
-}
-
-.slide-nav-btn.next {
-  right: 16px;
-}
-
-/* インジケータードット */
-.slide-indicators {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 6px 12px;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
-
-.indicator-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.indicator-dot.active {
-  background: #ffffff;
-  width: 24px;
-  border-radius: 10px;
+/* 写真スライドショー（Swiper標準テーマ設定） */
+.memories-swiper {
+  --swiper-theme-color: #ffffff;
+  --swiper-navigation-size: 26px;
 }
 
 /* 開催概要テーブル */
@@ -391,14 +229,14 @@ onBeforeUnmount(() => {
 
 .outline-table th,
 .outline-table td {
-  padding: 16px 20px;
+  padding: clamp(12px, 1.5vw, 16px) clamp(14px, 2vw, 20px);
   border-bottom: 1px solid var(--border);
-  font-size: 14px;
+  font-size: clamp(13px, 1.1vw, 14px);
   text-align: left;
 }
 
 .outline-table th {
-  width: 25%;
+  width: clamp(25%, 30vw, 32%);
   background: var(--sprout-bg);
   color: var(--sprout-title);
   font-weight: 800;
@@ -408,53 +246,5 @@ onBeforeUnmount(() => {
 .outline-table td {
   color: var(--text);
   line-height: 1.7;
-}
-
-/* レスポンシブ */
-@media (max-width: 768px) {
-  .slideshow-frame {
-    aspect-ratio: 4 / 3;
-    border-radius: 14px;
-  }
-
-  .slide-nav-btn {
-    width: 38px;
-    height: 38px;
-  }
-
-  .slide-nav-btn.prev {
-    left: 10px;
-  }
-
-  .slide-nav-btn.next {
-    right: 10px;
-  }
-
-  .indicator-dot {
-    width: 8px;
-    height: 8px;
-  }
-
-  .indicator-dot.active {
-    width: 18px;
-  }
-}
-
-@media (max-width: 680px) {
-  .greeting-text {
-    font-size: 15px;
-    line-height: 1.9;
-    gap: 16px;
-  }
-
-  .outline-table th,
-  .outline-table td {
-    padding: 12px 14px;
-    font-size: 13px;
-  }
-
-  .outline-table th {
-    width: 32%;
-  }
 }
 </style>

@@ -11,23 +11,28 @@ const event = computed(() => {
 });
 
 const mapUrl = computed(() => {
-  if (!event.value) return '/map';
-  const ev = event.value;
-  const room = ev.room || '';
-  const loc = ev.locationName || '';
+  const bId = event.value?.buildingId;
+  return bId ? `/map?tab=${bId}` : '/map';
+});
 
-  if (room.startsWith('3-') || loc.includes('3号館')) return '/map?tab=no3';
-  if (room.startsWith('6-') || loc.includes('6号館')) return '/map?tab=no6';
-  if (room.startsWith('7-') || loc.startsWith('7-') || loc.includes('7号館') || loc.includes('音楽館')) return '/map?tab=no7';
-  if (room.startsWith('8-') || loc.startsWith('8-') || loc.includes('8号館') || loc.includes('文化館')) return '/map?tab=no8';
-  if (loc.includes('SCC') || loc.includes('屋内ステージ') || room.includes('SCC') || room.includes('屋内ステージ')) return '/map?tab=scc';
-
-  return '/map';
+const pageTitle = computed(() =>
+  event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026'
+);
+const pageDescription = computed(() =>
+  event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ'
+);
+const ogImageUrl = computed(() => {
+  const img = event.value?.imageUrl;
+  return img ? `https://www.hirakatasai.net${img}` : undefined;
 });
 
 useSeoMeta({
-  title: () => event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026',
-  description: () => event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ',
+  title: pageTitle,
+  ogTitle: pageTitle,
+  description: pageDescription,
+  ogDescription: pageDescription,
+  ogImage: ogImageUrl,
+  ogUrl: () => `https://www.hirakatasai.net/events/${eventId.value}`,
 });
 </script>
 
@@ -52,17 +57,11 @@ useSeoMeta({
             <span class="category-badge" :class="'cat-' + event.category">
               {{ event.categoryLabel }}
             </span>
-            <span v-if="event.subCategory" class="sub-badge">
-              {{ event.subCategory }}
-            </span>
             <span class="day-badge">
               {{ event.dayLabel }}
             </span>
-            <span v-if="event.tentNo" class="tent-badge">
-              テントNo.{{ event.tentNo }}
-            </span>
-            <span v-if="event.room" class="room-badge">
-              教室: {{ event.room }}
+            <span v-if="event.locationName" class="location-badge-top">
+              {{ event.locationName }}
             </span>
           </div>
 
@@ -128,8 +127,8 @@ useSeoMeta({
             </div>
 
             <div class="info-item">
-              <span class="info-label">参加日程</span>
-              <span class="info-value">{{ event.participationDays }}</span>
+              <span class="info-label">開催日程</span>
+              <span class="info-value">{{ event.dayLabel }}</span>
             </div>
 
             <div class="info-item">
@@ -139,7 +138,7 @@ useSeoMeta({
 
             <div class="info-item">
               <span class="info-label">カテゴリ区分</span>
-              <span class="info-value">{{ event.categoryRaw }} / {{ event.subCategory }}</span>
+              <span class="info-value">{{ event.categoryLabel }}</span>
             </div>
           </div>
 
@@ -183,7 +182,7 @@ useSeoMeta({
                 class="timetable-slot-card is-clickable group"
                 title="タイムテーブルでこの枠を見る"
               >
-                <div class="slot-day-badge">{{ slot.day }}</div>
+                <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
                 <div class="slot-body">
                   <div class="slot-time">{{ slot.time }}</div>
                   <div class="slot-venue">会場: {{ slot.venue }}</div>
@@ -235,7 +234,7 @@ useSeoMeta({
 }
 
 .detail-main-card {
-  padding: 40px;
+  padding: clamp(24px, 3.5vw, 40px) clamp(16px, 3vw, 40px);
   background: white;
   border-radius: 20px;
   border: 1px solid var(--border);
@@ -272,16 +271,6 @@ useSeoMeta({
   background: linear-gradient(135deg, #d48806 0%, #b37400 100%);
 }
 
-.sub-badge {
-  background: var(--accent);
-  color: var(--text);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  border: 1px solid var(--border);
-}
-
 .day-badge {
   background: #f0f0f0;
   color: var(--text);
@@ -291,7 +280,7 @@ useSeoMeta({
   font-weight: 700;
 }
 
-.tent-badge, .room-badge {
+.location-badge-top {
   background: #eef5ee;
   color: var(--olive);
   border: 1px solid rgba(47, 91, 52, 0.25);
@@ -319,7 +308,7 @@ useSeoMeta({
 }
 
 .detail-title {
-  font-size: 30px;
+  font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 900;
   color: var(--text);
   margin-bottom: 20px;
@@ -395,6 +384,7 @@ useSeoMeta({
   font-size: 15px;
   font-weight: 700;
   color: var(--text);
+  white-space: pre-line;
 }
 
 .location-link {
@@ -540,7 +530,7 @@ useSeoMeta({
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 20px;
+  padding: clamp(14px, 2vw, 16px) clamp(16px, 2.5vw, 20px);
   background: #f4f8f5;
   border: 1px solid rgba(47, 91, 52, 0.2);
   border-radius: 12px;
@@ -567,6 +557,7 @@ useSeoMeta({
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
   flex-shrink: 0;
 }
 
@@ -643,20 +634,30 @@ useSeoMeta({
 }
 
 @media (max-width: 640px) {
-  .detail-main-card {
-    padding: 24px 16px;
-  }
-  .detail-title {
-    font-size: 22px;
-  }
   .timetable-slot-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .slot-day-badge {
+    order: 1;
+    white-space: nowrap;
   }
   .slot-action {
+    order: 2;
+    flex-shrink: 0;
+  }
+  .slot-body {
+    order: 3;
     width: 100%;
-    justify-content: flex-end;
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(47, 91, 52, 0.12);
   }
 }
 </style>

@@ -13,8 +13,8 @@ const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);
 </script>
 
 <template>
-  <div class="flex flex-row justify-center items-center gap-6">
-    <div v-if="isFinished" class="text-[24px]">開催中！</div>
+  <div class="flex flex-row flex-wrap justify-center items-center gap-x-4 sm:gap-x-6 gap-y-2">
+    <div v-if="isFinished" class="text-[clamp(1.5rem,5vw,2rem)]">開催中！</div>
     <div v-if="!isFinished" class="countdown-label">開催まであと</div>
     <div v-if="!isFinished" class="countdown-timer">
       <div class="countdown-item">
@@ -34,19 +34,16 @@ const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);
 </template>
 
 <style scoped>
-.countdown {
-  margin-bottom: 24px;
-}
-
 .countdown-label {
-  font-size: 18px;
+  font-size: clamp(0.9rem, 3.4vw, 1.1rem);
   color: var(--muted);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .countdown-timer {
   display: flex;
-  gap: 16px;
+  gap: clamp(0.625rem, 3vw, 1rem);
   justify-content: center;
 }
 
@@ -55,16 +52,36 @@ const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);
 }
 
 .countdown-value {
-  font-size: 36px;
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
   font-weight: 900;
   color: var(--olive);
   line-height: 1;
 }
 
 .countdown-unit {
-  font-size: 12px;
+  font-size: clamp(0.7rem, 2.8vw, 0.85rem);
   color: var(--muted);
   font-weight: 700;
   margin-top: 4px;
 }
+
+/* PC: タイトルより小さく保ちつつ幅に応じて縮小 */
+@media (min-width: 1024px) {
+  .countdown-label {
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+  }
+
+  .countdown-timer {
+    gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  }
+
+  .countdown-value {
+    font-size: clamp(2rem, 2.8vw, 3rem);
+  }
+
+  .countdown-unit {
+    font-size: clamp(0.75rem, 1vw, 1rem);
+  }
+}
 </style>
+
