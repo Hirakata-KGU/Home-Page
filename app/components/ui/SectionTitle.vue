@@ -15,7 +15,7 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <div class="flex flex-col items-center justify-center w-full max-w-[824px] mb-8 text-center">
-    <h2 :class="['font-sans font-bold text-4xl lg:text-5xl leading-tight mb-1', textColor]">
+    <h2 :class="['font-sans font-bold text-fluid-h1 leading-tight mb-1', textColor]">
       {{ title }}
     </h2>
     <UiOrnamentLine :color="ornamentColor" :max-width="maxWidth" />

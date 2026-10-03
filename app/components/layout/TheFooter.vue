@@ -3,7 +3,7 @@ const footerSections = [
   {
     title: 'TOP',
     columns: [
-      [{ label: 'ホームページ', to: '/' }]
+      [{ label: 'TOP', to: '/' }]
     ]
   },
   {
@@ -68,7 +68,7 @@ const footerSections = [
             </div>
           </div>
 
-          <div class="flex w-full justify-around max-w-[800px]">
+          <nav class="flex w-full justify-around max-w-[800px]" aria-label="フッターナビゲーション">
             <div
               v-for="sec in footerSections"
               :key="sec.title"
@@ -92,7 +92,7 @@ const footerSections = [
                 </ul>
               </div>
             </div>
-          </div>
+          </nav>
           <!-- TOP -->
         </div>
 

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 useSeoMeta({
   title: 'お問い合わせ・SNS｜平潟祭 2026',
+  ogTitle: 'お問い合わせ・SNS｜平潟祭 2026',
   description: '平潟祭2026に関するお問い合わせ、公式SNS（X / Instagram）のご案内。実行委員会へのお問い合わせはこちらから。',
+  ogDescription: '平潟祭2026に関するお問い合わせ、公式SNS（X / Instagram）のご案内。実行委員会へのお問い合わせはこちらから。',
+  ogUrl: 'https://www.hirakatasai.net/info/contact',
 });
 
 const contactSns = [
@@ -141,71 +144,6 @@ const contactSns = [
   font-size: 13px;
   opacity: 0.9;
   font-weight: 700;
-}
-
-.sns-body-area {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.sns-body-area p {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.sns-action-btn {
-  text-align: center;
-  width: 100%;
-}
-
-/* FAQ */
-.faq-list {
-  display: grid;
-  gap: 16px;
-}
-
-.faq-item {
-  background: var(--accent-2);
-  padding: 20px 24px;
-  border-radius: 12px;
-  border-left: 5px solid var(--olive);
-}
-
-.faq-item h4 {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--olive);
-  margin-bottom: 6px;
-}
-
-.faq-item p {
-  font-size: 14px;
-  color: var(--text);
-  line-height: 1.7;
-}
-
-/* Committee Card */
-.committee-card {
-  background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
-  border-left: 6px solid var(--gold);
-}
-
-.committee-info h4 {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--olive);
-  margin-bottom: 8px;
-}
-
-.committee-info p {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.8;
 }
 
 @media (max-width: 768px) {

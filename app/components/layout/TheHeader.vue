@@ -29,8 +29,8 @@ const guideSubItems = [
 </script>
 
 <template>
-  <header class="sticky top-0 w-full h-[80px] bg-white shadow-header z-[1000] flex justify-center items-center">
-    <div class="w-full max-w-[1920px] h-full px-6 lg:px-[51px] flex flex-row justify-between items-center gap-8">
+  <header class="sticky top-0 w-full bg-white shadow-header z-[1000] flex justify-center items-center pt-[env(safe-area-inset-top,0px)]">
+    <div class="w-full max-w-[1920px] h-[80px] px-[clamp(1.5rem,2.7vw,3.1875rem)] flex flex-row justify-between items-center gap-8">
       <!-- Left: Brand -->
       <NuxtLink to="/" class="flex flex-row items-center gap-[15px] h-[80px] no-underline shrink-0" @click="closeMobileMenu">
         <div class="w-[68px] h-[68px] flex items-center justify-center">
@@ -115,7 +115,7 @@ const guideSubItems = [
 
       <!-- Right: お問い合わせボタン（絵文字不使用） -->
       <div class="hidden lg:block shrink-0">
-        <NuxtLink to="/info/contact" class="btn-pill-green">
+        <NuxtLink to="/info/contact" class="btn-pill">
           <span>お問い合わせ</span>
         </NuxtLink>
       </div>
@@ -141,7 +141,7 @@ const guideSubItems = [
     <transition name="drawer">
       <nav
         v-if="isMobileMenuOpen"
-        class="lg:hidden flex flex-col bg-white absolute top-[80px] left-0 w-full px-6 py-6 shadow-[0_12px_24px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-2 max-h-[calc(100vh-80px)] overflow-y-auto"
+        class="lg:hidden flex flex-col bg-white absolute top-full left-0 w-full px-6 py-6 shadow-[0_12px_24px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-2 max-h-[calc(100vh-80px)] overflow-y-auto"
         aria-label="モバイルナビゲーション"
       >
         <NuxtLink
@@ -190,6 +190,14 @@ const guideSubItems = [
 </template>
 
 <style scoped>
+/* お問い合わせ用ピルボタン */
+.btn-pill {
+  @apply inline-flex justify-center items-center px-7 py-3.5 min-w-[160px] h-[52px]
+    bg-sprout-border hover:bg-[#356b48] text-white rounded-full no-underline
+    shadow-[0_2px_8px_rgba(66,132,90,0.25)] hover:shadow-[0_4px_14px_rgba(66,132,90,0.35)]
+    transition-all hover:-translate-y-0.5 font-sans font-normal text-[19px] leading-[24px];
+}
+
 /* ドロップダウンメニューの共通スタイリング */
 .dropdown-menu {
   @apply absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-200 ease-out z-[1100];
@@ -205,10 +213,6 @@ const guideSubItems = [
 
 .dropdown-item-title {
   @apply font-bold text-[14px] text-sprout-title leading-tight;
-}
-
-.dropdown-item-desc {
-  @apply text-[11px] text-text-muted mt-0.5;
 }
 
 .dropdown-item:hover .dropdown-item-title {

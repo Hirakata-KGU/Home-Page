@@ -86,3 +86,7 @@ export const getEventsByTentNo = (label: string): EventItem[] => {
   const targetId = `loc-tent-${label.padStart(2, '0')}`;
   return allEvents.filter((e) => e.locationId === targetId);
 };
+
+export const getEventsByLocationId = (locationId: string): EventItem[] => {
+  return allEvents.filter((e) => e.locationId === locationId);
+};

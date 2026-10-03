@@ -5,7 +5,10 @@ import { allEvents, categoryList, type EventCategory, type EventDay, type EventI
 
 useSeoMeta({
   title: '企画一覧｜平潟祭 2026',
-  description: '平潟祭2026の全5企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogTitle: '企画一覧｜平潟祭 2026',
+  description: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogDescription: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogUrl: 'https://www.hirakatasai.net/events',
 });
 
 const route = useRoute();
@@ -43,36 +46,26 @@ const searchQuery = ref<string>(
 );
 
 // URLクエリの同期処理
-let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 let isSyncingFromRoute = false;
 
-const syncUrlQuery = (debounce = false) => {
+const updateUrlQuery = () => {
   if (!import.meta.client || isSyncingFromRoute) return;
+  const query: Record<string, string> = {};
 
-  const update = () => {
-    const query: Record<string, string> = {};
-
-    if (searchQuery.value.trim()) {
-      query.q = searchQuery.value.trim();
-    }
-    if (selectedCategory.value !== 'all') {
-      query.category = selectedCategory.value;
-    }
-    if (selectedDay.value !== 'all') {
-      query.day = selectedDay.value;
-    }
-
-    router.replace({ query });
-  };
-
-  if (debounce) {
-    if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
-    searchDebounceTimer = setTimeout(update, 300);
-  } else {
-    if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
-    update();
+  if (searchQuery.value.trim()) {
+    query.q = searchQuery.value.trim();
   }
+  if (selectedCategory.value !== 'all') {
+    query.category = selectedCategory.value;
+  }
+  if (selectedDay.value !== 'all') {
+    query.day = selectedDay.value;
+  }
+
+  router.replace({ query });
 };
+
+const debouncedUpdateUrl = useDebounceFn(updateUrlQuery, 300);
 
 // カテゴリ変更
 const onSelectCategory = (catKey: 'all' | EventCategory) => {
@@ -133,11 +126,11 @@ const resetFilters = () => {
 
 // フィルター変更の監視（URLへ同期）
 watch([selectedCategory, selectedDay], () => {
-  syncUrlQuery(false);
+  updateUrlQuery();
 });
 
 watch(searchQuery, () => {
-  syncUrlQuery(true);
+  debouncedUpdateUrl();
 });
 
 // ブラウザの戻る/進むや外部リンクによるURL変化を監視・状態へ反映
@@ -294,7 +287,7 @@ watch(
 }
 
 .filter-section {
-  padding: 24px;
+  padding: clamp(16px, 3vw, 24px);
   background: white;
   border-radius: 16px;
   border: 1px solid var(--border);
@@ -495,9 +488,6 @@ watch(
 @media (max-width: 640px) {
   .events-grid {
     grid-template-columns: 1fr;
-  }
-  .filter-section {
-    padding: 16px;
   }
 }
 </style>

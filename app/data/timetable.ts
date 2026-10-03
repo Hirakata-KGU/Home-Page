@@ -57,12 +57,12 @@ export interface DaySchedule {
 export const daySchedules: DaySchedule[] = [
   {
     id: 'day1',
-    dayName: '10月31日（土）',
+    dayName: '10月31日(土)',
     allSlots: timetable.filter((s) => s.day === 'day1'),
   },
   {
     id: 'day2',
-    dayName: '11月1日（日）',
+    dayName: '11月1日(日)',
     allSlots: timetable.filter((s) => s.day === 'day2'),
   },
 ];

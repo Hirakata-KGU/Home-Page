@@ -1,11 +1,111 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, onBeforeUnmount } from 'vue';
-import ChickSvg from '~/components/svg/map/chick.vue';
+import { ref, computed } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay } from 'swiper/modules';
+import type { Swiper as SwiperClass } from 'swiper';
+import 'swiper/css';
+import ChickSvg from '~/components/map/chick.vue';
 
 useSeoMeta({
-  title: '平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭',
-  description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。',
+  title: '第77回 平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭 公式サイト',
+  ogTitle: '第77回 平潟祭 2026｜関東学院大学 金沢八景キャンパス 学園祭 公式サイト',
+  description: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。音楽ライブ、模擬店、展示、ステージパフォーマンスなど多数開催。',
+  ogDescription: '2026年10月31日(土)・11月1日(日)開催！第77回 平潟祭 『SPROUT』 関東学院大学 金沢八景キャンパスの学園祭公式サイト。音楽ライブ、模擬店、展示、ステージパフォーマンスなど多数開催。',
+  ogUrl: 'https://www.hirakatasai.net/',
 });
+
+// TOPページ専用の構造化データ（WebSite & Event）
+const topStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.hirakatasai.net/#website',
+      'url': 'https://www.hirakatasai.net/',
+      'name': '第77回 平潟祭 2026',
+      'alternateName': ['平潟祭', '平潟祭 2026', 'Hirakata Festival', '関東学院大学 平潟祭'],
+      'description': '関東学院大学 金沢八景キャンパスの学園祭「平潟祭」公式サイト。',
+      'inLanguage': 'ja',
+    },
+    {
+      '@type': 'Event',
+      '@id': 'https://www.hirakatasai.net/#event',
+      'name': '第77回 平潟祭 『SPROUT』',
+      'description': '2026年10月31日(土)・11月1日(日)開催！関東学院大学 金沢八景キャンパスの学園祭「平潟祭」。音楽ライブ、模擬店、展示、ステージパフォーマンスなど盛りだくさん。',
+      'startDate': '2026-10-31T10:00:00+09:00',
+      'endDate': '2026-11-01T18:00:00+09:00',
+      'eventStatus': 'https://schema.org/EventScheduled',
+      'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+      'location': {
+        '@type': 'Place',
+        'name': '関東学院大学 金沢八景キャンパス',
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': '金沢区六浦東1-50-1',
+          'addressLocality': '横浜市',
+          'addressRegion': '神奈川県',
+          'postalCode': '236-8501',
+          'addressCountry': 'JP',
+        },
+      },
+      'image': 'https://www.hirakatasai.net/images/hirakata-logo.png',
+      'organizer': {
+        '@type': 'Organization',
+        'name': '平潟祭実行委員会',
+        'url': 'https://www.hirakatasai.net/',
+      },
+    },
+  ],
+};
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(topStructuredData),
+    },
+  ],
+});
+
+// 0. ヒーローセクション装飾データ
+interface LeafItem {
+  id: string;
+  name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
+  left: number;   // X座標 (px) - viewBox 1920基準
+  top: number;    // Y座標 (px) - 波の稜線位置 (viewBox 287基準)
+  width: number;  // 横幅 (px)
+  height: number; // 縦幅 (px)
+}
+
+const leaves: LeafItem[] = [
+  // --- Hill 1 (最奥の丘) ---
+  { id: 'leaf-0-11', name: 5,  left: 1877, top: 58,  width: 29.22, height: 56 },
+  { id: 'leaf-0-8',  name: 12, left: 1370, top: 98,  width: 23.2,  height: 58 },
+  { id: 'leaf-0-4',  name: 3,  left: 765,  top: 18,  width: 34.67, height: 52 },
+  { id: 'leaf-0-3',  name: 8,  left: 503,  top: 74,  width: 40.0,  height: 60 },
+
+  // --- Hill 2 ---
+  { id: 'leaf-1-13', name: 6,  left: 1837, top: 102, width: 15.14, height: 58 },
+  { id: 'leaf-1-11', name: 14, left: 1511, top: 129, width: 34.42, height: 58 },
+  { id: 'leaf-1-8',  name: 16, left: 1214, top: 78,  width: 22.0,  height: 55 },
+  { id: 'leaf-1-3',  name: 6,  left: 434,  top: 114, width: 17.28, height: 58 },
+  { id: 'leaf-1-1',  name: 3,  left: 188,  top: 93,  width: 36.42, height: 57 },
+
+  // --- Hill 3 ---
+  { id: 'leaf-2-14', name: 6,  left: 1756, top: 162, width: 14.0,  height: 67 },
+  { id: 'leaf-2-13', name: 1,  left: 1642, top: 155, width: 38.67, height: 58 },
+  { id: 'leaf-2-7',  name: 5,  left: 1007, top: 192, width: 20.38, height: 63 },
+  { id: 'leaf-2-2',  name: 3,  left: 293,  top: 134, width: 42.67, height: 64 },
+  { id: 'leaf-2-1',  name: 14, left: 116,  top: 132, width: 27.45, height: 61 },
+
+  // --- Hill 4 (最前面の丘) ---
+  { id: 'leaf-3-13', name: 5,  left: 1866, top: 215, width: 44.87, height: 86 },
+  { id: 'leaf-3-11', name: 3,  left: 1585, top: 235, width: 34.0,  height: 51 },
+  { id: 'leaf-3-9',  name: 3,  left: 1269, top: 218, width: 42.67, height: 64 },
+  { id: 'leaf-3-6',  name: 11, left: 853,  top: 184, width: 36.8,  height: 92 },
+  { id: 'leaf-3-4',  name: 6,  left: 631,  top: 178, width: 24.21, height: 83 },
+  { id: 'leaf-3-0',  name: 8,  left: 47,   top: 245, width: 50.67, height: 76 },
+];
 
 // 1. 企画カードデータ（芸能ステージ・ステージパフォーマンス・模擬店グルメ・文化館展示の4つ）
 interface FeaturedEventItem {
@@ -52,301 +152,53 @@ const featuredEvents: FeaturedEventItem[] = [
   },
 ];
 
-// カルーセル状態管理
+// カルーセル状態管理（Swiper）
 const activeIndex = ref(0);
-const scrollContainer = ref<HTMLElement | null>(null);
-const cardRefs = ref<HTMLElement[]>([]);
-const isDragging = ref(false);
+let swiperInstance: SwiperClass | null = null;
 
 const currentFeaturedEvent = computed(() => {
   return featuredEvents[activeIndex.value] || featuredEvents[0];
 });
 
-// ポインタースクロール / ドラッグ制御
-let isPointerDown = false;
-let hasDragged = false;
-let startX = 0;
-let scrollStart = 0;
-let lastX = 0;
-let lastTime = 0;
-let velocity = 0;
-let targetIndex: number | null = null;
-let scrollRaf: number | null = null;
-let scrollTimer: ReturnType<typeof setTimeout> | null = null;
-
-// 自動切り替えタイマー（6秒ごと）
-const AUTO_PLAY_INTERVAL = 6000;
-let autoPlayTimer: ReturnType<typeof setTimeout> | null = null;
-
-const stopAutoPlay = () => {
-  if (autoPlayTimer) {
-    clearTimeout(autoPlayTimer);
-    autoPlayTimer = null;
-  }
+const onSwiper = (swiper: SwiperClass) => {
+  swiperInstance = swiper;
 };
 
-const startAutoPlay = () => {
-  stopAutoPlay();
-  if (!import.meta.client) return;
-  autoPlayTimer = setTimeout(() => {
-    const nextIndex = (activeIndex.value + 1) % featuredEvents.length;
-    scrollToItem(nextIndex);
-    startAutoPlay();
-  }, AUTO_PLAY_INTERVAL);
-};
-
-const handleVisibilityChange = () => {
-  if (document.hidden) {
-    stopAutoPlay();
-  } else {
-    startAutoPlay();
-  }
-};
-
-const onPointerDown = (e: PointerEvent) => {
-  if (e.button !== 0 && e.pointerType === 'mouse') return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
-    updateCardMetrics();
-  }
-
-  stopAutoPlay();
-  isPointerDown = true;
-  hasDragged = false;
-  startX = e.clientX;
-  lastX = e.clientX;
-  lastTime = performance.now();
-  scrollStart = container.scrollLeft;
-  velocity = 0;
-  targetIndex = null;
-};
-
-const onPointerMove = (e: PointerEvent) => {
-  if (!isPointerDown) return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  const dx = e.clientX - startX;
-  if (!hasDragged && Math.abs(dx) > 5) {
-    hasDragged = true;
-    isDragging.value = true;
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch {}
-    container.style.scrollSnapType = 'none';
-    container.style.scrollBehavior = 'auto';
-  }
-
-  if (hasDragged) {
-    container.scrollLeft = scrollStart - dx;
-    const now = performance.now();
-    const dt = now - lastTime;
-    if (dt > 0) {
-      velocity = (e.clientX - lastX) / dt;
-    }
-    lastX = e.clientX;
-    lastTime = now;
-  }
-};
-
-const onPointerUp = (e: PointerEvent) => {
-  if (!isPointerDown) return;
-  isPointerDown = false;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  if (hasDragged) {
-    try {
-      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-    } catch {}
-
-    container.style.scrollSnapType = 'x mandatory';
-    container.style.scrollBehavior = 'smooth';
-
-    if (velocity < -0.25 && activeIndex.value < featuredEvents.length - 1) {
-      scrollToItem(activeIndex.value + 1);
-    } else if (velocity > 0.25 && activeIndex.value > 0) {
-      scrollToItem(activeIndex.value - 1);
-    } else {
-      updateActiveIndex();
-      scrollToItem(activeIndex.value);
-    }
-    setTimeout(() => {
-      hasDragged = false;
-      isDragging.value = false;
-    }, 60);
-  } else {
-    isDragging.value = false;
-  }
-  startAutoPlay();
-};
-
-// カード位置キャッシュ（スクロールごとのoffsetLeft再計算によるリフロー/カクつきを完全防止）
-let cardMetrics: { center: number; width: number }[] = [];
-
-const updateCardMetrics = () => {
-  cardMetrics = cardRefs.value.map((el) => {
-    if (!el) return { center: 0, width: 300 };
-    return {
-      center: el.offsetLeft + el.offsetWidth / 2,
-      width: el.offsetWidth,
-    };
-  });
-};
-
-// スクロール時に最も中央に近いカードを判定（チラつき防止＆レイアウト再計算なしで高速化）
-const updateActiveIndex = () => {
-  const container = scrollContainer.value;
-  if (!container) return;
-  const center = container.scrollLeft + container.clientWidth / 2;
-
-  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
-    updateCardMetrics();
-  }
-
-  // 目標カードへ移動中は、目標が中央近く（カード幅の45%以内）に来るまで切り替えない（チラつき防止）
-  if (targetIndex !== null && cardMetrics[targetIndex]) {
-    const { center: targetCenter, width: targetWidth } = cardMetrics[targetIndex];
-    if (Math.abs(center - targetCenter) < targetWidth * 0.45) {
-      activeIndex.value = targetIndex;
-      targetIndex = null;
-    }
-    return;
-  }
-
-  let minDiff = Infinity;
-  let closest = activeIndex.value;
-  for (let i = 0; i < cardMetrics.length; i++) {
-    const metric = cardMetrics[i];
-    if (!metric) continue;
-    const diff = Math.abs(center - metric.center);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = i;
-    }
-  }
-  activeIndex.value = closest;
-};
-
-const onScroll = () => {
-  if (scrollRaf !== null) return;
-  scrollRaf = requestAnimationFrame(() => {
-    updateActiveIndex();
-    scrollRaf = null;
-  });
-};
-
-// 指定したカードを中央へスムーズスクロール
-const scrollToItem = (index: number) => {
-  if (index < 0 || index >= featuredEvents.length) return;
-  const container = scrollContainer.value;
-  if (!container) return;
-
-  targetIndex = index;
-  if (scrollTimer) {
-    clearTimeout(scrollTimer);
-  }
-
-  if (cardMetrics.length === 0 || cardMetrics[0]?.center === 0) {
-    updateCardMetrics();
-  }
-
-  const metric = cardMetrics[index];
-  const targetCenter = metric ? metric.center : (cardRefs.value[index]?.offsetLeft ?? 0) + (cardRefs.value[index]?.offsetWidth ?? 0) / 2;
-  const targetLeft = targetCenter - container.clientWidth / 2;
-  container.scrollTo({
-    left: targetLeft,
-    behavior: 'smooth',
-  });
-
-  // スクロール完了時（または到着時）に確実にアクティブを同期
-  scrollTimer = setTimeout(() => {
-    targetIndex = null;
-    activeIndex.value = index;
-    scrollTimer = null;
-  }, 350);
+const onSlideChange = (swiper: SwiperClass) => {
+  activeIndex.value = swiper.realIndex;
 };
 
 // カードクリック時の処理
 const handleCardClick = (index: number, to: string) => {
-  if (hasDragged) return;
-
-  startAutoPlay();
   if (activeIndex.value !== index) {
-    scrollToItem(index);
+    swiperInstance?.slideTo(index);
   } else {
     navigateTo(to);
   }
 };
 
+const goToSlide = (index: number) => {
+  swiperInstance?.slideTo(index);
+};
+
 // Google Maps 遅延ロード（初期化時の約400KiBのJS読み込みとリフローを完全防止）
 const mapContainerRef = ref<HTMLElement | null>(null);
 const isMapLoaded = ref(false);
-let mapObserver: IntersectionObserver | null = null;
 
 const loadMap = () => {
   isMapLoaded.value = true;
-  if (mapObserver) {
-    mapObserver.disconnect();
-    mapObserver = null;
-  }
 };
 
-onMounted(() => {
-  if (import.meta.client) {
-    // 1. カルーセル: 初期マウント時の同期的ジオメトリ計測を避け、描画完了後のアイドル時に安全にキャッシュ＆自動再生開始
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => {
-        updateCardMetrics();
-        startAutoPlay();
-      }, { timeout: 1200 });
-    } else {
-      setTimeout(() => {
-        updateCardMetrics();
-        startAutoPlay();
-      }, 300);
+const { stop: stopMapObserver } = useIntersectionObserver(
+  mapContainerRef,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      loadMap();
+      stopMapObserver();
     }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('resize', updateCardMetrics, { passive: true });
-
-    // 2. Google Maps: アクセスセクション付近（300px手前）までスクロールした際に初めてiframeをロード
-    if ('IntersectionObserver' in window && mapContainerRef.value) {
-      mapObserver = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting) {
-            loadMap();
-          }
-        },
-        { rootMargin: '300px' }
-      );
-      mapObserver.observe(mapContainerRef.value);
-    } else {
-      // IntersectionObserver非対応環境フォールバック
-      isMapLoaded.value = true;
-    }
-  }
-});
-
-onBeforeUnmount(() => {
-  stopAutoPlay();
-  if (scrollRaf !== null) {
-    cancelAnimationFrame(scrollRaf);
-  }
-  if (scrollTimer) {
-    clearTimeout(scrollTimer);
-  }
-  if (mapObserver) {
-    mapObserver.disconnect();
-    mapObserver = null;
-  }
-  if (import.meta.client) {
-    document.removeEventListener('visibilitychange', handleVisibilityChange);
-    window.removeEventListener('resize', updateCardMetrics);
-  }
-});
+  },
+  { rootMargin: '300px' }
+);
 
 // 2. ご案内カードデータ（電子パンフレット・平潟祭について・よくある質問）
 interface GuideCardItem {
@@ -402,7 +254,124 @@ const visitorGuidelines = [
 <template>
   <div class="flex flex-col items-center p-0 relative w-full bg-sprout-bg overflow-x-hidden">
     <!-- 1. Top (Hero Section) -->
-    <SectionsHeroSection />
+    <section class="relative w-full min-h-fit h-auto lg:h-[calc(100vh-80px)] max-h-[1200px] bg-sprout-bg overflow-hidden flex flex-col justify-center items-center">
+      <!-- Top Geometric Border Decorations (Group 3: top-right) -->
+      <div
+        class="absolute pointer-events-none z-[1] -top-24 -right-20 w-[340px] h-[340px] opacity-25 sm:-top-32 sm:-right-24 sm:w-[480px] sm:h-[480px] sm:opacity-35 lg:-top-40 lg:-right-28 lg:w-[650px] lg:h-[650px] lg:opacity-40 transition-all duration-300"
+        aria-hidden="true"
+      >
+        <div
+          v-for="scale in [1, 0.92, 0.84]"
+          :key="scale"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
+        >
+          <Svg8 class="w-full h-full"></Svg8>
+        </div>
+      </div>
+
+      <!-- Bottom Geometric Border Decorations (Group 2: bottom-left) -->
+      <div
+        class="absolute pointer-events-none z-[1] -bottom-24 -left-24 w-[360px] h-[360px] opacity-25 sm:-bottom-36 sm:-left-32 sm:w-[500px] sm:h-[500px] sm:opacity-35 lg:bottom-[-200px] lg:-left-40 lg:w-[680px] lg:h-[680px] lg:opacity-40 transition-all duration-300"
+        aria-hidden="true"
+      >
+        <div
+          v-for="scale in [1, 0.92, 0.84]"
+          :key="scale"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          :style="{ width: `${scale * 100}%`, height: `${scale * 100}%` }"
+        >
+          <Svg8 class="w-full h-full"></Svg8>
+        </div>
+      </div>
+
+      <!-- Main Container -->
+      <div class="relative z-10 w-full h-fit max-w-[1600px] px-4 sm:px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[280px] lg:pb-[150px]">
+        <!-- Title Block (left: 163px, top: 288px) -->
+        <div class="flex-1 w-full max-w-[824px] text-center">
+          <div class="flex items-end justify-center gap-2.5 sm:gap-4 lg:gap-6 font-sans font-bold leading-tight text-sprout-title mb-2">
+            <span class="text-[clamp(1.15rem,4vw,1.6rem)] lg:text-[clamp(1.5rem,1.8vw,2rem)] pb-1 sm:pb-1.5 whitespace-nowrap">第77回</span>
+            <h1 class="font-sans font-bold text-[clamp(2.6rem,10vw,3.9rem)] lg:text-[clamp(3.5rem,4.5vw,4.75rem)] leading-[1.12] text-sprout-title m-0 tracking-tight whitespace-nowrap">
+            平潟祭 2026
+            </h1>
+          </div>
+
+          <!-- Ornament Line (スマホ時も横幅いっぱいにしっかり長く伸びるようw-fullを確保) -->
+          <UiOrnamentLine color="#42845A" maxWidth="100%" class="w-full my-3 sm:my-4" />
+
+          <!-- Tagline & Quick CTA -->
+          <div class="mt-6">
+            <UiCountdownTimer target-date="2026-10-31T10:00:00" class="mb-5 w-full" />
+          </div>
+        </div>
+
+        <!-- Date & Badge Block (Group 1: right side) -->
+        <div class="relative w-[calc(480px*0.62)] h-[calc(480px*0.62)] flex items-center justify-center scale-[0.62] min-[380px]:w-[calc(480px*0.68)] min-[380px]:h-[calc(480px*0.68)] min-[380px]:scale-[0.68] sm:w-[calc(480px*0.85)] sm:h-[calc(480px*0.85)] sm:scale-[0.85] lg:w-[calc(480px*0.9)] lg:h-[calc(480px*0.9)] lg:scale-[0.9] xl:w-[480px] xl:h-[480px] xl:scale-100 transition-transform">
+          <!-- Polygon 1 -->
+          <Svg8 :style="{ width: '480px', height: '480px' }" class="absolute -rotate-[22.5deg]"></Svg8>
+          <!-- Polygon 2 -->
+          <Svg8 :style="{ width: '443px', height: '443px' }" class="absolute"></Svg8>
+          <!-- Polygon 3 (Fill) -->
+          <Svg8 :style="{ width: '409px', height: '409px' }" class="absolute -rotate-[22.5deg] drop-shadow-[0_12px_36px_rgba(67,124,98,0.25)]" fill-color="var(--theme-sprout-light)"></Svg8>
+          <!-- Polygon 4 (Inner Border) -->
+          <Svg8 :style="{ width: '395px', height: '395px' }" class="absolute -rotate-[22.5deg]"></Svg8>
+
+          <!-- Inside Badge Content -->
+          <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none pb-6">
+            <span class="text-[32px] font-bold leading-tight mb-1">2026</span>
+            <div class="text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-4">
+              <span>10/31</span>
+              <span>11/1</span>
+            </div>
+            <div class="w-[280px] h-0 border-t-2 border-sprout-bg my-1.5"></div>
+            <span class="text-[32px] font-bold leading-tight mb-5">10:00 ~ 17:00</span>
+
+            <div class="flex items-center gap-2, h-fit">
+              <svg
+                class="w-14 h-full shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
+                  fill="#F8F8ED"
+                />
+              </svg>
+              <div class="flex flex-col text-left">
+                <span class="text-lg font-medium leading-tight">関東学院大学</span>
+                <span class="text-[24px] font-bold leading-tight">金沢八景キャンパス</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Layers of Green Hills & Sprout Leaves (bottom) -->
+      <div class="absolute -bottom-0 left-0 w-full h-[300px] pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
+        <!-- Hill & Leaves Overlay (波の描画領域と草の座標系を100%完全同期) -->
+        <div class="relative w-full mt-10">
+          <SvgWave class="w-full block" preserveAspectRatio="none" />
+          <div class="absolute inset-0 pointer-events-none">
+            <div
+              v-for="leaf in leaves"
+              :key="leaf.id"
+              class="absolute pointer-events-none -translate-x-1/2 -translate-y-[85%]"
+              :style="{
+                left: `${(leaf.left / 1920) * 100}%`,
+                top: `${(leaf.top / 287) * 100}%`,
+                width: `clamp(${leaf.width * 1.2}px, ${(leaf.width / 1400) * 100}vw, ${leaf.width * 2}px)`,
+              }"
+            >
+              <SvgLeafIcon
+                :name="leaf.name"
+                class="w-full h-auto leaf-white-glow"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- 2. 企画セクション (背景: #437C62: -mt-[2px]でHeroSection最下部の波と確実にオーバーラップさせて隙間線を防止) -->
     <section class="w-full bg-sprout-moss py-8 px-0 relative z-[5] overflow-hidden -mt-[2px]" id="events">
@@ -412,90 +381,98 @@ const visitorGuidelines = [
 
         <!-- 4 Cards Horizontal Swipeable Carousel (3:4 Vertical Photos with Blurred Backdrop) -->
         <div class="relative w-full mt-4 mb-6">
-          <!-- Scroll / Swipe Container (マウス長押しドラッグ・タッチスワイプ対応) -->
-          <div
-            ref="scrollContainer"
-            class="events-scroll-container flex flex-row items-center gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory py-4 no-scrollbar select-none"
-            :class="isDragging ? 'cursor-grabbing' : 'cursor-grab'"
-            @scroll.passive="onScroll"
-            @pointerdown="onPointerDown"
-            @pointermove="onPointerMove"
-            @pointerup="onPointerUp"
-            @pointercancel="onPointerUp"
-            @mouseenter="stopAutoPlay"
-            @mouseleave="startAutoPlay"
-            @dragstart.prevent
+          <Swiper
+            :modules="[Autoplay]"
+            :slides-per-view="'auto'"
+            :centered-slides="true"
+            :space-between="16"
+            :breakpoints="{
+              640: {
+                spaceBetween: 24,
+              },
+            }"
+            :autoplay="{
+              delay: 6000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }"
+            :grab-cursor="true"
+            class="events-swiper w-full py-4 select-none"
+            @swiper="onSwiper"
+            @slide-change="onSlideChange"
           >
-            <div
+            <SwiperSlide
               v-for="(item, idx) in featuredEvents"
               :key="item.id"
-              :ref="(el) => { if (el) cardRefs[idx] = el as HTMLElement; }"
-              role="button"
-              tabindex="0"
-              :aria-label="item.title"
-              class="shrink-0 snap-center cursor-pointer transition-transform duration-300 h-[clamp(270px,50dvh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
-              :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
-              @click="handleCardClick(idx, item.to)"
-              @keydown.enter="handleCardClick(idx, item.to)"
-              @dragstart.prevent
+              class="!w-auto flex items-center justify-center"
             >
               <div
-                class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
-                :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
+                role="button"
+                tabindex="0"
+                :aria-label="item.title"
+                class="cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+                :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
+                @click="handleCardClick(idx, item.to)"
+                @keydown.enter="handleCardClick(idx, item.to)"
               >
-                <!-- ぼかした背景写真（軽量サムネイルをぼかしてFirefox等の描画負荷を大幅軽減） -->
-                <NuxtImg
-                  :src="item.image"
-                  aria-hidden="true"
-                  loading="lazy"
-                  draggable="false"
-                  width="30"
-                  height="40"
-                  format="webp"
-                  quality="10"
-                  class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none"
-                />
-
-                <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
-                <NuxtImg
-                  :src="item.image"
-                  :alt="item.title"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                  sizes="xs:260px sm:280px md:300px"
-                  format="webp"
-                  quality="80"
-                  class="relative z-10 w-full h-full object-contain transition-transform duration-300 pointer-events-none select-none"
-                  :class="{ 'hover:scale-105': activeIndex === idx }"
-                />
-
-                <!-- バッジ（左上） -->
-                <div class="absolute top-3 left-3 z-30">
-                  <span class="inline-block bg-sprout-dark/95 text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
-                    {{ item.badge }}
-                  </span>
-                </div>
-
-                <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示） -->
                 <div
-                  v-if="activeIndex === idx"
-                  class="absolute bottom-3 right-3 z-30"
+                  class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
+                  :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
                 >
-                  <span class="inline-flex items-center gap-1 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
-                    <span>詳細を見る</span>
-                    <span>→</span>
-                  </span>
-                </div>
+                  <!-- ぼかした背景写真（軽量サムネイルをぼかしてFirefox等の描画負荷を大幅軽減） -->
+                  <NuxtImg
+                    :src="item.image"
+                    aria-hidden="true"
+                    loading="lazy"
+                    draggable="false"
+                    width="30"
+                    height="40"
+                    format="webp"
+                    quality="10"
+                    class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none"
+                  />
 
-                <!-- 真ん中以外のものは薄く白くするオーバーレイ（backdrop-filterを使わず軽量化） -->
-                <div
-                  class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
-                  :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
-                />
+                  <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
+                  <NuxtImg
+                    :src="item.image"
+                    :alt="item.title"
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                    sizes="xs:260px sm:280px md:300px"
+                    format="webp"
+                    quality="80"
+                    class="relative z-10 w-full h-full object-contain transition-transform duration-300 pointer-events-none select-none"
+                    :class="{ 'hover:scale-105': activeIndex === idx }"
+                  />
+
+                  <!-- バッジ（左上） -->
+                  <div class="absolute top-3 left-3 z-30">
+                    <span class="inline-block bg-sprout-dark/95 text-sprout-accent text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full border border-sprout-accent/40 shadow-sm">
+                      {{ item.badge }}
+                    </span>
+                  </div>
+
+                  <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示） -->
+                  <div
+                    v-if="activeIndex === idx"
+                    class="absolute bottom-3 right-3 z-30"
+                  >
+                    <span class="inline-flex items-center gap-1 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
+                      <span>詳細を見る</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+
+                  <!-- 真ん中以外のものは薄く白くするオーバーレイ（backdrop-filterを使わず軽量化） -->
+                  <div
+                    class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
+                    :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
+                  />
+                </div>
               </div>
-            </div>
-          </div>
+            </SwiperSlide>
+          </Swiper>
 
           <!-- Indicator Dots -->
           <div class="flex items-center justify-center gap-2 mt-4">
@@ -506,7 +483,7 @@ const visitorGuidelines = [
               class="h-2 rounded-full transition-all duration-300 border-none cursor-pointer p-0"
               :class="activeIndex === idx ? 'w-8 bg-sprout-accent shadow-sm' : 'w-2 bg-white/40 hover:bg-white/70'"
               :aria-label="`${item.title}を表示`"
-              @click="scrollToItem(idx); startAutoPlay();"
+              @click="goToSlide(idx)"
             />
           </div>
         </div>
@@ -515,10 +492,10 @@ const visitorGuidelines = [
         <div class="text-center flex flex-col items-center gap-2.5 max-w-[800px] px-6 min-h-[110px]">
           <Transition name="event-desc-fade" mode="out-in">
             <div :key="currentFeaturedEvent.id" class="flex flex-col items-center gap-2.5">
-              <h3 class="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-wide m-0">
+              <h3 class="font-sans font-extrabold text-fluid-h2 text-white tracking-wide m-0">
                 {{ currentFeaturedEvent.title }}
               </h3>
-              <p class="font-sans font-medium text-sm sm:text-base lg:text-lg leading-relaxed text-white/95 max-w-[650px] m-0">
+              <p class="font-sans font-medium text-fluid-lead leading-relaxed text-white/95 max-w-[650px] m-0">
                 {{ currentFeaturedEvent.desc }}
               </p>
             </div>
@@ -529,7 +506,7 @@ const visitorGuidelines = [
         <div class="flex flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 mt-6 w-full max-w-[800px] px-6">
           <NuxtLink
             to="/map"
-            class="flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
+            class="flex-1 min-w-[clamp(130px,18vw,180px)] max-w-[210px] h-[clamp(46px,5vw,50px)] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-[clamp(0.875rem,1.1vw,1rem)] rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-sprout-border shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
@@ -541,7 +518,7 @@ const visitorGuidelines = [
 
           <NuxtLink
             to="/schedule"
-            class="flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
+            class="flex-1 min-w-[clamp(130px,18vw,180px)] max-w-[210px] h-[clamp(46px,5vw,50px)] bg-white hover:bg-sprout-bg text-sprout-title font-sans font-bold text-[clamp(0.875rem,1.1vw,1rem)] rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 no-underline border-2 border-transparent hover:border-sprout-accent transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-sprout-border shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
@@ -552,7 +529,7 @@ const visitorGuidelines = [
 
           <NuxtLink
             to="/events"
-            class="btn-gold flex-1 min-w-[130px] sm:min-w-[170px] max-w-[210px] h-[46px] sm:h-[50px] font-sans font-bold text-sm sm:text-base rounded-full shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] flex items-center justify-center gap-2 no-underline transition-all duration-200 hover:-translate-y-0.5"
+            class="btn-gold flex-1 min-w-[clamp(130px,18vw,180px)] max-w-[210px] h-[clamp(46px,5vw,50px)] font-sans font-bold text-[clamp(0.875rem,1.1vw,1rem)] rounded-full shadow-[0_4px_14px_rgba(245,158,11,0.35)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.45)] flex items-center justify-center gap-2 no-underline transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <rect x="3" y="3" width="7" height="7"></rect>
@@ -646,19 +623,22 @@ const visitorGuidelines = [
                       quality="80"
                       class="w-full h-full object-cover select-none pointer-events-none"
                     />
-                    <!-- 2. よくある質問 (chick.vue + 左上に？) -->
+                    <!-- 2. よくある質問 (chick.vue + 左上に？: 上品で愛らしいサイズに調整) -->
                     <div
                       v-else-if="item.isChick"
-                      class="w-full h-full bg-[#fdfbe8] relative flex items-center justify-center p-3 select-none"
+                      class="w-full h-full bg-[#fdfbe8] relative flex items-center justify-center select-none"
                     >
-                      <!-- アヒルの左上辺りの「？」マーク -->
-                      <span
-                        class="absolute top-[23%] left-[22%] font-sans font-black text-[clamp(18px,3.5vw,26px)] text-[#d86414] -rotate-12 select-none pointer-events-none drop-shadow-sm leading-none"
-                        aria-hidden="true"
-                      >
-                        ?
-                      </span>
-                      <ChickSvg class="w-[48%] h-[48%] drop-shadow-sm select-none" />
+                      <!-- ひよこと？マークのラッパー（サイズを64px〜72pxに確実に制限） -->
+                      <div class="relative w-16 h-16 sm:w-[72px] sm:h-[72px] flex items-center justify-center">
+                        <!-- アヒルの左上辺りの「？」マーク -->
+                        <span
+                          class="absolute -top-2.5 -left-2.5 font-sans font-black text-xl sm:text-2xl text-[#d86414] -rotate-12 select-none pointer-events-none drop-shadow-sm leading-none z-10"
+                          aria-hidden="true"
+                        >
+                          ?
+                        </span>
+                        <ChickSvg class="w-full h-full drop-shadow-sm select-none" />
+                      </div>
                     </div>
                     <!-- 3. 写真未定時（電子パンフレット等の準備中プレースホルダー） -->
                     <div
@@ -706,13 +686,13 @@ const visitorGuidelines = [
           <!-- Title -->
           <UiSectionTitle title="アクセス" />
 
-          <div class="w-full max-w-[1121px] bg-white rounded-2xl p-6 sm:p-10 shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
+          <div class="w-full max-w-[1121px] bg-white rounded-2xl p-[clamp(1.5rem,3.5vw,2.5rem)] shadow-[0_6px_24px_rgba(46,125,50,0.08)] border-2 border-sprout-border/30">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
               <!-- Access Info Column -->
               <div class="flex flex-col gap-6">
                 <div>
                   <span class="inline-block bg-sprout-bg text-sprout-title text-xs font-bold px-3 py-1 rounded-full border border-sprout-border mb-2">会場</span>
-                  <h3 class="text-xl sm:text-2xl font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
+                  <h3 class="text-fluid-h3 font-extrabold text-sprout-title mb-1">関東学院大学 金沢八景キャンパス</h3>
                   <p class="text-text-muted text-sm">〒236-8501 神奈川県横浜市金沢区六浦東1-50-1</p>
                 </div>
 
@@ -752,12 +732,12 @@ const visitorGuidelines = [
               <!-- Map Column -->
               <div
                 ref="mapContainerRef"
-                class="w-full h-full min-h-[340px] sm:min-h-[420px] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex relative bg-gray-50"
+                class="w-full h-full min-h-[clamp(340px,38vw,420px)] rounded-xl overflow-hidden shadow-sm border border-sprout-border/30 flex relative bg-gray-50"
               >
                 <!-- 遅延マウントされる Google Maps iframe -->
                 <iframe
                   v-if="isMapLoaded"
-                  class="w-full h-full min-h-[340px] sm:min-h-[420px] border-0"
+                  class="w-full h-full min-h-[clamp(340px,38vw,420px)] border-0"
                   src="https://www.google.com/maps?q=35.323287,139.623311&z=15&output=embed"
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -766,7 +746,7 @@ const visitorGuidelines = [
                 <!-- 未ロード時のプレースホルダー（軽量スケルトン表示） -->
                 <div
                   v-else
-                  class="w-full h-full min-h-[340px] sm:min-h-[420px] flex flex-col items-center justify-center p-6 text-center bg-sprout-bg/30 cursor-pointer group"
+                  class="w-full h-full min-h-[clamp(340px,38vw,420px)] flex flex-col items-center justify-center p-6 text-center bg-sprout-bg/30 cursor-pointer group"
                   @click="loadMap"
                 >
                   <div class="w-12 h-12 rounded-full bg-sprout-forest/10 flex items-center justify-center text-sprout-forest mb-3 group-hover:scale-110 transition-transform">
@@ -788,22 +768,9 @@ const visitorGuidelines = [
 </template>
 
 <style scoped>
-/* カルーセルのスクロールバー非表示 */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* スワイプコンテナの左右パディング（カードの可変幅に応じて端のカードも正確に中央スナップ） */
-.events-scroll-container {
-  padding-left: calc(50% - clamp(101px, 15dvh, 158px));
-  padding-right: calc(50% - clamp(101px, 15dvh, 158px));
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: pan-y pinch-zoom;
+/* Swiperコンテナのカード影・拡大用のはみ出し表示許可 */
+:deep(.events-swiper) {
+  overflow: visible;
 }
 
 /* 企画説明文の切り替えアニメーション（スムーズ＆高速） */
@@ -828,12 +795,37 @@ const visitorGuidelines = [
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
+/* セクションの共通レイアウト（このページ内で使用） */
+.section-container {
+  @apply w-full max-w-[1200px] px-6 mx-auto flex flex-col items-center;
+}
+
+/* ご来場にあたって */
+.guide-card {
+  @apply bg-white p-6 rounded-xl border-l-[5px] border-sprout-border shadow-sm;
+}
+.guide-card-desc {
+  @apply text-[13px] text-text-muted leading-relaxed m-0;
+}
+
 /* タイトルが写真に被っても綺麗に文字が浮き立つソフトな白シャドー */
 .guide-card-title {
+  @apply text-base font-extrabold text-sprout-title mb-2;
   text-shadow:
     0 0 5px rgba(255, 255, 255, 0.95),
     0 0 12px rgba(255, 255, 255, 0.9),
     0 0 24px rgba(255, 255, 255, 0.8),
     0 2px 6px rgba(255, 255, 255, 0.7);
+}
+
+/* 開催情報エリアのゴールドボタン */
+.btn-gold {
+  @apply text-white bg-gradient-to-br from-[var(--sun-gold)] to-[var(--sun-gold-light)]
+    hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(245,158,11,0.35)];
+}
+
+/* 葉っぱの輪郭を背景からふんわり浮かび上がらせるソフトな白い影・ブラー */
+.leaf-white-glow {
+  filter: drop-shadow(0 1px 4px rgba(255, 255, 255, 0.6));
 }
 </style>

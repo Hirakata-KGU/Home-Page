@@ -5,7 +5,10 @@ import { daySchedules, timetable, type TimetableSlot } from '~/data/timetable';
 
 useSeoMeta({
   title: 'タイムテーブル｜平潟祭 2026',
+  ogTitle: 'タイムテーブル｜平潟祭 2026',
   description: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全出演プログラムを一覧掲載',
+  ogDescription: '平潟祭2026のステージ＆音楽タイムテーブル。屋外ステージ、屋内ステージ（SCC 4階）、チャペル、体育館、1号館前の全出演プログラムを一覧掲載',
+  ogUrl: 'https://www.hirakatasai.net/schedule',
 });
 
 const route = useRoute();
@@ -27,7 +30,7 @@ const venueLanes = [
 const activeSlotId = ref<string | null>(null);
 
 // マウス操作可能か（ホバー対応端末かどうか）
-const isHoverDevice = ref(false);
+const isHoverDevice = useMediaQuery('(hover: hover) and (pointer: fine)');
 
 // タイムグリッドの基本設定（1時間ごと）
 const START_HOUR = 10; // 10:00
@@ -163,8 +166,6 @@ const applyRouteParams = async () => {
 
 onMounted(() => {
   if (import.meta.client) {
-    isHoverDevice.value = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    window.addEventListener('click', closeActiveSlot);
     applyRouteParams();
   }
 });
@@ -176,11 +177,7 @@ watch(
   }
 );
 
-onUnmounted(() => {
-  if (import.meta.client) {
-    window.removeEventListener('click', closeActiveSlot);
-  }
-});
+useEventListener('click', closeActiveSlot);
 </script>
 
 <template>

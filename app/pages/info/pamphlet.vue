@@ -1,7 +1,10 @@
 <script setup lang="ts">
 useSeoMeta({
   title: '電子パンフレット｜平潟祭 2026',
+  ogTitle: '電子パンフレット｜平潟祭 2026',
   description: '第77回 平潟祭の公式電子パンフレット。企画一覧、タイムテーブル、キャンパスマップをスマートフォンやPCからいつでもご確認いただけます。',
+  ogDescription: '第77回 平潟祭の公式電子パンフレット。企画一覧、タイムテーブル、キャンパスマップをスマートフォンやPCからいつでもご確認いただけます。',
+  ogUrl: 'https://www.hirakatasai.net/info/pamphlet',
 });
 
 // ※アイコンSVG提供後に配置予定
@@ -52,10 +55,10 @@ const pamphletHighlights = [
             <div class="inline-flex items-center gap-2 bg-sprout-bg text-sprout-forest text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-border mb-3">
               <span>PDF形式 / スマートフォン対応</span>
             </div>
-            <h2 class="text-2xl lg:text-3xl font-extrabold text-sprout-title mb-4">
+            <h2 class="text-fluid-h2 font-extrabold text-sprout-title mb-4">
               平潟祭公式パンフレットを<br class="hidden sm:inline">スマホで持ち歩こう
             </h2>
-            <p class="text-text-muted text-sm sm:text-base leading-relaxed mb-6">
+            <p class="text-text-muted text-fluid-lead leading-relaxed mb-6">
               当日のキャンパスマップ、企画タイムスケジュール、模擬店一覧、参加団体紹介などが1冊にまとまった公式ガイドブックです。
               ペーパーレスでいつでも快適にご覧いただけます。
             </p>
@@ -165,38 +168,6 @@ const pamphletHighlights = [
   border: 1px solid var(--sprout-border);
   border-radius: 14px;
   padding: 20px 24px;
-}
-
-.status-notice {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.pulse-dot {
-  width: 10px;
-  height: 10px;
-  background-color: var(--sun-gold);
-  border-radius: 50%;
-  box-shadow: 0 0 0 rgba(245, 158, 11, 0.4);
-  animation: pulseDot 1.8s infinite;
-}
-
-@keyframes pulseDot {
-  0% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-  }
-}
-
-.quick-nav-section {
-  background: linear-gradient(135deg, var(--sprout-bg) 0%, #ffffff 100%);
-  border-left: 6px solid var(--sprout);
 }
 
 @media (max-width: 900px) {
