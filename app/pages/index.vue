@@ -623,19 +623,22 @@ const visitorGuidelines = [
                       quality="80"
                       class="w-full h-full object-cover select-none pointer-events-none"
                     />
-                    <!-- 2. よくある質問 (chick.vue + 左上に？) -->
+                    <!-- 2. よくある質問 (chick.vue + 左上に？: 上品で愛らしいサイズに調整) -->
                     <div
                       v-else-if="item.isChick"
-                      class="w-full h-full bg-[#fdfbe8] relative flex items-center justify-center p-3 select-none"
+                      class="w-full h-full bg-[#fdfbe8] relative flex items-center justify-center select-none"
                     >
-                      <!-- アヒルの左上辺りの「？」マーク -->
-                      <span
-                        class="absolute top-[23%] left-[22%] font-sans font-black text-[clamp(18px,3.5vw,26px)] text-[#d86414] -rotate-12 select-none pointer-events-none drop-shadow-sm leading-none"
-                        aria-hidden="true"
-                      >
-                        ?
-                      </span>
-                      <ChickSvg class="w-[48%] h-[48%] drop-shadow-sm select-none" />
+                      <!-- ひよこと？マークのラッパー（サイズを64px〜72pxに確実に制限） -->
+                      <div class="relative w-16 h-16 sm:w-[72px] sm:h-[72px] flex items-center justify-center">
+                        <!-- アヒルの左上辺りの「？」マーク -->
+                        <span
+                          class="absolute -top-2.5 -left-2.5 font-sans font-black text-xl sm:text-2xl text-[#d86414] -rotate-12 select-none pointer-events-none drop-shadow-sm leading-none z-10"
+                          aria-hidden="true"
+                        >
+                          ?
+                        </span>
+                        <ChickSvg class="w-full h-full drop-shadow-sm select-none" />
+                      </div>
                     </div>
                     <!-- 3. 写真未定時（電子パンフレット等の準備中プレースホルダー） -->
                     <div
