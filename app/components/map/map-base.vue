@@ -77,10 +77,10 @@
     </g>
     <g id="g390" inkscape:label="12号館">
       <title id="title391">12号館</title>
-      <rect class="cls-19" x="288.72" y="43.080002" width="43.43" height="48.139999" id="rect29" style="fill: #6f6e6e" />
-      <rect class="cls-19" x="292.54999" y="33.509998" width="35.77" height="11.5" id="rect30" style="fill: #6f6e6e" />
+      <rect class="cls-19" x="288.72" y="43.080002" width="43.43" height="48.139999" id="rect29" style="fill: #8c8786" />
+      <rect class="cls-19" x="292.54999" y="33.509998" width="35.77" height="11.5" id="rect30" style="fill: #8c8786" />
     </g>
-    <rect class="cls-19" x="255.44788" y="180.78786" width="26.879999" height="138.53" transform="rotate(-36.42)" id="rect31" inkscape:label="工学部実験棟" style="fill: #6f6e6e">
+    <rect class="cls-19" x="255.44788" y="180.78786" width="26.879999" height="138.53" transform="rotate(-36.42)" id="rect31" inkscape:label="工学部実験棟" style="fill: #8c8786">
       <title id="title390">工学部実験棟</title>
     </rect>
     <g id="g396" inkscape:label="上部">
@@ -114,9 +114,9 @@
       </g>
       <g id="g394" inkscape:label="上部孤島">
         <title id="title395">上部孤島</title>
-        <rect class="cls-19" x="303.76001" y="7.8899999" width="11.38" height="19.23" id="rect32" style="fill: #6f6e6e" />
-        <polygon class="cls-19" points="263.13,4.63 280.47,3.23 280.83,6.91 279.65,7.05 280.32,12.87 263.8,14.55 " id="polygon33" style="fill: #6f6e6e" />
-        <rect class="cls-19" x="134.06633" y="161.67911" width="23.469999" height="11.38" transform="rotate(-33.24)" id="rect33" inkscape:label="栽培実習室" style="fill: #6f6e6e">
+        <rect class="cls-19" x="303.76001" y="7.8899999" width="11.38" height="19.23" id="rect32" style="fill: #8c8786" />
+        <polygon class="cls-19" points="263.13,4.63 280.47,3.23 280.83,6.91 279.65,7.05 280.32,12.87 263.8,14.55 " id="polygon33" style="fill: #8c8786" />
+        <rect class="cls-19" x="134.06633" y="161.67911" width="23.469999" height="11.38" transform="rotate(-33.24)" id="rect33" inkscape:label="栽培実習室" style="fill: #8c8786">
           <title id="title394">栽培実習室</title>
         </rect>
       </g>

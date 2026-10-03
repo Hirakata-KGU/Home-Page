@@ -51,7 +51,7 @@
         filter: url(#luminosity-invert);
       }
 
-      .cls-19, .cls-20 {
+      .cls-20 {
         fill: #6f6e6e;
       }
 
@@ -303,7 +303,7 @@
         stroke-width: .96px;
       }
 
-      .cls-63 {
+      .cls-19, .cls-63 {
         fill: #8c8786;
       }
 
