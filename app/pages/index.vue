@@ -71,40 +71,40 @@ useHead({
 interface LeafItem {
   id: string;
   name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
-  left: number;   // X座標 (px)
-  top: number;    // Y座標 (px)
+  left: number;   // X座標 (px) - viewBox 1920基準
+  top: number;    // Y座標 (px) - 波の稜線位置 (viewBox 287基準)
   width: number;  // 横幅 (px)
   height: number; // 縦幅 (px)
 }
 
 const leaves: LeafItem[] = [
   // --- Hill 1 (最奥の丘) ---
-  { id: 'leaf-0-11', name: 5, left: 1877, top: 50, width: 29.22, height: 56 },
-  { id: 'leaf-0-8',  name: 12, left: 1370, top: 97, width: 23.2,  height: 58 },
-  { id: 'leaf-0-4',  name: 3, left: 765,  top: 0,  width: 34.67, height: 52 },
-  { id: 'leaf-0-3',  name: 8, left: 503,  top: 55, width: 40.0,  height: 60 },
+  { id: 'leaf-0-11', name: 5,  left: 1877, top: 58,  width: 29.22, height: 56 },
+  { id: 'leaf-0-8',  name: 12, left: 1370, top: 98,  width: 23.2,  height: 58 },
+  { id: 'leaf-0-4',  name: 3,  left: 765,  top: 18,  width: 34.67, height: 52 },
+  { id: 'leaf-0-3',  name: 8,  left: 503,  top: 74,  width: 40.0,  height: 60 },
 
   // --- Hill 2 ---
-  { id: 'leaf-1-13', name: 6, left: 1837, top: 110, width: 15.14, height: 58 },
-  { id: 'leaf-1-11', name: 14, left: 1511, top: 135, width: 34.42, height: 58 },
-  { id: 'leaf-1-8',  name: 16, left: 1214, top: 84, width: 22.0,  height: 55 },
-  { id: 'leaf-1-3',  name: 6, left: 434,  top: 125, width: 17.28, height: 58 },
-  { id: 'leaf-1-1',  name: 3, left: 188,  top: 90, width: 36.42, height: 57 },
+  { id: 'leaf-1-13', name: 6,  left: 1837, top: 102, width: 15.14, height: 58 },
+  { id: 'leaf-1-11', name: 14, left: 1511, top: 129, width: 34.42, height: 58 },
+  { id: 'leaf-1-8',  name: 16, left: 1214, top: 78,  width: 22.0,  height: 55 },
+  { id: 'leaf-1-3',  name: 6,  left: 434,  top: 114, width: 17.28, height: 58 },
+  { id: 'leaf-1-1',  name: 3,  left: 188,  top: 93,  width: 36.42, height: 57 },
 
   // --- Hill 3 ---
-  { id: 'leaf-2-14', name: 6,  left: 1756, top: 174, width: 14.0,  height: 67 },
-  { id: 'leaf-2-13', name: 1,  left: 1642, top: 163, width: 38.67, height: 58 },
-  { id: 'leaf-2-7',  name: 5,  left: 1007,  top: 205, width: 20.38, height: 63 },
-  { id: 'leaf-2-2',  name: 3,  left: 293,  top: 120, width: 42.67, height: 64 },
-  { id: 'leaf-2-1',  name: 14, left: 116,  top: 135, width: 27.45, height: 61 },
+  { id: 'leaf-2-14', name: 6,  left: 1756, top: 162, width: 14.0,  height: 67 },
+  { id: 'leaf-2-13', name: 1,  left: 1642, top: 155, width: 38.67, height: 58 },
+  { id: 'leaf-2-7',  name: 5,  left: 1007, top: 192, width: 20.38, height: 63 },
+  { id: 'leaf-2-2',  name: 3,  left: 293,  top: 134, width: 42.67, height: 64 },
+  { id: 'leaf-2-1',  name: 14, left: 116,  top: 132, width: 27.45, height: 61 },
 
   // --- Hill 4 (最前面の丘) ---
-  { id: 'leaf-3-13', name: 5, left: 1866, top: 200, width: 44.87, height: 86 },
-  { id: 'leaf-3-11', name: 3, left: 1585, top: 255, width: 34.0,  height: 51 },
-  { id: 'leaf-3-9',  name: 3, left: 1269, top: 230, width: 42.67, height: 64 },
-  { id: 'leaf-3-6',  name: 11, left: 853,  top: 170, width: 36.8,  height: 92 },
-  { id: 'leaf-3-4',  name: 6, left: 631,  top: 170, width: 24.21, height: 83 },
-  { id: 'leaf-3-0',  name: 8, left: 47,   top: 225, width: 50.67, height: 76 },
+  { id: 'leaf-3-13', name: 5,  left: 1866, top: 215, width: 44.87, height: 86 },
+  { id: 'leaf-3-11', name: 3,  left: 1585, top: 235, width: 34.0,  height: 51 },
+  { id: 'leaf-3-9',  name: 3,  left: 1269, top: 218, width: 42.67, height: 64 },
+  { id: 'leaf-3-6',  name: 11, left: 853,  top: 184, width: 36.8,  height: 92 },
+  { id: 'leaf-3-4',  name: 6,  left: 631,  top: 178, width: 24.21, height: 83 },
+  { id: 'leaf-3-0',  name: 8,  left: 47,   top: 245, width: 50.67, height: 76 },
 ];
 
 // 1. 企画カードデータ（芸能ステージ・ステージパフォーマンス・模擬店グルメ・文化館展示の4つ）
@@ -286,7 +286,7 @@ const visitorGuidelines = [
       </div>
 
       <!-- Main Container -->
-      <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[300px] lg:pb-[150px]">
+      <div class="relative z-10 w-full h-fit max-w-[1600px] px-6 lg:px-10 flex flex-col lg:flex-row pt-20 lg:pt-0 items-center justify-around pb-[280px] lg:pb-[150px]">
         <!-- Title Block (left: 163px, top: 288px) -->
         <div class="flex-1 max-w-[824px] text-center lg:text-left">
           <div class="flex items-end justify-center gap-6 font-sans font-bold text-[clamp(1rem,1.8vw,2rem)] leading-tight text-sprout-title mb-2">
@@ -348,24 +348,27 @@ const visitorGuidelines = [
       </div>
 
       <!-- 4 Layers of Green Hills & Sprout Leaves (bottom) -->
-      <div class="absolute -bottom-[2px] left-0 w-full h-fit pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
-        <!-- Hill -->
-        <SvgWave class="w-full mt-10 transform translate-y-[1px]" preserveAspectRatio="none"></SvgWave>
-        <div
-          v-for="leaf in leaves"
-          :key="leaf.id"
-          class="absolute bottom-0 left-0 pointer-events-none"
-          :style="{
-            left: `${(leaf.left / 1920) * 100}%`,
-            top: `${(leaf.top / 370) * 100}%`,
-            width: `clamp(${leaf.width*1.2}px, ${(leaf.width / 1400) * 100}vw, ${leaf.width*2}px)`,
-            height: `${(leaf.height /240) * 100}%`,
-          }"
-        >
-          <SvgLeafIcon
-            :name="leaf.name"
-            class="w-full h-full drop-shadow-sm"
-          />
+      <div class="absolute -bottom-0 left-0 w-full h-[300px] pointer-events-none z-[2] overflow-hidden" aria-hidden="true">
+        <!-- Hill & Leaves Overlay (波の描画領域と草の座標系を100%完全同期) -->
+        <div class="relative w-full mt-10">
+          <SvgWave class="w-full block" preserveAspectRatio="none" />
+          <div class="absolute inset-0 pointer-events-none">
+            <div
+              v-for="leaf in leaves"
+              :key="leaf.id"
+              class="absolute pointer-events-none -translate-x-1/2 -translate-y-[85%]"
+              :style="{
+                left: `${(leaf.left / 1920) * 100}%`,
+                top: `${(leaf.top / 287) * 100}%`,
+                width: `clamp(${leaf.width * 1.2}px, ${(leaf.width / 1400) * 100}vw, ${leaf.width * 2}px)`,
+              }"
+            >
+              <SvgLeafIcon
+                :name="leaf.name"
+                class="w-full h-auto leaf-white-glow"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -796,5 +799,10 @@ const visitorGuidelines = [
     0 0 12px rgba(255, 255, 255, 0.9),
     0 0 24px rgba(255, 255, 255, 0.8),
     0 2px 6px rgba(255, 255, 255, 0.7);
+}
+
+/* 葉っぱの輪郭を背景からふんわり浮かび上がらせるソフトな白い影・ブラー */
+.leaf-white-glow {
+  filter: drop-shadow(0 1px 4px rgba(255, 255, 255, 0.6));
 }
 </style>
