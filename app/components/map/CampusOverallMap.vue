@@ -872,15 +872,6 @@ onMounted(() => {
   transform: translate(-50%, 6px) scale(0.7);
 }
 
-@media (max-width: 640px) {
-  .map-instruction {
-    font-size: 11px;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 12px;
-  }
-}
-
 /* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示（以前と完全同一デザイン） */
 .tent-card-popover {
   position: absolute;

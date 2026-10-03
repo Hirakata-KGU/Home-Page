@@ -170,38 +170,6 @@ const pamphletHighlights = [
   padding: 20px 24px;
 }
 
-.status-notice {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.pulse-dot {
-  width: 10px;
-  height: 10px;
-  background-color: var(--sun-gold);
-  border-radius: 50%;
-  box-shadow: 0 0 0 rgba(245, 158, 11, 0.4);
-  animation: pulseDot 1.8s infinite;
-}
-
-@keyframes pulseDot {
-  0% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-  }
-}
-
-.quick-nav-section {
-  background: linear-gradient(135deg, var(--sprout-bg) 0%, #ffffff 100%);
-  border-left: 6px solid var(--sprout);
-}
-
 @media (max-width: 900px) {
   .pamphlet-hero {
     grid-template-columns: 1fr;

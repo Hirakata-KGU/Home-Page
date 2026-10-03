@@ -34,10 +34,6 @@ const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);
 </template>
 
 <style scoped>
-.countdown {
-  margin-bottom: 24px;
-}
-
 .countdown-label {
   font-size: clamp(0.9rem, 3.4vw, 1.1rem);
   color: var(--muted);

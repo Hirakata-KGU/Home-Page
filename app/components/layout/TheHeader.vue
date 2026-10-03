@@ -215,10 +215,6 @@ const guideSubItems = [
   @apply font-bold text-[14px] text-sprout-title leading-tight;
 }
 
-.dropdown-item-desc {
-  @apply text-[11px] text-text-muted mt-0.5;
-}
-
 .dropdown-item:hover .dropdown-item-title {
   @apply text-sprout-border;
 }
