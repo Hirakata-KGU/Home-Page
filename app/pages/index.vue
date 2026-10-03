@@ -317,18 +317,18 @@ const visitorGuidelines = [
           <Svg8 :style="{ width: '395px', height: '395px' }" class="absolute -rotate-[22.5deg]"></Svg8>
 
           <!-- Inside Badge Content -->
-          <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none">
-            <span class="text-[32px] font-bold leading-tight mb-0.5">2026</span>
-            <div class="text-[44px] lg:text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-3">
+          <div class="relative z-10 flex flex-col items-center justify-center text-center text-sprout-bg font-sans select-none pb-6">
+            <span class="text-[32px] font-bold leading-tight mb-1">2026</span>
+            <div class="text-[54px] font-bold text-white leading-tight drop-shadow-[0_4px_4px_rgba(92,92,92,0.25)] flex items-center gap-4">
               <span>10/31</span>
               <span>11/1</span>
             </div>
-            <div class="w-8 h-0 border-t-2 border-sprout-bg my-1.5"></div>
-            <span class="text-[28px] font-bold leading-tight mb-2">10:00 ~ 17:00</span>
+            <div class="w-[280px] h-0 border-t-2 border-sprout-bg my-1.5"></div>
+            <span class="text-[32px] font-bold leading-tight mb-5">10:00 ~ 17:00</span>
 
-            <div class="flex items-center gap-2 mt-1">
+            <div class="flex items-center gap-2, h-fit">
               <svg
-                class="w-9 h-9 shrink-0"
+                class="w-14 h-full shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -339,8 +339,8 @@ const visitorGuidelines = [
                 />
               </svg>
               <div class="flex flex-col text-left">
-                <span class="text-base font-medium leading-tight">関東学院大学</span>
-                <span class="text-xl font-bold leading-tight">金沢八景キャンパス</span>
+                <span class="text-lg font-medium leading-tight">関東学院大学</span>
+                <span class="text-[24px] font-bold leading-tight">金沢八景キャンパス</span>
               </div>
             </div>
           </div>
