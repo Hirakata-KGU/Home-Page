@@ -2,7 +2,7 @@
   <svg
     viewBox="0 0 21.19 19.44"
     xmlns="http://www.w3.org/2000/svg"
-    class="chick-svg"
+    class="chick-svg block w-full h-full"
   >
     <g
       id="chick-layer"
@@ -44,11 +44,4 @@
 
 <script lang="ts" setup>
 </script>
-
-<style scoped>
-.chick-svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-</style>
+

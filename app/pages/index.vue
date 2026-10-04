@@ -374,7 +374,7 @@ const visitorGuidelines = [
     </section>
 
     <!-- 2. 企画セクション (背景: #437C62: -mt-[2px]でHeroSection最下部の波と確実にオーバーラップさせて隙間線を防止) -->
-    <section class="w-full bg-sprout-moss py-8 px-0 relative z-[5] overflow-hidden -mt-[2px]" id="events">
+    <section class="content-visibility-auto w-full bg-sprout-moss py-8 px-0 relative z-[5] overflow-hidden -mt-[2px]" id="events">
       <div class="w-full flex flex-col items-center">
         <!-- Title -->
         <UiSectionTitle title="企画" text-color="text-sprout-accent" ornament-color="#DFF794" />
@@ -592,7 +592,7 @@ const visitorGuidelines = [
       </div>
 
       <!-- 3. ご案内セクション -->
-      <section class="w-full pb-16 relative z-10" id="guide">
+      <section class="content-visibility-auto w-full pb-16 relative z-10" id="guide">
         <div class="section-container">
           <!-- Title -->
           <UiSectionTitle title="ご案内" />
@@ -668,7 +668,7 @@ const visitorGuidelines = [
       </section>
 
       <!-- 4. ご来場にあたってセクション -->
-      <section class="w-full pt-2 pb-16 relative z-10" id="about">
+      <section class="content-visibility-auto w-full pt-2 pb-16 relative z-10" id="about">
         <div class="section-container">
           <!-- Title -->
           <UiSectionTitle title="ご来場にあたって" />
@@ -683,7 +683,7 @@ const visitorGuidelines = [
       </section>
 
       <!-- 5. アクセスセクション -->
-      <section class="w-full pt-2 pb-20 relative z-10" id="access">
+      <section class="content-visibility-auto w-full pt-2 pb-20 relative z-10" id="access">
         <div class="section-container">
           <!-- Title -->
           <UiSectionTitle title="アクセス" />
@@ -834,5 +834,11 @@ const visitorGuidelines = [
 /* 葉っぱの輪郭を背景からふんわり浮かび上がらせるソフトな白い影・ブラー */
 .leaf-white-glow {
   filter: drop-shadow(0 1px 4px rgba(255, 255, 255, 0.6));
+}
+
+/* 画面外セクションの初期レイアウト計算をスキップして初期リフローを激減 */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 </style>
