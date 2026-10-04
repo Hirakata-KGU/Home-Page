@@ -433,18 +433,20 @@ const visitorGuidelines = [
                   />
 
                   <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
-                  <NuxtImg
-                    :src="item.image"
-                    :alt="item.title"
-                    loading="lazy"
-                    decoding="async"
-                    draggable="false"
-                    sizes="xs:260px sm:280px md:300px"
-                    format="webp"
-                    quality="80"
-                    class="relative z-10 w-full h-full object-contain transition-transform duration-300 pointer-events-none select-none"
-                    :class="{ 'hover:scale-105': activeIndex === idx }"
-                  />
+                  <div class="relative z-10 w-full h-full flex items-center justify-center">
+                    <NuxtImg
+                      :src="item.image"
+                      :alt="item.title"
+                      loading="lazy"
+                      decoding="async"
+                      draggable="false"
+                      sizes="xs:260px sm:280px md:300px"
+                      format="webp"
+                      quality="80"
+                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none"
+                      :class="{ 'hover:scale-105': activeIndex === idx }"
+                    />
+                  </div>
 
                   <!-- バッジ（左上） -->
                   <div class="absolute top-3 left-3 z-30">
@@ -768,9 +770,14 @@ const visitorGuidelines = [
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css";
+
 /* Swiperコンテナのカード影・拡大用のはみ出し表示許可 */
 :deep(.events-swiper) {
   overflow: visible;
+}
+:deep(.events-swiper .swiper-wrapper) {
+  align-items: center;
 }
 
 /* 企画説明文の切り替えアニメーション（スムーズ＆高速） */
@@ -820,7 +827,7 @@ const visitorGuidelines = [
 
 /* 開催情報エリアのゴールドボタン */
 .btn-gold {
-  @apply text-white bg-gradient-to-br from-[var(--sun-gold)] to-[var(--sun-gold-light)]
+  @apply text-white bg-linear-to-br from-(--sun-gold) to-(--sun-gold-light)
     hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(245,158,11,0.35)];
 }
 

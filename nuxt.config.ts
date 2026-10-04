@@ -1,12 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { process } from 'std-env'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
   modules: [
-    '@nuxtjs/tailwindcss',
     './modules/festival-data',
     '@nuxt/image',
     '@nuxtjs/google-fonts',
@@ -49,8 +49,10 @@ export default defineNuxtConfig({
     inject: false,
   },
 
-  tailwindcss: {
-    cssPath: '~/assets/css/main.css',
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
   },
 
   gtag: {

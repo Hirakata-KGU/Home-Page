@@ -45,7 +45,7 @@ const footerSections = [
     </svg>
 
     <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark relative z-9">
-      <div class="flex flex-col items-center gap-8 w-full max-w-[var(--max-width)]">
+      <div class="flex flex-col items-center gap-8 w-full max-w-(--max-width)">
         <!-- Navigation Columns -->
         <div class="flex flex-col items-center lg:flex-row justify-between w-full gap-8">
           <!-- Col 1: Brand -->
@@ -132,7 +132,9 @@ const footerSections = [
     </div>
   </footer>
 </template>
-<style>
+<style scoped>
+@reference "~/assets/css/main.css";
+
   /* Footer Navigation */
   .footer-social-btn {
     @apply inline-flex items-center justify-center w-9 h-9 bg-white/10 hover:bg-sprout-light hover:text-sprout-dark text-white rounded-full no-underline text-base transition-colors;
