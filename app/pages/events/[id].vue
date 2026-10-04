@@ -162,16 +162,6 @@ useSeoMeta({
           <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="detail-section timetable-section">
             <div class="timetable-header-row">
               <h3 class="section-heading !mb-0 !border-b-0 !pb-0">ステージ出演スケジュール</h3>
-              <NuxtLink
-                :to="`/schedule?event=${event.id}`"
-                class="timetable-all-link group"
-                title="タイムテーブルで確認"
-              >
-                <span>タイムテーブルで確認</span>
-                <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </NuxtLink>
             </div>
             <p class="section-subtext">タップすると該当のタイムテーブルへジャンプします。</p>
             <div class="timetable-slot-list">
