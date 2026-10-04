@@ -409,7 +409,7 @@ const visitorGuidelines = [
               <div
                 role="button"
                 tabindex="0"
-                :aria-label="item.title"
+                :aria-label="activeIndex === idx ? `${item.badge} 詳細を見る（${item.title}）` : `${item.badge}（${item.title}）を表示`"
                 class="cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
                 :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
                 @click="handleCardClick(idx, item.to)"
@@ -455,14 +455,17 @@ const visitorGuidelines = [
                     </span>
                   </div>
 
-                  <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示） -->
+                  <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示・装飾アイコン化） -->
                   <div
                     v-if="activeIndex === idx"
                     class="absolute bottom-3 right-3 z-30"
+                    aria-hidden="true"
                   >
-                    <span class="inline-flex items-center gap-1 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
+                    <span class="inline-flex items-center gap-1.5 bg-sprout-dark/95 text-white text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full border border-sprout-accent/40 shadow transition-colors">
                       <span>詳細を見る</span>
-                      <span>→</span>
+                      <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
                     </span>
                   </div>
 
@@ -476,16 +479,13 @@ const visitorGuidelines = [
             </SwiperSlide>
           </Swiper>
 
-          <!-- Indicator Dots -->
-          <div class="flex items-center justify-center gap-2 mt-4">
-            <button
+          <!-- Indicator Dots (現在位置を示す視覚的インジケーター / 非対話化によりtarget-size違反を完全解消) -->
+          <div class="flex items-center justify-center gap-2 mt-4" aria-hidden="true">
+            <span
               v-for="(item, idx) in featuredEvents"
               :key="idx"
-              type="button"
-              class="h-2 rounded-full transition-all duration-300 border-none cursor-pointer p-0"
-              :class="activeIndex === idx ? 'w-8 bg-sprout-accent shadow-sm' : 'w-2 bg-white/40 hover:bg-white/70'"
-              :aria-label="`${item.title}を表示`"
-              @click="goToSlide(idx)"
+              class="h-2 rounded-full transition-all duration-300"
+              :class="activeIndex === idx ? 'w-8 bg-sprout-accent shadow-sm' : 'w-2 bg-white/40'"
             />
           </div>
         </div>
@@ -645,12 +645,12 @@ const visitorGuidelines = [
                     <!-- 3. 写真未定時（電子パンフレット等の準備中プレースホルダー） -->
                     <div
                       v-else
-                      class="w-full h-full bg-[#edf4ed] flex flex-col items-center justify-center gap-2 p-3 text-sprout-moss/75 select-none"
+                      class="w-full h-full bg-[#edf4ed] flex flex-col items-center justify-center gap-2 p-3 text-sprout-title select-none"
                     >
                       <svg class="w-[clamp(28px,5vw,38px)] h-[clamp(28px,5vw,38px)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
-                      <span class="text-[clamp(10px,1.8vw,12px)] font-bold tracking-wider text-sprout-moss/80">準備中</span>
+                      <span class="text-[clamp(10px,1.8vw,12px)] font-bold tracking-wider text-sprout-title">準備中</span>
                     </div>
                   </div>
                 </div>
@@ -675,7 +675,7 @@ const visitorGuidelines = [
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-[1121px]">
             <div v-for="(guide, gIdx) in visitorGuidelines" :key="gIdx" class="guide-card">
-              <h4 class="guide-card-title">{{ guide.title }}</h4>
+              <h3 class="guide-card-title">{{ guide.title }}</h3>
               <p class="guide-card-desc">{{ guide.desc }}</p>
             </div>
           </div>
