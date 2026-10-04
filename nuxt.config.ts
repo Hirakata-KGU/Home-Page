@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@vueuse/nuxt',
     '@nuxtjs/sitemap',
+    'nuxt-gtag',
   ],
 
   site: {
@@ -50,6 +51,10 @@ export default defineNuxtConfig({
 
   tailwindcss: {
     cssPath: '~/assets/css/main.css',
+  },
+
+  gtag: {
+    id: 'G-Q8714M92ME',
   },
 
   app: {

@@ -15,6 +15,7 @@
     "@vueuse/core": "^15.0.0",
     "@vueuse/nuxt": "^15.0.0",
     "nuxt": "^4.5.2",
+    "nuxt-gtag": "^5.0.0",
     "swiper": "^14.3.0",
     "vue": "^3.5.41",
     "vue-router": "^5.2.0"
