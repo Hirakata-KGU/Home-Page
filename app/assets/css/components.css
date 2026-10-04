@@ -1,52 +1,50 @@
 /*
- * 再利用するUIパターン（@layer components）
+ * 再利用するUIパターン
  * 命名規則: 「部品 + 種類」 例) .btn + .btn-primary
- * - 2か所以上で繰り返すUIはここに @apply で定義する
+ * - 2か所以上で繰り返すUIはここに @utility で定義する
  * - 1コンポーネントだけの装飾は各 .vue の <style scoped> へ
  * - 1回しか使わない短いスタイルは Tailwind ユーティリティを直接書く
  */
 
-@layer components {
+@utility section {
   /* ---------- Layout ---------- */
   /* 白いセクション枠（about / contact / pamphlet などで使用） */
-  .section {
-    @apply bg-white rounded-[20px] p-[clamp(24px,3.5vw,40px)] [box-shadow:var(--shadow-sm)]
-      border-t-[5px] border-t-[var(--sprout)] border-b border-b-[var(--border)];
-    animation: fadeInUp 0.6s ease both;
-  }
+  @apply bg-white rounded-[20px] p-[clamp(24px,3.5vw,40px)] shadow-(--shadow-sm)
+      border-t-[5px] border-t-(--sprout) border-b border-b-(--border);
+  animation: fadeInUp 0.6s ease both;
+}
 
-  .section-header {
-    @apply flex flex-col items-center text-center gap-4 mb-8 pb-5 border-b-2 border-b-[var(--sprout-bg)]
+@utility section-header {
+  @apply flex flex-col items-center text-center gap-4 mb-8 pb-5 border-b-2 border-b-(--sprout-bg)
       md:flex-row md:text-left;
-  }
+}
 
-  .section-title {
-    @apply flex-1;
+@utility section-title {
+  @apply flex-1;
+  & h2 {
+    @apply text-[clamp(22px,2vw,26px)] font-black text-(--sprout-dark) mb-1;
   }
-  .section-title h2 {
-    @apply text-[clamp(22px,2vw,26px)] font-black text-[var(--sprout-dark)] mb-1;
+  & p {
+    @apply text-[13px] font-bold uppercase tracking-[0.5px] text-(--text-muted);
   }
-  .section-title p {
-    @apply text-[13px] font-bold uppercase tracking-[0.5px] text-[var(--text-muted)];
-  }
+}
 
+@utility btn {
   /* ---------- Buttons ---------- */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 px-[30px] py-3.5 rounded-full
-      text-[15px] font-extrabold no-underline cursor-pointer [box-shadow:var(--shadow-md)]
+  @apply inline-flex items-center justify-center gap-2 px-[30px] py-3.5 rounded-full
+      text-[15px] font-extrabold no-underline cursor-pointer shadow-(--shadow-md)
       transition-all duration-300;
-  }
+}
 
-  .btn-primary {
-    @apply text-white bg-gradient-to-br from-[var(--sprout-light)] to-[var(--sprout)]
+@utility btn-primary {
+  @apply text-white bg-linear-to-br from-(--sprout-light) to-(--sprout)
       hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(46,125,50,0.3)]
-      hover:from-[var(--sprout-bright)] hover:to-[var(--sprout-light)];
-  }
+      hover:from-(--sprout-bright) hover:to-(--sprout-light);
+}
 
-  .btn-secondary {
-    @apply bg-white/85 backdrop-blur-[10px] border-2 border-[var(--border)] text-[var(--sprout-dark)]
-      hover:bg-white hover:border-[var(--sprout)] hover:text-[var(--sprout)] hover:-translate-y-0.5;
-  }
+@utility btn-secondary {
+  @apply bg-white/85 backdrop-blur-[10px] border-2 border-(--border) text-(--sprout-dark)
+      hover:bg-white hover:border-(--sprout) hover:text-(--sprout) hover:-translate-y-0.5;
 }
 
 @keyframes fadeInUp {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import { getBuildingDataList } from '~/data/map-buildings';
 import CampusOverallMap from '~/components/map/CampusOverallMap.vue';
 import EventCard from '~/components/ui/EventCard.vue';

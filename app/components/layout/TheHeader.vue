@@ -190,6 +190,8 @@ const guideSubItems = [
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css";
+
 /* お問い合わせ用ピルボタン */
 .btn-pill {
   @apply inline-flex justify-center items-center px-7 py-3.5 min-w-[160px] h-[52px]

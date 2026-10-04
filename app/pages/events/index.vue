@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
 
 useSeoMeta({
