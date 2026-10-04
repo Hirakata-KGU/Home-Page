@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@vueuse/nuxt',
     '@nuxtjs/sitemap',
-    'nuxt-gtag',
+    '@nuxt/scripts',
   ],
 
   site: {
@@ -55,8 +55,12 @@ export default defineNuxtConfig({
     ],
   },
 
-  gtag: {
-    id: 'G-Q8714M92ME',
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: 'G-Q8714M92ME',
+      },
+    },
   },
 
   app: {
