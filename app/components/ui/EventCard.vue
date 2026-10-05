@@ -249,6 +249,7 @@ defineProps<{
   color: white;
   letter-spacing: 0.02em;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 1);
 }
 
 .category-chip.cat-food {
@@ -264,7 +265,7 @@ defineProps<{
 }
 
 .category-chip.cat-entertainment {
-  background: #d48806;
+  background: #925400;
 }
 
 .day-chip {

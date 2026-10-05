@@ -6,13 +6,17 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
+  features: {
+    inlineStyles: true,
+  },
+
   modules: [
     './modules/festival-data',
     '@nuxt/image',
     '@nuxtjs/google-fonts',
     '@vueuse/nuxt',
     '@nuxtjs/sitemap',
-    'nuxt-gtag',
+    '@nuxt/scripts',
   ],
 
   site: {
@@ -47,6 +51,7 @@ export default defineNuxtConfig({
     display: 'swap',
     download: true, // 重要：フォント本体を _nuxt/ 内に保存して配信（外部依存を完全排除）
     inject: false,
+    preload: true,
   },
 
   vite: {
@@ -55,8 +60,12 @@ export default defineNuxtConfig({
     ],
   },
 
-  gtag: {
-    id: 'G-Q8714M92ME',
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: 'G-Q8714M92ME',
+      },
+    },
   },
 
   app: {

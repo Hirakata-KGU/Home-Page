@@ -241,7 +241,7 @@ useEventListener('click', closeActiveSlot);
                   class="venue-header-cell"
                   :class="venue.key + '-col'"
                 >
-                  <h3>{{ venue.label }}</h3>
+                  <h2>{{ venue.label }}</h2>
                   <p>{{ venue.sub }}</p>
                 </div>
               </div>
@@ -307,7 +307,7 @@ useEventListener('click', closeActiveSlot);
                   >
                     <div v-if="slot.isSpecial" class="special-badge">注目企画</div>
                     <div class="block-time">{{ slot.time }}</div>
-                    <h4 class="block-title">{{ slot.title }}</h4>
+                    <h3 class="block-title">{{ slot.title }}</h3>
                     <div class="block-performer">{{ slot.groupName }}</div>
 
                     <!-- 展開時（ホバー/タップ時）にスムーズに出現する詳細ボタン -->
@@ -484,7 +484,7 @@ useEventListener('click', closeActiveSlot);
   border-right: none;
 }
 
-.venue-header-cell h3 {
+.venue-header-cell h2 {
   font-size: 13px;
   font-weight: 800;
   margin-bottom: 2px;
@@ -687,25 +687,25 @@ useEventListener('click', closeActiveSlot);
 .block-time {
   font-size: 10px;
   font-weight: 800;
-  color: var(--olive);
+  color: #204526;
   margin-bottom: 1px;
   letter-spacing: 0.02em;
 }
 
 .indoor-block .block-time {
-  color: #997825;
+  color: #785a10;
 }
 
 .chapel-block .block-time {
-  color: #734b8c;
+  color: #552d6d;
 }
 
 .gym-block .block-time {
-  color: #00796b;
+  color: #00594f;
 }
 
 .bldg1-block .block-time {
-  color: #455a64;
+  color: #2c3e47;
 }
 
 .block-title {

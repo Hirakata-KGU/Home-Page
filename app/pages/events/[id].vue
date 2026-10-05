@@ -64,12 +64,12 @@ useSeoMeta({
             </span>
           </div>
 
+          <h2 class="detail-title">{{ event.title }}</h2>
+
           <div class="organizer-header">
             <span class="organizer-label">出店・出演団体</span>
-            <h3 class="organizer-name">{{ event.organizer }}</h3>
+            <p class="organizer-name">{{ event.organizer }}</p>
           </div>
-
-          <h2 class="detail-title">{{ event.title }}</h2>
 
           <!-- 企画写真（メインビジュアル: 高さは写真に合わせて自動変動・上限付き、余白には常時ぼかし背景を表示） -->
           <div
@@ -245,7 +245,7 @@ useSeoMeta({
 }
 
 .cat-food {
-  background: #b89345;
+  background: #8c671a;
 }
 
 .cat-culture {
@@ -257,7 +257,7 @@ useSeoMeta({
 }
 
 .cat-entertainment {
-  background: linear-gradient(135deg, #d48806 0%, #b37400 100%);
+  background: #925400;
 }
 
 .day-badge {
