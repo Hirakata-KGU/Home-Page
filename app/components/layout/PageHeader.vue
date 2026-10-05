@@ -106,21 +106,22 @@ useHead(() => {
 }
 
 .breadcrumb a {
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .breadcrumb a:hover {
-  color: white;
-  text-decoration: underline;
+  color: #f1f8f4;
+  transform: translateY(-3px);
 }
 
 .separator {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .current {
-  color: var(--sun-gold-light);
+  color: #fffdaa;
   font-weight: 700;
 }
 
@@ -155,9 +156,9 @@ h1 {
 
 .subtitle {
   font-size: 13px;
-  color: var(--sun-gold-light);
+  color: #fffdaa;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 </style>

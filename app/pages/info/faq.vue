@@ -98,11 +98,11 @@ const faqCategories = [
               class="bg-sprout-bg/60 rounded-xl p-[clamp(1.25rem,2vw,1.5rem)] border-l-4 border-sprout-border bg-sprout-bg shadow-md"
             >
               <h3 class="text-[clamp(1rem,1.5vw,1.125rem)] font-bold text-sprout-title mb-2.5 flex items-start gap-2.5">
-                <span class="text-sprout-border font-black shrink-0">Q.</span>
+                <span class="text-sprout-forest font-black shrink-0">Q.</span>
                 <span>{{ item.q }}</span>
               </h3>
               <div class="text-[clamp(0.875rem,1vw,1rem)] text-text-muted leading-relaxed pl-6 flex items-start gap-2.5">
-                <span class="text-amber-600 font-black shrink-0 -ml-6">A.</span>
+                <span class="text-amber-800 font-black shrink-0 -ml-6">A.</span>
                 <p class="m-0">{{ item.a }}</p>
               </div>
             </div>

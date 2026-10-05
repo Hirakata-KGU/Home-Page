@@ -251,13 +251,16 @@ watch(
       </section>
 
       <!-- 企画一覧グリッド -->
-      <div v-if="filteredEvents.length > 0" class="events-grid">
-        <UiEventCard
-          v-for="event in filteredEvents"
-          :key="event.id"
-          :event="event"
-        />
-      </div>
+      <section v-if="filteredEvents.length > 0" class="events-list-section">
+        <h2 class="sr-only">企画・企画カード一覧</h2>
+        <div class="events-grid">
+          <UiEventCard
+            v-for="event in filteredEvents"
+            :key="event.id"
+            :event="event"
+          />
+        </div>
+      </section>
 
       <!-- 検索該当なしの場合 -->
       <section v-else class="section no-results">
@@ -383,14 +386,14 @@ watch(
   font-size: 11px;
   padding: 2px 7px;
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.08);
   color: inherit;
   font-weight: 800;
 }
 
 .tab-btn.active .tab-count {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
+  background: #1b3a24;
+  color: #ffffff;
 }
 
 .day-filter {

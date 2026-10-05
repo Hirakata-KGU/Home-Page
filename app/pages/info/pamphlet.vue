@@ -45,7 +45,7 @@ const pamphletHighlights = [
             <div class="pamphlet-cover">
               <span class="cover-badge">2026年度版</span>
               <!-- アイコンSVG提供後に配置予定 -->
-              <h3 class="cover-title">第77回 平潟祭<br><span>SPROUT</span></h3>
+              <p class="cover-title">第77回 平潟祭<br><span>SPROUT</span></p>
               <p class="cover-date">2026.10.31(Sat) - 11.1(Sun)</p>
               <span class="cover-univ">関東学院大学 金沢八景キャンパス</span>
             </div>
