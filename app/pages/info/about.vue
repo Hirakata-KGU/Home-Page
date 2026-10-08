@@ -91,17 +91,23 @@ const memories2025 = [
         </div>
 
         <div class="greeting-container">
-          <div class="greeting-photo-wrapper">
-            <NuxtImg
-              src="/images/about/S__80912469.jpg"
-              alt="第77回 平潟祭 実行委員長"
-              width="1144"
-              height="1430"
-              loading="lazy"
-              format="webp"
-              sizes="xs:220px sm:240px md:280px"
-              class="greeting-photo"
-            />
+          <div class="greeting-author">
+            <div class="greeting-photo-wrapper">
+              <NuxtImg
+                src="/images/about/S__80912469.jpg"
+                alt="第77回 平潟祭 実行委員長"
+                width="1144"
+                height="1430"
+                loading="lazy"
+                format="webp"
+                sizes="xs:220px sm:240px md:280px"
+                class="greeting-photo"
+              />
+            </div>
+            <div class="greeting-author-info">
+              <p class="greeting-author-role">第77回 平潟祭 実行委員長</p>
+              <p class="greeting-author-name">大竹 航樹</p>
+            </div>
           </div>
 
           <div class="greeting-text">
@@ -225,9 +231,16 @@ const memories2025 = [
   }
 }
 
+.greeting-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
 .greeting-photo-wrapper {
   width: clamp(200px, 45vw, 240px);
-  flex-shrink: 0;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -248,6 +261,25 @@ const memories2025 = [
   aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
+}
+
+.greeting-author-info {
+  text-align: center;
+}
+
+.greeting-author-role {
+  font-size: clamp(12px, 0.9vw, 13px);
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 500;
+}
+
+.greeting-author-name {
+  font-size: clamp(16px, 1.2vw, 18px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  margin: 2px 0 0;
 }
 
 /* 委員長挨拶テキスト */
