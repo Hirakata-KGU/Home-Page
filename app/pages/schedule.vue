@@ -16,13 +16,14 @@ const router = useRouter();
 const activeDayId = ref<'day1' | 'day2'>('day1');
 const highlightedSlotId = ref<string | null>(null);
 
-// 5会場の定義（locationId に直接紐付け）
+// 6会場の定義（locationId に直接紐付け）
 const venueLanes = [
   { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '' },
   { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F' },
   { locationId: 'loc-chapel', label: 'チャペル', sub: '' },
   { locationId: 'loc-gym', label: '体育館', sub: '' },
   { locationId: 'loc-bldg1-front', label: '1号館前', sub: '' },
+  { locationId: 'loc-ground', label: 'グラウンド', sub: '' },
 ];
 
 // タップ（クリック）で展開・固定されているスロットID（スマホ用）
@@ -232,7 +233,7 @@ useEventListener('click', closeActiveSlot);
           <!-- 横スクロールコンテナ -->
           <div class="timetable-scroll-container">
             <div class="timetable-grid" :style="{ height: TOTAL_HEIGHT + 'px' }">
-              <!-- グリッドヘッダー（固定）: 時間(70px) + 5会場(各minmax(180px, 1fr)) -->
+              <!-- グリッドヘッダー（固定）: 時間(70px) + 6会場(各minmax(170px, 1fr)) -->
               <div class="grid-header">
                 <div class="time-header-cell">時間</div>
                 <div
@@ -278,7 +279,7 @@ useEventListener('click', closeActiveSlot);
                   </div>
                 </div>
 
-                <!-- 各会場レーン（5列） -->
+                <!-- 各会場レーン（6列） -->
                 <div
                   v-for="venue in venueLanes"
                   :key="venue.locationId"
@@ -441,16 +442,16 @@ useEventListener('click', closeActiveSlot);
 }
 
 .timetable-grid {
-  min-width: 960px;
+  min-width: 1100px;
   width: 100%;
   position: relative;
   background: white;
 }
 
-/* ヘッダー: 時間(70px) + 5会場(各minmax(170px, 1fr)) */
+/* ヘッダー: 時間(70px) + 6会場(各minmax(170px, 1fr)) */
 .grid-header {
   display: grid;
-  grid-template-columns: 70px repeat(5, minmax(170px, 1fr));
+  grid-template-columns: 70px repeat(6, minmax(170px, 1fr));
   background: #243526;
   color: white;
   position: sticky;
@@ -500,7 +501,7 @@ useEventListener('click', closeActiveSlot);
 .grid-body {
   position: relative;
   display: grid;
-  grid-template-columns: 70px repeat(5, minmax(170px, 1fr));
+  grid-template-columns: 70px repeat(6, minmax(170px, 1fr));
 }
 
 /* 1時間ごとの背景グリッド線（全体を横断） */
@@ -663,6 +664,12 @@ useEventListener('click', closeActiveSlot);
   border-left: 3.5px solid #455a64;
 }
 
+.loc-ground-block {
+  background: #fdf8f4;
+  border: 1px solid #edd5c8;
+  border-left: 3.5px solid #c86d3b;
+}
+
 /* 注目企画（芸能ステージなど） */
 .program-block.is-special {
   background: linear-gradient(135deg, #fff9e6 0%, #ffeed1 100%);
@@ -706,6 +713,10 @@ useEventListener('click', closeActiveSlot);
 
 .loc-bldg1-front-block .block-time {
   color: #2c3e47;
+}
+
+.loc-ground-block .block-time {
+  color: #8c4318;
 }
 
 .block-title {
