@@ -18,11 +18,11 @@ const highlightedSlotId = ref<string | null>(null);
 
 // 5会場の定義（locationId に直接紐付け）
 const venueLanes = [
-  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '', key: 'outdoor' },
-  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F', key: 'indoor' },
-  { locationId: 'loc-chapel', label: 'チャペル', sub: '', key: 'chapel' },
-  { locationId: 'loc-gym', label: '体育館', sub: '', key: 'gym' },
-  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '', key: 'bldg1' },
+  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '' },
+  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F' },
+  { locationId: 'loc-chapel', label: 'チャペル', sub: '' },
+  { locationId: 'loc-gym', label: '体育館', sub: '' },
+  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '' },
 ];
 
 // タップ（クリック）で展開・固定されているスロットID（スマホ用）
@@ -239,7 +239,7 @@ useEventListener('click', closeActiveSlot);
                   v-for="venue in venueLanes"
                   :key="venue.locationId"
                   class="venue-header-cell"
-                  :class="venue.key + '-col'"
+                  :class="venue.locationId + '-col'"
                 >
                   <h2>{{ venue.label }}</h2>
                   <p>{{ venue.sub }}</p>
@@ -283,7 +283,7 @@ useEventListener('click', closeActiveSlot);
                   v-for="venue in venueLanes"
                   :key="venue.locationId"
                   class="venue-lane"
-                  :class="venue.key + '-lane'"
+                  :class="venue.locationId + '-lane'"
                 >
                   <div
                     v-for="slot in getSlotsForVenue(day.allSlots, venue.locationId)"
@@ -291,7 +291,7 @@ useEventListener('click', closeActiveSlot);
                     :id="`slot-${slot.slotId}`"
                     class="program-block"
                     :class="[
-                      venue.key + '-block',
+                      venue.locationId + '-block',
                       {
                         'is-special': slot.isSpecial,
                         'is-active': activeSlotId === slot.slotId,
@@ -633,31 +633,31 @@ useEventListener('click', closeActiveSlot);
 }
 
 /* 会場ごとのテーマカラー */
-.outdoor-block {
+.loc-outdoor-stage-block {
   background: #f0f8f0;
   border: 1px solid #b7deb8;
   border-left: 3.5px solid #2f5b34;
 }
 
-.indoor-block {
+.loc-scc-bennett-block {
   background: #fdfbf3;
   border: 1px solid #ebd9b0;
   border-left: 3.5px solid #c9a85a;
 }
 
-.chapel-block {
+.loc-chapel-block {
   background: #f7f3fb;
   border: 1px solid #dbcde8;
   border-left: 3.5px solid #734b8c;
 }
 
-.gym-block {
+.loc-gym-block {
   background: #eef7f6;
   border: 1px solid #b2dfdb;
   border-left: 3.5px solid #00796b;
 }
 
-.bldg1-block {
+.loc-bldg1-front-block {
   background: #f5f6f8;
   border: 1px solid #cfd8dc;
   border-left: 3.5px solid #455a64;
@@ -692,19 +692,19 @@ useEventListener('click', closeActiveSlot);
   letter-spacing: 0.02em;
 }
 
-.indoor-block .block-time {
+.loc-scc-bennett-block .block-time {
   color: #785a10;
 }
 
-.chapel-block .block-time {
+.loc-chapel-block .block-time {
   color: #552d6d;
 }
 
-.gym-block .block-time {
+.loc-gym-block .block-time {
   color: #00594f;
 }
 
-.bldg1-block .block-time {
+.loc-bldg1-front-block .block-time {
   color: #2c3e47;
 }
 
