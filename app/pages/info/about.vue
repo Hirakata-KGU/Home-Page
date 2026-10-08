@@ -221,7 +221,6 @@ const memories2025 = [
 @media (min-width: 768px) {
   .greeting-container {
     flex-direction: row;
-    align-items: flex-start;
     gap: clamp(32px, 3.5vw, 44px);
   }
 }
