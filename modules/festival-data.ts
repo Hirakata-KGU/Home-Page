@@ -42,10 +42,36 @@ export default defineNuxtModule<ModuleOptions>({
         return XLSX.utils.sheet_to_json<T>(sheet);
       };
 
+      // 時刻（文字列 "HH:mm" または Excel 小数シリアル値）から分数を計算
+      const parseTimeToMinutes = (val: any): number => {
+        if (typeof val === 'number' && val >= 0 && val < 1) {
+          return Math.round(val * 24 * 60);
+        }
+        const match = String(val || '').trim().match(/^(\d{1,2}):(\d{2})/);
+        return match ? parseInt(match[1], 10) * 60 + parseInt(match[2], 10) : 0;
+      };
+
+
       // 6つのシートをJSONとして出力
-      const sheets = ['mogiten', 'culture', 'music', 'geinou', 'location', 'timetable'];
+      const sheets = ['mogiten', 'culture', 'music', 'other', 'location', 'timetable'];
       for (const sheetName of sheets) {
-        const data = getSheetData(sheetName);
+        let data = getSheetData(sheetName);
+        if (sheetName === 'timetable') {
+          // startTime と endTime から startMinutes, endMinutes, durationMinutes を自動算出
+          data = data.map((row: any) => {
+            const startMinutes = parseTimeToMinutes(row.startTime);
+            const endMinutes = parseTimeToMinutes(row.endTime);
+            const durationMinutes = Math.max(0, endMinutes - startMinutes);
+            const displayTime = row.time ? String(row.time).trim() : `${startTimeStr}～${endTimeStr}`;
+            return {
+              ...row,
+              time: displayTime,
+              startMinutes,
+              endMinutes,
+              durationMinutes,
+            };
+          });
+        }
         const jsonPath = resolve(outputDirFullPath, `${sheetName}.json`);
         writeFileSync(jsonPath, JSON.stringify(data, null, 2), 'utf-8');
         console.log(`[festival-data] Saved ${jsonPath} (${data.length} items)`);

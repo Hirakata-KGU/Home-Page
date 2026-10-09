@@ -16,13 +16,14 @@ const router = useRouter();
 const activeDayId = ref<'day1' | 'day2'>('day1');
 const highlightedSlotId = ref<string | null>(null);
 
-// 5会場の定義（locationId に直接紐付け）
+// 6会場の定義（locationId に直接紐付け）
 const venueLanes = [
-  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '', key: 'outdoor' },
-  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F', key: 'indoor' },
-  { locationId: 'loc-chapel', label: 'チャペル', sub: '', key: 'chapel' },
-  { locationId: 'loc-gym', label: '体育館', sub: '', key: 'gym' },
-  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '', key: 'bldg1' },
+  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '' },
+  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F' },
+  { locationId: 'loc-chapel', label: 'チャペル', sub: '' },
+  { locationId: 'loc-gym', label: '体育館', sub: '' },
+  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '' },
+  { locationId: 'loc-ground', label: 'グラウンド', sub: '' },
 ];
 
 // タップ（クリック）で展開・固定されているスロットID（スマホ用）
@@ -45,15 +46,13 @@ const TOTAL_HEIGHT = (END_HOUR - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP + G
 
 // スロットの位置計算（top）
 const getSlotTop = (slot: TimetableSlot): number => {
-  const startMin = Number(slot.startMinutes);
   const baseMin = START_HOUR * 60; // 600
-  return (startMin - baseMin) * MINUTE_HEIGHT + GRID_OFFSET_TOP;
+  return (slot.startMinutes - baseMin) * MINUTE_HEIGHT + GRID_OFFSET_TOP;
 };
 
 // スロットの高さ計算（height）
 const getSlotHeight = (slot: TimetableSlot): number => {
-  const durMin = Number(slot.durationMinutes);
-  return Math.max(34, durMin * MINUTE_HEIGHT - 6);
+  return Math.max(34, slot.durationMinutes * MINUTE_HEIGHT - 6);
 };
 
 // 会場ごとのスロット分類（locationId で直接判定）
@@ -232,14 +231,14 @@ useEventListener('click', closeActiveSlot);
           <!-- 横スクロールコンテナ -->
           <div class="timetable-scroll-container">
             <div class="timetable-grid" :style="{ height: TOTAL_HEIGHT + 'px' }">
-              <!-- グリッドヘッダー（固定）: 時間(70px) + 5会場(各minmax(180px, 1fr)) -->
+              <!-- グリッドヘッダー（固定）: 時間(70px) + 6会場(各minmax(170px, 1fr)) -->
               <div class="grid-header">
                 <div class="time-header-cell">時間</div>
                 <div
                   v-for="venue in venueLanes"
                   :key="venue.locationId"
                   class="venue-header-cell"
-                  :class="venue.key + '-col'"
+                  :class="venue.locationId + '-col'"
                 >
                   <h2>{{ venue.label }}</h2>
                   <p>{{ venue.sub }}</p>
@@ -278,12 +277,12 @@ useEventListener('click', closeActiveSlot);
                   </div>
                 </div>
 
-                <!-- 各会場レーン（5列） -->
+                <!-- 各会場レーン（6列） -->
                 <div
                   v-for="venue in venueLanes"
                   :key="venue.locationId"
                   class="venue-lane"
-                  :class="venue.key + '-lane'"
+                  :class="venue.locationId + '-lane'"
                 >
                   <div
                     v-for="slot in getSlotsForVenue(day.allSlots, venue.locationId)"
@@ -291,7 +290,7 @@ useEventListener('click', closeActiveSlot);
                     :id="`slot-${slot.slotId}`"
                     class="program-block"
                     :class="[
-                      venue.key + '-block',
+                      venue.locationId + '-block',
                       {
                         'is-special': slot.isSpecial,
                         'is-active': activeSlotId === slot.slotId,
@@ -441,16 +440,16 @@ useEventListener('click', closeActiveSlot);
 }
 
 .timetable-grid {
-  min-width: 960px;
+  min-width: 1100px;
   width: 100%;
   position: relative;
   background: white;
 }
 
-/* ヘッダー: 時間(70px) + 5会場(各minmax(170px, 1fr)) */
+/* ヘッダー: 時間(70px) + 6会場(各minmax(170px, 1fr)) */
 .grid-header {
   display: grid;
-  grid-template-columns: 70px repeat(5, minmax(170px, 1fr));
+  grid-template-columns: 70px repeat(6, minmax(170px, 1fr));
   background: #243526;
   color: white;
   position: sticky;
@@ -500,7 +499,7 @@ useEventListener('click', closeActiveSlot);
 .grid-body {
   position: relative;
   display: grid;
-  grid-template-columns: 70px repeat(5, minmax(170px, 1fr));
+  grid-template-columns: 70px repeat(6, minmax(170px, 1fr));
 }
 
 /* 1時間ごとの背景グリッド線（全体を横断） */
@@ -633,34 +632,40 @@ useEventListener('click', closeActiveSlot);
 }
 
 /* 会場ごとのテーマカラー */
-.outdoor-block {
+.loc-outdoor-stage-block {
   background: #f0f8f0;
   border: 1px solid #b7deb8;
   border-left: 3.5px solid #2f5b34;
 }
 
-.indoor-block {
+.loc-scc-bennett-block {
   background: #fdfbf3;
   border: 1px solid #ebd9b0;
   border-left: 3.5px solid #c9a85a;
 }
 
-.chapel-block {
+.loc-chapel-block {
   background: #f7f3fb;
   border: 1px solid #dbcde8;
   border-left: 3.5px solid #734b8c;
 }
 
-.gym-block {
+.loc-gym-block {
   background: #eef7f6;
   border: 1px solid #b2dfdb;
   border-left: 3.5px solid #00796b;
 }
 
-.bldg1-block {
+.loc-bldg1-front-block {
   background: #f5f6f8;
   border: 1px solid #cfd8dc;
   border-left: 3.5px solid #455a64;
+}
+
+.loc-ground-block {
+  background: #fdf8f4;
+  border: 1px solid #edd5c8;
+  border-left: 3.5px solid #c86d3b;
 }
 
 /* 注目企画（芸能ステージなど） */
@@ -692,20 +697,24 @@ useEventListener('click', closeActiveSlot);
   letter-spacing: 0.02em;
 }
 
-.indoor-block .block-time {
+.loc-scc-bennett-block .block-time {
   color: #785a10;
 }
 
-.chapel-block .block-time {
+.loc-chapel-block .block-time {
   color: #552d6d;
 }
 
-.gym-block .block-time {
+.loc-gym-block .block-time {
   color: #00594f;
 }
 
-.bldg1-block .block-time {
+.loc-bldg1-front-block .block-time {
   color: #2c3e47;
+}
+
+.loc-ground-block .block-time {
+  color: #8c4318;
 }
 
 .block-title {

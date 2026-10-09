@@ -1,6 +1,6 @@
 import rawTimetable from './timetable.json';
 import rawMusic from './music.json';
-import rawGeinou from './geinou.json';
+import rawOther from './other.json';
 import rawLocation from './location.json';
 
 export interface TimetableSlot {
@@ -21,9 +21,9 @@ export interface TimetableSlot {
 }
 
 const eventMap = new Map<string, { title: string; groupName: string }>(
-  [...(rawMusic as any[]), ...(rawGeinou as any[])].map((m) => [
+  [...(rawMusic as any[]), ...(rawOther as any[])].map((m) => [
     m.id,
-    { title: m.title || '', groupName: m.groupName || 'ゲスト企画' },
+    { title: m.title || '', groupName: m.groupName || '' },
   ])
 );
 
