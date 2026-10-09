@@ -46,15 +46,13 @@ const TOTAL_HEIGHT = (END_HOUR - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP + G
 
 // スロットの位置計算（top）
 const getSlotTop = (slot: TimetableSlot): number => {
-  const startMin = Number(slot.startMinutes);
   const baseMin = START_HOUR * 60; // 600
-  return (startMin - baseMin) * MINUTE_HEIGHT + GRID_OFFSET_TOP;
+  return (slot.startMinutes - baseMin) * MINUTE_HEIGHT + GRID_OFFSET_TOP;
 };
 
 // スロットの高さ計算（height）
 const getSlotHeight = (slot: TimetableSlot): number => {
-  const durMin = Number(slot.durationMinutes);
-  return Math.max(34, durMin * MINUTE_HEIGHT - 6);
+  return Math.max(34, slot.durationMinutes * MINUTE_HEIGHT - 6);
 };
 
 // 会場ごとのスロット分類（locationId で直接判定）
