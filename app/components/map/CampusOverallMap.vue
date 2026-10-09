@@ -9,9 +9,8 @@ import No8Svg from '~/components/map/no8.vue';
 import SccSvg from '~/components/map/scc.vue';
 import ChickSvg from '~/components/map/chick.vue';
 import GymSvg from '~/components/map/gym.vue';
-import TearoomSvg from '~/components/map/tearoom.vue';
 import TentItem from '~/components/map/tent.vue';
-import { getEventsByTentNo, getEventsByLocationId } from '~/data/map-buildings';
+import { getEventsByTentNo } from '~/data/map-buildings';
 import EventCard from '~/components/ui/EventCard.vue';
 
 const emit = defineEmits<{
@@ -77,7 +76,7 @@ const tentList = [
 
 const hoveredBuilding = ref<string | null>(null);
 
-// 選択中またはホバー中のポップオーバー管理（テント24基 + 茶室）
+// 選択中またはホバー中のポップオーバー管理（テント24基）
 interface PopoverItem {
   strokeColor?: string;
   id: string;
@@ -90,25 +89,11 @@ interface PopoverItem {
   placement: 'left' | 'right' | 'top' | 'bottom' | 'bottom-left';
 }
 
-const teaRoomItem: PopoverItem = {
-  id: 'tea-room',
-  label: '茶室',
-  company: false,
-  left: 83.73,
-  top: 1.64,
-  width: 2.58,
-  height: 2.53,
-  placement: 'bottom-left',
-};
-
 const activeTent = ref<PopoverItem | null>(null);
 const isPinned = ref(false);
 
 const activeTentEvents = computed(() => {
   if (!activeTent.value) return [];
-  if (activeTent.value.id === 'tea-room') {
-    return getEventsByLocationId('loc-sado-room');
-  }
   return getEventsByTentNo(activeTent.value.label);
 });
 
@@ -146,31 +131,6 @@ const handleTentMouseEnter = (tent: PopoverItem) => {
 const handleTentMouseLeave = (tent: PopoverItem) => {
   if (isPinned.value) return;
   if (activeTent.value?.id === tent.id) {
-    scheduleHide();
-  }
-};
-
-const toggleTeaRoom = () => {
-  clearHideTimer();
-  if (activeTent.value?.id === teaRoomItem.id && isPinned.value) {
-    closeTent();
-  } else {
-    activeTent.value = teaRoomItem;
-    isPinned.value = true;
-  }
-};
-
-const handleTeaRoomMouseEnter = () => {
-  hoveredBuilding.value = 'tearoom';
-  if (isPinned.value) return;
-  clearHideTimer();
-  activeTent.value = teaRoomItem;
-};
-
-const handleTeaRoomMouseLeave = () => {
-  hoveredBuilding.value = null;
-  if (isPinned.value) return;
-  if (activeTent.value?.id === teaRoomItem.id) {
     scheduleHide();
   }
 };
@@ -316,24 +276,6 @@ onMounted(() => {
                   <span class="pin-badge">体育館</span>
                 </div>
               </NuxtLink>
-
-              <!-- 茶室（ホバー・タップでイベントカード出現） -->
-              <div
-                class="interactive-building building-tearoom"
-                :class="{ 'is-hovered': hoveredBuilding === 'tearoom' || activeTent?.id === 'tea-room' }"
-                style="left: 83.73%; top: 1.64%; width: 2.58%; height: 2.53%;"
-                role="button"
-                tabindex="0"
-                aria-label="茶室の企画を見る"
-                @mouseenter="handleTeaRoomMouseEnter"
-                @mouseleave="handleTeaRoomMouseLeave"
-                @click="toggleTeaRoom"
-              >
-                <TearoomSvg class="building-svg-element" />
-                <div class="building-pin pin-tearoom">
-                  <span class="pin-badge">茶室</span>
-                </div>
-              </div>
 
               <!-- チャペル（クリックでタイムテーブルへ） -->
               <NuxtLink
@@ -603,30 +545,6 @@ onMounted(() => {
 .pin-gym {
   top: 50%;
   left: 65.5%;
-}
-
-.building-tearoom {
-  position: absolute;
-  z-index: 995;
-}
-
-.pin-tearoom {
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, 6px);
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.pin-tearoom::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: -8px;
-  right: -8px;
-  bottom: -6px;
-  background: transparent;
-  pointer-events: auto;
 }
 
 .interactive-building:hover .pin-badge,
