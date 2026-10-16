@@ -5,8 +5,8 @@ import { allEvents, categoryList, type EventCategory, type EventDay, type EventI
 useSeoMeta({
   title: '企画一覧｜平潟祭 2026',
   ogTitle: '企画一覧｜平潟祭 2026',
-  description: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
-  ogDescription: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能ステージ）一覧。カテゴリや日程、団体名で簡単検索！',
+  description: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能、その他企画）一覧。カテゴリや日程、団体名で簡単検索！',
+  ogDescription: '平潟祭2026の全企画（模擬店・グルメ、文化館展示、音楽館・ステージライブ、芸能、その他企画）一覧。カテゴリや日程、団体名で簡単検索！',
   ogUrl: 'https://www.hirakatasai.net/events',
 });
 
@@ -21,6 +21,7 @@ const normalizeCategory = (cat: unknown): 'all' | EventCategory => {
   if (c === 'culture' || c === '文化館' || c === '展示') return 'culture';
   if (c === 'music' || c === 'stage' || c === '音楽館' || c === 'ステージ') return 'music';
   if (c === 'entertainment' || c === 'geino' || c === '芸能' || c === 'talkshow') return 'entertainment';
+  if (c === 'other' || c === 'その他') return 'other';
   return 'all';
 };
 
@@ -238,7 +239,7 @@ watch(
         <!-- 該当件数 & アクティブ条件リセット -->
         <div class="filter-footer">
           <div class="results-count">
-            該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 59 件
+            該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 {{allEvents.length }} 件
           </div>
           <button
             v-if="selectedCategory !== 'all' || selectedDay !== 'all' || searchQuery"

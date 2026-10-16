@@ -70,8 +70,17 @@ defineProps<{
             <circle cx="18" cy="16" r="3"></circle>
           </svg>
           <!-- 芸能アイコン -->
-          <svg v-else class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg v-else-if="event.category === 'entertainment'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <!-- その他アイコン（スポーツ・大会・イベント） -->
+          <svg v-else class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+            <path d="M4 22h16"></path>
+            <path d="M10 14.66V17c0 .55-.45 1-1 1H7"></path>
+            <path d="M14 14.66V17c0 .55.45 1 1 1h2"></path>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
           </svg>
         </div>
       </div>
@@ -87,7 +96,7 @@ defineProps<{
 
     <!-- カードコンテンツ -->
     <div class="event-content">
-      <div class="event-organizer-row">
+      <div v-if="event.organizer" class="event-organizer-row">
         <span class="organizer-badge">{{ event.organizer }}</span>
       </div>
 
@@ -210,6 +219,10 @@ defineProps<{
   background: linear-gradient(135deg, #d48806 0%, #faad14 100%);
 }
 
+.card-fallback-box.fallback-other {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
 .fallback-icon-wrap {
   opacity: 0.85;
   transition: transform 0.3s ease;
@@ -266,6 +279,10 @@ defineProps<{
 
 .category-chip.cat-entertainment {
   background: #925400;
+}
+
+.category-chip.cat-other {
+  background: #4b5563;
 }
 
 .day-chip {

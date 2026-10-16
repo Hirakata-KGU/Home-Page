@@ -3,7 +3,6 @@ import { ref, computed, watch } from 'vue';
 import { getBuildingDataList } from '~/data/map-buildings';
 import CampusOverallMap from '~/components/map/CampusOverallMap.vue';
 import EventCard from '~/components/ui/EventCard.vue';
-import { foodBooths } from '~/data/events';
 
 useSeoMeta({
   title: '場内マップ｜平潟祭 2026',

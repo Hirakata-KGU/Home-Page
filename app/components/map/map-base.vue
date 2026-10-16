@@ -432,6 +432,17 @@
         <path class="cls-13" d="M 44.45,334.36" id="path274" style="fill: none; stroke-miterlimit: 10; stroke: #e94820; stroke-width: 1.45px" />
       </g>
     </g>
+    <g id="g-ground" inkscape:label="グラウンド案内" style="isolation:isolate">
+      <title id="title-ground">グラウンド案内</title>
+      <text
+        id="text-ground"
+        x="-3"
+        y="365"
+        text-anchor="middle"
+        dominant-baseline="central"
+        style="fill: #000000; font-size: 6px; font-weight: bold; font-family: HiraginoSans-W6-83pv-RKSJ-H, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; letter-spacing: 0.05em;"
+      >← グラウンド</text>
+    </g>
     <g id="g374" inkscape:label="6・8号館">
       <title id="title375">6・8号館</title>
       <g id="g364" inkscape:label="6号館8号館背景">

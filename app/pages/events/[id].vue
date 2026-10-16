@@ -15,7 +15,9 @@ const mapUrl = computed(() => {
 });
 
 const pageTitle = computed(() =>
-  event.value ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : '企画詳細｜平潟祭 2026'
+  event.value
+    ? (event.value.organizer ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : `${event.value.title}｜平潟祭 2026`)
+    : '企画詳細｜平潟祭 2026'
 );
 const pageDescription = computed(() =>
   event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ'
@@ -66,7 +68,7 @@ useSeoMeta({
 
           <h2 class="detail-title">{{ event.title }}</h2>
 
-          <div class="organizer-header">
+          <div v-if="event.organizer" class="organizer-header">
             <span class="organizer-label">出店・出演団体</span>
             <p class="organizer-name">{{ event.organizer }}</p>
           </div>
@@ -258,6 +260,10 @@ useSeoMeta({
 
 .cat-entertainment {
   background: #925400;
+}
+
+.cat-other {
+  background: #4b5563;
 }
 
 .day-badge {

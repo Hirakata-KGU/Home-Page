@@ -90,29 +90,50 @@ const memories2025 = [
           </div>
         </div>
 
-        <div class="greeting-text">
-          <p>
-            第77回平潟祭にご来場いただき、誠にありがとうございます。<br>
-            また、平潟祭にご協力いただいた関係者の皆様に厚くお礼申し上げます。
-          </p>
-          <p>
-            第77回の平潟祭のテーマは「SPROUT」です。
-          </p>
-          <p>
-            「SPROUT」には「芽吹く」という意味があります。
-          </p>
-          <p>
-            これまでの76回の平潟祭の開催を通して、先輩方が積み上げてきた経験や想いを大切に受け継ぎ、その土台の上に、今年度の私たちだからこそ生み出せる新たなものを芽吹かせたいという思いから、このテーマに決定いたしました。
-          </p>
-          <p>
-            そして、目まぐるしく変化していく時代に合わせ、私たち自身も変化していくとともに、これまで先輩方が築き上げてきたものを受け継ぎながら、これからの時代に当たり前となる新たなものを芽吹かせるという意味も込められています。
-          </p>
-          <p>
-            団体による様々な模擬店や演奏、展示に加え、芸能ステージなど、盛りだくさんの内容となっています！
-          </p>
-          <p>
-            ぜひ、77回目の平潟祭をお楽しみください！
-          </p>
+        <div class="greeting-container">
+          <div class="greeting-author">
+            <div class="greeting-photo-wrapper">
+              <NuxtImg
+                src="/images/about/S__80912469.jpg"
+                alt="第77回 平潟祭 実行委員長"
+                width="1144"
+                height="1430"
+                loading="lazy"
+                format="webp"
+                sizes="xs:220px sm:240px md:280px"
+                class="greeting-photo"
+              />
+            </div>
+            <div class="greeting-author-info">
+              <p class="greeting-author-role">第77回 平潟祭 実行委員長</p>
+              <p class="greeting-author-name">大竹 航樹</p>
+            </div>
+          </div>
+
+          <div class="greeting-text">
+            <p>
+              第77回平潟祭にご来場いただき、誠にありがとうございます。<br>
+              また、平潟祭にご協力いただいた関係者の皆様に厚くお礼申し上げます。
+            </p>
+            <p>
+              第77回の平潟祭のテーマは「SPROUT」です。
+            </p>
+            <p>
+              「SPROUT」には「芽吹く」という意味があります。
+            </p>
+            <p>
+              これまでの76回の平潟祭の開催を通して、先輩方が積み上げてきた経験や想いを大切に受け継ぎ、その土台の上に、今年度の私たちだからこそ生み出せる新たなものを芽吹かせたいという思いから、このテーマに決定いたしました。
+            </p>
+            <p>
+              そして、目まぐるしく変化していく時代に合わせ、私たち自身も変化していくとともに、これまで先輩方が築き上げてきたものを受け継ぎながら、これからの時代に当たり前となる新たなものを芽吹かせるという意味も込められています。
+            </p>
+            <p>
+              団体による様々な模擬店や演奏、展示に加え、芸能ステージなど、盛りだくさんの内容となっています！
+            </p>
+            <p>
+              ぜひ、77回目の平潟祭をお楽しみください！
+            </p>
+          </div>
         </div>
       </section>
 
@@ -195,8 +216,76 @@ const memories2025 = [
   max-width: 100%;
 }
 
+/* 委員長挨拶 */
+.greeting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+@media (min-width: 768px) {
+  .greeting-container {
+    flex-direction: row;
+    gap: clamp(32px, 3.5vw, 44px);
+  }
+}
+
+.greeting-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.greeting-photo-wrapper {
+  width: clamp(200px, 45vw, 240px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(46, 125, 50, 0.15);
+  background: var(--sprout-bg);
+}
+
+@media (min-width: 768px) {
+  .greeting-photo-wrapper {
+    width: clamp(220px, 24vw, 270px);
+    border-radius: 20px;
+  }
+}
+
+.greeting-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.greeting-author-info {
+  text-align: center;
+}
+
+.greeting-author-role {
+  font-size: clamp(12px, 0.9vw, 13px);
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 500;
+}
+
+.greeting-author-name {
+  font-size: clamp(16px, 1.2vw, 18px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  margin: 2px 0 0;
+}
+
 /* 委員長挨拶テキスト */
 .greeting-text {
+  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: clamp(16px, 2vw, 20px);

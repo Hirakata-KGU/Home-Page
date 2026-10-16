@@ -1,7 +1,7 @@
 import mogiten from './mogiten.json';
 import culture from './culture.json';
 import music from './music.json';
-import geinou from './geinou.json';
+import other from './other.json';
 import location from './location.json';
 import eventImages from './event-images.json';
 import { timetableByEventId, type TimetableSlot } from './timetable';
@@ -23,22 +23,20 @@ export const getEventImageUrl = (id: string): string | null =>
   (eventImages as Record<string, string>)[id] || null;
 
 export type { TimetableSlot };
-export type EventCategory = 'food' | 'culture' | 'music' | 'entertainment';
+export type EventCategory = 'food' | 'culture' | 'music' | 'entertainment' | 'other';
 export type EventDay = 'day1' | 'day2' | 'both';
 
 export interface EventItem {
   id: string;
   title: string;
-  groupName: string;
+  groupName?: string;
   category: EventCategory;
-  categoryRaw: string;
   categoryLabel: string;
   locationId: string;
   locationName: string;
   buildingId?: string;
   building?: string;
   floor?: number | string;
-  locationTab?: 'campus' | 'culture' | 'music';
   day: EventDay;
   dayLabel: string;
   timeRange: string;
@@ -55,6 +53,7 @@ const catMap: Record<string, { key: EventCategory; label: string }> = {
   '文化館': { key: 'culture', label: '文化館・展示' },
   '音楽館': { key: 'music', label: '音楽館・ステージ' },
   '芸能': { key: 'entertainment', label: '芸能' },
+  'その他': { key: 'other', label: 'その他' },
 };
 
 const dayLabelMap: Record<string, string> = {
@@ -68,7 +67,7 @@ export const allEvents: EventItem[] = [
   ...mogiten,
   ...culture,
   ...music,
-  ...geinou,
+  ...other,
 ].map((raw: any): EventItem => {
   const cat = catMap[raw.category] || { key: 'food', label: raw.category };
   const loc = locationMap.get(raw.locationId);
@@ -80,14 +79,12 @@ export const allEvents: EventItem[] = [
     title: raw.title,
     groupName: raw.groupName,
     category: cat.key,
-    categoryRaw: raw.category,
     categoryLabel: cat.label,
     locationId: raw.locationId,
     locationName: loc?.name || '',
     buildingId: loc?.buildingId,
     building: loc?.building,
     floor: loc?.floor,
-    locationTab: loc?.building?.includes('7') ? 'music' : loc?.building?.includes('8') ? 'culture' : 'campus',
     day,
     dayLabel: dayLabelMap[day] || '',
     timeRange: slots.length > 0 ? slots.map((s) => `${dayLabelMap[s.day] || s.day}  ${s.time}`).join('\n') : '10:00 - 17:00',
@@ -106,6 +103,5 @@ export const categoryList: { key: 'all' | EventCategory; label: string; count: n
   { key: 'culture', label: '文化館・展示', count: allEvents.filter((e) => e.category === 'culture').length },
   { key: 'music', label: '音楽館・ステージ', count: allEvents.filter((e) => e.category === 'music').length },
   { key: 'entertainment', label: '芸能', count: allEvents.filter((e) => e.category === 'entertainment').length },
+  { key: 'other', label: 'その他', count: allEvents.filter((e) => e.category === 'other').length },
 ];
-
-export const eventItems = allEvents;
