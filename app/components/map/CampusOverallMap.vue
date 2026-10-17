@@ -10,11 +10,12 @@ import SccSvg from '~/components/map/scc.vue';
 import ChickSvg from '~/components/map/chick.vue';
 import GymSvg from '~/components/map/gym.vue';
 import TentItem from '~/components/map/tent.vue';
-import { getEventsByTentNo } from '~/data/map-buildings';
+import { getEventsByTent, type BuildingId} from '~/data/map-buildings';
+import { type LocationItem } from '~/data/events';
 import EventCard from '~/components/ui/EventCard.vue';
 
 const emit = defineEmits<{
-  (e: 'select-building', buildingId: 'no3' | 'no6' | 'no7' | 'no8' | 'scc'): void;
+  (e: 'select-building', buildingId: BuildingId): void;
 }>();
 
 // スクロールコンテナの参照
@@ -46,56 +47,68 @@ function triggerChickClick() {
   startBubbleTimer();
 }
 
-// テント配置データ (ViewBox 385 x 580 基準のパーセント値: 手動微調整値を数学的アフィン変換で継承)
-const tentList = [
-  { strokeColor: '#4a7f52', id: 'tc1', label: '企画1', company: true, left: 48.52, top: 75.02, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#4a7f52', id: 'tc2', label: '企画2', company: true, left: 48.52, top: 59.85, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't1', label: '1', company: false, left: 48.52, top: 73.25, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't2', label: '2', company: false, left: 48.52, top: 71.4, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't3', label: '3', company: false, left: 48.52, top: 69.54, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't4', label: '4', company: false, left: 48.52, top: 67.69, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't5', label: '5', company: false, left: 48.52, top: 65.92, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't6', label: '6', company: false, left: 55.99, top: 57.74, width: 5.16, height: 2.4, placement: 'right' as const },
-  { strokeColor: '#c9a063', id: 't7', label: '7', company: false, left: 55.99, top: 55.89, width: 5.16, height: 2.4, placement: 'right' as const },
-  { strokeColor: '#c9a063', id: 't8', label: '8', company: false, left: 48.52, top: 58.08, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't9', label: '9', company: false, left: 48.52, top: 56.23, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't10', label: '10', company: false, left: 48.52, top: 54.37, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't11', label: '11', company: false, left: 48.52, top: 51.17, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't12', label: '12', company: false, left: 48.52, top: 49.31, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't13', label: '13', company: false, left: 48.52, top: 44.85, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't14', label: '14', company: false, left: 48.52, top: 42.99, width: 5.16, height: 2.4, placement: 'left' as const },
-  { strokeColor: '#c9a063', id: 't15', label: '15', company: false, left: 55.99, top: 44.93, width: 5.16, height: 2.4, placement: 'right' as const },
-  { strokeColor: '#c9a063', id: 't16', label: '16', company: false, left: 55.99, top: 43.08, width: 5.16, height: 2.4, placement: 'right' as const },
-  { strokeColor: '#c9a063', id: 't17', label: '17', company: false, left: 55.99, top: 41.22, width: 5.16, height: 2.4, placement: 'right' as const },
-  { strokeColor: '#c9a063', id: 't18', label: '18', company: false, left: 55.99, top: 39.45, width: 5.16, height: 2.4, placement: 'right' as const },
-  { strokeColor: '#c9a063', id: 't19', label: '19', company: false, left: 57.00, top: 24.62, width: 5.16, height: 2.4, rotate: 0, placement: 'bottom' as const },
-  { strokeColor: '#c9a063', id: 't20', label: '20', company: false, left: 61.60, top: 24.40, width: 5.16, height: 2.4, rotate: -8, placement: 'bottom' as const },
-  { strokeColor: '#c9a063', id: 't21', label: '21', company: false, left: 66.20, top: 23.40, width: 5.16, height: 2.4, rotate: -25, placement: 'bottom' as const },
-  { strokeColor: '#c9a063', id: 't22', label: '22', company: false, left: 70.00, top: 21.50, width: 5.16, height: 2.4, rotate: -50, placement: 'bottom' as const },
+// 選択可能建物データ
+const selectableBuildings: { id: BuildingId; label: string; component: unknown; style: string; pinClass?: string }[] = [
+  { id: 'no3', label: '社会連携館 (3号館)', component: No3Svg, style: 'left: 61.16%; top: 65.18%; width: 20.40%; height: 14.87%;' },
+  { id: 'no6', label: '文化館 (6号館)', component: No6Svg, style: 'left: 73.56%; top: 26.28%; width: 26.02%; height: 8.77%;', pinClass: 'pt-5' },
+  { id: 'no7', label: '音楽館 (7号館)', component: No7Svg, style: 'left: 61.65%; top: 39.80%; width: 17.26%; height: 20.75%;' },
+  { id: 'no8', label: '文化館 (8号館)', component: No8Svg, style: 'left: 76.59%; top: 18.16%; width: 22.96%; height: 7.37%;' },
+  { id: 'scc', label: '屋内ステージ (SCC)', component: SccSvg, style: 'left: 28.44%; top: 28.38%; width: 23.31%; height: 11.58%;' },
 ];
 
-const hoveredBuilding = ref<string | null>(null);
-
-// 選択中またはホバー中のポップオーバー管理（テント24基）
-interface PopoverItem {
-  strokeColor?: string;
+// テント配置データ (ViewBox 385 x 580 基準のパーセント値: 手動微調整値を数学的アフィン変換で継承)
+export interface TentConfig {
   id: string;
   label: string;
-  company?: boolean;
+  locationId?: LocationItem['locationId'];
   left: number;
   top: number;
-  width: number;
-  height: number;
-  placement: 'left' | 'right' | 'top' | 'bottom' | 'bottom-left';
+  placement: 'left' | 'right' | 'bottom' | 'top';
+  strokeColor?: string;
+  rotate?: number;
+  interactive?: boolean;
+  width?: number;
+  height?: number;
 }
+const tentList: TentConfig[] = [
+  { strokeColor: '#4a7f52', id: 'tc1', label: '企画1', locationId: 'loc-company-tent-1', left: 48.52, top: 75.02, placement: 'left' },
+  { strokeColor: '#4a7f52', id: 'tc2', label: '企画2', locationId: 'loc-company-tent-2', left: 48.52, top: 59.85, placement: 'left' },
+  { id: 't1', label: '1', locationId: 'loc-tent-01', left: 48.52, top: 73.25, placement: 'left' },
+  { id: 't2', label: '2', locationId: 'loc-tent-02', left: 48.52, top: 71.4, placement: 'left' },
+  { id: 't3', label: '3', locationId: 'loc-tent-03', left: 48.52, top: 69.54, placement: 'left' },
+  { id: 't4', label: '4', locationId: 'loc-tent-04', left: 48.52, top: 67.69, placement: 'left' },
+  { id: 't5', label: '5', locationId: 'loc-tent-05', left: 48.52, top: 65.92, placement: 'left' },
+  { id: 't6', label: '6', locationId: 'loc-tent-06', left: 55.99, top: 57.74, placement: 'right' },
+  { id: 't7', label: '7', locationId: 'loc-tent-07', left: 55.99, top: 55.89, placement: 'right' },
+  { id: 't8', label: '8', locationId: 'loc-tent-08', left: 48.52, top: 58.08, placement: 'left' },
+  { id: 't9', label: '9', locationId: 'loc-tent-09', left: 48.52, top: 56.23, placement: 'left' },
+  { id: 't10', label: '10', locationId: 'loc-tent-10', left: 48.52, top: 54.37, placement: 'left' },
+  { id: 't11', label: '11', locationId: 'loc-tent-11', left: 48.52, top: 51.17, placement: 'left' },
+  { id: 't12', label: '12', locationId: 'loc-tent-12', left: 48.52, top: 49.31, placement: 'left' },
+  { id: 't13', label: '13', locationId: 'loc-tent-13', left: 48.52, top: 44.85, placement: 'left' },
+  { id: 't14', label: '14', locationId: 'loc-tent-14', left: 48.52, top: 42.99, placement: 'left' },
+  { id: 't15', label: '15', locationId: 'loc-tent-15', left: 55.99, top: 44.93, placement: 'right' },
+  { id: 't16', label: '16', locationId: 'loc-tent-16', left: 55.99, top: 43.08, placement: 'right' },
+  { id: 't17', label: '17', locationId: 'loc-tent-17', left: 55.99, top: 41.22, placement: 'right' },
+  { id: 't18', label: '18', locationId: 'loc-tent-18', left: 55.99, top: 39.45, placement: 'right' },
+  { id: 't19', label: '19', locationId: 'loc-tent-19', left: 57.00, top: 24.62, rotate: 0, placement: 'top' },
+  { id: 't20', label: '20', locationId: 'loc-tent-20', left: 61.60, top: 24.40, rotate: -8, placement: 'top' },
+  { id: 't21', label: '21', locationId: 'loc-tent-21', left: 66.20, top: 23.40, rotate: -25, placement: 'top' },
+  { id: 't22', label: '22', locationId: 'loc-tent-22', left: 70.00, top: 21.50, rotate: -50, placement: 'top' },
+  { strokeColor: '#000000', id: 'hq', label: '本部', left: 56.66, top: 83.53, width: 7.12, height: 4.21, interactive: false, placement: 'bottom' },
+];
 
-const activeTent = ref<PopoverItem | null>(null);
+const getTentPosStyle = (t: TentConfig) => ({
+  left: `${t.left}%`,
+  top: `${t.top}%`,
+  width: `${t.width || 5.16}%`,
+  height: `${t.height || 2.4}%`,
+});
+
+const activeTent = ref<TentConfig | null>(null);
 const isPinned = ref(false);
 
-const activeTentEvents = computed(() => {
-  if (!activeTent.value) return [];
-  return getEventsByTentNo(activeTent.value.label);
-});
+const activeTentEvents = computed(() => getEventsByTent(activeTent.value?.locationId));
 
 const { start: scheduleHide, stop: clearHideTimer } = useTimeoutFn(() => {
   activeTent.value = null;
@@ -107,9 +120,9 @@ const closeTent = () => {
   isPinned.value = false;
 };
 
-const toggleTent = (tent: PopoverItem) => {
+const toggleTent = (tent: TentConfig) => {
   clearHideTimer();
-  const events = getEventsByTentNo(tent.label);
+  const events = getEventsByTent(tent.locationId);
   if (events.length === 0) return;
   if (activeTent.value?.id === tent.id && isPinned.value) {
     closeTent();
@@ -119,16 +132,16 @@ const toggleTent = (tent: PopoverItem) => {
   }
 };
 
-const handleTentMouseEnter = (tent: PopoverItem) => {
+const handleTentMouseEnter = (tent: TentConfig) => {
   if (isPinned.value) return;
   clearHideTimer();
-  const events = getEventsByTentNo(tent.label);
+  const events = getEventsByTent(tent.locationId);
   if (events.length > 0) {
     activeTent.value = tent;
   }
 };
 
-const handleTentMouseLeave = (tent: PopoverItem) => {
+const handleTentMouseLeave = (tent: TentConfig) => {
   if (isPinned.value) return;
   if (activeTent.value?.id === tent.id) {
     scheduleHide();
@@ -171,93 +184,23 @@ onMounted(() => {
 
             <!-- 2. 建物オーバーレイレイヤー（選択可能建物） -->
             <div class="map-buildings-layer">
-              <!-- 3号館 -->
+              <!-- 選択可能な校舎群 (3, 6, 7, 8号館, SCC) -->
               <div
-                class="interactive-building building-no3"
-                :class="{ 'is-hovered': hoveredBuilding === 'no3' }"
-                style="left: 61.16%; top: 65.18%; width: 20.40%; height: 14.87%;"
+                v-for="b in selectableBuildings"
+                :key="b.id"
+                class="interactive-building"
+                :class="`building-${b.id}`"
+                :style="b.style"
                 role="button"
                 tabindex="0"
-                aria-label="社会連携館 (3号館) の企画一覧を開く"
-                @mouseenter="hoveredBuilding = 'no3'"
-                @mouseleave="hoveredBuilding = null"
-                @click="emit('select-building', 'no3')"
+                :aria-label="`${b.label} の企画一覧を開く`"
+                @click="emit('select-building', b.id)"
+                @keydown.enter="emit('select-building', b.id)"
+                @keydown.space.prevent="emit('select-building', b.id)"
               >
-                <No3Svg class="building-svg-element" />
-                <div class="building-pin pin-no3">
-                  <span class="pin-badge">社会連携館 (3号館)</span>
-                </div>
-              </div>
-
-              <!-- 6号館 -->
-              <div
-                class="interactive-building building-no6"
-                :class="{ 'is-hovered': hoveredBuilding === 'no6' }"
-                style="left: 73.56%; top: 26.28%; width: 26.02%; height: 8.77%;"
-                role="button"
-                tabindex="0"
-                aria-label="文化館 (6号館) の企画一覧を開く"
-                @mouseenter="hoveredBuilding = 'no6'"
-                @mouseleave="hoveredBuilding = null"
-                @click="emit('select-building', 'no6')"
-              >
-                <No6Svg class="building-svg-element" />
-                <div class="building-pin pin-no6 pt-5">
-                  <span class="pin-badge">文化館 (6号館)</span>
-                </div>
-              </div>
-
-              <!-- 7号館 -->
-              <div
-                class="interactive-building building-no7"
-                :class="{ 'is-hovered': hoveredBuilding === 'no7' }"
-                style="left: 61.65%; top: 39.80%; width: 17.26%; height: 20.75%;"
-                role="button"
-                tabindex="0"
-                aria-label="音楽館 (7号館) の企画一覧を開く"
-                @mouseenter="hoveredBuilding = 'no7'"
-                @mouseleave="hoveredBuilding = null"
-                @click="emit('select-building', 'no7')"
-              >
-                <No7Svg class="building-svg-element" />
-                <div class="building-pin pin-no7">
-                  <span class="pin-badge">音楽館 (7号館)</span>
-                </div>
-              </div>
-
-              <!-- 8号館 -->
-              <div
-                class="interactive-building building-no8"
-                :class="{ 'is-hovered': hoveredBuilding === 'no8' }"
-                style="left: 76.59%; top: 18.16%; width: 22.96%; height: 7.37%;"
-                role="button"
-                tabindex="0"
-                aria-label="文化館 (8号館) の企画一覧を開く"
-                @mouseenter="hoveredBuilding = 'no8'"
-                @mouseleave="hoveredBuilding = null"
-                @click="emit('select-building', 'no8')"
-              >
-                <No8Svg class="building-svg-element" />
-                <div class="building-pin pin-no8">
-                  <span class="pin-badge">文化館 (8号館)</span>
-                </div>
-              </div>
-
-              <!-- SCC (屋内ステージ) -->
-              <div
-                class="interactive-building building-scc"
-                :class="{ 'is-hovered': hoveredBuilding === 'scc' }"
-                style="left: 28.44%; top: 28.38%; width: 23.31%; height: 11.58%;"
-                role="button"
-                tabindex="0"
-                aria-label="屋内ステージ (SCC) の企画一覧を開く"
-                @mouseenter="hoveredBuilding = 'scc'"
-                @mouseleave="hoveredBuilding = null"
-                @click="emit('select-building', 'scc')"
-              >
-                <SccSvg class="building-svg-element" />
-                <div class="building-pin pin-scc">
-                  <span class="pin-badge">屋内ステージ (SCC)</span>
+                <component :is="b.component" class="building-svg-element" />
+                <div class="building-pin" :class="[`pin-${b.id}`, b.pinClass]">
+                  <span class="pin-badge">{{ b.label }}</span>
                 </div>
               </div>
 
@@ -265,11 +208,8 @@ onMounted(() => {
               <NuxtLink
                 to="/schedule?venue=体育館"
                 class="interactive-building building-gym"
-                :class="{ 'is-hovered': hoveredBuilding === 'gym' }"
                 style="left: -7.70%; top: 75.64%; width: 24.79%; height: 16.53%;"
                 aria-label="体育館のタイムテーブルを見る"
-                @mouseenter="hoveredBuilding = 'gym'"
-                @mouseleave="hoveredBuilding = null"
               >
                 <GymSvg class="building-svg-element" />
                 <div class="building-pin pin-gym">
@@ -332,22 +272,18 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- 3. 模擬店テントオーバーレイレイヤー（24基） -->
+            <!-- 3. 模擬店テントオーバーレイレイヤー -->
             <div class="map-tents-layer">
               <div
                 v-for="t in tentList"
                 :key="t.id"
                 class="tent-pos-wrapper"
-                :style="{
-                  left: `${t.left}%`,
-                  top: `${t.top}%`,
-                  width: `${t.width}%`,
-                  height: `${t.height}%`
-                }"
+                :style="getTentPosStyle(t)"
               >
                 <TentItem
                   :label="t.label"
                   :stroke-color="t.strokeColor"
+                  :interactive="t.interactive ?? true"
                   :is-active="activeTent?.id === t.id"
                   :rotate="t.rotate"
                   class="w-full h-full"
@@ -358,28 +294,11 @@ onMounted(() => {
               </div>
             </div>
 
-            <div class="map-tents-layer">
-              <TentItem 
-                label="本部"
-                stroke-color="#000000"
-                :interactive="false"
-                :style="{ left: '56.66%', top: '83.53%', width: '7.12%', height: '4.21%' }"
-                class="tent-pos-wrapper"
-              />
-            </div>
-
             <!-- 単一のポップオーバーレイヤー（デザイン・位置・アニメーションは完全同一） -->
             <div
               v-if="activeTent && activeTentEvents.length > 0"
-              class="tent-pos-wrapper"
-              :style="{
-                left: `${activeTent.left}%`,
-                top: `${activeTent.top}%`,
-                width: `${activeTent.width}%`,
-                height: `${activeTent.height}%`,
-                pointerEvents: 'none',
-                zIndex: 1000
-              }"
+              class="tent-popover-wrapper"
+              :style="getTentPosStyle(activeTent)"
             >
               <Transition name="fade-scale" appear>
                 <div
@@ -613,6 +532,12 @@ onMounted(() => {
   pointer-events: auto;
 }
 
+.tent-popover-wrapper {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+}
+
 /* アヒル（遊び心要素） */
 .interactive-chick-wrapper {
   position: absolute;
@@ -797,7 +722,7 @@ onMounted(() => {
   transform: translate(-50%, 6px) scale(0.7);
 }
 
-/* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示（以前と完全同一デザイン） */
+/* ポップオーバー：周囲の箱・枠線・パディングを無くし、EventCard 自体のみを表示 */
 .tent-card-popover {
   position: absolute;
   z-index: 1000;
@@ -809,14 +734,8 @@ onMounted(() => {
   pointer-events: auto;
 }
 
-/* PC配置 */
+/* PC配置: 縦並びで2枚とも全体表示（スクロールなし） */
 @media (min-width: 641px) {
-  .tent-card-popover.placement-top {
-    bottom: calc(100% + 6px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
   .tent-card-popover.placement-bottom {
     top: calc(100% + 6px);
     left: 50%;
@@ -835,45 +754,88 @@ onMounted(() => {
     transform: translateY(-50%);
   }
 
-  .tent-card-popover.placement-bottom-left {
-    right: calc(100% + 2px);
-    top: 0;
-    transform: none;
+  .tent-card-popover.placement-top {
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .tent-card-popover.placement-bottom-left::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -10px;
-    width: 14px;
-    height: 100%;
-    background: transparent;
-    pointer-events: auto;
+  .popover-cards-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 }
 
-/* スマホ閲覧時: 画面端での見切れを防止するため画面下部にフローティング表示（dvwによる動的スケーリング） */
+/* スマホ閲覧時: 画面高さ(dvh)を基準にclampでカードサイズを調整 */
 @media (max-width: 640px) {
   .tent-card-popover {
     position: fixed;
-    bottom: 20px;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
     left: 50%;
     transform: translateX(-50%);
     top: auto;
-    width: clamp(240px, 72dvw, 300px);
+    width: min(94dvw, clamp(210px, 36dvh, 310px));
     margin: 0;
     z-index: 1000;
     filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.22));
   }
-}
 
-.popover-cards-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 380px;
-  overflow-y: auto;
+  /* 2枚ある場合（9番テント等）は横並びにするため幅を広げる */
+  .tent-card-popover:has(.popover-cards-wrap > :nth-child(2)) {
+    width: min(96dvw, clamp(320px, 68dvh, 560px));
+  }
+
+  .popover-cards-wrap {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .popover-card-item {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+  }
+
+  .popover-card-item :deep(.event-card) {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  /* 画面高さが低い場合でも収まるよう、各要素をdvhベースのclampでコンパクト化 */
+  .popover-card-item :deep(.event-content) {
+    padding: clamp(8px, 1.6dvh, 14px) clamp(10px, 2.2dvh, 16px);
+  }
+
+  .popover-card-item :deep(.event-title) {
+    font-size: clamp(12px, 1.9dvh, 15px);
+    margin-bottom: clamp(4px, 1dvh, 8px);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .popover-card-item :deep(.organizer-badge) {
+    font-size: clamp(10px, 1.4dvh, 11px);
+    padding: 2px 6px;
+  }
+
+  .popover-card-item :deep(.category-chip),
+  .popover-card-item :deep(.day-chip) {
+    font-size: clamp(9px, 1.3dvh, 10px);
+    padding: 2px 6px;
+  }
+
+  .popover-card-item :deep(.event-footer) {
+    padding-top: clamp(6px, 1.2dvh, 10px);
+    font-size: clamp(10px, 1.4dvh, 11px);
+  }
 }
 
 /* トランジション */
@@ -888,10 +850,10 @@ onMounted(() => {
 }
 
 @media (min-width: 641px) {
-  .placement-top.fade-scale-enter-from,
-  .placement-top.fade-scale-leave-to,
   .placement-bottom.fade-scale-enter-from,
-  .placement-bottom.fade-scale-leave-to {
+  .placement-bottom.fade-scale-leave-to ,
+  .placement-top.fade-scale-enter-from,
+  .placement-top.fade-scale-leave-to {
     transform: translateX(-50%) scale(0.94);
   }
 
@@ -900,11 +862,6 @@ onMounted(() => {
   .placement-right.fade-scale-enter-from,
   .placement-right.fade-scale-leave-to {
     transform: translateY(-50%) scale(0.94);
-  }
-
-  .placement-bottom-left.fade-scale-enter-from,
-  .placement-bottom-left.fade-scale-leave-to {
-    transform: translateX(10px) scale(0.94);
   }
 }
 

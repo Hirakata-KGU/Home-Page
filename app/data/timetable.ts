@@ -2,40 +2,44 @@ import rawTimetable from './timetable.json';
 import rawMusic from './music.json';
 import rawOther from './other.json';
 import rawLocation from './location.json';
+import type { LocationItem, RawEventItem } from './events';
 
-export interface TimetableSlot {
+export interface RawTimetableSlot {
   id: string;
   slotId: string;
   day: 'day1' | 'day2';
   locationId: string;
-  venue: string;
   time: string;
   startTime: string;
   endTime: string;
   startMinutes: number;
   endMinutes: number;
   durationMinutes: number;
+}
+
+export interface TimetableSlot extends RawTimetableSlot {
+  venue: string;
   title: string;
   groupName: string;
   isSpecial?: boolean;
 }
 
 const eventMap = new Map<string, { title: string; groupName: string }>(
-  [...(rawMusic as any[]), ...(rawOther as any[])].map((m) => [
+  ([...rawMusic, ...rawOther] as RawEventItem[]).map((m) => [
     m.id,
     { title: m.title || '', groupName: m.groupName || '' },
   ])
 );
 
-const locationMap = new Map<string, string>(
-  (rawLocation as any[]).map((loc) => [loc.locationId, loc.name || ''])
+const locationNameMap = new Map<string, string>(
+  (rawLocation as LocationItem[]).map((loc) => [loc.locationId, loc.name || ''])
 );
 
-export const timetable: TimetableSlot[] = (rawTimetable as any[]).map((t) => {
+export const timetable: TimetableSlot[] = (rawTimetable as RawTimetableSlot[]).map((t) => {
   const ev = eventMap.get(t.id);
   return {
     ...t,
-    venue: locationMap.get(t.locationId) || '',
+    venue: locationNameMap.get(t.locationId) || '',
     title: ev?.title || '',
     groupName: ev?.groupName || '',
     isSpecial: t.id === 'celeb',

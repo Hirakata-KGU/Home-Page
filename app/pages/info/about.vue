@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { useImageModal } from '~/composables/useImageModal';
+
+const { openGallery } = useImageModal();
 
 useSeoMeta({
   title: '平潟祭について｜第77回 平潟祭 2026',
@@ -64,9 +67,15 @@ const memories2025 = [
           class="memories-swiper w-full aspect-[16/10] max-sm:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg bg-black"
         >
           <SwiperSlide
-            v-for="item in memories2025"
+            v-for="(item, idx) in memories2025"
             :key="item.src"
-            class="w-full h-full"
+            class="w-full h-full cursor-pointer group relative"
+            role="button"
+            tabindex="0"
+            title="クリックして元データを拡大表示"
+            @click="openGallery(memories2025, idx)"
+            @keydown.enter.prevent="openGallery(memories2025, idx)"
+            @keydown.space.prevent="openGallery(memories2025, idx)"
           >
             <NuxtImg
               :src="item.src"
@@ -74,8 +83,18 @@ const memories2025 = [
               loading="lazy"
               format="webp"
               sizes="xs:100vw sm:100vw md:1000px"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
+            <!-- 拡大表示ガイドバッジ -->
+            <div class="absolute bottom-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white text-xs font-semibold backdrop-blur-md transition-all shadow-md group-hover:bg-sprout-accent group-hover:text-black">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+              <span>タップで拡大</span>
+            </div>
           </SwiperSlide>
         </Swiper>
       </section>
