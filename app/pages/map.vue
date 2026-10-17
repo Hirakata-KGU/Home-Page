@@ -126,26 +126,24 @@ const handleSelectBuildingFromMap = (buildingId: BuildingId) => {
             <h2 class="text-fluid-h2 font-black text-[#2f5b34]">
               {{ currentTabInfo?.title }}
             </h2>
-            <p class="text-fluid-caption text-[#6b7280] mt-1 font-medium mx-auto">
+            <p v-if="currentBuilding.subtitle" class="text-[clamp(0.875rem,1.3vw,1.0625rem)] font-extrabold text-[#3d7044] mt-1">
+              {{ currentBuilding.subtitle }}
+            </p>
+            <p v-if="currentBuilding.description" class="text-fluid-caption text-[#6b7280] mt-1.5 font-medium mx-auto max-w-2xl">
               {{ currentBuilding.description }}
             </p>
           </div>
 
-          <!-- 階層（フロア）ごとの企画カード一覧 -->
+          <!-- 階層（フロア）ごとの企画カード一覧（企画がある階層のみ自動表示） -->
           <div class="floors-container mt-6 space-y-8">
             <div
               v-for="fl in currentBuilding.floors"
               :key="fl.floor"
               class="floor-block"
             >
-              <!-- フロア見出し（サブの薄い文字は削除） -->
+              <!-- フロア見出し（階層ごとのタイトルは廃止し、フロア表示のみ） -->
               <div class="floor-heading-row">
                 <div class="floor-badge-tag">{{ fl.floor }}</div>
-                <div>
-                  <h3 class="text-[clamp(1rem,1.5vw,1.125rem)] font-extrabold text-[#2f5b34]">
-                    {{ fl.floorLabel }}
-                  </h3>
-                </div>
               </div>
 
               <!-- そのフロアのEventCard一覧 -->
