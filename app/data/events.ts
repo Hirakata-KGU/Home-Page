@@ -6,13 +6,15 @@ import location from './location.json';
 import eventImages from './event-images.json';
 import { timetableByEventId, type TimetableSlot } from './timetable';
 
+export type BuildingId = 'no3' | 'no6' | 'no7' | 'no8' | 'scc';
+
 export interface LocationItem {
   locationId: string;
-  buildingId?: string;
+  buildingId?: BuildingId;
   name: string;
   building: string;
   floor: number | string;
-  room?: string | number;
+  room?: number | string;
 }
 
 export const locationMap = new Map<string, LocationItem>(
@@ -26,7 +28,18 @@ export type { TimetableSlot };
 export type EventCategory = 'food' | 'culture' | 'music' | 'entertainment' | 'other';
 export type EventDay = 'day1' | 'day2' | 'both';
 
-export interface EventItem {
+export interface RawEventItem {
+  id: string;
+  title: string;
+  groupName?: string;
+  category: string;
+  locationId: string;
+  day?: EventDay;
+  salesInfo?: string;
+  pr?: string;
+}
+
+export interface EventItem extends Partial<Omit<LocationItem, 'name'>> {
   id: string;
   title: string;
   groupName?: string;
@@ -34,9 +47,6 @@ export interface EventItem {
   categoryLabel: string;
   locationId: string;
   locationName: string;
-  buildingId?: string;
-  building?: string;
-  floor?: number | string;
   day: EventDay;
   dayLabel: string;
   timeRange: string;
@@ -56,25 +66,22 @@ const catMap: Record<string, { key: EventCategory; label: string }> = {
   'その他': { key: 'other', label: 'その他' },
 };
 
-const dayLabelMap: Record<string, string> = {
+const dayLabelMap: Record<EventDay, string> = {
   day1: '10/31 (土)',
   day2: '11/1 (日)',
   both: '10/31 (土), 11/1 (日)',
 };
 
+const rawEvents = [...mogiten, ...culture, ...music, ...other] as RawEventItem[];
 
-export const allEvents: EventItem[] = [
-  ...mogiten,
-  ...culture,
-  ...music,
-  ...other,
-].map((raw: any): EventItem => {
+export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
   const cat = catMap[raw.category] || { key: 'food', label: raw.category };
   const loc = locationMap.get(raw.locationId);
   const slots = timetableByEventId.get(raw.id) || [];
   const day: EventDay = raw.day || 'both';
-  
+
   return {
+    ...loc,
     id: raw.id,
     title: raw.title,
     groupName: raw.groupName,
@@ -82,13 +89,10 @@ export const allEvents: EventItem[] = [
     categoryLabel: cat.label,
     locationId: raw.locationId,
     locationName: loc?.name || '',
-    buildingId: loc?.buildingId,
-    building: loc?.building,
-    floor: loc?.floor,
     day,
     dayLabel: dayLabelMap[day] || '',
     timeRange: slots.length > 0 ? slots.map((s) => `${dayLabelMap[s.day] || s.day}  ${s.time}`).join('\n') : '10:00 - 17:00',
-    organizer: raw.groupName,
+    organizer: raw.groupName || '',
     description: raw.pr || '',
     salesInfo: raw.salesInfo || null,
     imageUrl: getEventImageUrl(raw.id),
@@ -99,9 +103,9 @@ export const allEvents: EventItem[] = [
 
 export const categoryList: { key: 'all' | EventCategory; label: string; count: number }[] = [
   { key: 'all', label: 'すべて', count: allEvents.length },
-  { key: 'food', label: '模擬店・グルメ', count: allEvents.filter((e) => e.category === 'food').length },
-  { key: 'culture', label: '文化館・展示', count: allEvents.filter((e) => e.category === 'culture').length },
-  { key: 'music', label: '音楽館・ステージ', count: allEvents.filter((e) => e.category === 'music').length },
-  { key: 'entertainment', label: '芸能', count: allEvents.filter((e) => e.category === 'entertainment').length },
-  { key: 'other', label: 'その他', count: allEvents.filter((e) => e.category === 'other').length },
+  ...Object.values(catMap).map(({ key, label }) => ({
+    key,
+    label,
+    count: allEvents.filter((e) => e.category === key).length,
+  })),
 ];

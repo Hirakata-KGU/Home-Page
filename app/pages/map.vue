@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { getBuildingDataList } from '~/data/map-buildings';
+import { buildingDataMap, type BuildingId } from '~/data/map-buildings';
 import CampusOverallMap from '~/components/map/CampusOverallMap.vue';
 import EventCard from '~/components/ui/EventCard.vue';
 
@@ -12,13 +12,29 @@ useSeoMeta({
   ogUrl: 'https://www.hirakatasai.net/map',
 });
 
-type TabKey = 'all' | 'no3' | 'no6' | 'no7' | 'no8' | 'scc';
+type TabKey = 'all' | BuildingId;
+
+interface MapTab {
+  key: TabKey;
+  label: string;
+  sub: string;
+  title: string;
+}
+
+const mapTabs: MapTab[] = [
+  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店', title: '全体マップ' },
+  { key: 'no3', label: '社会連携館', sub: '3号館', title: '社会連携館 (3号館)' },
+  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F', title: '屋内ステージ (SCC 4F)' },
+  { key: 'no7', label: '音楽館', sub: '7号館', title: '音楽館 (7号館)' },
+  { key: 'no8', label: '文化館 (8号館)', sub: '8号館', title: '文化館 (8号館)' },
+  { key: 'no6', label: '文化館 (6号館)', sub: '6号館', title: '文化館 (6号館)' },
+];
 
 const route = useRoute();
 const router = useRouter();
 
-const validTabs: TabKey[] = ['all', 'no3', 'no6', 'no7', 'no8', 'scc'];
-const initialTab = (route.query.tab as TabKey);
+const validTabs = mapTabs.map((t) => t.key);
+const initialTab = route.query.tab as TabKey;
 const currentTab = ref<TabKey>(validTabs.includes(initialTab) ? initialTab : 'all');
 
 // URLクエリの変更（ブラウザの戻る・進むボタン含む）を検知してタブを同期
@@ -43,25 +59,14 @@ const setTab = (key: TabKey, isPush = true) => {
   }
 };
 
-const tabs: { key: TabKey; label: string; sub: string; title: string }[] = [
-  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店', title: '全体マップ' },
-  { key: 'no3', label: '社会連携館', sub: '3号館', title: '社会連携館 (3号館)' },
-  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F', title: '屋内ステージ (SCC 4F)' },
-  { key: 'no7', label: '音楽館', sub: '7号館', title: '音楽館 (7号館)' },
-  { key: 'no8', label: '文化館 (8号館)', sub: '8号館', title: '文化館 (8号館)' },
-  { key: 'no6', label: '文化館 (6号館)', sub: '6号館', title: '文化館 (6号館)' },
-];
-
-const currentTabInfo = computed(() => tabs.find(t => t.key === currentTab.value));
-
-const buildingDataList = getBuildingDataList();
+const currentTabInfo = computed(() => mapTabs.find((t) => t.key === currentTab.value));
 
 const currentBuilding = computed(() => {
   if (currentTab.value === 'all') return null;
-  return buildingDataList[currentTab.value] || null;
+  return buildingDataMap[currentTab.value] || null;
 });
 
-const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' | 'scc') => {
+const handleSelectBuildingFromMap = (buildingId: BuildingId) => {
   setTab(buildingId, true);
   if (typeof window !== 'undefined') {
     window.scrollTo({ top: 260, behavior: 'smooth' });
@@ -83,7 +88,7 @@ const handleSelectBuildingFromMap = (buildingId: 'no3' | 'no6' | 'no7' | 'no8' |
       <nav class="map-nav-wrapper pb-[clamp(1.5rem,2.5vw,2rem)]" aria-label="場内エリア切り替え">
         <div class="tab-grid" role="tablist">
           <button
-            v-for="t in tabs"
+            v-for="t in mapTabs"
             :key="t.key"
             class="map-tab-btn"
             :class="{ 'is-active': currentTab === t.key }"

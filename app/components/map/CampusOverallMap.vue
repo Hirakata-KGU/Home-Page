@@ -10,11 +10,12 @@ import SccSvg from '~/components/map/scc.vue';
 import ChickSvg from '~/components/map/chick.vue';
 import GymSvg from '~/components/map/gym.vue';
 import TentItem from '~/components/map/tent.vue';
-import { getEventsByTentNo } from '~/data/map-buildings';
+import { getEventsByTent, type BuildingId} from '~/data/map-buildings';
+import { type LocationItem } from '~/data/events';
 import EventCard from '~/components/ui/EventCard.vue';
 
 const emit = defineEmits<{
-  (e: 'select-building', buildingId: 'no3' | 'no6' | 'no7' | 'no8' | 'scc'): void;
+  (e: 'select-building', buildingId: BuildingId): void;
 }>();
 
 // スクロールコンテナの参照
@@ -47,63 +48,67 @@ function triggerChickClick() {
 }
 
 // 選択可能建物データ
-const selectableBuildings = [
-  { id: 'no3' as const, label: '社会連携館 (3号館)', component: No3Svg, style: 'left: 61.16%; top: 65.18%; width: 20.40%; height: 14.87%;' },
-  { id: 'no6' as const, label: '文化館 (6号館)', component: No6Svg, style: 'left: 73.56%; top: 26.28%; width: 26.02%; height: 8.77%;', pinClass: 'pt-5' },
-  { id: 'no7' as const, label: '音楽館 (7号館)', component: No7Svg, style: 'left: 61.65%; top: 39.80%; width: 17.26%; height: 20.75%;' },
-  { id: 'no8' as const, label: '文化館 (8号館)', component: No8Svg, style: 'left: 76.59%; top: 18.16%; width: 22.96%; height: 7.37%;' },
-  { id: 'scc' as const, label: '屋内ステージ (SCC)', component: SccSvg, style: 'left: 28.44%; top: 28.38%; width: 23.31%; height: 11.58%;' },
+const selectableBuildings: { id: BuildingId; label: string; component: unknown; style: string; pinClass?: string }[] = [
+  { id: 'no3', label: '社会連携館 (3号館)', component: No3Svg, style: 'left: 61.16%; top: 65.18%; width: 20.40%; height: 14.87%;' },
+  { id: 'no6', label: '文化館 (6号館)', component: No6Svg, style: 'left: 73.56%; top: 26.28%; width: 26.02%; height: 8.77%;', pinClass: 'pt-5' },
+  { id: 'no7', label: '音楽館 (7号館)', component: No7Svg, style: 'left: 61.65%; top: 39.80%; width: 17.26%; height: 20.75%;' },
+  { id: 'no8', label: '文化館 (8号館)', component: No8Svg, style: 'left: 76.59%; top: 18.16%; width: 22.96%; height: 7.37%;' },
+  { id: 'scc', label: '屋内ステージ (SCC)', component: SccSvg, style: 'left: 28.44%; top: 28.38%; width: 23.31%; height: 11.58%;' },
 ];
 
 // テント配置データ (ViewBox 385 x 580 基準のパーセント値: 手動微調整値を数学的アフィン変換で継承)
-interface TentConfig {
+export interface TentConfig {
   id: string;
   label: string;
+  locationId?: LocationItem['locationId'];
   left: number;
   top: number;
-  placement: 'left' | 'right' | 'bottom';
+  placement: 'left' | 'right' | 'bottom' | 'top';
   strokeColor?: string;
   rotate?: number;
   interactive?: boolean;
   width?: number;
   height?: number;
 }
-
 const tentList: TentConfig[] = [
-  { strokeColor: '#4a7f52', id: 'tc1', label: '企画1', left: 48.52, top: 75.02, placement: 'left' },
-  { strokeColor: '#4a7f52', id: 'tc2', label: '企画2', left: 48.52, top: 59.85, placement: 'left' },
-  { id: 't1', label: '1', left: 48.52, top: 73.25, placement: 'left' },
-  { id: 't2', label: '2', left: 48.52, top: 71.4, placement: 'left' },
-  { id: 't3', label: '3', left: 48.52, top: 69.54, placement: 'left' },
-  { id: 't4', label: '4', left: 48.52, top: 67.69, placement: 'left' },
-  { id: 't5', label: '5', left: 48.52, top: 65.92, placement: 'left' },
-  { id: 't6', label: '6', left: 55.99, top: 57.74, placement: 'right' },
-  { id: 't7', label: '7', left: 55.99, top: 55.89, placement: 'right' },
-  { id: 't8', label: '8', left: 48.52, top: 58.08, placement: 'left' },
-  { id: 't9', label: '9', left: 48.52, top: 56.23, placement: 'left' },
-  { id: 't10', label: '10', left: 48.52, top: 54.37, placement: 'left' },
-  { id: 't11', label: '11', left: 48.52, top: 51.17, placement: 'left' },
-  { id: 't12', label: '12', left: 48.52, top: 49.31, placement: 'left' },
-  { id: 't13', label: '13', left: 48.52, top: 44.85, placement: 'left' },
-  { id: 't14', label: '14', left: 48.52, top: 42.99, placement: 'left' },
-  { id: 't15', label: '15', left: 55.99, top: 44.93, placement: 'right' },
-  { id: 't16', label: '16', left: 55.99, top: 43.08, placement: 'right' },
-  { id: 't17', label: '17', left: 55.99, top: 41.22, placement: 'right' },
-  { id: 't18', label: '18', left: 55.99, top: 39.45, placement: 'right' },
-  { id: 't19', label: '19', left: 57.00, top: 24.62, rotate: 0, placement: 'bottom' },
-  { id: 't20', label: '20', left: 61.60, top: 24.40, rotate: -8, placement: 'bottom' },
-  { id: 't21', label: '21', left: 66.20, top: 23.40, rotate: -25, placement: 'bottom' },
-  { id: 't22', label: '22', left: 70.00, top: 21.50, rotate: -50, placement: 'bottom' },
+  { strokeColor: '#4a7f52', id: 'tc1', label: '企画1', locationId: 'loc-company-tent-1', left: 48.52, top: 75.02, placement: 'left' },
+  { strokeColor: '#4a7f52', id: 'tc2', label: '企画2', locationId: 'loc-company-tent-2', left: 48.52, top: 59.85, placement: 'left' },
+  { id: 't1', label: '1', locationId: 'loc-tent-01', left: 48.52, top: 73.25, placement: 'left' },
+  { id: 't2', label: '2', locationId: 'loc-tent-02', left: 48.52, top: 71.4, placement: 'left' },
+  { id: 't3', label: '3', locationId: 'loc-tent-03', left: 48.52, top: 69.54, placement: 'left' },
+  { id: 't4', label: '4', locationId: 'loc-tent-04', left: 48.52, top: 67.69, placement: 'left' },
+  { id: 't5', label: '5', locationId: 'loc-tent-05', left: 48.52, top: 65.92, placement: 'left' },
+  { id: 't6', label: '6', locationId: 'loc-tent-06', left: 55.99, top: 57.74, placement: 'right' },
+  { id: 't7', label: '7', locationId: 'loc-tent-07', left: 55.99, top: 55.89, placement: 'right' },
+  { id: 't8', label: '8', locationId: 'loc-tent-08', left: 48.52, top: 58.08, placement: 'left' },
+  { id: 't9', label: '9', locationId: 'loc-tent-09', left: 48.52, top: 56.23, placement: 'left' },
+  { id: 't10', label: '10', locationId: 'loc-tent-10', left: 48.52, top: 54.37, placement: 'left' },
+  { id: 't11', label: '11', locationId: 'loc-tent-11', left: 48.52, top: 51.17, placement: 'left' },
+  { id: 't12', label: '12', locationId: 'loc-tent-12', left: 48.52, top: 49.31, placement: 'left' },
+  { id: 't13', label: '13', locationId: 'loc-tent-13', left: 48.52, top: 44.85, placement: 'left' },
+  { id: 't14', label: '14', locationId: 'loc-tent-14', left: 48.52, top: 42.99, placement: 'left' },
+  { id: 't15', label: '15', locationId: 'loc-tent-15', left: 55.99, top: 44.93, placement: 'right' },
+  { id: 't16', label: '16', locationId: 'loc-tent-16', left: 55.99, top: 43.08, placement: 'right' },
+  { id: 't17', label: '17', locationId: 'loc-tent-17', left: 55.99, top: 41.22, placement: 'right' },
+  { id: 't18', label: '18', locationId: 'loc-tent-18', left: 55.99, top: 39.45, placement: 'right' },
+  { id: 't19', label: '19', locationId: 'loc-tent-19', left: 57.00, top: 24.62, rotate: 0, placement: 'top' },
+  { id: 't20', label: '20', locationId: 'loc-tent-20', left: 61.60, top: 24.40, rotate: -8, placement: 'top' },
+  { id: 't21', label: '21', locationId: 'loc-tent-21', left: 66.20, top: 23.40, rotate: -25, placement: 'top' },
+  { id: 't22', label: '22', locationId: 'loc-tent-22', left: 70.00, top: 21.50, rotate: -50, placement: 'top' },
   { strokeColor: '#000000', id: 'hq', label: '本部', left: 56.66, top: 83.53, width: 7.12, height: 4.21, interactive: false, placement: 'bottom' },
 ];
+
+const getTentPosStyle = (t: TentConfig) => ({
+  left: `${t.left}%`,
+  top: `${t.top}%`,
+  width: `${t.width || 5.16}%`,
+  height: `${t.height || 2.4}%`,
+});
 
 const activeTent = ref<TentConfig | null>(null);
 const isPinned = ref(false);
 
-const activeTentEvents = computed(() => {
-  if (!activeTent.value) return [];
-  return getEventsByTentNo(activeTent.value.label);
-});
+const activeTentEvents = computed(() => getEventsByTent(activeTent.value?.locationId));
 
 const { start: scheduleHide, stop: clearHideTimer } = useTimeoutFn(() => {
   activeTent.value = null;
@@ -117,7 +122,7 @@ const closeTent = () => {
 
 const toggleTent = (tent: TentConfig) => {
   clearHideTimer();
-  const events = getEventsByTentNo(tent.label);
+  const events = getEventsByTent(tent.locationId);
   if (events.length === 0) return;
   if (activeTent.value?.id === tent.id && isPinned.value) {
     closeTent();
@@ -130,7 +135,7 @@ const toggleTent = (tent: TentConfig) => {
 const handleTentMouseEnter = (tent: TentConfig) => {
   if (isPinned.value) return;
   clearHideTimer();
-  const events = getEventsByTentNo(tent.label);
+  const events = getEventsByTent(tent.locationId);
   if (events.length > 0) {
     activeTent.value = tent;
   }
@@ -273,12 +278,7 @@ onMounted(() => {
                 v-for="t in tentList"
                 :key="t.id"
                 class="tent-pos-wrapper"
-                :style="{
-                  left: `${t.left}%`,
-                  top: `${t.top}%`,
-                  width: `${t.width || 5.16}%`,
-                  height: `${t.height || 2.4}%`
-                }"
+                :style="getTentPosStyle(t)"
               >
                 <TentItem
                   :label="t.label"
@@ -297,15 +297,8 @@ onMounted(() => {
             <!-- 単一のポップオーバーレイヤー（デザイン・位置・アニメーションは完全同一） -->
             <div
               v-if="activeTent && activeTentEvents.length > 0"
-              class="tent-pos-wrapper"
-              :style="{
-                left: `${activeTent.left}%`,
-                top: `${activeTent.top}%`,
-                width: `${activeTent.width}%`,
-                height: `${activeTent.height}%`,
-                pointerEvents: 'none',
-                zIndex: 1000
-              }"
+              class="tent-popover-wrapper"
+              :style="getTentPosStyle(activeTent)"
             >
               <Transition name="fade-scale" appear>
                 <div
@@ -539,6 +532,12 @@ onMounted(() => {
   pointer-events: auto;
 }
 
+.tent-popover-wrapper {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+}
+
 /* アヒル（遊び心要素） */
 .interactive-chick-wrapper {
   position: absolute;
@@ -755,6 +754,12 @@ onMounted(() => {
     transform: translateY(-50%);
   }
 
+  .tent-card-popover.placement-top {
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .popover-cards-wrap {
     display: flex;
     flex-direction: column;
@@ -846,7 +851,9 @@ onMounted(() => {
 
 @media (min-width: 641px) {
   .placement-bottom.fade-scale-enter-from,
-  .placement-bottom.fade-scale-leave-to {
+  .placement-bottom.fade-scale-leave-to ,
+  .placement-top.fade-scale-enter-from,
+  .placement-top.fade-scale-leave-to {
     transform: translateX(-50%) scale(0.94);
   }
 
