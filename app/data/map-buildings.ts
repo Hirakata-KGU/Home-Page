@@ -1,4 +1,5 @@
 import { allEvents, locationMap, type EventItem } from '~/data/events';
+import location from '~/data/location.json';
 
 export interface BuildingFloorData {
   floor: string;
@@ -86,10 +87,12 @@ export const getBuildingDataList = (): Record<string, BuildingData> => {
 };
 
 export const getEventsByTentNo = (label: string): EventItem[] => {
-  const targetId = `loc-tent-${label.padStart(2, '0')}`;
-  return allEvents.filter((e) => e.locationId === targetId);
-};
-
-export const getEventsByLocationId = (locationId: string): EventItem[] => {
-  return allEvents.filter((e) => e.locationId === locationId);
+  const isCompany = /^(?:企業|企画)/.test(label);
+  const room = Number(label.replace(/\D/g, ''));
+  const targetIds = new Set(
+    (location as any[])
+      .filter((l) => l.building === 'テント' && Number(l.room) === room && (isCompany ? String(l.locationId).includes('company') : !String(l.locationId).includes('company')))
+      .map((l) => l.locationId)
+  );
+  return allEvents.filter((e) => targetIds.has(e.locationId));
 };

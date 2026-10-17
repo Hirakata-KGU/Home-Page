@@ -40,17 +40,17 @@ const fontSize = computed(() => {
     :style="{
       '--tent-rotate': `${props.rotate}deg`,
     }"
-    @pointerenter="(e: PointerEvent) => e.pointerType !== 'touch' && emit('hover-enter')"
-    @pointerleave="(e: PointerEvent) => e.pointerType !== 'touch' && emit('hover-leave')"
+    @pointerenter="(e: PointerEvent) => interactive && e.pointerType !== 'touch' && emit('hover-enter')"
+    @pointerleave="(e: PointerEvent) => interactive && e.pointerType !== 'touch' && emit('hover-leave')"
     @click.stop="interactive && emit('select')"
   >
     <svg
       viewBox="0 0 20.786667 15.096"
       xmlns="http://www.w3.org/2000/svg"
       class="tent-svg"
-      role="button"
+      :role="interactive ? 'button' : undefined"
       :aria-label="props.label"
-      tabindex="0"
+      :tabindex="interactive ? 0 : undefined"
       @keydown.enter="interactive && emit('select')"
       @keydown.space.prevent="interactive && emit('select')"
     >
@@ -93,7 +93,7 @@ const fontSize = computed(() => {
   cursor: pointer;
 }
 
-.tent-wrapper::after {
+.tent-wrapper.is-clickable::after {
   content: '';
   position: absolute;
   inset: -6px;
@@ -115,13 +115,13 @@ const fontSize = computed(() => {
   transition: fill 0.2s ease, stroke 0.2s ease, stroke-width 0.2s ease;
 }
 
-.tent-wrapper:hover .tent-svg,
+.tent-wrapper.is-clickable:hover .tent-svg,
 .tent-wrapper.is-active .tent-svg {
   transform: scale(1.18);
   filter: drop-shadow(0 2px 5px rgba(47, 91, 52, 0.35));
 }
 
-.tent-wrapper:hover .tent-rect,
+.tent-wrapper.is-clickable:hover .tent-rect,
 .tent-wrapper.is-active .tent-rect {
   fill: #e8f5e9;
   stroke: var(--olive, #2f5b34);
