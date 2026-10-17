@@ -25,7 +25,10 @@ const buildingConfigs: Record<'no3' | 'no6' | 'no7' | 'no8' | 'scc', {
     name: '3号館',
     subName: 'Building No.3',
     description: '1階には休憩・飲食スペースを設けているほか、GREEN×EXPOと連携した特別出店もお楽しみいただけます。',
-    floors: [{ floor: '2F', floorLabel: '2階 教室フロア', floorNum: 2 }],
+    floors: [
+      { floor: '1F', floorLabel: '1階 模擬店フロア', floorNum: 1 },
+      { floor: '2F', floorLabel: '2階 教室フロア', floorNum: 2 },
+    ],
   },
   no6: {
     name: '6号館',

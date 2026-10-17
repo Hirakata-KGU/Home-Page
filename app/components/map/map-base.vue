@@ -115,6 +115,7 @@
       <g id="g394" inkscape:label="上部孤島">
         <title id="title395">上部孤島</title>
         <rect class="cls-19" x="303.76001" y="7.8899999" width="11.38" height="19.23" id="rect32" style="fill: #8c8786" />
+        <polygon class="cls-19" points="286.1,21.36 286.1,11.68 288.72,11.68 288.72,6.71 296.04,6.71 296.04,21.36 " id="polygon32" style="fill: #8c8786" />
         <polygon class="cls-19" points="263.13,4.63 280.47,3.23 280.83,6.91 279.65,7.05 280.32,12.87 263.8,14.55 " id="polygon33" style="fill: #8c8786" />
         <rect class="cls-19" x="134.06633" y="161.67911" width="23.469999" height="11.38" transform="rotate(-33.24)" id="rect33" inkscape:label="栽培実習室" style="fill: #8c8786">
           <title id="title394">栽培実習室</title>
