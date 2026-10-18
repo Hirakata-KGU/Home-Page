@@ -16,27 +16,27 @@ useSeoMeta({
 // 2025年度 学園祭の写真データ
 const memories2025 = [
   {
-    src: '/images/2025/gate.jpg',
+    src: '/images/2025/gate.webp',
     alt: '2025年度 入場ゲート・装飾',
   },
   {
-    src: '/images/2025/okugai-stage.jpg',
+    src: '/images/2025/okugai-stage.webp',
     alt: '2025年度 野外ステージ',
   },
   {
-    src: '/images/2025/LINE_ALBUM_2025 広報部門_260914_202.jpg',
+    src: '/images/2025/LINE_ALBUM_2025 広報部門_260914_202.webp',
     alt: '2025年度 キャンパス風景',
   },
   {
-    src: '/images/2025/LINE_ALBUM_2026.6.23_260914_10.jpg',
+    src: '/images/2025/LINE_ALBUM_2026.6.23_260914_10.webp',
     alt: '2025年度 ステージパフォーマンス',
   },
   {
-    src: '/images/2025/S__41058357_0.jpg',
+    src: '/images/2025/S__41058357_0.webp',
     alt: '2025年度 企画・模擬店',
   },
   {
-    src: '/images/2025/Gemini_Generated_Image_pxxa5fpxxa5fpxxa.jpg',
+    src: '/images/2025/Gemini_Generated_Image_pxxa5fpxxa5fpxxa.webp',
     alt: '2025年度 夕景・ライトアップ',
   },
 ];
@@ -113,7 +113,7 @@ const memories2025 = [
           <div class="greeting-author">
             <div class="greeting-photo-wrapper">
               <NuxtImg
-                src="/images/about/S__80912469.jpg"
+                src="/images/about/S__80912469.webp"
                 alt="第77回 平潟祭 実行委員長"
                 width="1144"
                 height="1430"

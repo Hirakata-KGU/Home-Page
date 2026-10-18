@@ -1,85 +1,84 @@
-export interface GalleryItem {
+export interface ModalImageItem {
   src: string;
+  title?: string;
   alt?: string;
-  caption?: string;
-  width?: number;
-  height?: number;
 }
 
 export const useImageModal = () => {
-  const openGallery = async (items: GalleryItem[], index = 0) => {
-    if (typeof window === 'undefined' || !items.length) return;
+  const isOpen = useState<boolean>('custom_modal_is_open', () => false);
+  const currentImage = useState<ModalImageItem | null>('custom_modal_current_image', () => null);
+  const galleryItems = useState<ModalImageItem[]>('custom_modal_gallery_items', () => []);
+  const currentIndex = useState<number>('custom_modal_current_index', () => 0);
 
-    // PhotoSwipe を動的インポート（クライアントサイドでのみ安全に実行）
-    const PhotoSwipe = (await import('photoswipe')).default;
+  // ダイアログを閉じる（ユーザー操作で閉じた場合は積んだ履歴を1つ戻す）
+  const closeImage = (fromHistory = false) => {
+    if (!isOpen.value) return;
+    isOpen.value = false;
+    currentImage.value = null;
 
-    // 各画像の天然解像度を取得して PhotoSwipe のデータソースを作成
-    const dataSource = await Promise.all(
-      items.map(async (item) => {
-        if (item.width && item.height) {
-          return {
-            src: item.src,
-            width: item.width,
-            height: item.height,
-            alt: item.alt || '',
-          };
-        }
-
-        return new Promise<{ src: string; width: number; height: number; alt: string }>((resolve) => {
-          const img = new Image();
-          img.src = item.src;
-          if (img.complete && img.naturalWidth) {
-            resolve({
-              src: item.src,
-              width: img.naturalWidth,
-              height: img.naturalHeight,
-              alt: item.alt || '',
-            });
-          } else {
-            img.onload = () => {
-              resolve({
-                src: item.src,
-                width: img.naturalWidth || window.innerWidth,
-                height: img.naturalHeight || window.innerHeight,
-                alt: item.alt || '',
-              });
-            };
-            img.onerror = () => {
-              resolve({
-                src: item.src,
-                width: window.innerWidth,
-                height: window.innerHeight,
-                alt: item.alt || '',
-              });
-            };
-          }
-        });
-      })
-    );
-
-    const pswp = new PhotoSwipe({
-      dataSource,
-      index,
-      showHideAnimationType: 'fade',
-      bgOpacity: 0.88,
-      wheelToZoom: true,
-      arrowKeys: items.length > 1,
-      closeTitle: '閉じる',
-      zoomTitle: '拡大 / 縮小',
-      arrowPrevTitle: '前の画像',
-      arrowNextTitle: '次の画像',
-    });
-
-    pswp.init();
+    if (!fromHistory && typeof window !== 'undefined' && window.history.state?.imageModal) {
+      window.history.back();
+    }
   };
 
-  const openImage = (url: string, alt = '', caption = '') => {
+  // 単体画像を開く
+  const openImage = (url: string, title = '') => {
     if (!url) return;
-    openGallery([{ src: url, alt, caption }], 0);
+    const item: ModalImageItem = { src: url, title };
+    galleryItems.value = [item];
+    currentIndex.value = 0;
+    currentImage.value = item;
+    isOpen.value = true;
+
+    // ブラウザの戻る操作でダイアログだけを閉じるための履歴を追加
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ imageModal: true }, '');
+    }
+  };
+
+  // 複数画像ギャラリーを開く
+  const openGallery = (
+    items: { src: string; alt?: string; title?: string }[],
+    startIndex = 0
+  ) => {
+    if (!items || !items.length) return;
+    const formatted = items.map((it) => ({
+      src: it.src,
+      title: it.title || it.alt || '',
+    }));
+    galleryItems.value = formatted;
+    currentIndex.value = startIndex;
+    currentImage.value = formatted[startIndex] || formatted[0];
+    isOpen.value = true;
+
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ imageModal: true }, '');
+    }
+  };
+
+  const nextImage = () => {
+    if (currentIndex.value < galleryItems.value.length - 1) {
+      currentIndex.value++;
+      currentImage.value = galleryItems.value[currentIndex.value];
+    }
+  };
+
+  const prevImage = () => {
+    if (currentIndex.value > 0) {
+      currentIndex.value--;
+      currentImage.value = galleryItems.value[currentIndex.value];
+    }
   };
 
   return {
+    isOpen,
+    currentImage,
+    galleryItems,
+    currentIndex,
     openImage,
     openGallery,
+    closeImage,
+    nextImage,
+    prevImage,
   };
 };

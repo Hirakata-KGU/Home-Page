@@ -6,6 +6,7 @@
       <slot />
     </main>
     <LayoutTheFooter />
+    <UiImageModal />
   </div>
 </template>
 

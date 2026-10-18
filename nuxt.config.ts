@@ -108,7 +108,6 @@ export default defineNuxtConfig({
   },
 
   css: [
-    'photoswipe/style.css',
     'swiper/css',
     'swiper/css/effect-fade',
     'swiper/css/navigation',
