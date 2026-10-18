@@ -83,9 +83,9 @@ useSeoMeta({
             role="button"
             tabindex="0"
             title="クリックして元データを拡大表示"
-            @click="event && event.imageUrl && openImage(event.imageUrl, event.title, event.organizer)"
-            @keydown.enter.prevent="event && event.imageUrl && openImage(event.imageUrl, event.title, event.organizer)"
-            @keydown.space.prevent="event && event.imageUrl && openImage(event.imageUrl, event.title, event.organizer)"
+            @click="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.organizer})`)"
+            @keydown.enter.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.organizer})`)"
+            @keydown.space.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.organizer})`)"
           >
             <NuxtImg
               :src="event.imageUrl"
