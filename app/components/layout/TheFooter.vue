@@ -40,11 +40,11 @@ const footerSections = [
 
 <template>
   <footer class="w-full relative overflow-hidden mt-0 p-0 leading-none">
-    <svg width="1248" height="106" viewBox="0 0 1248 106" fill="#1B3A24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full -mb-[2px] transform relative z-10]">
+    <svg width="1248" height="106" viewBox="0 0 1248 106" fill="#1B3A24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full -mb-[2px] transform relative z-10">
     <path d="M0 106L29.64 90.9879C59.41 77.2453 118.69 49.2212 178.1 30.8978C237.51 12.5743 296.79 3.41257 356.2 1.25687C415.61 -0.898831 438.83 -0.394002 498.5 3.64794C558.04 7.68988 653.9 22.6283 713.44 34.7541C773.11 46.8799 832.39 59.9998 891.8 70.5088C951.21 80.7484 1010.49 80.7484 1069.9 74.5508C1129.31 68.0837 1188.59 55.6883 1218.36 49.2212L1248 43.0236V106H1218.36C1188.59 106 1129.31 106 1069.9 106C1010.49 106 951.21 106 891.8 106C832.39 106 773.11 106 713.44 106C653.9 106 594.1 106 534.56 106C474.89 106 415.61 106 356.2 106C296.79 106 237.51 106 178.1 106C118.69 106 59.41 106 29.64 106H0Z"/>
     </svg>
 
-    <div class="flex flex-col justify-center items-center px-2 pt-1 pb-10 w-full bg-sprout-dark relative z-9">
+    <div class="flex flex-col justify-center items-center px-2 pt-1 pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] w-full bg-sprout-dark relative z-[9]">
       <div class="flex flex-col items-center gap-8 w-full max-w-(--max-width)">
         <!-- Navigation Columns -->
         <div class="flex flex-col items-center lg:flex-row justify-between w-full gap-8">
