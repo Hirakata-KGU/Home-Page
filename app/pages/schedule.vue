@@ -604,25 +604,29 @@ useEventListener('click', closeActiveSlot);
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-/* ホバーまたはアクティブ時の展開：
-   min-height に普段の高さが指定されているため、
-   height: fit-content にすると：
-   - 長時間アイテム（よさこい等）: 中身が小さくても min-height が効いて元の高さをキープ
-   - 短時間アイテム（パイプオルガン等）: 中身に合わせて自然に縦展開
-*/
-.program-block:hover,
+/* アクティブ時（タップ固定時）の展開 */
 .program-block.is-active {
   z-index: 50 !important;
   height: auto !important;
   overflow: visible !important;
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-}
-
-.program-block.is-active {
   outline: 2px solid var(--olive);
   outline-offset: 1px;
 }
+
+/* マウスホバー対応端末のみ :hover を有効化（iOS Safari の Synthetic Hover によるタップ消費バグを防止） */
+@media (hover: hover) {
+  .program-block:hover {
+    z-index: 50 !important;
+    height: auto !important;
+    overflow: visible !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+}
+
+
 
 /* URL指定で強調されたカードのアニメーション */
 .program-block.is-highlighted {
@@ -757,14 +761,24 @@ useEventListener('click', closeActiveSlot);
               margin-top 0.25s ease;
 }
 
-/* ホバーまたはアクティブ時に滑らかにアニメーション出現 */
-.program-block:hover .block-action-row,
+/* アクティブ時（タップ固定時）にアクションボタンを出現 */
 .program-block.is-active .block-action-row {
   max-height: 48px;
   opacity: 1;
   transform: translateY(0);
   margin-top: 6px;
   pointer-events: auto;
+}
+
+/* マウスホバー端末のみ hover で出現 */
+@media (hover: hover) {
+  .program-block:hover .block-action-row {
+    max-height: 48px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 6px;
+    pointer-events: auto;
+  }
 }
 
 .block-detail-btn {
