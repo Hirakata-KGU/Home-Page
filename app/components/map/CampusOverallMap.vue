@@ -491,6 +491,7 @@ onMounted(() => {
   display: inline-block;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   color: #1e3d26;
   font-size: 17px;
   font-weight: 800;
