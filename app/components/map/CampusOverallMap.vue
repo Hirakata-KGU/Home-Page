@@ -162,8 +162,7 @@ onMounted(() => {
 
 <template>
   <div class="overall-map-container">
-    <!-- PC・スマホ共通：カード固定表示中にどこをタップ/クリックしても解除できる透明バックドロップ -->
-    <!-- ※テント(z-995)の手前ではなく背面に敷くため、Teleportせずmapコンテナ直下に配置（テントはタップ可能、建物はタップ不可） -->
+    <!-- 1. 全画面透明幕B：地図の外側の余白やヘッダーをタップした時に閉じる (z-990) -->
     <div
       v-if="activeTent && isPinned"
       class="fixed inset-0 z-[990]"
@@ -171,30 +170,7 @@ onMounted(() => {
       @click="closeTent"
     />
 
-    <!-- スマホ用フローティングカード（WebKitのスクロールコンテナ内fixedバグを回避するためbody直下にTeleport） -->
-    <ClientOnly>
-      <Teleport to="body">
-        <Transition name="fade-scale-mobile">
-          <div
-            v-if="activeTent && activeTentEvents.length > 0"
-            class="mobile-tent-card-fixed sm:hidden"
-            @click.stop
-          >
-            <div class="popover-cards-wrap">
-              <div
-                v-for="ev in activeTentEvents"
-                :key="ev.id"
-                class="popover-card-item"
-              >
-                <EventCard :event="ev" />
-              </div>
-            </div>
-          </div>
-        </Transition>
-      </Teleport>
-    </ClientOnly>
-
-    <!-- 地図の外枠フレーム（画面幅ぴったり、外枠からはみ出る部分はoverflow: hiddenで完全非描画） -->
+    <!-- 2. 地図の外枠フレーム（幕Bより手前に配置 z-995） -->
     <div class="map-outer-frame">
       <!-- 内部スクロールコンテナ（中身の地図を小さくせず、指で左右スクロール可能） -->
       <div ref="scrollContainerRef" class="map-scroll-viewport">
@@ -296,7 +272,15 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- 3. 模擬店テントオーバーレイレイヤー -->
+            <!-- ② 地図内透明幕A：建物(z-10)の手前、テント(z-30)の奥に敷く (z-20) -->
+            <div
+              v-if="activeTent && isPinned"
+              class="map-inner-backdrop"
+              aria-hidden="true"
+              @click="closeTent"
+            />
+
+            <!-- 3. 模擬店テントオーバーレイレイヤー (z-30: 幕Aの手前なのでタップ可能！) -->
             <div class="map-tents-layer">
               <div
                 v-for="t in tentList"
@@ -349,6 +333,25 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <!-- ④ スマホ用フローティングカード（地図フレームの外なのでスクロール影響ゼロ、最前面 z-1000） -->
+    <Transition name="fade-scale">
+      <div
+        v-if="activeTent && activeTentEvents.length > 0"
+        class="mobile-tent-card-fixed sm:hidden"
+        @click.stop
+      >
+        <div class="popover-cards-wrap">
+          <div
+            v-for="ev in activeTentEvents"
+            :key="ev.id"
+            class="popover-card-item"
+          >
+            <EventCard :event="ev" />
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -366,6 +369,7 @@ onMounted(() => {
 */
 .map-outer-frame {
   position: relative;
+  z-index: 995; /* 全画面透明幕B (z-990) より手前に配置 */
   width: 100%;
   border-radius: 16px;
   background: #fdfbf7;
@@ -434,6 +438,18 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   pointer-events: auto;
+  z-index: 10; /* レイヤー①: 建物・背景 */
+}
+
+/* 地図内透明幕A: 建物(z-10)の手前、テント(z-30)の奥に敷く (レイヤー②) */
+.map-inner-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  cursor: pointer;
+  background: transparent;
 }
 
 .interactive-building {
@@ -548,7 +564,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 995;
+  z-index: 30; /* レイヤー③: テント（幕Aの手前なのでタップ可能！） */
 }
 
 .tent-pos-wrapper {
@@ -559,7 +575,7 @@ onMounted(() => {
 .tent-popover-wrapper {
   position: absolute;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 40; /* PC用ポップオーバー */
 }
 
 /* アヒル（遊び心要素） */
@@ -885,15 +901,9 @@ onMounted(() => {
   transform: translateY(-50%) scale(0.94);
 }
 
-/* スマホ用トランジション */
-.fade-scale-mobile-enter-active,
-.fade-scale-mobile-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.fade-scale-mobile-enter-from,
-.fade-scale-mobile-leave-to {
-  opacity: 0;
+/* スマホ配置時のアニメーション方向（下からふわっと浮き上がる） */
+.mobile-tent-card-fixed.fade-scale-enter-from,
+.mobile-tent-card-fixed.fade-scale-leave-to {
   transform: translate(-50%, 12px) scale(0.96);
 }
 </style>
