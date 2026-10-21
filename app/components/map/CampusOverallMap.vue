@@ -163,12 +163,36 @@ onMounted(() => {
 <template>
   <div class="overall-map-container">
     <!-- PC・スマホ共通：カード固定表示中にどこをタップ/クリックしても解除できる透明バックドロップ -->
+    <!-- ※テント(z-995)の手前ではなく背面に敷くため、Teleportせずmapコンテナ直下に配置（テントはタップ可能、建物はタップ不可） -->
     <div
       v-if="activeTent && isPinned"
       class="fixed inset-0 z-[990]"
       aria-hidden="true"
       @click="closeTent"
     />
+
+    <!-- スマホ用フローティングカード（WebKitのスクロールコンテナ内fixedバグを回避するためbody直下にTeleport） -->
+    <ClientOnly>
+      <Teleport to="body">
+        <Transition name="fade-scale-mobile">
+          <div
+            v-if="activeTent && activeTentEvents.length > 0"
+            class="mobile-tent-card-fixed sm:hidden"
+            @click.stop
+          >
+            <div class="popover-cards-wrap">
+              <div
+                v-for="ev in activeTentEvents"
+                :key="ev.id"
+                class="popover-card-item"
+              >
+                <EventCard :event="ev" />
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </Teleport>
+    </ClientOnly>
 
     <!-- 地図の外枠フレーム（画面幅ぴったり、外枠からはみ出る部分はoverflow: hiddenで完全非描画） -->
     <div class="map-outer-frame">
@@ -294,10 +318,10 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- 単一のポップオーバーレイヤー（デザイン・位置・アニメーションは完全同一） -->
+            <!-- PC用ポップオーバーレイヤー（テント横に追従表示、PC画面幅でのみ描画） -->
             <div
               v-if="activeTent && activeTentEvents.length > 0"
-              class="tent-popover-wrapper"
+              class="tent-popover-wrapper hidden sm:block"
               :style="getTentPosStyle(activeTent)"
             >
               <Transition name="fade-scale" appear>
@@ -767,78 +791,76 @@ onMounted(() => {
   }
 }
 
-/* スマホ閲覧時: 画面高さ(dvh)を基準にclampでカードサイズを調整 */
-@media (max-width: 640px) {
-  .tent-card-popover {
-    position: fixed;
-    bottom: max(16px, env(safe-area-inset-bottom, 16px));
-    left: 50%;
-    transform: translateX(-50%);
-    top: auto;
-    width: min(94dvw, clamp(210px, 36dvh, 310px));
-    margin: 0;
-    z-index: 1000;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.22));
-  }
-
-  /* 2枚ある場合（9番テント等）は横並びにするため幅を広げる */
-  .tent-card-popover:has(.popover-cards-wrap > :nth-child(2)) {
-    width: min(96dvw, clamp(320px, 68dvh, 560px));
-  }
-
-  .popover-cards-wrap {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    align-items: stretch;
-    width: 100%;
-  }
-
-  .popover-card-item {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-  }
-
-  .popover-card-item :deep(.event-card) {
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-  }
-
-  /* 画面高さが低い場合でも収まるよう、各要素をdvhベースのclampでコンパクト化 */
-  .popover-card-item :deep(.event-content) {
-    padding: clamp(8px, 1.6dvh, 14px) clamp(10px, 2.2dvh, 16px);
-  }
-
-  .popover-card-item :deep(.event-title) {
-    font-size: clamp(12px, 1.9dvh, 15px);
-    margin-bottom: clamp(4px, 1dvh, 8px);
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .popover-card-item :deep(.organizer-badge) {
-    font-size: clamp(10px, 1.4dvh, 11px);
-    padding: 2px 6px;
-  }
-
-  .popover-card-item :deep(.category-chip),
-  .popover-card-item :deep(.day-chip) {
-    font-size: clamp(9px, 1.3dvh, 10px);
-    padding: 2px 6px;
-  }
-
-  .popover-card-item :deep(.event-footer) {
-    padding-top: clamp(6px, 1.2dvh, 10px);
-    font-size: clamp(10px, 1.4dvh, 11px);
-  }
+/* スマホ閲覧時: 画面高さ(dvh)を基準にclampでカードサイズを調整（Teleportでbody直下にマウントし確実に最前面化） */
+.mobile-tent-card-fixed {
+  position: fixed;
+  bottom: max(16px, env(safe-area-inset-bottom, 16px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(94dvw, clamp(210px, 36dvh, 310px));
+  margin: 0;
+  z-index: 1000;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.22));
+  pointer-events: auto;
 }
 
-/* トランジション */
+/* 2枚ある場合（9番テント等）は横並びにするため幅を広げる */
+.mobile-tent-card-fixed:has(.popover-cards-wrap > :nth-child(2)) {
+  width: min(96dvw, clamp(320px, 68dvh, 560px));
+}
+
+.mobile-tent-card-fixed .popover-cards-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.mobile-tent-card-fixed .popover-card-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
+.mobile-tent-card-fixed .popover-card-item :deep(.event-card) {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+/* 画面高さが低い場合でも収まるよう、各要素をdvhベースのclampでコンパクト化 */
+.mobile-tent-card-fixed .popover-card-item :deep(.event-content) {
+  padding: clamp(8px, 1.6dvh, 14px) clamp(10px, 2.2dvh, 16px);
+}
+
+.mobile-tent-card-fixed .popover-card-item :deep(.event-title) {
+  font-size: clamp(12px, 1.9dvh, 15px);
+  margin-bottom: clamp(4px, 1dvh, 8px);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mobile-tent-card-fixed .popover-card-item :deep(.organizer-badge) {
+  font-size: clamp(10px, 1.4dvh, 11px);
+  padding: 2px 6px;
+}
+
+.mobile-tent-card-fixed .popover-card-item :deep(.category-chip),
+.mobile-tent-card-fixed .popover-card-item :deep(.day-chip) {
+  font-size: clamp(9px, 1.3dvh, 10px);
+  padding: 2px 6px;
+}
+
+.mobile-tent-card-fixed .popover-card-item :deep(.event-footer) {
+  padding-top: clamp(6px, 1.2dvh, 10px);
+  font-size: clamp(10px, 1.4dvh, 11px);
+}
+
+/* PC用トランジション */
 .fade-scale-enter-active,
 .fade-scale-leave-active {
   transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -849,26 +871,29 @@ onMounted(() => {
   opacity: 0;
 }
 
-@media (min-width: 641px) {
-  .placement-bottom.fade-scale-enter-from,
-  .placement-bottom.fade-scale-leave-to ,
-  .placement-top.fade-scale-enter-from,
-  .placement-top.fade-scale-leave-to {
-    transform: translateX(-50%) scale(0.94);
-  }
-
-  .placement-left.fade-scale-enter-from,
-  .placement-left.fade-scale-leave-to,
-  .placement-right.fade-scale-enter-from,
-  .placement-right.fade-scale-leave-to {
-    transform: translateY(-50%) scale(0.94);
-  }
+.placement-bottom.fade-scale-enter-from,
+.placement-bottom.fade-scale-leave-to,
+.placement-top.fade-scale-enter-from,
+.placement-top.fade-scale-leave-to {
+  transform: translateX(-50%) scale(0.94);
 }
 
-@media (max-width: 640px) {
-  .fade-scale-enter-from,
-  .fade-scale-leave-to {
-    transform: translate(-50%, 12px) scale(0.96);
-  }
+.placement-left.fade-scale-enter-from,
+.placement-left.fade-scale-leave-to,
+.placement-right.fade-scale-enter-from,
+.placement-right.fade-scale-leave-to {
+  transform: translateY(-50%) scale(0.94);
+}
+
+/* スマホ用トランジション */
+.fade-scale-mobile-enter-active,
+.fade-scale-mobile-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-scale-mobile-enter-from,
+.fade-scale-mobile-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 12px) scale(0.96);
 }
 </style>
