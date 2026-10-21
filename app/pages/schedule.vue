@@ -340,7 +340,7 @@ useEventListener('click', closeActiveSlot);
 .page-container {
   max-width: var(--max-width);
   margin: -32px auto 80px;
-  padding: 0 24px;
+  padding: 0 clamp(14px, 3vw, 24px);
   position: relative;
   z-index: 10;
   display: grid;
@@ -351,7 +351,7 @@ useEventListener('click', closeActiveSlot);
 }
 
 .controls-section {
-  padding: 24px 28px;
+  padding: clamp(16px, 3.5vw, 24px) clamp(14px, 3.5vw, 28px);
   background: white;
   border-radius: 16px;
   border: 1px solid var(--border);
@@ -372,14 +372,18 @@ useEventListener('click', closeActiveSlot);
 }
 
 .tab-btn {
-  padding: 10px 24px;
+  padding: 10px clamp(16px, 5.0vw, 24px);
   border-radius: 50px;
   border: 2px solid var(--border);
   background: white;
   cursor: pointer;
   font-weight: 800;
   color: var(--muted);
-  font-size: 14px;
+  font-size: clamp(13px, 1.2vw, 14px);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.25s ease;
 }
 
