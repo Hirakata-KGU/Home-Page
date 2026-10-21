@@ -54,6 +54,8 @@ const contactSns = [
             :href="sns.url"
             v-for="sns in contactSns"
             :key="sns.name"
+            target="_blank"
+            rel="noopener noreferrer"
             class="contact-sns-card"
           >
             <div class="sns-header-area" :style="{ background: sns.gradient }">
