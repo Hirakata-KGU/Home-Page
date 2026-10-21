@@ -175,6 +175,16 @@ watch(
   }
 );
 
+// iOS WebKit / タッチ端末でカード外タップ時に確実に解除するためのハンドラー
+const handleGlobalPointerDown = (e: Event) => {
+  if (!activeSlotId.value) return;
+  const target = (e as MouseEvent | TouchEvent).target as HTMLElement | null;
+  if (!target?.closest('.program-block')) {
+    closeActiveSlot();
+  }
+};
+
+useEventListener('pointerdown', handleGlobalPointerDown);
 useEventListener('click', closeActiveSlot);
 </script>
 
