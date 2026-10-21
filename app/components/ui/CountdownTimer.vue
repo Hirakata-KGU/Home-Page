@@ -6,7 +6,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  targetDate: '2026-10-31T10:00:00',
+  targetDate: '2026-10-31T10:00:00+09:00',
 });
 
 const { days, hours, minutes, isFinished } = useCountdown(props.targetDate);

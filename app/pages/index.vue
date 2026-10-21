@@ -301,7 +301,7 @@ const visitorGuidelines = [
 
           <!-- Tagline & Quick CTA -->
           <div class="mt-6">
-            <UiCountdownTimer target-date="2026-10-31T10:00:00" class="mb-5 w-full" />
+            <UiCountdownTimer target-date="2026-10-31T10:00:00+09:00" class="mb-5 w-full" />
           </div>
         </div>
 
