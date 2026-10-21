@@ -33,6 +33,9 @@
 
 /* ---------- Base ---------- */
 @layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
   html {
     scroll-behavior: smooth;
     scroll-padding-top: calc(80px + env(safe-area-inset-top, 0px));
