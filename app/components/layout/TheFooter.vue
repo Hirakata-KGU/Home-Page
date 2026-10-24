@@ -29,6 +29,7 @@ const footerSections = [
       [
         { label: '電子パンフレット', to: '/info/pamphlet' },
         { label: '平潟祭について', to: '/info/about' },
+        { label: 'ご協賛一覧', to: '/info/sponsors' },
         { label: 'よくある質問', to: '/info/faq' },
         { label: 'アクセス', to: '/#access' },
         { label: 'お問い合わせ', to: '/info/contact' },

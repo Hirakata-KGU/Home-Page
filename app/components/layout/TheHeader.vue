@@ -42,6 +42,7 @@ const mainNavItems = [
 const guideSubItems = [
   { name: '電子パンフレット', to: '/info/pamphlet'},
   { name: '平潟祭について', to: '/info/about'},
+  { name: 'ご協賛一覧', to: '/info/sponsors'},
   { name: 'よくある質問', to: '/info/faq'},
   { name: 'アクセス', to: '/#access'},
 ];
@@ -98,7 +99,7 @@ const guideSubItems = [
           <button
             type="button"
             class="flex items-center gap-1.5 bg-transparent border-none p-0 cursor-pointer text-sprout-forest transition-colors font-sans text-[15px] leading-[22px]"
-            :class="['/info/about', '/info/pamphlet', '/info/faq'].includes($route.path) ? 'font-bold text-sprout-border' : 'font-medium group-hover:text-sprout-border'"
+            :class="['/info/about', '/info/pamphlet', '/info/sponsors', '/info/faq'].includes($route.path) ? 'font-bold text-sprout-border' : 'font-medium group-hover:text-sprout-border'"
           >
             <span>ご案内</span>
             <!-- CSS chevron arrow (絵文字不使用) -->
@@ -110,7 +111,7 @@ const guideSubItems = [
           <!-- 下線インジケータ（他アイテムと完全に同じ位置・gapで配置） -->
           <span
             class="w-[14px] h-[2.5px] bg-sprout-border rounded-[1px] transition-all duration-200"
-            :class="['/info/about', '/info/pamphlet', '/info/faq'].includes($route.path) ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0 group-hover:opacity-60 group-hover:scale-x-100'"
+            :class="['/info/about', '/info/pamphlet', '/info/sponsors', '/info/faq'].includes($route.path) ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0 group-hover:opacity-60 group-hover:scale-x-100'"
           ></span>
 
           <!-- ドロップダウンメニュー（絵文字不使用） -->
