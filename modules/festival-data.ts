@@ -8,6 +8,39 @@ export interface ModuleOptions {
   outputDir?: string;
 }
 
+const SHEETS = ['mogiten', 'culture', 'music', 'other', 'location', 'timetable'] as const;
+const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif']);
+
+type SheetRow = Record<string, unknown>;
+
+/** 時刻（"HH:mm" 文字列 または Excel 小数シリアル値）を分に変換 */
+const parseTimeToMinutes = (val: unknown): number => {
+  if (typeof val === 'number' && val >= 0 && val < 1) {
+    return Math.round(val * 24 * 60);
+  }
+  const match = String(val ?? '').trim().match(/^(\d{1,2}):(\d{2})/);
+  return match ? Number(match[1]) * 60 + Number(match[2]) : 0;
+};
+
+const formatMinutes = (minutes: number): string =>
+  `${Math.floor(minutes / 60)}:${String(minutes % 60).padStart(2, '0')}`;
+
+/** startTime / endTime から startMinutes, endMinutes, durationMinutes と表示用 time を補完 */
+const enrichTimetableRow = (row: SheetRow): SheetRow => {
+  const startMinutes = parseTimeToMinutes(row.startTime);
+  const endMinutes = parseTimeToMinutes(row.endTime);
+  const time = row.time
+    ? String(row.time).trim()
+    : `${formatMinutes(startMinutes)}～${formatMinutes(endMinutes)}`;
+  return {
+    ...row,
+    time,
+    startMinutes,
+    endMinutes,
+    durationMinutes: Math.max(0, endMinutes - startMinutes),
+  };
+};
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'festival-data-converter',
@@ -18,9 +51,13 @@ export default defineNuxtModule<ModuleOptions>({
     outputDir: 'app/data',
   },
   setup(options, nuxt) {
-    const excelFullPath = resolve(nuxt.options.rootDir, options.excelPath || 'app/data/hirakata_festival_data.xlsx');
-    const outputDirFullPath = resolve(nuxt.options.rootDir, options.outputDir || 'app/data');
+    const excelFullPath = resolve(nuxt.options.rootDir, options.excelPath!);
+    const outputDirFullPath = resolve(nuxt.options.rootDir, options.outputDir!);
     const imagesDirFullPath = resolve(nuxt.options.rootDir, 'public/images/events');
+
+    const writeJson = (name: string, data: unknown) => {
+      writeFileSync(resolve(outputDirFullPath, name), JSON.stringify(data, null, 2), 'utf-8');
+    };
 
     const convertExcelToDatabases = () => {
       if (!existsSync(excelFullPath)) {
@@ -28,94 +65,48 @@ export default defineNuxtModule<ModuleOptions>({
         return;
       }
 
-      console.log(`[festival-data] Converting sheets from ${excelFullPath} into separate JSON databases...`);
-      const fileBuffer = readFileSync(excelFullPath);
-      const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
+      const workbook = XLSX.read(readFileSync(excelFullPath), { type: 'buffer' });
 
-      // ヘルパー：シートの全レコードを配列で取得
-      const getSheetData = <T = any>(sheetName: string): T[] => {
+      for (const sheetName of SHEETS) {
         const sheet = workbook.Sheets[sheetName];
         if (!sheet) {
           console.warn(`[festival-data] Sheet not found: ${sheetName}`);
-          return [];
+          continue;
         }
-        return XLSX.utils.sheet_to_json<T>(sheet);
-      };
-
-      // 時刻（文字列 "HH:mm" または Excel 小数シリアル値）から分数を計算
-      const parseTimeToMinutes = (val: any): number => {
-        if (typeof val === 'number' && val >= 0 && val < 1) {
-          return Math.round(val * 24 * 60);
-        }
-        const match = String(val || '').trim().match(/^(\d{1,2}):(\d{2})/);
-        return match ? parseInt(match[1], 10) * 60 + parseInt(match[2], 10) : 0;
-      };
-
-
-      // 6つのシートをJSONとして出力
-      const sheets = ['mogiten', 'culture', 'music', 'other', 'location', 'timetable'];
-      for (const sheetName of sheets) {
-        let data = getSheetData(sheetName);
-        if (sheetName === 'timetable') {
-          // startTime と endTime から startMinutes, endMinutes, durationMinutes を自動算出
-          data = data.map((row: any) => {
-            const startMinutes = parseTimeToMinutes(row.startTime);
-            const endMinutes = parseTimeToMinutes(row.endTime);
-            const durationMinutes = Math.max(0, endMinutes - startMinutes);
-            const displayTime = row.time ? String(row.time).trim() : `${startTimeStr}～${endTimeStr}`;
-            return {
-              ...row,
-              time: displayTime,
-              startMinutes,
-              endMinutes,
-              durationMinutes,
-            };
-          });
-        }
-        const jsonPath = resolve(outputDirFullPath, `${sheetName}.json`);
-        writeFileSync(jsonPath, JSON.stringify(data, null, 2), 'utf-8');
-        console.log(`[festival-data] Saved ${jsonPath} (${data.length} items)`);
+        const rows = XLSX.utils.sheet_to_json<SheetRow>(sheet);
+        writeJson(`${sheetName}.json`, sheetName === 'timetable' ? rows.map(enrichTimetableRow) : rows);
       }
+      console.log('[festival-data] Converted Excel sheets to JSON');
     };
 
-    // public/images/events 内の写真を自動スキャンして event-images.json を生成
+    // public/images/events 内の写真を走査して event-images.json（id → 画像パス）を生成
     const scanEventImages = () => {
       if (!existsSync(imagesDirFullPath)) {
         console.warn(`[festival-data] Images directory not found: ${imagesDirFullPath}`);
         return;
       }
 
-      console.log(`[festival-data] Scanning event photos from ${imagesDirFullPath}...`);
-      const files = readdirSync(imagesDirFullPath);
       const imageMap: Record<string, string> = {};
-
-      for (const file of files) {
+      for (const file of readdirSync(imagesDirFullPath)) {
         const ext = extname(file);
-        const lowerExt = ext.toLowerCase();
-        if (['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif'].includes(lowerExt)) {
-          const baseName = basename(file, ext);
-          imageMap[baseName] = `/images/events/${file}`;
+        if (IMAGE_EXTENSIONS.has(ext.toLowerCase())) {
+          imageMap[basename(file, ext)] = `/images/events/${file}`;
         }
       }
-
-      const eventImagesPath = resolve(outputDirFullPath, 'event-images.json');
-      writeFileSync(eventImagesPath, JSON.stringify(imageMap, null, 2), 'utf-8');
-      console.log(`[festival-data] Saved ${eventImagesPath} (${Object.keys(imageMap).length} mapped images)`);
+      writeJson('event-images.json', imageMap);
+      console.log(`[festival-data] Mapped ${Object.keys(imageMap).length} event images`);
     };
 
-    // 初期起動時およびビルド準備時に変換を実行
     convertExcelToDatabases();
     scanEventImages();
 
-    // 開発サーバー動作時のファイル変更監視（watch）
-    nuxt.hook('builder:watch', async (event, path) => {
+    // 開発サーバー動作時のファイル変更監視
+    nuxt.hook('builder:watch', (_event, path) => {
       const normalizedPath = path.replace(/\\/g, '/');
       if (normalizedPath.includes('hirakata_festival_data.xlsx')) {
-        console.log(`[festival-data] Detected change in ${path}, re-generating databases...`);
         convertExcelToDatabases();
       }
-      if (normalizedPath.includes('images/events') || normalizedPath.includes('images/event')) {
-        console.log(`[festival-data] Detected event image changes in ${path}, re-scanning event images...`);
+      if (normalizedPath.includes('images/events')) {
         scanEventImages();
       }
     });
