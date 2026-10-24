@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref } from 'vue';
 import { allEvents } from '~/data/events';
 import { useImageModal } from '~/composables/useImageModal';
@@ -280,6 +280,10 @@ useSeoMeta({
 
 .cat-entertainment {
   background: #925400;
+}
+
+.cat-expo {
+  background: #0d7a57;
 }
 
 .cat-other {
