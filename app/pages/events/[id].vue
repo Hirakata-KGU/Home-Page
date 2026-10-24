@@ -132,8 +132,9 @@ useSeoMeta({
             <div class="info-item">
               <span class="info-label">開催場所</span>
               <NuxtLink
+                v-if="event.locationId !== 'loc-undecided'"
                 :to="mapUrl"
-                class="location-link group"
+                class="location-link is-clickable group"
                 title="場内マップで場所を確認"
               >
                 <div class="location-main">
@@ -150,6 +151,15 @@ useSeoMeta({
                   </svg>
                 </span>
               </NuxtLink>
+              <div v-else class="location-link">
+                <div class="location-main">
+                  <svg class="w-4 h-4 text-(--olive) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span class="location-name">{{ event.locationName }}</span>
+                </div>
+              </div>
             </div>
 
             <div class="info-item">
@@ -189,30 +199,44 @@ useSeoMeta({
             <div class="timetable-header-row">
               <h3 class="section-heading !mb-0 !border-b-0 !pb-0">ステージ出演スケジュール</h3>
             </div>
-            <p class="section-subtext">タップすると該当のタイムテーブルへジャンプします。</p>
+            <p
+              v-if="event.timetableSlots.some((s) => s.locationId !== 'loc-undecided')"
+              class="section-subtext"
+            >
+              タップすると該当のタイムテーブルへジャンプします。
+            </p>
             <div class="timetable-slot-list">
-              <NuxtLink
-                v-for="(slot, idx) in event.timetableSlots"
-                :key="idx"
-                :to="slot.slotId ? `/schedule?slot=${slot.slotId}` : `/schedule?event=${event.id}`"
-                class="timetable-slot-card is-clickable group"
-                title="タイムテーブルでこの枠を見る"
-              >
-                <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
-                <div class="slot-body">
-                  <div class="slot-time">{{ slot.time }}</div>
-                  <div class="slot-venue">会場: {{ slot.venue }}</div>
-                  <div class="slot-title">{{ slot.title }}</div>
+              <template v-for="(slot, idx) in event.timetableSlots" :key="idx">
+                <NuxtLink
+                  v-if="slot.locationId !== 'loc-undecided'"
+                  :to="slot.slotId ? `/schedule?slot=${slot.slotId}` : `/schedule?event=${event.id}`"
+                  class="timetable-slot-card is-clickable group"
+                  title="タイムテーブルでこの枠を見る"
+                >
+                  <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
+                  <div class="slot-body">
+                    <div class="slot-time">{{ slot.time }}</div>
+                    <div class="slot-venue">会場: {{ slot.venue }}</div>
+                    <div class="slot-title">{{ slot.title }}</div>
+                  </div>
+                  <div class="slot-action">
+                    <span class="slot-action-btn">
+                      <span>時間を見る</span>
+                      <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </span>
+                  </div>
+                </NuxtLink>
+                <div v-else class="timetable-slot-card">
+                  <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
+                  <div class="slot-body">
+                    <div class="slot-time">{{ slot.time }}</div>
+                    <div class="slot-venue">会場: {{ slot.venue }}</div>
+                    <div class="slot-title">{{ slot.title }}</div>
+                  </div>
                 </div>
-                <div class="slot-action">
-                  <span class="slot-action-btn">
-                    <span>時間を見る</span>
-                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                  </span>
-                </div>
-              </NuxtLink>
+              </template>
             </div>
           </div>
 
@@ -429,7 +453,11 @@ useSeoMeta({
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.location-link:hover {
+.location-link.is-clickable {
+  cursor: pointer;
+}
+
+.location-link.is-clickable:hover {
   border-color: var(--olive);
   background: #f4f8f5;
   box-shadow: 0 2px 8px rgba(47, 91, 52, 0.12);
@@ -463,7 +491,7 @@ useSeoMeta({
   transition: all 0.2s ease;
 }
 
-.location-link:hover .location-badge {
+.location-link.is-clickable:hover .location-badge {
   background: var(--olive);
   color: white;
 }
