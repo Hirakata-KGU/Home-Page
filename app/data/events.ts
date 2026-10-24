@@ -43,8 +43,6 @@ export interface EventItem extends Partial<Omit<LocationItem, 'name'>> {
   id: string;
   title: string;
   groupName?: string;
-  category: EventCategory;
-  categoryLabel: string;
   categories: EventCategory[];
   categoryLabels: string[];
   locationId: string;
@@ -91,8 +89,6 @@ export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
     resolved.push({ key: 'other', label: 'その他' });
   }
 
-  // EXPO部が含まれている場合は EXPO部を主カテゴリとし、それ以外は先頭
-  const primaryCat = resolved.find((c) => c.key === 'expo') || resolved[0];
   const categories = resolved.map((c) => c.key);
   const categoryLabels = resolved.map((c) => c.label);
 
@@ -105,8 +101,6 @@ export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
     id: raw.id,
     title: raw.title,
     groupName: raw.groupName,
-    category: primaryCat.key,
-    categoryLabel: primaryCat.label,
     categories,
     categoryLabels,
     locationId: raw.locationId,

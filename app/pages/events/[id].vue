@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { computed, ref } from 'vue';
 import { allEvents } from '~/data/events';
 import { useImageModal } from '~/composables/useImageModal';
@@ -45,7 +45,7 @@ useSeoMeta({
     <!-- ページヘッダー（絵文字不使用） -->
     <LayoutPageHeader
       :title="event ? event.title : '企画詳細'"
-      :sub-title="event ? event.categoryLabel : 'Event Details'"
+      :sub-title="event ? event.categoryLabels.join(' / ') : 'Event Details'"
       :breadcrumbs="[
         { name: '企画一覧', path: '/events' },
         { name: event ? event.title : '詳細' },
@@ -58,8 +58,13 @@ useSeoMeta({
         <article class="section detail-main-card">
           <!-- 上部バッジ群 -->
           <div class="meta-badges">
-            <span class="category-badge" :class="'cat-' + event.category">
-              {{ event.categoryLabel }}
+            <span
+              v-for="(catKey, idx) in event.categories"
+              :key="catKey"
+              class="category-badge"
+              :class="'cat-' + catKey"
+            >
+              {{ event.categoryLabels[idx] }}
             </span>
             <span class="day-badge">
               {{ event.dayLabel }}
@@ -105,9 +110,9 @@ useSeoMeta({
               loading="eager"
               fetchpriority="high"
               decoding="async"
-              :sizes="event.category === 'entertainment' ? '' : 'sm:100vw md:900px'"
+              :sizes="event.categories.includes('entertainment') ? '' : 'sm:100vw md:900px'"
               format="webp"
-              :quality="event.category === 'entertainment' ? '100' : '80'"
+              :quality="event.categories.includes('entertainment') ? '100' : '80'"
             />
 
             <!-- 拡大表示ガイドバッジ -->
@@ -159,7 +164,7 @@ useSeoMeta({
 
             <div class="info-item">
               <span class="info-label">カテゴリ区分</span>
-              <span class="info-value">{{ event.categoryLabel }}</span>
+              <span class="info-value">{{ event.categoryLabels.join('、') }}</span>
             </div>
           </div>
 

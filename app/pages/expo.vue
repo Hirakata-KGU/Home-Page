@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { computed } from 'vue';
 import { allEvents } from '~/data/events';
 
@@ -12,7 +12,7 @@ useSeoMeta({
 });
 
 const expoEvents = computed(() => {
-  return allEvents.filter((e) => e.category === 'expo');
+  return allEvents.filter((e) => e.categories.includes('expo'));
 });
 </script>
 

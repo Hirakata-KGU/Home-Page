@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
 
@@ -78,7 +78,7 @@ const categoryCounts = computed(() => {
   const counts: Record<string, number> = { all: allEvents.length };
   for (const cat of categoryList) {
     if (cat.key !== 'all') {
-      counts[cat.key] = allEvents.filter(e => e.categories ? e.categories.includes(cat.key) : e.category === cat.key).length;
+      counts[cat.key] = allEvents.filter((e) => e.categories.includes(cat.key)).length;
     }
   }
   return counts;
@@ -89,7 +89,7 @@ const filteredEvents = computed(() => {
   return allEvents.filter((event) => {
     // カテゴリフィルター
     if (selectedCategory.value !== 'all') {
-      const hasCat = event.categories ? event.categories.includes(selectedCategory.value) : event.category === selectedCategory.value;
+      const hasCat = event.categories.includes(selectedCategory.value);
       if (!hasCat) {
         return false;
       }
