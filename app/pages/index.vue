@@ -214,7 +214,7 @@ const guideItems: GuideCardItem[] = [
     id: 'pamphlet',
     title: '電子パンフレット',
     to: '/info/pamphlet',
-    image: '/images/pamphlet-cover.png',
+    image: '/images/top/pamphlet-cover.png',
   },
   {
     id: 'about',
