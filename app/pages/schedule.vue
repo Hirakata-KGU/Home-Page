@@ -175,16 +175,41 @@ watch(
   }
 );
 
-// iOS WebKit / タッチ端末でカード外タップ時に確実に解除するためのハンドラー
-const handleGlobalPointerDown = (e: Event) => {
+// iOS WebKit / タッチ端末でカード外タップ時に確実に解除するためのハンドラー（スクロール操作では解除しない）
+const pointerStartPos = ref<{ x: number; y: number } | null>(null);
+
+const handleGlobalPointerDown = (e: PointerEvent) => {
   if (!activeSlotId.value) return;
-  const target = (e as MouseEvent | TouchEvent).target as HTMLElement | null;
-  if (!target?.closest('.program-block')) {
-    closeActiveSlot();
+  const target = e.target as HTMLElement | null;
+  if (target?.closest('.program-block')) {
+    pointerStartPos.value = null;
+    return;
+  }
+  pointerStartPos.value = { x: e.clientX, y: e.clientY };
+};
+
+const handleGlobalPointerUp = (e: PointerEvent) => {
+  if (!activeSlotId.value || !pointerStartPos.value) return;
+  const dx = Math.abs(e.clientX - pointerStartPos.value.x);
+  const dy = Math.abs(e.clientY - pointerStartPos.value.y);
+  pointerStartPos.value = null;
+
+  // 指の移動量が少ない（タップと判定できる）場合のみ固定表示を解除
+  if (dx < 10 && dy < 10) {
+    const target = e.target as HTMLElement | null;
+    if (!target?.closest('.program-block')) {
+      closeActiveSlot();
+    }
   }
 };
 
+const handleGlobalPointerCancel = () => {
+  pointerStartPos.value = null;
+};
+
 useEventListener('pointerdown', handleGlobalPointerDown);
+useEventListener('pointerup', handleGlobalPointerUp);
+useEventListener('pointercancel', handleGlobalPointerCancel);
 useEventListener('click', closeActiveSlot);
 </script>
 
