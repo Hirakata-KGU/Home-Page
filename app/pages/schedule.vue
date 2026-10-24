@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import { daySchedules, timetable } from '~/data/timetable';
 import type { TimetableSlot } from '~/types/festival';
 
@@ -36,7 +36,7 @@ const isHoverDevice = useMediaQuery('(hover: hover) and (pointer: fine)');
 // タイムグリッドの基本設定（1時間ごと）
 const START_HOUR = 10; // 10:00
 const END_HOUR = 18;   // 18:00
-const HOURS = [10, 11, 12, 13, 14, 15, 16, 17, 18];
+const HOURS = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i);
 const HOUR_HEIGHT = 110; // 1時間あたりのピクセル高さ
 const MINUTE_HEIGHT = HOUR_HEIGHT / 60; // 1分あたりのピクセル高さ
 
@@ -45,21 +45,20 @@ const GRID_OFFSET_TOP = 40;
 const GRID_OFFSET_BOTTOM = 100;
 const TOTAL_HEIGHT = (END_HOUR - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP + GRID_OFFSET_BOTTOM; // 約936px
 
+// 時刻（時）からグリッド上の top(px) を求める
+const hourToTop = (hour: number): string => `${(hour - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP}px`;
+
 // スロットの位置計算（top）
-const getSlotTop = (slot: TimetableSlot): number => {
-  const baseMin = START_HOUR * 60; // 600
-  return (slot.startMinutes - baseMin) * MINUTE_HEIGHT + GRID_OFFSET_TOP;
-};
+const getSlotTop = (slot: TimetableSlot): number =>
+  (slot.startMinutes - START_HOUR * 60) * MINUTE_HEIGHT + GRID_OFFSET_TOP;
 
 // スロットの高さ計算（height）
-const getSlotHeight = (slot: TimetableSlot): number => {
-  return Math.max(34, slot.durationMinutes * MINUTE_HEIGHT - 6);
-};
+const getSlotHeight = (slot: TimetableSlot): number =>
+  Math.max(34, slot.durationMinutes * MINUTE_HEIGHT - 6);
 
 // 会場ごとのスロット分類（locationId で直接判定）
-const getSlotsForVenue = (slots: TimetableSlot[], locationId: string): TimetableSlot[] => {
-  return slots.filter((s) => s.locationId === locationId);
-};
+const getSlotsForVenue = (slots: TimetableSlot[], locationId: string): TimetableSlot[] =>
+  slots.filter((s) => s.locationId === locationId);
 
 // カードクリック時のハンドラー
 const handleSlotClick = (e: MouseEvent, slot: TimetableSlot) => {
@@ -104,7 +103,6 @@ const selectDay = (dayId: 'day1' | 'day2') => {
 
 // スロットへのスクロール実行
 const scrollToSlot = (slotId: string) => {
-  if (!import.meta.client) return;
   const el = document.getElementById(`slot-${slotId}`);
   if (!el) return;
 
@@ -126,8 +124,6 @@ const scrollToSlot = (slotId: string) => {
 
 // URLパラメータ（クエリやハッシュ）の解析と適用
 const applyRouteParams = async () => {
-  if (!import.meta.client) return;
-
   const dayParam = route.query.day as string | undefined;
   const eventParam =
     (route.query.event as string) ||
@@ -163,11 +159,7 @@ const applyRouteParams = async () => {
   }
 };
 
-onMounted(() => {
-  if (import.meta.client) {
-    applyRouteParams();
-  }
-});
+onMounted(applyRouteParams);
 
 watch(
   () => [route.query.day, route.query.event, route.query.slot, route.query.venue, route.hash],
@@ -289,7 +281,7 @@ useEventListener('click', closeActiveSlot);
                     v-for="hour in HOURS"
                     :key="hour"
                     class="hour-line-node"
-                    :style="{ top: ((hour - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP) + 'px' }"
+                    :style="{ top: hourToTop(hour) }"
                   >
                     <div class="hour-line"></div>
                     <!-- 30分の補助点線 -->
@@ -307,7 +299,7 @@ useEventListener('click', closeActiveSlot);
                     v-for="hour in HOURS"
                     :key="hour"
                     class="time-axis-node"
-                    :style="{ top: ((hour - START_HOUR) * HOUR_HEIGHT + GRID_OFFSET_TOP) + 'px' }"
+                    :style="{ top: hourToTop(hour) }"
                   >
                     <span class="time-label-pill">{{ hour }}:00</span>
                   </div>
@@ -455,7 +447,6 @@ useEventListener('click', closeActiveSlot);
    ==================================================== */
 .grid-view-wrapper {
   width: 100%;
-  max-width: 100%;
   min-width: 0;
 }
 
@@ -466,13 +457,11 @@ useEventListener('click', closeActiveSlot);
   border: 1px solid var(--border);
   overflow: hidden;
   width: 100%;
-  max-width: 100%;
   min-width: 0;
 }
 
 .timetable-scroll-container {
   width: 100%;
-  max-width: 100%;
   min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -623,6 +612,9 @@ useEventListener('click', closeActiveSlot);
   border-radius: 8px;
   padding: 6px 8px;
   color: inherit;
+  background: var(--lane-bg);
+  border: 1px solid var(--lane-border);
+  border-left: 3.5px solid var(--lane-accent);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -656,8 +648,6 @@ useEventListener('click', closeActiveSlot);
   }
 }
 
-
-
 /* URL指定で強調されたカードのアニメーション */
 .program-block.is-highlighted {
   animation: pulse-focus 2s infinite ease-in-out;
@@ -675,41 +665,47 @@ useEventListener('click', closeActiveSlot);
   }
 }
 
-/* 会場ごとのテーマカラー */
+/* 会場ごとのテーマカラー（背景 / 枠線 / 左アクセント / 時刻文字色） */
 .loc-outdoor-stage-block {
-  background: #f0f8f0;
-  border: 1px solid #b7deb8;
-  border-left: 3.5px solid #2f5b34;
+  --lane-bg: #f0f8f0;
+  --lane-border: #b7deb8;
+  --lane-accent: #2f5b34;
+  --lane-time: #204526;
 }
 
 .loc-scc-bennett-block {
-  background: #fdfbf3;
-  border: 1px solid #ebd9b0;
-  border-left: 3.5px solid #c9a85a;
+  --lane-bg: #fdfbf3;
+  --lane-border: #ebd9b0;
+  --lane-accent: #c9a85a;
+  --lane-time: #785a10;
 }
 
 .loc-chapel-block {
-  background: #f7f3fb;
-  border: 1px solid #dbcde8;
-  border-left: 3.5px solid #734b8c;
+  --lane-bg: #f7f3fb;
+  --lane-border: #dbcde8;
+  --lane-accent: #734b8c;
+  --lane-time: #552d6d;
 }
 
 .loc-gym-block {
-  background: #eef7f6;
-  border: 1px solid #b2dfdb;
-  border-left: 3.5px solid #00796b;
+  --lane-bg: #eef7f6;
+  --lane-border: #b2dfdb;
+  --lane-accent: #00796b;
+  --lane-time: #00594f;
 }
 
 .loc-bldg1-front-block {
-  background: #f5f6f8;
-  border: 1px solid #cfd8dc;
-  border-left: 3.5px solid #455a64;
+  --lane-bg: #f5f6f8;
+  --lane-border: #cfd8dc;
+  --lane-accent: #455a64;
+  --lane-time: #2c3e47;
 }
 
 .loc-ground-block {
-  background: #fdf8f4;
-  border: 1px solid #edd5c8;
-  border-left: 3.5px solid #c86d3b;
+  --lane-bg: #fdf8f4;
+  --lane-border: #edd5c8;
+  --lane-accent: #c86d3b;
+  --lane-time: #8c4318;
 }
 
 /* 注目企画（芸能ステージなど） */
@@ -736,29 +732,9 @@ useEventListener('click', closeActiveSlot);
 .block-time {
   font-size: 10px;
   font-weight: 800;
-  color: #204526;
+  color: var(--lane-time);
   margin-bottom: 1px;
   letter-spacing: 0.02em;
-}
-
-.loc-scc-bennett-block .block-time {
-  color: #785a10;
-}
-
-.loc-chapel-block .block-time {
-  color: #552d6d;
-}
-
-.loc-gym-block .block-time {
-  color: #00594f;
-}
-
-.loc-bldg1-front-block .block-time {
-  color: #2c3e47;
-}
-
-.loc-ground-block .block-time {
-  color: #8c4318;
 }
 
 .block-title {
@@ -818,8 +794,6 @@ useEventListener('click', closeActiveSlot);
   padding: 3px 8px;
   transition: all 0.2s ease;
 }
-
-
 
 @media (max-width: 768px) {
   .controls-header {
