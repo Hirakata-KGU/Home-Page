@@ -11,18 +11,8 @@ useSeoMeta({
   ogUrl: 'https://www.hirakatasai.net/expo',
 });
 
-// EXPO関連企画4件のID一覧（表示順）
-const expoEventIds = [
-  'expo-cafe',
-  'expo-walk-rally',
-  'expo-tekken',
-  'expo-photo-spot',
-];
-
 const expoEvents = computed(() => {
-  return expoEventIds
-    .map((id) => allEvents.find((e) => e.id === id))
-    .filter((e): e is NonNullable<typeof e> => Boolean(e));
+  return allEvents.filter((e) => e.category === 'expo');
 });
 </script>
 
@@ -72,20 +62,32 @@ const expoEvents = computed(() => {
             </p>
           </div>
 
-          <div class="mt-6 flex flex-wrap gap-4">
-            <a
-              href="https://next-gen.city.yokohama.lg.jp/expobu"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="external-link-btn group"
-            >
-              <span>EXPO部 WEBページ（横浜市）</span>
-              <svg class="w-4 h-4 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
+          <div class="flex gap-5">
+            <div class="mt-6 flex flex-wrap gap-4">
+              <a
+                href="/hirakatasai2026-pamphlet.pdf#page=8"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="external-link-btn"
+              >
+                <span>電子パンフレットで閲覧</span>
+              </a>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-4">
+              <a
+                href="https://next-gen.city.yokohama.lg.jp/expobu"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="external-link-btn"
+              >
+                <span>EXPO部 WEBページ（横浜市）</span>
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -263,7 +265,6 @@ const expoEvents = computed(() => {
   padding: 12px 24px;
   border-radius: 9999px;
   background: var(--sprout-moss);
-  color: white;
   font-weight: 800;
   font-size: 14px;
   text-decoration: none;
