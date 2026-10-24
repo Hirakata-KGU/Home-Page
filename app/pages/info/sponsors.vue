@@ -8,14 +8,14 @@ useSeoMeta({
   ogUrl: 'https://www.hirakatasai.net/info/sponsors',
 });
 
-export interface Sponsor {
+interface Sponsor {
   id: string;
   name: string;
   logo?: string;
   url?: string;
-}
+};
 
-export const sponsors: Sponsor[] = [
+const sponsors: Sponsor[] = [
   { id: 'docomo-cs', name: '株式会社ドコモCS' },
   { id: 'kg-church', name: '関東学院教会' },
   { id: 'aututu-myanmar', name: 'アウトゥトゥミャンマー支援' },
