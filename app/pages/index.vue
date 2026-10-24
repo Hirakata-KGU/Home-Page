@@ -669,6 +669,48 @@ const visitorGuidelines = [
               <p class="guide-card-desc">{{ guide.desc }}</p>
             </div>
           </div>
+
+          <!-- 人流計測カメラの調整実験実施について（実施計画書） -->
+          <div class="w-full max-w-[1121px] mt-6 bg-white rounded-2xl p-5 sm:p-7 border border-sprout-border/20 border-l-[5px] border-l-sprout-border shadow-sm">
+            <h3 class="text-base sm:text-lg font-extrabold text-sprout-title mb-4">
+              人流計測カメラの調整実験実施について
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- 実験の目的 -->
+              <div class="bg-sprout-bg/60 rounded-xl p-4 sm:p-5 border border-sprout-border/15 flex flex-col">
+                <h4 class="text-sm font-bold text-sprout-forest flex items-center gap-2 mb-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sprout-forest shrink-0"></span>
+                  <span>【実験の目的】</span>
+                </h4>
+                <p class="text-[13px] sm:text-sm text-text-main leading-relaxed m-0">
+                  人流計測への活用に向けて、来場者が通行する環境における、カメラの設定及び計測精度を確認する実験を行います。
+                </p>
+              </div>
+
+              <!-- 計測方法と映像の取扱いについて -->
+              <div class="bg-sprout-bg/60 rounded-xl p-4 sm:p-5 border border-sprout-border/15 flex flex-col justify-between">
+                <div>
+                  <h4 class="text-sm font-bold text-sprout-forest flex items-center gap-2 mb-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-sprout-forest shrink-0"></span>
+                    <span>【計測方法と映像の取扱いについて】</span>
+                  </h4>
+                  <p class="text-[13px] sm:text-sm text-text-main leading-relaxed m-0">
+                    固定カメラを使用し、ご来場者数の計測を行います。撮影された映像内の顔にはシステムによるぼかし処理を行い、原則として録画、保存はいたしません。
+                  </p>
+                  <p class="text-xs text-text-muted leading-relaxed mt-3 pt-2.5 border-t border-sprout-border/15">
+                    本実験は、ご来場者個人を特定することを目的とするものではなく、人流計測カメラの設定及び計測精度の確認を目的としています。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+              <p class="text-xs text-black font-medium m-0">
+                理工学部 情報ネット・メディアコース PBL（Project Based Learning）MOP班
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
