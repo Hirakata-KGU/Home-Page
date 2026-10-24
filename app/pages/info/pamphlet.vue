@@ -56,9 +56,6 @@ const pdfUrl = `${useRuntimeConfig().app.baseURL.replace(/\/$/, '')}/hirakatasai
                 <a :href="pdfUrl" download="hirakatasai2026-pamphlet.pdf" class="btn btn-secondary">
                   ダウンロード
                 </a>
-                <NuxtLink to="/events" class="btn btn-secondary">
-                  Web版 企画一覧を見る →
-                </NuxtLink>
               </div>
             </div>
           </div>
