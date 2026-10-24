@@ -9,11 +9,16 @@
   /* Theme Palette */
   --theme-title: #325632;
   --theme-border: #42845A;
+  --theme-sprout-light: #B9DD7B;
 
   /* Olive & Green backwards compatibility */
   --olive: var(--theme-title);
   --olive-light: var(--theme-border);
   --accent: #f9fbf8;
+
+  /* Sunlight & Growth Gold */
+  --sun-gold: #f59e0b;
+  --sun-gold-light: #fbbf55;
 
   /* Neutrals & Base */
   --text: #1a2e1c;
