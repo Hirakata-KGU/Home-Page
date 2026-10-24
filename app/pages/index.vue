@@ -131,7 +131,7 @@ const featuredEvents: FeaturedEventItem[] = [
     title: '関東学院大学 EXPO部',
     badge: '企画特集',
     image: '/images/kgu_expo_logo.png',
-    desc: '関東学院大学 EXPO部×平潟祭のコラボ企画！カフェやウォークラリーなど見どころをまとめて紹介。',
+    desc: '今年の平潟祭では、関東学院大学EXPO部による企画が盛り沢山！カフェやウォークラリーなど見どころをまとめて紹介。',
     to: '/expo',
   },
   {
