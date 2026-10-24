@@ -1,4 +1,4 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+﻿// https://nuxt.com/docs/api/configuration/nuxt-config
 import { process } from 'std-env'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     urls: [
       { loc: '/', priority: 1.0, changefreq: 'daily' },
       { loc: '/events', priority: 0.9, changefreq: 'daily' },
+      { loc: '/expo', priority: 0.9, changefreq: 'daily' },
       { loc: '/schedule', priority: 0.9, changefreq: 'daily' },
       { loc: '/map', priority: 0.9, changefreq: 'daily' },
       { loc: '/info/about', priority: 0.8, changefreq: 'weekly' },

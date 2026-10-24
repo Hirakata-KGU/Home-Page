@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay } from 'swiper/modules';
@@ -125,6 +125,14 @@ const featuredEvents: FeaturedEventItem[] = [
     image: '/images/events/celeb.webp',
     desc: '宮世琉弥トークショー（全席指定・有料チケット制）',
     to: '/events/celeb',
+  },
+  {
+    id: 'expo',
+    title: '関東学院大学 EXPO部',
+    badge: '企画特集',
+    image: '/images/kgu_expo_logo.png',
+    desc: '関東学院大学 EXPO部×平潟祭のコラボ企画！カフェやウォークラリーなど見どころをまとめて紹介。',
+    to: '/expo',
   },
   {
     id: 'stage',
@@ -429,7 +437,7 @@ const visitorGuidelines = [
                     height="40"
                     format="webp"
                     quality="10"
-                    class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none"
+                    class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-80 pointer-events-none select-none bg-white"
                   />
 
                   <!-- 前面写真（適正解像度とWebP圧縮で高速描画） -->
@@ -443,7 +451,7 @@ const visitorGuidelines = [
                       sizes="xs:260px sm:280px md:300px"
                       format="webp"
                       quality="80"
-                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none"
+                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none drop-shadow-[0_0_20px_#ffffff]"
                       :class="{ 'hover:scale-105': activeIndex === idx }"
                     />
                   </div>

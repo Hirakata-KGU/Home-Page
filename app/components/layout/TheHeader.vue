@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, watch, onUnmounted } from 'vue';
 
 const isMobileMenuOpen = ref(false);
@@ -33,6 +33,7 @@ const closeMobileMenu = () => {
 // ナビゲーション項目（企画関連はまとめずに個別に配置）
 const mainNavItems = [
   { name: 'TOP', to: '/' },
+  { name: 'KGU EXPO部', to: '/expo' },
   { name: '企画一覧', to: '/events' },
   { name: 'タイムテーブル', to: '/schedule' },
   { name: '場内マップ', to: '/map' },
