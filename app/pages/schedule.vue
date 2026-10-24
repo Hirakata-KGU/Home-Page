@@ -175,6 +175,41 @@ watch(
   }
 );
 
+// iOS WebKit / タッチ端末でカード外タップ時に確実に解除するためのハンドラー（スクロール操作では解除しない）
+const pointerStartPos = ref<{ x: number; y: number } | null>(null);
+
+const handleGlobalPointerDown = (e: PointerEvent) => {
+  if (!activeSlotId.value) return;
+  const target = e.target as HTMLElement | null;
+  if (target?.closest('.program-block')) {
+    pointerStartPos.value = null;
+    return;
+  }
+  pointerStartPos.value = { x: e.clientX, y: e.clientY };
+};
+
+const handleGlobalPointerUp = (e: PointerEvent) => {
+  if (!activeSlotId.value || !pointerStartPos.value) return;
+  const dx = Math.abs(e.clientX - pointerStartPos.value.x);
+  const dy = Math.abs(e.clientY - pointerStartPos.value.y);
+  pointerStartPos.value = null;
+
+  // 指の移動量が少ない（タップと判定できる）場合のみ固定表示を解除
+  if (dx < 10 && dy < 10) {
+    const target = e.target as HTMLElement | null;
+    if (!target?.closest('.program-block')) {
+      closeActiveSlot();
+    }
+  }
+};
+
+const handleGlobalPointerCancel = () => {
+  pointerStartPos.value = null;
+};
+
+useEventListener('pointerdown', handleGlobalPointerDown);
+useEventListener('pointerup', handleGlobalPointerUp);
+useEventListener('pointercancel', handleGlobalPointerCancel);
 useEventListener('click', closeActiveSlot);
 </script>
 
@@ -330,7 +365,7 @@ useEventListener('click', closeActiveSlot);
 .page-container {
   max-width: var(--max-width);
   margin: -32px auto 80px;
-  padding: 0 24px;
+  padding: 0 clamp(14px, 3vw, 24px);
   position: relative;
   z-index: 10;
   display: grid;
@@ -341,7 +376,7 @@ useEventListener('click', closeActiveSlot);
 }
 
 .controls-section {
-  padding: 24px 28px;
+  padding: clamp(16px, 3.5vw, 24px) clamp(14px, 3.5vw, 28px);
   background: white;
   border-radius: 16px;
   border: 1px solid var(--border);
@@ -362,14 +397,18 @@ useEventListener('click', closeActiveSlot);
 }
 
 .tab-btn {
-  padding: 10px 24px;
+  padding: 10px clamp(16px, 5.0vw, 24px);
   border-radius: 50px;
   border: 2px solid var(--border);
   background: white;
   cursor: pointer;
   font-weight: 800;
   color: var(--muted);
-  font-size: 14px;
+  font-size: clamp(13px, 1.2vw, 14px);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.25s ease;
 }
 
@@ -594,25 +633,29 @@ useEventListener('click', closeActiveSlot);
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-/* ホバーまたはアクティブ時の展開：
-   min-height に普段の高さが指定されているため、
-   height: fit-content にすると：
-   - 長時間アイテム（よさこい等）: 中身が小さくても min-height が効いて元の高さをキープ
-   - 短時間アイテム（パイプオルガン等）: 中身に合わせて自然に縦展開
-*/
-.program-block:hover,
+/* アクティブ時（タップ固定時）の展開 */
 .program-block.is-active {
   z-index: 50 !important;
   height: auto !important;
   overflow: visible !important;
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-}
-
-.program-block.is-active {
   outline: 2px solid var(--olive);
   outline-offset: 1px;
 }
+
+/* マウスホバー対応端末のみ :hover を有効化（iOS Safari の Synthetic Hover によるタップ消費バグを防止） */
+@media (hover: hover) {
+  .program-block:hover {
+    z-index: 50 !important;
+    height: auto !important;
+    overflow: visible !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+}
+
+
 
 /* URL指定で強調されたカードのアニメーション */
 .program-block.is-highlighted {
@@ -747,14 +790,24 @@ useEventListener('click', closeActiveSlot);
               margin-top 0.25s ease;
 }
 
-/* ホバーまたはアクティブ時に滑らかにアニメーション出現 */
-.program-block:hover .block-action-row,
+/* アクティブ時（タップ固定時）にアクションボタンを出現 */
 .program-block.is-active .block-action-row {
   max-height: 48px;
   opacity: 1;
   transform: translateY(0);
   margin-top: 6px;
   pointer-events: auto;
+}
+
+/* マウスホバー端末のみ hover で出現 */
+@media (hover: hover) {
+  .program-block:hover .block-action-row {
+    max-height: 48px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 6px;
+    pointer-events: auto;
+  }
 }
 
 .block-detail-btn {

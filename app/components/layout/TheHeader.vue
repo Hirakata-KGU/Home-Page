@@ -1,7 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 
 const isMobileMenuOpen = ref(false);
+
+// モバイルメニュー展開時の背面スクロールロック（iOS Safariのバウンススクロール防止）
+watch(isMobileMenuOpen, (isOpen) => {
+  if (typeof document === 'undefined') return;
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+  } else {
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+  }
+});
+
+onUnmounted(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+  }
+});
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -141,7 +160,7 @@ const guideSubItems = [
     <transition name="drawer">
       <nav
         v-if="isMobileMenuOpen"
-        class="lg:hidden flex flex-col bg-white absolute top-full left-0 w-full px-6 py-6 shadow-[0_12px_24px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-2 max-h-[calc(100vh-80px)] overflow-y-auto"
+        class="lg:hidden flex flex-col bg-white absolute top-full left-0 w-full px-6 pt-6 pb-[max(1.5rem,calc(env(safe-area-inset-bottom,0px)+1rem))] shadow-[0_12px_24px_rgba(0,0,0,0.15)] border-t border-[#ECECEC] gap-2 max-h-[calc(100dvh-80px-env(safe-area-inset-top,0px))] overflow-y-auto overscroll-contain"
         aria-label="モバイルナビゲーション"
       >
         <NuxtLink

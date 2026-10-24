@@ -139,6 +139,7 @@ useHead(() => {
   height: clamp(52px, 6.5vw, 68px);
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 16px;
   display: flex;

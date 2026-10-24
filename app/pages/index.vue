@@ -301,7 +301,7 @@ const visitorGuidelines = [
 
           <!-- Tagline & Quick CTA -->
           <div class="mt-6">
-            <UiCountdownTimer target-date="2026-10-31T10:00:00" class="mb-5 w-full" />
+            <UiCountdownTimer target-date="2026-10-31T10:00:00+09:00" class="mb-5 w-full" />
           </div>
         </div>
 
@@ -683,7 +683,7 @@ const visitorGuidelines = [
       </section>
 
       <!-- 5. アクセスセクション -->
-      <section class="content-visibility-auto w-full pt-2 pb-20 relative z-10" id="access">
+      <section class="w-full pt-2 pb-20 relative z-10" id="access">
         <div class="section-container">
           <!-- Title -->
           <UiSectionTitle title="アクセス" />
@@ -839,6 +839,6 @@ const visitorGuidelines = [
 /* 画面外セクションの初期レイアウト計算をスキップして初期リフローを激減 */
 .content-visibility-auto {
   content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
+  contain-intrinsic-size: auto 800px;
 }
 </style>

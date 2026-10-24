@@ -314,7 +314,9 @@ watch(
   padding: 12px 44px;
   border-radius: 50px;
   border: 2px solid var(--border);
-  font-size: 14px;
+  font-size: 16px; /* iOS Safari のフォーカス時自動ズームインを防止 */
+  -webkit-appearance: none;
+  appearance: none;
   font-family: inherit;
   transition: all 0.25s ease;
   background: var(--bg-alt, #fafaf9);

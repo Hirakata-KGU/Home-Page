@@ -334,24 +334,27 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- ④ スマホ用フローティングカード（地図フレームの外なのでスクロール影響ゼロ、最前面 z-1000） -->
-    <Transition name="fade-scale">
-      <div
-        v-if="activeTent && activeTentEvents.length > 0"
-        class="mobile-tent-card-fixed sm:hidden"
-        @click.stop
-      >
-        <div class="popover-cards-wrap">
-          <div
-            v-for="ev in activeTentEvents"
-            :key="ev.id"
-            class="popover-card-item"
-          >
-            <EventCard :event="ev" />
+    <!-- ④ スマホ用フローティングカード（Teleportでbody直下にマウントし、ページ全体の最前面 z-1000 に配置） -->
+    <Teleport to="body">
+      <Transition name="fade-scale">
+        <div
+          v-if="activeTent && activeTentEvents.length > 0"
+          class="mobile-tent-card-fixed sm:hidden"
+          :class="{ 'is-multi': activeTentEvents.length > 1 }"
+          @click.stop
+        >
+          <div class="popover-cards-wrap">
+            <div
+              v-for="ev in activeTentEvents"
+              :key="ev.id"
+              class="popover-card-item"
+            >
+              <EventCard :event="ev" />
+            </div>
           </div>
         </div>
-      </div>
-    </Transition>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -491,6 +494,7 @@ onMounted(() => {
   display: inline-block;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   color: #1e3d26;
   font-size: 17px;
   font-weight: 800;
@@ -820,8 +824,8 @@ onMounted(() => {
   pointer-events: auto;
 }
 
-/* 2枚ある場合（9番テント等）は横並びにするため幅を広げる */
-.mobile-tent-card-fixed:has(.popover-cards-wrap > :nth-child(2)) {
+/* 2枚ある場合（9番テント等）は横並びにするため幅を広げる（iOS WebKitの:has再計算バグ回避のためクラス指定） */
+.mobile-tent-card-fixed.is-multi {
   width: min(96dvw, clamp(320px, 68dvh, 560px));
 }
 

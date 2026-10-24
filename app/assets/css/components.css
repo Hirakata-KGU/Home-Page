@@ -45,6 +45,7 @@
 @utility btn-secondary {
   @apply bg-white/85 backdrop-blur-[10px] border-2 border-(--border) text-(--sprout-dark)
       hover:bg-white hover:border-(--sprout) hover:text-(--sprout) hover:-translate-y-0.5;
+  -webkit-backdrop-filter: blur(10px);
 }
 
 @keyframes fadeInUp {

@@ -1,6 +1,6 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
-export function useCountdown(targetDateStr: string = '2026-10-31T10:00:00') {
+export function useCountdown(targetDateStr: string = '2026-10-31T10:00:00+09:00') {
   const days = ref(0);
   const hours = ref(0);
   const minutes = ref(0);

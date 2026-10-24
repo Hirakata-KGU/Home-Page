@@ -293,6 +293,7 @@ defineProps<{
   background: rgba(0, 0, 0, 0.6);
   color: white;
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   white-space: nowrap;
 }
 
