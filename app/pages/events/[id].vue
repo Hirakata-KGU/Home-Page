@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { allEvents } from '~/data/events';
 import { useImageModal } from '~/composables/useImageModal';
 
@@ -17,11 +17,11 @@ const mapUrl = computed(() => {
   return bId ? `/map?tab=${bId}` : '/map';
 });
 
-const pageTitle = computed(() =>
-  event.value
-    ? (event.value.groupName ? `${event.value.title}（${event.value.groupName}）｜平潟祭 2026` : `${event.value.title}｜平潟祭 2026`)
-    : '企画詳細｜平潟祭 2026'
-);
+const pageTitle = computed(() => {
+  const e = event.value;
+  if (!e) return '企画詳細｜平潟祭 2026';
+  return `${e.title}${e.groupName ? `（${e.groupName}）` : ''}｜平潟祭 2026`;
+});
 const pageDescription = computed(() =>
   event.value ? `${event.value.title} - ${event.value.description}` : '平潟祭2026 企画詳細ページ'
 );
@@ -29,6 +29,12 @@ const ogImageUrl = computed(() => {
   const img = event.value?.imageUrl;
   return img ? `https://www.hirakatasai.net${img}` : undefined;
 });
+
+/** 企画写真を拡大モーダルで開く */
+const openFeaturedImage = () => {
+  const e = event.value;
+  if (e?.imageUrl) openImage(e.imageUrl, `${e.title} (${e.groupName})`);
+};
 
 useSeoMeta({
   title: pageTitle,
@@ -53,170 +59,168 @@ useSeoMeta({
     />
 
     <div class="page-container">
-      <div v-if="event" class="event-detail-wrapper">
-        <!-- メイン詳細カード -->
-        <article class="section detail-main-card">
-          <!-- 上部バッジ群 -->
-          <div class="meta-badges">
-            <span class="category-badge" :class="'cat-' + event.category">
-              {{ event.categoryLabel }}
-            </span>
-            <span class="day-badge">
-              {{ event.dayLabel }}
-            </span>
-            <span v-if="event.locationName" class="location-badge-top">
-              {{ event.locationName }}
-            </span>
+      <!-- メイン詳細カード -->
+      <article v-if="event" class="section detail-main-card">
+        <!-- 上部バッジ群 -->
+        <div class="meta-badges">
+          <span class="category-badge" :class="'cat-' + event.category">
+            {{ event.categoryLabel }}
+          </span>
+          <span class="day-badge">
+            {{ event.dayLabel }}
+          </span>
+          <span v-if="event.locationName" class="location-badge-top">
+            {{ event.locationName }}
+          </span>
+        </div>
+
+        <h2 class="detail-title">{{ event.title }}</h2>
+
+        <div v-if="event.groupName" class="organizer-header">
+          <span class="organizer-label">出店・出演団体</span>
+          <p class="organizer-name">{{ event.groupName }}</p>
+        </div>
+
+        <!-- 企画写真（メインビジュアル: クリックで元データを拡大表示） -->
+        <div
+          v-if="event.imageUrl"
+          class="detail-featured-media cursor-pointer group focus-visible:ring-2 focus-visible:ring-sprout-accent focus-visible:outline-none transition-transform active:scale-[0.99]"
+          role="button"
+          tabindex="0"
+          title="クリックして元データを拡大表示"
+          @click="openFeaturedImage"
+          @keydown.enter.prevent="openFeaturedImage"
+          @keydown.space.prevent="openFeaturedImage"
+        >
+          <NuxtImg
+            :src="event.imageUrl"
+            class="ambient-bg"
+            aria-hidden="true"
+            loading="lazy"
+            format="webp"
+            quality="10"
+            width="50"
+            height="50"
+          />
+          <!-- 芸能写真の場合は再エンコード・圧縮を回避し、元画像の高精細な生データをそのまま表示 -->
+          <NuxtImg
+            :src="event.imageUrl"
+            :alt="`${event.title} - ${event.groupName}`"
+            class="featured-photo transition-transform duration-300 group-hover:scale-[1.01]"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            :sizes="event.category === 'entertainment' ? '' : 'sm:100vw md:900px'"
+            format="webp"
+            :quality="event.category === 'entertainment' ? '100' : '80'"
+          />
+
+          <!-- 拡大表示ガイドバッジ -->
+          <div class="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white text-xs font-semibold backdrop-blur-md transition-all shadow-md group-hover:bg-sprout-accent group-hover:text-black">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+            <span>タップで拡大</span>
+          </div>
+        </div>
+
+        <!-- 基本情報グリッド -->
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">開催場所</span>
+            <NuxtLink
+              :to="mapUrl"
+              class="location-link group"
+              title="場内マップで場所を確認"
+            >
+              <div class="location-main">
+                <svg class="w-4 h-4 text-(--olive) shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span class="location-name">{{ event.locationName }}</span>
+              </div>
+              <span class="location-badge">
+                <span>マップを見る</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </span>
+            </NuxtLink>
           </div>
 
-          <h2 class="detail-title">{{ event.title }}</h2>
-
-          <div v-if="event.groupName" class="organizer-header">
-            <span class="organizer-label">出店・出演団体</span>
-            <p class="organizer-name">{{ event.groupName }}</p>
+          <div class="info-item">
+            <span class="info-label">開催日程</span>
+            <span class="info-value">{{ event.dayLabel }}</span>
           </div>
 
-          <!-- 企画写真（メインビジュアル: クリックで元データを拡大表示） -->
-          <div
-            v-if="event.imageUrl"
-            class="detail-featured-media cursor-pointer group focus-visible:ring-2 focus-visible:ring-sprout-accent focus-visible:outline-none transition-transform active:scale-[0.99]"
-            role="button"
-            tabindex="0"
-            title="クリックして元データを拡大表示"
-            @click="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.groupName})`)"
-            @keydown.enter.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.groupName})`)"
-            @keydown.space.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.groupName})`)"
-          >
-            <NuxtImg
-              :src="event.imageUrl"
-              class="ambient-bg"
-              aria-hidden="true"
-              loading="lazy"
-              format="webp"
-              quality="10"
-              width="50"
-              height="50"
-            />
-            <!-- 芸能写真の場合は再エンコード・圧縮を回避し、元画像の高精細な生データをそのまま表示 -->
-            <NuxtImg
-              :src="event.imageUrl"
-              :alt="`${event.title} - ${event.groupName}`"
-              class="featured-photo transition-transform duration-300 group-hover:scale-[1.01]"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              :sizes="event.category === 'entertainment' ? '' : 'sm:100vw md:900px'"
-              format="webp"
-              :quality="event.category === 'entertainment' ? '100' : '80'"
-            />
+          <div class="info-item">
+            <span class="info-label">開催時間帯</span>
+            <span class="info-value">{{ event.timeRange }}</span>
+          </div>
 
-            <!-- 拡大表示ガイドバッジ -->
-            <div class="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white text-xs font-semibold backdrop-blur-md transition-all shadow-md group-hover:bg-sprout-accent group-hover:text-black">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                <line x1="11" y1="8" x2="11" y2="14"></line>
-                <line x1="8" y1="11" x2="14" y2="11"></line>
-              </svg>
-              <span>タップで拡大</span>
+          <div class="info-item">
+            <span class="info-label">カテゴリ区分</span>
+            <span class="info-value">{{ event.categoryLabel }}</span>
+          </div>
+        </div>
+
+        <!-- 企画概要・PR文 -->
+        <div class="detail-section">
+          <h3 class="section-heading">企画概要・PR</h3>
+          <p class="description-text">{{ event.description }}</p>
+        </div>
+
+        <!-- 模擬店専用：販売メニュー・価格情報 -->
+        <div v-if="event.salesInfo" class="detail-section sales-section">
+          <h3 class="section-heading">販売メニュー・価格情報</h3>
+          <div class="sales-card">
+            <div class="sales-content">
+              {{ event.salesInfo }}
             </div>
           </div>
+        </div>
 
-          <!-- 基本情報グリッド -->
-          <div class="info-grid">
-            <div class="info-item">
-              <span class="info-label">開催場所</span>
-              <NuxtLink
-                :to="mapUrl"
-                class="location-link group"
-                title="場内マップで場所を確認"
-              >
-                <div class="location-main">
-                  <svg class="w-4 h-4 text-(--olive) shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <span class="location-name">{{ event.locationName }}</span>
-                </div>
-                <span class="location-badge">
-                  <span>マップを見る</span>
+        <!-- 音楽館・ステージ専用：タイムテーブル出演スケジュール -->
+        <div v-if="event.timetableSlots?.length" class="detail-section timetable-section">
+          <div class="timetable-header-row">
+            <h3 class="section-heading !mb-0 !border-b-0 !pb-0">ステージ出演スケジュール</h3>
+          </div>
+          <p class="section-subtext">タップすると該当のタイムテーブルへジャンプします。</p>
+          <div class="timetable-slot-list">
+            <NuxtLink
+              v-for="(slot, idx) in event.timetableSlots"
+              :key="idx"
+              :to="slot.slotId ? `/schedule?slot=${slot.slotId}` : `/schedule?event=${event.id}`"
+              class="timetable-slot-card is-clickable group"
+              title="タイムテーブルでこの枠を見る"
+            >
+              <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
+              <div class="slot-body">
+                <div class="slot-time">{{ slot.time }}</div>
+                <div class="slot-venue">会場: {{ slot.venue }}</div>
+                <div class="slot-title">{{ slot.title }}</div>
+              </div>
+              <div class="slot-action">
+                <span class="slot-action-btn">
+                  <span>時間を見る</span>
                   <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
                   </svg>
                 </span>
-              </NuxtLink>
-            </div>
-
-            <div class="info-item">
-              <span class="info-label">開催日程</span>
-              <span class="info-value">{{ event.dayLabel }}</span>
-            </div>
-
-            <div class="info-item">
-              <span class="info-label">開催時間帯</span>
-              <span class="info-value">{{ event.timeRange }}</span>
-            </div>
-
-            <div class="info-item">
-              <span class="info-label">カテゴリ区分</span>
-              <span class="info-value">{{ event.categoryLabel }}</span>
-            </div>
-          </div>
-
-          <!-- 企画概要・PR文 -->
-          <div class="detail-section">
-            <h3 class="section-heading">企画概要・PR</h3>
-            <p class="description-text">{{ event.description }}</p>
-          </div>
-
-          <!-- 模擬店専用：販売メニュー・価格情報 -->
-          <div v-if="event.salesInfo" class="detail-section sales-section">
-            <h3 class="section-heading">販売メニュー・価格情報</h3>
-            <div class="sales-card">
-              <div class="sales-content">
-                {{ event.salesInfo }}
               </div>
-            </div>
+            </NuxtLink>
           </div>
+        </div>
 
-          <!-- 音楽館・ステージ専用：タイムテーブル出演スケジュール -->
-          <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="detail-section timetable-section">
-            <div class="timetable-header-row">
-              <h3 class="section-heading !mb-0 !border-b-0 !pb-0">ステージ出演スケジュール</h3>
-            </div>
-            <p class="section-subtext">タップすると該当のタイムテーブルへジャンプします。</p>
-            <div class="timetable-slot-list">
-              <NuxtLink
-                v-for="(slot, idx) in event.timetableSlots"
-                :key="idx"
-                :to="slot.slotId ? `/schedule?slot=${slot.slotId}` : `/schedule?event=${event.id}`"
-                class="timetable-slot-card is-clickable group"
-                title="タイムテーブルでこの枠を見る"
-              >
-                <div class="slot-day-badge">{{ slot.day === 'day2' ? '11/1 (日)' : '10/31 (土)' }}</div>
-                <div class="slot-body">
-                  <div class="slot-time">{{ slot.time }}</div>
-                  <div class="slot-venue">会場: {{ slot.venue }}</div>
-                  <div class="slot-title">{{ slot.title }}</div>
-                </div>
-                <div class="slot-action">
-                  <span class="slot-action-btn">
-                    <span>時間を見る</span>
-                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                  </span>
-                </div>
-              </NuxtLink>
-            </div>
-          </div>
-
-          <!-- タグ一覧 -->
-          <div v-if="event.tags && event.tags.length" class="tags-row !mb-0">
-            <span v-for="tag in event.tags" :key="tag" class="tag">#{{ tag }}</span>
-          </div>
-        </article>
-      </div>
+        <!-- タグ一覧 -->
+        <div v-if="event.tags.length" class="tags-row">
+          <span v-for="tag in event.tags" :key="tag" class="tag">#{{ tag }}</span>
+        </div>
+      </article>
 
       <!-- Not Found -->
       <section v-else class="section not-found">
@@ -235,11 +239,6 @@ useSeoMeta({
   padding: 0 24px;
   position: relative;
   z-index: 10;
-  display: grid;
-  gap: 32px;
-}
-
-.event-detail-wrapper {
   display: grid;
   gap: 32px;
 }
@@ -519,27 +518,6 @@ useSeoMeta({
   border-bottom: 2px solid var(--border);
 }
 
-.timetable-all-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--olive);
-  text-decoration: none;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  background: #f4f8f5;
-  border: 1px solid rgba(47, 91, 52, 0.2);
-  transition: all 0.2s ease;
-}
-
-.timetable-all-link:hover {
-  background: var(--olive);
-  color: white;
-  border-color: var(--olive);
-}
-
 .timetable-slot-list {
   display: grid;
   gap: 12px;
@@ -633,7 +611,6 @@ useSeoMeta({
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 12px;
-  margin-bottom: 0;
 }
 
 .tag {
@@ -654,9 +631,7 @@ useSeoMeta({
 
 @media (max-width: 640px) {
   .timetable-slot-card {
-    display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
     gap: 10px;
   }
