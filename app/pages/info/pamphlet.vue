@@ -7,25 +7,9 @@ useSeoMeta({
   ogUrl: 'https://www.hirakatasai.net/info/pamphlet',
 });
 
-// ※アイコンSVG提供後に配置予定
-const pamphletHighlights = [
-  {
-    title: 'キャンパスマップ & 模擬店配置図',
-    desc: '正門からメインストリート、文化館・音楽館まで、すべての企画・ブースの位置を網羅。',
-  },
-  {
-    title: '両日タイムテーブル',
-    desc: '屋内ホール・野外芝生広場ステージなどの開演時間を一目でチェック可能。',
-  },
-  {
-    title: '全企画・出演団体紹介',
-    desc: 'ステージ出演者や各サークル・展示団体の見どころ・プロフィールを詳しく掲載。',
-  },
-  {
-    title: 'ご来場案内 & キャンパスガイド',
-    desc: '本部テント、救護所、授乳室、喫煙所、ゴミステーションなどの安心安全な設備案内。',
-  },
-];
+// public/ 配下のPDF。baseURL を考慮してリンクを生成
+const pdfUrl = `${useRuntimeConfig().app.baseURL.replace(/\/$/, '')}/hirakatasai2026-pamphlet.pdf`;
+
 </script>
 
 <template>
@@ -66,14 +50,12 @@ const pamphletHighlights = [
             <!-- Download / Viewer Actions -->
             <div class="action-box">
               <div class="flex flex-wrap gap-3 mt-4">
-                <button
-                  type="button"
-                  class="btn btn-primary opacity-80 cursor-not-allowed"
-                  disabled
-                  title="公開まで今しばらくお待ちください"
-                >
-                  PDFダウンロード（準備中）
-                </button>
+                <a :href="pdfUrl" target="_blank" rel="noopener" class="btn btn-primary">
+                  パンフレットを開く（PDF）
+                </a>
+                <a :href="pdfUrl" download="hirakatasai2026-pamphlet.pdf" class="btn btn-secondary">
+                  ダウンロード
+                </a>
                 <NuxtLink to="/events" class="btn btn-secondary">
                   Web版 企画一覧を見る →
                 </NuxtLink>
