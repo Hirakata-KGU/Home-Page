@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { buildingDataMap, type BuildingId } from '~/data/map-buildings';
+import { buildingDataMap } from '~/data/map-buildings';
+import type { BuildingId } from '~/types/festival';
 import CampusOverallMap from '~/components/map/CampusOverallMap.vue';
 import EventCard from '~/components/ui/EventCard.vue';
 

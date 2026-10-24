@@ -1,6 +1,5 @@
-import { allEvents, type BuildingId, type EventItem, type LocationItem } from '~/data/events';
-
-export type { BuildingId };
+import { allEvents } from '~/data/events';
+import type { BuildingId, EventItem, LocationItem } from '~/types/festival';
 
 export interface BuildingFloorData {
   floorNum: number;

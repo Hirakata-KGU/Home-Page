@@ -10,8 +10,8 @@ import SccSvg from '~/components/map/scc.vue';
 import ChickSvg from '~/components/map/chick.vue';
 import GymSvg from '~/components/map/gym.vue';
 import TentItem from '~/components/map/tent.vue';
-import { getEventsByTent, type BuildingId} from '~/data/map-buildings';
-import { type LocationItem } from '~/data/events';
+import { getEventsByTent } from '~/data/map-buildings';
+import type { BuildingId, LocationItem } from '~/types/festival';
 import EventCard from '~/components/ui/EventCard.vue';
 
 const emit = defineEmits<{

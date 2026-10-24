@@ -4,18 +4,8 @@ import music from './music.json';
 import other from './other.json';
 import location from './location.json';
 import eventImages from './event-images.json';
-import { timetableByEventId, type TimetableSlot } from './timetable';
-
-export type BuildingId = 'no3' | 'no6' | 'no7' | 'no8' | 'scc';
-
-export interface LocationItem {
-  locationId: string;
-  buildingId?: BuildingId;
-  name: string;
-  building: string;
-  floor: number | string;
-  room?: number | string;
-}
+import { timetableByEventId } from './timetable';
+import type { EventCategory, EventDay, EventItem, LocationItem, RawEventItem } from '~/types/festival';
 
 export const locationMap = new Map<string, LocationItem>(
   (location as LocationItem[]).map((loc) => [loc.locationId, loc])
@@ -23,42 +13,6 @@ export const locationMap = new Map<string, LocationItem>(
 
 export const getEventImageUrl = (id: string): string | null =>
   (eventImages as Record<string, string>)[id] || null;
-
-export type { TimetableSlot };
-export type EventCategory = 'food' | 'culture' | 'music' | 'entertainment' | 'expo' | 'other';
-export type EventDay = 'day1' | 'day2' | 'both';
-
-export interface RawEventItem {
-  id: string;
-  title: string;
-  groupName?: string;
-  category: string;
-  locationId: string;
-  day?: EventDay;
-  salesInfo?: string;
-  pr?: string;
-}
-
-export interface EventItem extends Partial<Omit<LocationItem, 'name'>> {
-  id: string;
-  title: string;
-  groupName?: string;
-  category: EventCategory;
-  categoryLabel: string;
-  categories: EventCategory[];
-  categoryLabels: string[];
-  locationId: string;
-  locationName: string;
-  day: EventDay;
-  dayLabel: string;
-  timeRange: string;
-  organizer: string;
-  description: string;
-  salesInfo?: string | null;
-  imageUrl?: string | null;
-  tags: string[];
-  timetableSlots?: TimetableSlot[];
-}
 
 const catMap: Record<string, { key: EventCategory; label: string }> = {
   '模擬店': { key: 'food', label: '模擬店・グルメ' },

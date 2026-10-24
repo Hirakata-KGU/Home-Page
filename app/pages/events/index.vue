@@ -1,6 +1,7 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { allEvents, categoryList, type EventCategory, type EventDay, type EventItem } from '~/data/events';
+import { allEvents, categoryList } from '~/data/events';
+import type { EventCategory, EventDay, EventItem } from '~/types/festival';
 
 useSeoMeta({
   title: '企画一覧｜平潟祭 2026',

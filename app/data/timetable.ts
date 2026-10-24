@@ -2,27 +2,7 @@ import rawTimetable from './timetable.json';
 import rawMusic from './music.json';
 import rawOther from './other.json';
 import rawLocation from './location.json';
-import type { LocationItem, RawEventItem } from './events';
-
-export interface RawTimetableSlot {
-  id: string;
-  slotId: string;
-  day: 'day1' | 'day2';
-  locationId: string;
-  time: string;
-  startTime: string;
-  endTime: string;
-  startMinutes: number;
-  endMinutes: number;
-  durationMinutes: number;
-}
-
-export interface TimetableSlot extends RawTimetableSlot {
-  venue: string;
-  title: string;
-  groupName: string;
-  isSpecial?: boolean;
-}
+import type { LocationItem, RawEventItem, RawTimetableSlot, TimetableSlot } from '~/types/festival';
 
 const eventMap = new Map<string, { title: string; groupName: string }>(
   ([...rawMusic, ...rawOther] as RawEventItem[]).map((m) => [

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { EventItem } from '~/data/events';
+import type { EventItem } from '~/types/festival';
 
 const props = withDefaults(defineProps<{
   event: EventItem;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
-import { daySchedules, timetable, type TimetableSlot } from '~/data/timetable';
+import { daySchedules, timetable } from '~/data/timetable';
+import type { TimetableSlot } from '~/types/festival';
 
 useSeoMeta({
   title: 'タイムテーブル｜平潟祭 2026',
