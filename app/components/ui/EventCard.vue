@@ -14,14 +14,11 @@ const props = withDefaults(defineProps<{
 });
 
 // EXPO部の企画かどうか（複数カテゴリのどれかに EXPO部 を含む）
-const isExpo = computed(() => (props.event.categories || [props.event.category]).includes('expo'));
+const isExpo = computed(() => props.event.categories.includes('expo'));
 </script>
 
 <template>
-  <NuxtLink
-    :to="`/events/${event.id}`"
-    class="event-card"
-  >
+  <NuxtLink :to="`/events/${event.id}`" class="event-card">
     <!-- カード上部画像メディアエリア -->
     <div class="card-media-wrapper">
       <!-- 写真ありの場合 -->
@@ -68,40 +65,40 @@ const isExpo = computed(() => (props.event.categories || [props.event.category])
           class="expo-logo"
         />
         <div v-else class="fallback-icon-wrap">
-          <!-- 模擬店アイコン -->
-          <svg v-if="event.category === 'food'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-            <line x1="6" y1="1" x2="6" y2="4"></line>
-            <line x1="10" y1="1" x2="10" y2="4"></line>
-            <line x1="14" y1="1" x2="14" y2="4"></line>
-          </svg>
-          <!-- 文化館アイコン -->
-          <svg v-else-if="event.category === 'culture'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
-            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
-            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
-            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
-          </svg>
-          <!-- 音楽館アイコン -->
-          <svg v-else-if="event.category === 'music'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18V5l12-2v13"></path>
-            <circle cx="6" cy="18" r="3"></circle>
-            <circle cx="18" cy="16" r="3"></circle>
-          </svg>
-          <!-- 芸能アイコン -->
-          <svg v-else-if="event.category === 'entertainment'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-          </svg>
-          <!-- その他アイコン（スポーツ・大会・イベント） -->
-          <svg v-else class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-            <path d="M4 22h16"></path>
-            <path d="M10 14.66V17c0 .55-.45 1-1 1H7"></path>
-            <path d="M14 14.66V17c0 .55.45 1 1 1h2"></path>
-            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+          <svg class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- 模擬店 -->
+            <template v-if="event.category === 'food'">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+              <line x1="6" y1="1" x2="6" y2="4" />
+              <line x1="10" y1="1" x2="10" y2="4" />
+              <line x1="14" y1="1" x2="14" y2="4" />
+            </template>
+            <!-- 文化館 -->
+            <template v-else-if="event.category === 'culture'">
+              <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+              <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+              <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+              <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+            </template>
+            <!-- 音楽館 -->
+            <template v-else-if="event.category === 'music'">
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+            </template>
+            <!-- 芸能 -->
+            <polygon v-else-if="event.category === 'entertainment'" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            <!-- その他（スポーツ・大会・イベント） -->
+            <template v-else>
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path d="M10 14.66V17c0 .55-.45 1-1 1H7" />
+              <path d="M14 14.66V17c0 .55.45 1 1 1h2" />
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+            </template>
           </svg>
         </div>
       </div>
@@ -109,7 +106,7 @@ const isExpo = computed(() => (props.event.categories || [props.event.category])
       <!-- オーバーレイバッジ（カテゴリ＆日程） -->
       <div class="card-overlay-badges">
         <div class="header-badges">
-          <span v-for="(catKey, idx) in (event.categories || [event.category])" :key="catKey" class="category-chip" :class="'cat-' + catKey">{{ (event.categoryLabels && event.categoryLabels[idx]) || event.categoryLabel }}</span>
+          <span v-for="(catKey, idx) in event.categories" :key="catKey" class="category-chip" :class="'cat-' + catKey">{{ event.categoryLabels[idx] }}</span>
         </div>
         <span class="day-chip">{{ event.dayLabel }}</span>
       </div>
@@ -127,7 +124,7 @@ const isExpo = computed(() => (props.event.categories || [props.event.category])
       <p v-if="showDescription && event.description" class="event-desc">{{ event.description }}</p>
 
       <!-- タイムテーブル連携枠プレビュー -->
-      <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="event-tt-preview">
+      <div v-if="event.timetableSlots?.length" class="event-tt-preview">
         <span class="tt-tag">
           タイムテーブル出演あり ({{ event.timetableSlots.length }}枠)
         </span>
