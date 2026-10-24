@@ -79,7 +79,7 @@ const expoEvents = computed(() => {
               rel="noopener noreferrer"
               class="external-link-btn group"
             >
-              <span>EXPO部 WEBページ（横浜市）へ</span>
+              <span>EXPO部 WEBページ（横浜市）</span>
               <svg class="w-4 h-4 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                 <polyline points="15 3 21 3 21 9"></polyline>
@@ -94,7 +94,7 @@ const expoEvents = computed(() => {
       <section class="section">
         <div class="section-header">
           <div class="section-title">
-            <h2>平潟祭 EXPO部企画</h2>
+            <h2>関東学院大学 EXPO部企画</h2>
             <p>KGU EXPO Div Events</p>
           </div>
         </div>

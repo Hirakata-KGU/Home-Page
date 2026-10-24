@@ -12,7 +12,7 @@ const footerSections = [
       [
         { label: '企画一覧', to: '/events' },
         { label: 'タイムテーブル', to: '/schedule' },
-        { label: '関東学院大学 EXPO部', to: '/expo' }
+        { label: 'KGU EXPO部', to: '/expo' }
       ],
       [
         { label: '全体・模擬店マップ', to: '/map' },
