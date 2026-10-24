@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue';
 import { allEvents } from '~/data/events';
 
@@ -100,92 +100,13 @@ const expoEvents = computed(() => {
         </div>
 
         <div class="events-grid">
-          <article
+          <UiEventCard
             v-for="event in expoEvents"
             :key="event.id"
-            class="expo-event-card"
-          >
-            <NuxtLink
-              :to="'/events/' + event.id"
-              class="event-card-inner group"
-            >
-              <!-- 企画画像・フォールバック -->
-              <div class="card-media-wrapper">
-                <NuxtImg
-                  v-if="event.imageUrl"
-                  :src="event.imageUrl"
-                  :alt="event.title"
-                  loading="lazy"
-                  format="webp"
-                  sizes="xs:100vw sm:50vw md:400px"
-                  class="card-img group-hover:scale-105 transition-transform duration-300"
-                />
-                <div
-                  v-else
-                  class="card-fallback-box"
-                >
-                  <svg class="w-12 h-12 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
-                  </svg>
-                </div>
-
-                <!-- バッジ群 -->
-                <div class="card-badges">
-                  <div class="flex flex-wrap gap-1.5">
-                    <span
-                      v-for="(catKey, idx) in (event.categories || [event.category])"
-                      :key="catKey"
-                      class="category-chip"
-                      :class="'cat-' + catKey"
-                    >
-                      {{ (event.categoryLabels && event.categoryLabels[idx]) || event.categoryLabel }}
-                    </span>
-                  </div>
-                  <span class="day-chip">{{ event.dayLabel }}</span>
-                </div>
-              </div>
-
-              <!-- カード本文 -->
-              <div class="card-body">
-                <div v-if="event.organizer" class="card-organizer">
-                  {{ event.organizer }}
-                </div>
-                <h3 class="card-title group-hover:text-(--sprout-forest) transition-colors">
-                  {{ event.title }}
-                </h3>
-
-                <!-- 開催場所 -->
-                <div class="card-meta-row">
-                  <svg class="w-4 h-4 text-(--sprout-moss) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <span v-if="event.locationName" class="font-bold text-[13px] text-(--sprout-title)">
-                    {{ event.locationName }}
-                  </span>
-                  <span v-else class="text-[12px] font-semibold text-(--text-muted) italic">
-                    場所・詳細は後日公開
-                  </span>
-                </div>
-
-                <!-- 概要・PR文 -->
-                <p v-if="event.description" class="card-desc">
-                  {{ event.description }}
-                </p>
-
-                <!-- リンクボタン風ラベル -->
-                <div class="card-action">
-                  <span class="action-btn">
-                    <span>企画詳細を見る</span>
-                    <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            </NuxtLink>
-          </article>
+            :event="event"
+            show-description
+            location-fallback="場所・詳細は後日公開"
+          />
         </div>
       </section>
 
@@ -369,147 +290,6 @@ const expoEvents = computed(() => {
   .events-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.expo-event-card {
-  border-radius: 16px;
-  background: white;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-  transition: all 0.25s ease;
-}
-
-.expo-event-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(46, 125, 50, 0.15);
-  border-color: rgba(66, 132, 90, 0.4);
-}
-
-.event-card-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-}
-
-.card-media-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #f0f4f0;
-}
-
-.card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-fallback-box {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #0d7a57 0%, #10b981 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-badges {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.category-chip {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
-  color: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.category-chip.cat-expo {
-  background: #0d7a57;
-}
-
-.category-chip.cat-food {
-  background: #b89345;
-}
-
-.day-chip {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.65);
-  color: white;
-  backdrop-filter: blur(4px);
-}
-
-.card-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.card-organizer {
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--sprout-forest);
-  margin-bottom: 6px;
-}
-
-.card-title {
-  font-size: 17px;
-  font-weight: 900;
-  color: var(--text-main);
-  line-height: 1.4;
-  margin: 0 0 10px;
-}
-
-.card-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-
-.card-desc {
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-muted);
-  margin: 0 0 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.card-action {
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--sprout-moss);
 }
 
 /* マスコットカード */

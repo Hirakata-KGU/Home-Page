@@ -1,9 +1,16 @@
 ﻿<script setup lang="ts">
 import type { EventItem } from '~/data/events';
 
-defineProps<{
+withDefaults(defineProps<{
   event: EventItem;
-}>();
+  /** 企画のPR文（概要）をカード内に表示するか */
+  showDescription?: boolean;
+  /** 開催場所が未設定のときに表示する代替テキスト */
+  locationFallback?: string;
+}>(), {
+  showDescription: false,
+  locationFallback: '',
+});
 </script>
 
 <template>
@@ -107,6 +114,9 @@ defineProps<{
 
       <h3 class="event-title">{{ event.title }}</h3>
 
+      <!-- 企画概要・PR文（showDescription 指定時のみ） -->
+      <p v-if="showDescription && event.description" class="event-desc">{{ event.description }}</p>
+
       <!-- タイムテーブル連携枠プレビュー -->
       <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="event-tt-preview">
         <span class="tt-tag">
@@ -121,7 +131,8 @@ defineProps<{
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          <span>{{ event.locationName }}</span>
+          <span v-if="event.locationName">{{ event.locationName }}</span>
+          <span v-else-if="locationFallback" class="event-location-fallback">{{ locationFallback }}</span>
         </div>
         <span class="event-more-link">詳細を見る →</span>
       </div>
@@ -337,6 +348,23 @@ defineProps<{
   color: var(--text);
   margin-bottom: 12px;
   line-height: 1.4;
+}
+
+.event-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-location-fallback {
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .event-tt-preview {
