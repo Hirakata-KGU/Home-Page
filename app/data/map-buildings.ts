@@ -1,5 +1,5 @@
 import { allEvents } from '~/data/events';
-import type { BuildingId, EventItem, LocationItem } from '~/types/festival';
+import type { BuildingId, EventItem } from '~/types/festival';
 
 export interface BuildingFloorData {
   floorNum: number;
@@ -14,10 +14,7 @@ export interface BuildingData {
   floors: BuildingFloorData[];
 }
 
-export interface BuildingConfig {
-  subtitle?: string;
-  description: string;
-}
+export type BuildingConfig = Pick<BuildingData, 'subtitle' | 'description'>;
 
 /**
  * 建物ごとの設定情報
@@ -57,17 +54,13 @@ export const buildingDataMap = Object.fromEntries(
     // 企画が存在する階層（floor）ごとにグループ化
     const floorMap = new Map<number, EventItem[]>();
 
-    bEvents.forEach((ev) => {
+    for (const ev of bEvents) {
       const parsed = typeof ev.floor === 'number'
         ? ev.floor
         : parseInt(String(ev.floor).replace(/[^\d]/g, ''), 10);
-      const floorNum = !isNaN(parsed) && parsed > 0 ? parsed : 1;
-
-      if (!floorMap.has(floorNum)) {
-        floorMap.set(floorNum, []);
-      }
-      floorMap.get(floorNum)!.push(ev);
-    });
+      const floorNum = parsed > 0 ? parsed : 1;
+      floorMap.set(floorNum, [...(floorMap.get(floorNum) ?? []), ev]);
+    }
 
     // 階数順（1F, 2F, 3F...）にソートし、企画があるフロアのみ生成
     const sortedFloors: BuildingFloorData[] = Array.from(floorMap.entries())
@@ -99,5 +92,5 @@ export const buildingDataMap = Object.fromEntries(
   })
 ) as Record<BuildingId, BuildingData>;
 
-export const getEventsByTent = (locationId?: LocationItem['locationId']): EventItem[] =>
+export const getEventsByTent = (locationId?: string): EventItem[] =>
   locationId ? allEvents.filter((e) => e.locationId === locationId) : [];
