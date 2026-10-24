@@ -1,7 +1,8 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
+import { computed } from 'vue';
 import type { EventItem } from '~/data/events';
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   event: EventItem;
   /** 企画のPR文（概要）をカード内に表示するか */
   showDescription?: boolean;
@@ -11,6 +12,9 @@ withDefaults(defineProps<{
   showDescription: false,
   locationFallback: '',
 });
+
+// EXPO部の企画かどうか（複数カテゴリのどれかに EXPO部 を含む）
+const isExpo = computed(() => (props.event.categories || [props.event.category]).includes('expo'));
 </script>
 
 <template>
@@ -53,7 +57,17 @@ withDefaults(defineProps<{
         class="card-fallback-box"
         :class="'fallback-' + event.category"
       >
-        <div class="fallback-icon-wrap">
+        <NuxtImg
+          v-if="isExpo"
+          src="/images/kgu_expo_logo.png"
+          alt="関東学院大学 EXPO部 ロゴ"
+          width="960"
+          height="324"
+          format="webp"
+          loading="lazy"
+          class="expo-logo"
+        />
+        <div v-else class="fallback-icon-wrap">
           <!-- 模擬店アイコン -->
           <svg v-if="event.category === 'food'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
@@ -75,11 +89,6 @@ withDefaults(defineProps<{
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
             <circle cx="18" cy="16" r="3"></circle>
-          </svg>
-          <!-- EXPO部アイコン -->
-          <svg v-else-if="event.category === 'expo'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
           </svg>
           <!-- 芸能アイコン -->
           <svg v-else-if="event.category === 'entertainment'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -241,6 +250,13 @@ withDefaults(defineProps<{
 
 .card-fallback-box.fallback-other {
   background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.expo-logo {
+  object-fit: contain;
+  /* 白い縁取り（背景写真・グラデーション上でも視認しやすくする） */
+  filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+  width: 45%;
 }
 
 .fallback-icon-wrap {
