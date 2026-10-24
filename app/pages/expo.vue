@@ -62,8 +62,8 @@ const expoEvents = computed(() => {
             </p>
           </div>
 
-          <div class="flex gap-5">
-            <div class="mt-6 flex flex-wrap gap-4">
+          <div class="flex flex-col gap-5 sm:flex-row mt-6 w-full items-center sm:items-start">
+            <div class="flex flex-wrap gap-4">
               <a
                 href="/hirakatasai2026-pamphlet.pdf#page=8"
                 target="_blank"
@@ -73,7 +73,7 @@ const expoEvents = computed(() => {
                 <span>電子パンフレットで閲覧</span>
               </a>
             </div>
-            <div class="mt-6 flex flex-wrap gap-4">
+            <div class="flex flex-wrap gap-4">
               <a
                 href="https://next-gen.city.yokohama.lg.jp/expobu"
                 target="_blank"
@@ -109,27 +109,6 @@ const expoEvents = computed(() => {
             show-description
             location-fallback="場所・詳細は後日公開"
           />
-        </div>
-      </section>
-
-      <!-- 公式マスコットグリーティング -->
-      <section class="section">
-        <div class="section-header">
-          <div class="section-title">
-            <h2>公式マスコット グリーティング</h2>
-            <p>Official Mascot Greeting</p>
-          </div>
-        </div>
-
-        <h3 class="mascot-title">
-          公式マスコットキャラクター「トゥンクトゥンク」がやって来る！
-        </h3>
-
-        <div class="mascot-schedule-box">
-          <div class="schedule-item">
-            <span class="schedule-label">登場日時</span>
-            <span class="schedule-value">10/31（土） 11:00～11:30頃</span>
-          </div>
         </div>
       </section>
 
