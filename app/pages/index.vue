@@ -214,7 +214,7 @@ const guideItems: GuideCardItem[] = [
     id: 'pamphlet',
     title: '電子パンフレット',
     to: '/info/pamphlet',
-    image: '', // 写真未定：後日画像パス（例: '/images/pamphlet.jpg'）を指定すれば即時反映
+    image: '/images/top/pamphlet-cover.png',
   },
   {
     id: 'about',
@@ -613,7 +613,7 @@ const visitorGuidelines = [
                 <!-- svg8形状でクリッピングされた写真領域（8角形のみ10度回転） -->
                 <div class="w-full h-full overflow-hidden bg-sprout-bg flex items-center justify-center guide-svg8-clip">
                   <!-- 写真・中身コンテナ（拡大を排し、-10度で打ち消して写真は回転させず直立を維持） -->
-                  <div class="w-full h-full -rotate-[10deg] group-hover:-rotate-[12deg] transition-transform duration-300 will-change-transform flex items-center justify-center">
+                  <div class="w-full h-full bg-[#ffffff] -rotate-[10deg] group-hover:-rotate-[12deg] transition-transform duration-300 will-change-transform flex items-center justify-center">
                     <!-- 1. 写真がある場合（平潟祭について、または電子パンフレットの写真追加時） -->
                     <NuxtImg
                       v-if="item.image"
@@ -628,10 +628,10 @@ const visitorGuidelines = [
                     <!-- 2. よくある質問 (chick.vue + 左上に？: 上品で愛らしいサイズに調整) -->
                     <div
                       v-else-if="item.isChick"
-                      class="w-full h-full bg-[#fdfbe8] relative flex items-center justify-center select-none"
+                      class="w-full h-full bg-[#ffffff] relative flex items-center justify-center select-none"
                     >
                       <!-- ひよこと？マークのラッパー（サイズを64px〜72pxに確実に制限） -->
-                      <div class="relative w-16 h-16 sm:w-[72px] sm:h-[72px] flex items-center justify-center">
+                      <div class="relative w-[96px] h-[96px] flex items-center justify-center">
                         <!-- アヒルの左上辺りの「？」マーク -->
                         <span
                           class="absolute -top-2.5 -left-2.5 font-sans font-black text-xl sm:text-2xl text-[#d86414] -rotate-12 select-none pointer-events-none drop-shadow-sm leading-none z-10"
@@ -642,23 +642,13 @@ const visitorGuidelines = [
                         <ChickSvg class="w-full h-full drop-shadow-sm select-none" />
                       </div>
                     </div>
-                    <!-- 3. 写真未定時（電子パンフレット等の準備中プレースホルダー） -->
-                    <div
-                      v-else
-                      class="w-full h-full bg-[#edf4ed] flex flex-col items-center justify-center gap-2 p-3 text-sprout-title select-none"
-                    >
-                      <svg class="w-[clamp(28px,5vw,38px)] h-[clamp(28px,5vw,38px)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                      <span class="text-[clamp(10px,1.8vw,12px)] font-bold tracking-wider text-sprout-title">準備中</span>
-                    </div>
                   </div>
                 </div>
               </div>
 
               <!-- 左下: タイトル（写真が重なっても読みやすい白フチ・外線付き） -->
               <div class="relative z-20">
-                <h3 class="guide-card-title font-sans font-extrabold text-[clamp(1.15rem,2.1vw,1.45rem)] text-sprout-title tracking-wide transition-colors duration-200 group-hover:text-sprout-border m-0 leading-tight">
+                <h3 class="guide-card-title font-sans font-extrabold text-[20px] text-sprout-title tracking-wide transition-colors duration-200 group-hover:text-sprout-border m-0 leading-tight">
                   {{ item.title }}
                 </h3>
               </div>
@@ -817,7 +807,7 @@ const visitorGuidelines = [
 
 /* タイトルが写真に被っても綺麗に文字が浮き立つソフトな白シャドー */
 .guide-card-title {
-  @apply text-base font-extrabold text-sprout-title mb-2;
+  @apply font-extrabold text-sprout-title mb-2;
   text-shadow:
     0 0 5px rgba(255, 255, 255, 0.95),
     0 0 12px rgba(255, 255, 255, 0.9),
