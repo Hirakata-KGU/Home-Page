@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       { loc: '/schedule', priority: 0.9, changefreq: 'daily' },
       { loc: '/map', priority: 0.9, changefreq: 'daily' },
       { loc: '/info/about', priority: 0.8, changefreq: 'weekly' },
+      { loc: '/info/sponsors', priority: 0.6, changefreq: 'monthly' },
       { loc: '/info/pamphlet', priority: 0.8, changefreq: 'weekly' },
       { loc: '/info/faq', priority: 0.7, changefreq: 'weekly' },
       { loc: '/info/contact', priority: 0.6, changefreq: 'monthly' },
