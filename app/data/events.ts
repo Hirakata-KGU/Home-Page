@@ -3,16 +3,15 @@ import culture from './culture.json';
 import music from './music.json';
 import other from './other.json';
 import location from './location.json';
-import eventImages from './event-images.json';
+import eventImagesJson from './event-images.json';
 import { timetableByEventId } from './timetable';
 import type { EventCategory, EventDay, EventItem, LocationItem, RawEventItem } from '~/types/festival';
 
-export const locationMap = new Map<string, LocationItem>(
+const locationMap = new Map<string, LocationItem>(
   (location as LocationItem[]).map((loc) => [loc.locationId, loc])
 );
 
-export const getEventImageUrl = (id: string): string | null =>
-  (eventImages as Record<string, string>)[id] || null;
+const eventImages = eventImagesJson as Record<string, string>;
 
 const catMap: Record<string, { key: EventCategory; label: string }> = {
   '模擬店': { key: 'food', label: '模擬店・グルメ' },
@@ -58,7 +57,7 @@ export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
     ...loc,
     id: raw.id,
     title: raw.title,
-    groupName: raw.groupName,
+    groupName: raw.groupName || '',
     category: primaryCat.key,
     categoryLabel: primaryCat.label,
     categories,
@@ -68,10 +67,9 @@ export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
     day,
     dayLabel: dayLabelMap[day] || '',
     timeRange: slots.length > 0 ? slots.map((s) => `${dayLabelMap[s.day] || s.day}  ${s.time}`).join('\n') : '10:00 - 17:00',
-    organizer: raw.groupName || '',
     description: raw.pr || '',
     salesInfo: raw.salesInfo || null,
-    imageUrl: getEventImageUrl(raw.id),
+    imageUrl: eventImages[raw.id] || null,
     tags: [...categoryLabels, loc?.name || '', dayLabelMap[day] || ''].filter(Boolean),
     timetableSlots: slots,
   };

@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { computed, ref } from 'vue';
 import { allEvents } from '~/data/events';
 import { useImageModal } from '~/composables/useImageModal';
@@ -19,7 +19,7 @@ const mapUrl = computed(() => {
 
 const pageTitle = computed(() =>
   event.value
-    ? (event.value.organizer ? `${event.value.title}（${event.value.organizer}）｜平潟祭 2026` : `${event.value.title}｜平潟祭 2026`)
+    ? (event.value.groupName ? `${event.value.title}（${event.value.groupName}）｜平潟祭 2026` : `${event.value.title}｜平潟祭 2026`)
     : '企画詳細｜平潟祭 2026'
 );
 const pageDescription = computed(() =>
@@ -71,9 +71,9 @@ useSeoMeta({
 
           <h2 class="detail-title">{{ event.title }}</h2>
 
-          <div v-if="event.organizer" class="organizer-header">
+          <div v-if="event.groupName" class="organizer-header">
             <span class="organizer-label">出店・出演団体</span>
-            <p class="organizer-name">{{ event.organizer }}</p>
+            <p class="organizer-name">{{ event.groupName }}</p>
           </div>
 
           <!-- 企画写真（メインビジュアル: クリックで元データを拡大表示） -->
@@ -83,9 +83,9 @@ useSeoMeta({
             role="button"
             tabindex="0"
             title="クリックして元データを拡大表示"
-            @click="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.organizer})`)"
-            @keydown.enter.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.organizer})`)"
-            @keydown.space.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.organizer})`)"
+            @click="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.groupName})`)"
+            @keydown.enter.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.groupName})`)"
+            @keydown.space.prevent="event && event.imageUrl && openImage(event.imageUrl, `${event.title} (${event.groupName})`)"
           >
             <NuxtImg
               :src="event.imageUrl"
@@ -100,7 +100,7 @@ useSeoMeta({
             <!-- 芸能写真の場合は再エンコード・圧縮を回避し、元画像の高精細な生データをそのまま表示 -->
             <NuxtImg
               :src="event.imageUrl"
-              :alt="`${event.title} - ${event.organizer}`"
+              :alt="`${event.title} - ${event.groupName}`"
               class="featured-photo transition-transform duration-300 group-hover:scale-[1.01]"
               loading="eager"
               fetchpriority="high"

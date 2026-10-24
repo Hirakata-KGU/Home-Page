@@ -49,7 +49,7 @@ export interface TimetableSlot extends RawTimetableSlot {
 export interface EventItem extends Partial<Omit<LocationItem, 'name'>> {
   id: string;
   title: string;
-  groupName?: string;
+  groupName: string;
   category: EventCategory;
   categoryLabel: string;
   categories: EventCategory[];
@@ -59,7 +59,6 @@ export interface EventItem extends Partial<Omit<LocationItem, 'name'>> {
   day: EventDay;
   dayLabel: string;
   timeRange: string;
-  organizer: string;
   description: string;
   salesInfo?: string | null;
   imageUrl?: string | null;

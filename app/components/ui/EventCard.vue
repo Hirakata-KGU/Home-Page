@@ -41,7 +41,7 @@ const isExpo = computed(() => (props.event.categories || [props.event.category])
         />
         <NuxtImg
           :src="event.imageUrl"
-          :alt="`${event.title} - ${event.organizer}`"
+          :alt="`${event.title} - ${event.groupName}`"
           loading="lazy"
           decoding="async"
           sizes="sm:100vw md:50vw lg:380px"
@@ -117,8 +117,8 @@ const isExpo = computed(() => (props.event.categories || [props.event.category])
 
     <!-- カードコンテンツ -->
     <div class="event-content">
-      <div v-if="event.organizer" class="event-organizer-row">
-        <span class="organizer-badge">{{ event.organizer }}</span>
+      <div v-if="event.groupName" class="event-organizer-row">
+        <span class="organizer-badge">{{ event.groupName }}</span>
       </div>
 
       <h3 class="event-title">{{ event.title }}</h3>
