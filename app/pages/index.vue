@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Autoplay } from 'swiper/modules';
@@ -115,7 +115,10 @@ interface FeaturedEventItem {
   image: string;
   desc: string;
   to: string;
+  external?: boolean;
 }
+
+const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
 
 const featuredEvents: FeaturedEventItem[] = [
   {
@@ -132,7 +135,8 @@ const featuredEvents: FeaturedEventItem[] = [
     badge: '企画特集',
     image: '/images/kgu_expo_logo.png',
     desc: '今年の平潟祭では、関東学院大学EXPO部による企画が盛り沢山！カフェやウォークラリーなど見どころをまとめて紹介。',
-    to: '/expo',
+    to: `${baseURL}/hirakatasai2026-pamphlet.pdf#page=8`,
+    external: true,
   },
   {
     id: 'stage',
@@ -177,11 +181,11 @@ const onSlideChange = (swiper: SwiperClass) => {
 };
 
 // カードクリック時の処理
-const handleCardClick = (index: number, to: string) => {
+const handleCardClick = (index: number, item: FeaturedEventItem) => {
   if (activeIndex.value !== index) {
     swiperInstance?.slideTo(index);
   } else {
-    navigateTo(to);
+    navigateTo(item.to, { external: item.external });
   }
 };
 
@@ -420,8 +424,8 @@ const visitorGuidelines = [
                 :aria-label="activeIndex === idx ? `${item.badge} 詳細を見る（${item.title}）` : `${item.badge}（${item.title}）を表示`"
                 class="cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
                 :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
-                @click="handleCardClick(idx, item.to)"
-                @keydown.enter="handleCardClick(idx, item.to)"
+                @click="handleCardClick(idx, item)"
+                @keydown.enter="handleCardClick(idx, item)"
               >
                 <div
                   class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
@@ -451,7 +455,7 @@ const visitorGuidelines = [
                       sizes="xs:260px sm:280px md:300px"
                       format="webp"
                       quality="80"
-                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none drop-shadow-[0_0_20px_#ffffff]"
+                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none drop-shadow-[0_0_6px_#ffffff] drop-shadow-[0_0_10px_#ffffff]"
                       :class="{ 'hover:scale-105': activeIndex === idx }"
                     />
                   </div>
