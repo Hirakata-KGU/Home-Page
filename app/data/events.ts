@@ -63,7 +63,7 @@ const catMap: Record<string, { key: EventCategory; label: string }> = {
   '文化館': { key: 'culture', label: '文化館・展示' },
   '音楽館': { key: 'music', label: '音楽館・ステージ' },
   '芸能': { key: 'entertainment', label: '芸能' },
-  'EXPO部': { key: 'expo', label: 'KGU EXPO部' },
+  'EXPO部': { key: 'expo', label: '関東学院大学 EXPO部' },
   'その他': { key: 'other', label: 'その他' },
 };
 

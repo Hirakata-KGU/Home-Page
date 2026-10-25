@@ -455,7 +455,7 @@ const visitorGuidelines = [
                       sizes="xs:260px sm:280px md:300px"
                       format="webp"
                       quality="80"
-                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none drop-shadow-[0_0_6px_#ffffff] drop-shadow-[0_0_10px_#ffffff]"
+                      class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none filter-[drop-shadow(0_0_6px_#ffffff)_drop-shadow(0_0_20px_#ffffff)]"
                       :class="{ 'hover:scale-105': activeIndex === idx }"
                     />
                   </div>
