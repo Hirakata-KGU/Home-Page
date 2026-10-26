@@ -180,6 +180,24 @@ const featuredEvents: FeaturedEventItem[] = [
   },
 ];
 
+// 3周分（21枚）のクローン配列を生成（表示中カードの左右に常に十分な余裕を確保し、テレポートや端の空白を防止）
+const LOOP_COPIES = 3;
+
+interface LoopedEventItem extends FeaturedEventItem {
+  uniqueKey: string;
+  originalIndex: number;
+  isClone: boolean;
+}
+
+const loopedEvents: LoopedEventItem[] = Array.from({ length: LOOP_COPIES }, (_, copyIdx) =>
+  featuredEvents.map((item, originalIndex) => ({
+    ...item,
+    uniqueKey: `${item.id}-copy-${copyIdx}`,
+    originalIndex,
+    isClone: copyIdx !== 0,
+  }))
+).flat();
+
 // カルーセル状態管理（Swiper）
 const activeIndex = ref(0);
 let swiperInstance: SwiperClass | null = null;
@@ -193,36 +211,24 @@ const onSwiper = (swiper: SwiperClass) => {
 };
 
 const onSlideChange = (swiper: SwiperClass) => {
-  activeIndex.value = swiper.realIndex;
+  activeIndex.value = swiper.realIndex % featuredEvents.length;
 };
 
-// カードクリック時の処理
-const handleCardClick = (index: number, item: FeaturedEventItem, event: Event) => {
-  if (activeIndex.value !== index) {
-    // slideToLoop は7枚だと見た目がテレポートするため、Swiper内部の slideNext/slidePrev と同じ手順で移動する
-    // 1) 進行方向に loopFix（見た目の位置を保ったままDOMを付け替え、ループ用の余白を確保）
-    // 2) リフロー後、付け替え後のクリック対象スライドの位置へアニメーション付きで slideTo
+// カードクリック時の処理（SwiperのslideNext/slidePrevと同様にloopFixで端を補充してからスライド）
+const handleCardClick = (item: LoopedEventItem, event: Event) => {
+  if (activeIndex.value !== item.originalIndex) {
     const swiper = swiperInstance;
-    const slideEl = (event.currentTarget as HTMLElement | null)?.closest('.swiper-slide') as HTMLElement | null;
-    if (!swiper || !slideEl) {
-      swiperInstance?.slideToLoop(index);
-      return;
+    const slideEl = (event.currentTarget as HTMLElement | null)?.closest('.swiper-slide');
+    const domIndex = slideEl && swiper ? swiper.slides.indexOf(slideEl as HTMLElement) : -1;
+    if (swiper && domIndex >= 0) {
+      const diff = domIndex - swiper.activeIndex;
+      swiper.loopFix({ direction: diff > 0 ? 'next' : 'prev' });
+      void swiper.wrapperEl.clientLeft;
+      swiper.slideTo(swiper.activeIndex + diff);
     }
-    const domIndex = swiper.slides.indexOf(slideEl);
-    if (domIndex < 0) {
-      swiper.slideToLoop(index);
-      return;
-    }
-    swiper.loopFix({ direction: domIndex > swiper.activeIndex ? 'next' : 'prev' });
-    void swiper.wrapperEl.clientLeft; // 強制リフロー（transitionをリセットするため）
-    swiper.slideTo(swiper.slides.indexOf(slideEl));
   } else {
     navigateTo(item.to, { external: item.external });
   }
-};
-
-const goToSlide = (index: number) => {
-  swiperInstance?.slideToLoop(index);
 };
 
 // Google Maps 遅延ロード（初期化時の約400KiBのJS読み込みとリフローを完全防止）
@@ -432,6 +438,8 @@ const visitorGuidelines = [
               :centered-slides="true"
               :space-between="16"
               :loop="true"
+              :loop-additional-slides="3"
+              :initial-slide="featuredEvents.length"
               :breakpoints="{
                 640: {
                   spaceBetween: 24,
@@ -443,24 +451,25 @@ const visitorGuidelines = [
                 pauseOnMouseEnter: true,
               }"
               :grab-cursor="true"
-              class="events-swiper events-loop-window py-4 select-none"
+              class="events-swiper w-full py-4 select-none"
               @swiper="onSwiper"
               @slide-change="onSlideChange"
             >
               <SwiperSlide
-                v-for="(item, idx) in featuredEvents"
-                :key="item.id"
+                v-for="item in loopedEvents"
+                :key="item.uniqueKey"
                 v-slot="{ isActive }"
                 class="!w-auto flex items-center justify-center"
               >
                 <div
                   role="button"
-                  tabindex="0"
+                  :tabindex="item.isClone ? -1 : 0"
+                  :aria-hidden="item.isClone ? 'true' : undefined"
                   :aria-label="isActive ? `${item.badge} 詳細を見る（${item.title}）` : `${item.badge}（${item.title}）を表示`"
                   class="cursor-pointer transition-transform duration-300 h-[var(--card-h)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
                   :class="isActive ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
-                  @click="handleCardClick(idx, item, $event)"
-                  @keydown.enter="handleCardClick(idx, item, $event)"
+                  @click="handleCardClick(item, $event)"
+                  @keydown.enter="handleCardClick(item, $event)"
                 >
                 <div
                   class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
@@ -470,7 +479,6 @@ const visitorGuidelines = [
                   <NuxtImg
                     :src="item.image"
                     aria-hidden="true"
-                    loading="lazy"
                     draggable="false"
                     width="30"
                     height="40"
@@ -484,7 +492,6 @@ const visitorGuidelines = [
                     <NuxtImg
                       :src="item.image"
                       :alt="item.title"
-                      loading="lazy"
                       decoding="async"
                       draggable="false"
                       sizes="xs:260px sm:280px md:300px"
@@ -884,12 +891,6 @@ const visitorGuidelines = [
     --card-h: clamp(270px, 50vh, 720px);
     --gap: 24px;
   }
-}
-
-/* Swiperコンテナの幅をカード約3枚分に制限し、Swiperの内部spv（slidesPerViewDynamic）計算を安全に抑える */
-:deep(.events-loop-window) {
-  width: min(100%, calc(var(--card-h) * 0.75 * 3 + var(--gap) * 2));
-  margin-inline: auto;
 }
 
 /* Swiperコンテナのカード影・拡大用のはみ出し表示許可 */
