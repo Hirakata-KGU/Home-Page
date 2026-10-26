@@ -11,7 +11,7 @@ const footerSections = [
     columns: [
       [
         { label: '企画一覧', to: '/events' },
-        { label: 'タイムテーブル', to: '/schedule' }
+        { label: 'タイムテーブル', to: '/schedule' },
       ],
       [
         { label: '全体・模擬店マップ', to: '/map' },

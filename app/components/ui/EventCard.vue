@@ -1,14 +1,31 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { EventItem } from '~/data/events';
 
-defineProps<{
+const props = withDefaults(defineProps<{
   event: EventItem;
-}>();
+  /** 企画のPR文（概要）をカード内に表示するか */
+  showDescription?: boolean;
+  /** 開催場所が未設定のときに表示する代替テキスト */
+  locationFallback?: string;
+}>(), {
+  showDescription: false,
+  locationFallback: '',
+});
+
+// EXPO部の企画かどうか（複数カテゴリのどれかに EXPO部 を含む）
+const isExpo = computed(() => props.event.categories.includes('expo'));
+const primaryCategory = computed(() => isExpo.value ? 'expo' : (props.event.categories[0] || 'other'));
+const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
+const cardLink = computed(() =>
+  isExpo.value ? `${baseURL}/hirakatasai2026-pamphlet.pdf#page=8` : `/events/${props.event.id}`
+);
 </script>
 
 <template>
   <NuxtLink
-    :to="`/events/${event.id}`"
+    :to="cardLink"
+    :external="isExpo"
     class="event-card"
   >
     <!-- カード上部画像メディアエリア -->
@@ -44,11 +61,21 @@ defineProps<{
       <div
         v-else
         class="card-fallback-box"
-        :class="'fallback-' + event.category"
+        :class="'fallback-' + primaryCategory"
       >
-        <div class="fallback-icon-wrap">
+        <NuxtImg
+          v-if="isExpo"
+          src="/images/kgu_expo_logo.png"
+          alt="関東学院大学 EXPO部 ロゴ"
+          width="960"
+          height="324"
+          format="webp"
+          loading="lazy"
+          class="expo-logo"
+        />
+        <div v-else class="fallback-icon-wrap">
           <!-- 模擬店アイコン -->
-          <svg v-if="event.category === 'food'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg v-if="primaryCategory === 'food'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
             <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
             <line x1="6" y1="1" x2="6" y2="4"></line>
@@ -56,7 +83,7 @@ defineProps<{
             <line x1="14" y1="1" x2="14" y2="4"></line>
           </svg>
           <!-- 文化館アイコン -->
-          <svg v-else-if="event.category === 'culture'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg v-else-if="primaryCategory === 'culture'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
             <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
             <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
@@ -64,13 +91,13 @@ defineProps<{
             <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
           </svg>
           <!-- 音楽館アイコン -->
-          <svg v-else-if="event.category === 'music'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg v-else-if="primaryCategory === 'music'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
             <circle cx="18" cy="16" r="3"></circle>
           </svg>
           <!-- 芸能アイコン -->
-          <svg v-else-if="event.category === 'entertainment'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg v-else-if="primaryCategory === 'entertainment'" class="w-12 h-12 text-white/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
           <!-- その他アイコン（スポーツ・大会・イベント） -->
@@ -88,7 +115,7 @@ defineProps<{
       <!-- オーバーレイバッジ（カテゴリ＆日程） -->
       <div class="card-overlay-badges">
         <div class="header-badges">
-          <span class="category-chip" :class="'cat-' + event.category">{{ event.categoryLabel }}</span>
+          <span v-for="(catKey, idx) in event.categories" :key="catKey" class="category-chip" :class="'cat-' + catKey">{{ event.categoryLabels[idx] }}</span>
         </div>
         <span class="day-chip">{{ event.dayLabel }}</span>
       </div>
@@ -101,6 +128,9 @@ defineProps<{
       </div>
 
       <h3 class="event-title">{{ event.title }}</h3>
+
+      <!-- 企画概要・PR文（showDescription 指定時のみ） -->
+      <p v-if="showDescription && event.description" class="event-desc">{{ event.description }}</p>
 
       <!-- タイムテーブル連携枠プレビュー -->
       <div v-if="event.timetableSlots && event.timetableSlots.length > 0" class="event-tt-preview">
@@ -116,7 +146,8 @@ defineProps<{
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          <span>{{ event.locationName }}</span>
+          <span v-if="event.locationName">{{ event.locationName }}</span>
+          <span v-else-if="locationFallback" class="event-location-fallback">{{ locationFallback }}</span>
         </div>
         <span class="event-more-link">詳細を見る →</span>
       </div>
@@ -219,8 +250,19 @@ defineProps<{
   background: linear-gradient(135deg, #d48806 0%, #faad14 100%);
 }
 
+.card-fallback-box.fallback-expo {
+  background: linear-gradient(135deg, #0d7a57 0%, #10b981 100%);
+}
+
 .card-fallback-box.fallback-other {
   background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.expo-logo {
+  object-fit: contain;
+  /* 白い縁取り（背景写真・グラデーション上でも視認しやすくする） */
+  filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+  width: 45%;
 }
 
 .fallback-icon-wrap {
@@ -281,6 +323,10 @@ defineProps<{
   background: #925400;
 }
 
+.category-chip.cat-expo {
+  background: #0d7a57;
+}
+
 .category-chip.cat-other {
   background: #4b5563;
 }
@@ -324,6 +370,23 @@ defineProps<{
   color: var(--text);
   margin-bottom: 12px;
   line-height: 1.4;
+}
+
+.event-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-location-fallback {
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .event-tt-preview {

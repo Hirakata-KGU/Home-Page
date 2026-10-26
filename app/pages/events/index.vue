@@ -21,6 +21,7 @@ const normalizeCategory = (cat: unknown): 'all' | EventCategory => {
   if (c === 'culture' || c === '文化館' || c === '展示') return 'culture';
   if (c === 'music' || c === 'stage' || c === '音楽館' || c === 'ステージ') return 'music';
   if (c === 'entertainment' || c === 'geino' || c === '芸能' || c === 'talkshow') return 'entertainment';
+  if (c === 'expo' || c === 'expobu' || c === 'expo部' || c === 'kgu-expo' || c === 'kgu_expo' || c === 'kgu expo部') return 'expo';
   if (c === 'other' || c === 'その他') return 'other';
   return 'all';
 };
@@ -77,7 +78,7 @@ const categoryCounts = computed(() => {
   const counts: Record<string, number> = { all: allEvents.length };
   for (const cat of categoryList) {
     if (cat.key !== 'all') {
-      counts[cat.key] = allEvents.filter(e => e.category === cat.key).length;
+      counts[cat.key] = allEvents.filter((e) => e.categories.includes(cat.key)).length;
     }
   }
   return counts;
@@ -87,8 +88,11 @@ const categoryCounts = computed(() => {
 const filteredEvents = computed(() => {
   return allEvents.filter((event) => {
     // カテゴリフィルター
-    if (selectedCategory.value !== 'all' && event.category !== selectedCategory.value) {
-      return false;
+    if (selectedCategory.value !== 'all') {
+      const hasCat = event.categories.includes(selectedCategory.value);
+      if (!hasCat) {
+        return false;
+      }
     }
 
     // 日程フィルター
