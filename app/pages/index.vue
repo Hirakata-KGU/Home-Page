@@ -170,6 +170,14 @@ const featuredEvents: FeaturedEventItem[] = [
     desc: '美術・写真展示、体験型ワークショップなど、学生たちの創造力が光る文化館展示をお楽しみください！',
     to: '/events?category=culture',
   },
+    {
+    id: 'radio',
+    title: 'ひらかたジャック2026！～学生が届ける、平潟祭の『今』!～',
+    badge: '地域企画',
+    image: '/images/events/radio.webp',
+    desc: '金沢区を元気にするメディア 金沢シーサイドFM 連携企画！平潟祭の「今」をラジオでお届けします！',
+    to: `/events/radio`,
+  },
 ];
 
 // カルーセル状態管理（Swiper）
