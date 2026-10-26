@@ -147,6 +147,14 @@ const featuredEvents: FeaturedEventItem[] = [
     to: '/events?category=music',
   },
   {
+    id: 'omikoshi',
+    title: '御神輿',
+    badge: '地域企画',
+    image: '/images/top/omikoshi.jpeg',
+    desc: '今年の平潟祭では、キャンパスに大きなお神輿がやってきます！。お神輿の熱気とともに、地域との絆をもっともっと強く、そして深めていきましょう！',
+    to: `/events/omikoshi`,
+  },
+  {
     id: 'food',
     title: '模擬店グルメ',
     badge: 'メインストリート',
