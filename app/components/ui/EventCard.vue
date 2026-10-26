@@ -17,15 +17,19 @@ const props = withDefaults(defineProps<{
 const isExpo = computed(() => props.event.categories.includes('expo'));
 const primaryCategory = computed(() => isExpo.value ? 'expo' : (props.event.categories[0] || 'other'));
 const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
-const cardLink = computed(() =>
-  isExpo.value ? `${baseURL}/hirakatasai2026-pamphlet.pdf#page=8` : `/events/${props.event.id}`
-);
+const cardLink = computed(() => {
+  if (isExpo.value) {
+    return `${baseURL}/hirakatasai2026-pamphlet.pdf#page=8`
+  } else {
+    return `/events/${props.event.id}`
+  }
+});
 </script>
 
 <template>
   <NuxtLink
     :to="cardLink"
-    :external="isExpo"
+    :external="cardLink.startsWith('/events')"
     class="event-card"
   >
     <!-- カード上部画像メディアエリア -->
