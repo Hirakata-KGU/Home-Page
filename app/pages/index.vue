@@ -197,9 +197,25 @@ const onSlideChange = (swiper: SwiperClass) => {
 };
 
 // カードクリック時の処理
-const handleCardClick = (index: number, item: FeaturedEventItem) => {
+const handleCardClick = (index: number, item: FeaturedEventItem, event: Event) => {
   if (activeIndex.value !== index) {
-    swiperInstance?.slideToLoop(index);
+    // slideToLoop は7枚だと見た目がテレポートするため、Swiper内部の slideNext/slidePrev と同じ手順で移動する
+    // 1) 進行方向に loopFix（見た目の位置を保ったままDOMを付け替え、ループ用の余白を確保）
+    // 2) リフロー後、付け替え後のクリック対象スライドの位置へアニメーション付きで slideTo
+    const swiper = swiperInstance;
+    const slideEl = (event.currentTarget as HTMLElement | null)?.closest('.swiper-slide') as HTMLElement | null;
+    if (!swiper || !slideEl) {
+      swiperInstance?.slideToLoop(index);
+      return;
+    }
+    const domIndex = swiper.slides.indexOf(slideEl);
+    if (domIndex < 0) {
+      swiper.slideToLoop(index);
+      return;
+    }
+    swiper.loopFix({ direction: domIndex > swiper.activeIndex ? 'next' : 'prev' });
+    void swiper.wrapperEl.clientLeft; // 強制リフロー（transitionをリセットするため）
+    swiper.slideTo(swiper.slides.indexOf(slideEl));
   } else {
     navigateTo(item.to, { external: item.external });
   }
@@ -443,8 +459,8 @@ const visitorGuidelines = [
                   :aria-label="isActive ? `${item.badge} 詳細を見る（${item.title}）` : `${item.badge}（${item.title}）を表示`"
                   class="cursor-pointer transition-transform duration-300 h-[var(--card-h)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
                   :class="isActive ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
-                  @click="handleCardClick(idx, item)"
-                  @keydown.enter="handleCardClick(idx, item)"
+                  @click="handleCardClick(idx, item, $event)"
+                  @keydown.enter="handleCardClick(idx, item, $event)"
                 >
                 <div
                   class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
