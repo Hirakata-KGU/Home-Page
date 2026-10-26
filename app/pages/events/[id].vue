@@ -2,6 +2,9 @@
 import { computed, ref } from 'vue';
 import { allEvents } from '~/data/events';
 import { useImageModal } from '~/composables/useImageModal';
+import { venueLanes } from '~/data/timetable';
+
+const hasVenueLane = (locationId: string) => venueLanes.some((v) => v.locationId === locationId);
 
 const { openImage } = useImageModal();
 
@@ -200,7 +203,7 @@ useSeoMeta({
               <h3 class="section-heading !mb-0 !border-b-0 !pb-0">ステージ出演スケジュール</h3>
             </div>
             <p
-              v-if="event.timetableSlots.some((s) => s.locationId !== 'loc-undecided')"
+              v-if="event.timetableSlots.some((s) => hasVenueLane(s.locationId))"
               class="section-subtext"
             >
               タップすると該当のタイムテーブルへジャンプします。
@@ -208,7 +211,7 @@ useSeoMeta({
             <div class="timetable-slot-list">
               <template v-for="(slot, idx) in event.timetableSlots" :key="idx">
                 <NuxtLink
-                  v-if="slot.locationId !== 'loc-undecided'"
+                  v-if="hasVenueLane(slot.locationId)"
                   :to="slot.slotId ? `/schedule?slot=${slot.slotId}` : `/schedule?event=${event.id}`"
                   class="timetable-slot-card is-clickable group"
                   title="タイムテーブルでこの枠を見る"

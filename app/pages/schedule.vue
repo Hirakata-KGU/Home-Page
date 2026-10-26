@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
-import { daySchedules, timetable, type TimetableSlot } from '~/data/timetable';
+import { daySchedules, timetable, type TimetableSlot, venueLanes } from '~/data/timetable';
 
 useSeoMeta({
   title: 'タイムテーブル｜平潟祭 2026',
@@ -16,15 +16,6 @@ const router = useRouter();
 const activeDayId = ref<'day1' | 'day2'>('day1');
 const highlightedSlotId = ref<string | null>(null);
 
-// 6会場の定義（locationId に直接紐付け）
-const venueLanes = [
-  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '' },
-  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F' },
-  { locationId: 'loc-chapel', label: 'チャペル', sub: '' },
-  { locationId: 'loc-gym', label: '体育館', sub: '' },
-  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '' },
-  { locationId: 'loc-ground', label: 'グラウンド', sub: '' },
-];
 
 // タップ（クリック）で展開・固定されているスロットID（スマホ用）
 const activeSlotId = ref<string | null>(null);

@@ -70,3 +70,13 @@ export const daySchedules: DaySchedule[] = [
     allSlots: timetable.filter((s) => s.day === 'day2'),
   },
 ];
+
+// 6会場の定義（locationId に直接紐付け）
+export const venueLanes = [
+  { locationId: 'loc-outdoor-stage', label: '屋外ステージ', sub: '' },
+  { locationId: 'loc-scc-bennett', label: '屋内ステージ', sub: 'SCC 4F' },
+  { locationId: 'loc-chapel', label: 'チャペル', sub: '' },
+  { locationId: 'loc-gym', label: '体育館', sub: '' },
+  { locationId: 'loc-bldg1-front', label: '1号館前', sub: '' },
+  { locationId: 'loc-ground', label: 'グラウンド', sub: '' },
+];
