@@ -180,6 +180,24 @@ const featuredEvents: FeaturedEventItem[] = [
   },
 ];
 
+// 3周分（21枚）のクローン配列を生成（表示中カードの左右に常に十分な余裕を確保し、テレポートや端の空白を防止）
+const LOOP_COPIES = 3;
+
+interface LoopedEventItem extends FeaturedEventItem {
+  uniqueKey: string;
+  originalIndex: number;
+  isClone: boolean;
+}
+
+const loopedEvents: LoopedEventItem[] = Array.from({ length: LOOP_COPIES }, (_, copyIdx) =>
+  featuredEvents.map((item, originalIndex) => ({
+    ...item,
+    uniqueKey: `${item.id}-copy-${copyIdx}`,
+    originalIndex,
+    isClone: copyIdx !== 0,
+  }))
+).flat();
+
 // カルーセル状態管理（Swiper）
 const activeIndex = ref(0);
 let swiperInstance: SwiperClass | null = null;
@@ -193,20 +211,24 @@ const onSwiper = (swiper: SwiperClass) => {
 };
 
 const onSlideChange = (swiper: SwiperClass) => {
-  activeIndex.value = swiper.realIndex;
+  activeIndex.value = swiper.realIndex % featuredEvents.length;
 };
 
-// カードクリック時の処理
-const handleCardClick = (index: number, item: FeaturedEventItem) => {
-  if (activeIndex.value !== index) {
-    swiperInstance?.slideTo(index);
+// カードクリック時の処理（SwiperのslideNext/slidePrevと同様にloopFixで端を補充してからスライド）
+const handleCardClick = (item: LoopedEventItem, event: Event) => {
+  if (activeIndex.value !== item.originalIndex) {
+    const swiper = swiperInstance;
+    const slideEl = (event.currentTarget as HTMLElement | null)?.closest('.swiper-slide');
+    const domIndex = slideEl && swiper ? swiper.slides.indexOf(slideEl as HTMLElement) : -1;
+    if (swiper && domIndex >= 0) {
+      const diff = domIndex - swiper.activeIndex;
+      swiper.loopFix({ direction: diff > 0 ? 'next' : 'prev' });
+      void swiper.wrapperEl.clientLeft;
+      swiper.slideTo(swiper.activeIndex + diff);
+    }
   } else {
     navigateTo(item.to, { external: item.external });
   }
-};
-
-const goToSlide = (index: number) => {
-  swiperInstance?.slideTo(index);
 };
 
 // Google Maps 遅延ロード（初期化時の約400KiBのJS読み込みとリフローを完全防止）
@@ -409,49 +431,54 @@ const visitorGuidelines = [
 
         <!-- 4 Cards Horizontal Swipeable Carousel (3:4 Vertical Photos with Blurred Backdrop) -->
         <div class="relative w-full mt-4 mb-6">
-          <Swiper
-            :modules="[Autoplay]"
-            :slides-per-view="'auto'"
-            :centered-slides="true"
-            :space-between="16"
-            :breakpoints="{
-              640: {
-                spaceBetween: 24,
-              },
-            }"
-            :autoplay="{
-              delay: 6000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }"
-            :grab-cursor="true"
-            class="events-swiper w-full py-4 select-none"
-            @swiper="onSwiper"
-            @slide-change="onSlideChange"
-          >
-            <SwiperSlide
-              v-for="(item, idx) in featuredEvents"
-              :key="item.id"
-              class="!w-auto flex items-center justify-center"
+          <div class="events-fade-wrap w-full">
+            <Swiper
+              :modules="[Autoplay]"
+              :slides-per-view="'auto'"
+              :centered-slides="true"
+              :space-between="16"
+              :loop="true"
+              :loop-additional-slides="3"
+              :initial-slide="featuredEvents.length"
+              :breakpoints="{
+                640: {
+                  spaceBetween: 24,
+                },
+              }"
+              :autoplay="{
+                delay: 6000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }"
+              :grab-cursor="true"
+              class="events-swiper w-full py-4 select-none"
+              @swiper="onSwiper"
+              @slide-change="onSlideChange"
             >
-              <div
-                role="button"
-                tabindex="0"
-                :aria-label="activeIndex === idx ? `${item.badge} 詳細を見る（${item.title}）` : `${item.badge}（${item.title}）を表示`"
-                class="cursor-pointer transition-transform duration-300 h-[clamp(270px,50vh,720px)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
-                :class="activeIndex === idx ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
-                @click="handleCardClick(idx, item)"
-                @keydown.enter="handleCardClick(idx, item)"
+              <SwiperSlide
+                v-for="item in loopedEvents"
+                :key="item.uniqueKey"
+                v-slot="{ isActive }"
+                class="!w-auto flex items-center justify-center"
               >
                 <div
+                  role="button"
+                  :tabindex="item.isClone ? -1 : 0"
+                  :aria-hidden="item.isClone ? 'true' : undefined"
+                  :aria-label="isActive ? `${item.badge} 詳細を見る（${item.title}）` : `${item.badge}（${item.title}）を表示`"
+                  class="cursor-pointer transition-transform duration-300 h-[var(--card-h)] aspect-[3/4] select-none outline-none focus-visible:ring-2 focus-visible:ring-sprout-accent"
+                  :class="isActive ? 'scale-100 z-20' : 'scale-90 sm:scale-95 z-10'"
+                  @click="handleCardClick(item, $event)"
+                  @keydown.enter="handleCardClick(item, $event)"
+                >
+                <div
                   class="relative w-full h-full rounded-2xl overflow-hidden border-2 transition-[border-color,box-shadow] duration-300 shadow-xl select-none"
-                  :class="activeIndex === idx ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
+                  :class="isActive ? 'border-sprout-accent shadow-[0_12px_36px_rgba(0,0,0,0.45)] ring-2 ring-sprout-accent/50' : 'border-white/30 shadow-[0_4px_16px_rgba(0,0,0,0.2)]'"
                 >
                   <!-- ぼかした背景写真（軽量サムネイルをぼかしてFirefox等の描画負荷を大幅軽減） -->
                   <NuxtImg
                     :src="item.image"
                     aria-hidden="true"
-                    loading="lazy"
                     draggable="false"
                     width="30"
                     height="40"
@@ -465,14 +492,13 @@ const visitorGuidelines = [
                     <NuxtImg
                       :src="item.image"
                       :alt="item.title"
-                      loading="lazy"
                       decoding="async"
                       draggable="false"
                       sizes="xs:260px sm:280px md:300px"
                       format="webp"
                       quality="80"
                       class="w-full h-full object-contain object-center transition-transform duration-300 pointer-events-none select-none filter-[drop-shadow(0_0_6px_#ffffff)_drop-shadow(0_0_20px_#ffffff)]"
-                      :class="{ 'hover:scale-105': activeIndex === idx }"
+                      :class="{ 'hover:scale-105': isActive }"
                     />
                   </div>
 
@@ -485,7 +511,7 @@ const visitorGuidelines = [
 
                   <!-- 詳細を見るインジケーター（アクティブ時のみ右下に表示・装飾アイコン化） -->
                   <div
-                    v-if="activeIndex === idx"
+                    v-if="isActive"
                     class="absolute bottom-3 right-3 z-30"
                     aria-hidden="true"
                   >
@@ -500,12 +526,13 @@ const visitorGuidelines = [
                   <!-- 真ん中以外のものは薄く白くするオーバーレイ（backdrop-filterを使わず軽量化） -->
                   <div
                     class="absolute inset-0 z-20 transition-opacity duration-300 pointer-events-none"
-                    :class="activeIndex === idx ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
+                    :class="isActive ? 'bg-transparent opacity-0' : 'bg-white/60 opacity-100'"
                   />
                 </div>
               </div>
             </SwiperSlide>
-          </Swiper>
+            </Swiper>
+          </div>
 
           <!-- Indicator Dots (現在位置を示す視覚的インジケーター / 非対話化によりtarget-size違反を完全解消) -->
           <div class="flex items-center justify-center gap-2 mt-4" aria-hidden="true">
@@ -831,6 +858,40 @@ const visitorGuidelines = [
 
 <style scoped>
 @reference "~/assets/css/main.css";
+
+/* 企画カルーセルの左右フェードアウト＆サイズ制御 */
+.events-fade-wrap {
+  --card-h: clamp(210px, 34vh, 400px);
+  --gap: 16px;
+  --fade-width: clamp(32px, 8vw, 180px);
+  --clear-half: min(calc(50% - var(--fade-width)), calc(600px - var(--fade-width)));
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent calc(50% - var(--clear-half) - var(--fade-width)),
+    #000 calc(50% - var(--clear-half)),
+    #000 calc(50% + var(--clear-half)),
+    transparent calc(50% + var(--clear-half) + var(--fade-width)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent calc(50% - var(--clear-half) - var(--fade-width)),
+    #000 calc(50% - var(--clear-half)),
+    #000 calc(50% + var(--clear-half)),
+    transparent calc(50% + var(--clear-half) + var(--fade-width)),
+    transparent 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .events-fade-wrap {
+    --card-h: clamp(270px, 50vh, 720px);
+    --gap: 24px;
+  }
+}
 
 /* Swiperコンテナのカード影・拡大用のはみ出し表示許可 */
 :deep(.events-swiper) {
