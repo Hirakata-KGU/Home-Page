@@ -29,7 +29,7 @@ const cardLink = computed(() => {
 <template>
   <NuxtLink
     :to="cardLink"
-    :external="cardLink.startsWith('/events')"
+    :external="!cardLink.startsWith('/events')"
     class="event-card"
   >
     <!-- カード上部画像メディアエリア -->
