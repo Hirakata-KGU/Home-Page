@@ -108,7 +108,7 @@ const filteredEvents = computed(() => {
       const matchTitle = event.title.toLowerCase().includes(q);
       const matchDesc = event.description.toLowerCase().includes(q);
       const matchOrg = event.organizer.toLowerCase().includes(q);
-      const matchLoc = event.locationName.toLowerCase().includes(q);
+      const matchLoc = event.locationNames.some((l) => l.toLowerCase().includes(q)) || event.locationName.toLowerCase().includes(q);
       const matchSales = event.salesInfo ? event.salesInfo.toLowerCase().includes(q) : false;
       const matchTags = event.tags.some((t) => t.toLowerCase().includes(q));
 
