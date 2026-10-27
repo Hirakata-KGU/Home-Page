@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { allEvents } from '~/data/events';
+import { allEvents, type LocationItem } from '~/data/events';
 import { useImageModal } from '~/composables/useImageModal';
 import { venueLanes } from '~/data/timetable';
 
@@ -14,6 +14,15 @@ const eventId = computed(() => route.params.id as string);
 const event = computed(() => {
   return allEvents.find((e) => e.id === eventId.value);
 });
+
+
+const getLocationMapUrl = (loc: LocationItem) => {
+  return loc.buildingId ? `/map?tab=${loc.buildingId}` : '/map';
+};
+
+const isClickableLocation = (loc: LocationItem) => {
+  return loc.locationId !== 'loc-undecided' && loc.locationId !== 'loc-private';
+};
 
 const mapUrl = computed(() => {
   const bId = event.value?.buildingId;
@@ -72,8 +81,12 @@ useSeoMeta({
             <span class="day-badge">
               {{ event.dayLabel }}
             </span>
-            <span v-if="event.locationName" class="location-badge-top">
-              {{ event.locationName }}
+            <span
+              v-for="locName in (event.locationNames && event.locationNames.length > 0 ? event.locationNames : (event.locationName ? [event.locationName] : []))"
+              :key="locName"
+              class="location-badge-top"
+            >
+              {{ locName }}
             </span>
           </div>
 
@@ -134,33 +147,48 @@ useSeoMeta({
           <div class="info-grid">
             <div class="info-item">
               <span class="info-label">開催場所</span>
-              <NuxtLink
-                v-if="event.locationId !== 'loc-undecided'"
-                :to="mapUrl"
-                class="location-link is-clickable group"
-                title="場内マップで場所を確認"
-              >
-                <div class="location-main">
-                  <svg class="w-4 h-4 text-(--olive) shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <span class="location-name">{{ event.locationName }}</span>
-                </div>
-                <span class="location-badge">
-                  <span>マップを見る</span>
-                  <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </span>
-              </NuxtLink>
-              <div v-else class="location-link">
-                <div class="location-main">
-                  <svg class="w-4 h-4 text-(--olive) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <span class="location-name">{{ event.locationName }}</span>
+              <div class="location-list">
+                <template v-if="event.locations && event.locations.length > 0">
+                  <template v-for="loc in event.locations" :key="loc.locationId">
+                    <NuxtLink
+                      v-if="isClickableLocation(loc)"
+                      :to="getLocationMapUrl(loc)"
+                      class="location-link is-clickable group"
+                      title="場内マップで場所を確認"
+                    >
+                      <div class="location-main">
+                        <svg class="w-4 h-4 text-(--olive) shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span class="location-name">{{ loc.name }}</span>
+                      </div>
+                      <span class="location-badge">
+                        <span>マップを見る</span>
+                        <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </span>
+                    </NuxtLink>
+                    <div v-else class="location-link">
+                      <div class="location-main">
+                        <svg class="w-4 h-4 text-(--olive) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span class="location-name">{{ loc.name }}</span>
+                      </div>
+                    </div>
+                  </template>
+                </template>
+                <div v-else class="location-link">
+                  <div class="location-main">
+                    <svg class="w-4 h-4 text-(--olive) shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span class="location-name">{{ event.locationName || '未定' }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -436,6 +464,12 @@ useSeoMeta({
   font-weight: 700;
   color: var(--text);
   white-space: pre-line;
+}
+
+.location-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .location-link {

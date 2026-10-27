@@ -33,19 +33,22 @@ export interface RawEventItem {
   title: string;
   groupName?: string;
   category: string;
-  locationId: string;
+  locationId?: string;
+  locationIds?: string;
   day?: EventDay;
   salesInfo?: string;
   pr?: string;
 }
 
-export interface EventItem extends Partial<Omit<LocationItem, 'name'>> {
+export interface EventItem extends Partial<Omit<LocationItem, 'name' | 'locationId'>> {
   id: string;
   title: string;
   groupName?: string;
   categories: EventCategory[];
   categoryLabels: string[];
-  locationId: string;
+  locationIds: string[];
+  locations: LocationItem[];
+  locationNames: string[];
   locationName: string;
   day: EventDay;
   dayLabel: string;
@@ -92,19 +95,34 @@ export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
   const categories = resolved.map((c) => c.key);
   const categoryLabels = resolved.map((c) => c.label);
 
-  const loc = locationMap.get(raw.locationId);
+  const rawLocStr = (raw.locationIds ?? raw.locationId ?? '').toString();
+  const locationIds = rawLocStr
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  const locations = locationIds
+    .map((id) => locationMap.get(id))
+    .filter((loc): loc is LocationItem => Boolean(loc));
+
+  const locationNames = locations.map((loc) => loc.name || '').filter(Boolean);
+  const locationName = locationNames.join('、');
+  const primaryLoc = locations[0];
+
   const slots = timetableByEventId.get(raw.id) || [];
   const day: EventDay = raw.day || 'both';
 
   return {
-    ...loc,
+    ...primaryLoc,
     id: raw.id,
     title: raw.title,
     groupName: raw.groupName,
     categories,
     categoryLabels,
-    locationId: raw.locationId,
-    locationName: loc?.name || '',
+    locationIds,
+    locations,
+    locationNames,
+    locationName,
     day,
     dayLabel: dayLabelMap[day] || '',
     timeRange: slots.length > 0 ? slots.map((s) => `${dayLabelMap[s.day] || s.day}  ${s.time}`).join('\n') : '10:00 - 17:00',
@@ -112,7 +130,7 @@ export const allEvents: EventItem[] = rawEvents.map((raw): EventItem => {
     description: raw.pr || '',
     salesInfo: raw.salesInfo || null,
     imageUrl: getEventImageUrl(raw.id),
-    tags: [...categoryLabels, loc?.name || '', dayLabelMap[day] || ''].filter(Boolean),
+    tags: [...categoryLabels, ...locationNames, dayLabelMap[day] || ''].filter(Boolean),
     timetableSlots: slots,
   };
 });

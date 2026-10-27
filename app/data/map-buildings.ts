@@ -42,7 +42,7 @@ export const buildingConfigs: Record<BuildingId, BuildingConfig> = {
     description: '美術・写真・鉄道・模型・マンガ・放送研究・演劇など、文化系サークルの多彩な作品展示と公演が集結する建物です。',
   },
   scc: {
-    subtitle: 'ベンネットホール（SCC 4F）',
+    subtitle: 'SCC 4F ベンネットホール',
     description: 'オーケストラ、吹奏楽、合唱、そして豪華ゲストトークショーが開催される屋内ステージです。',
   },
 };
@@ -52,22 +52,34 @@ export const buildingConfigs: Record<BuildingId, BuildingConfig> = {
  */
 export const buildingDataMap = Object.fromEntries(
   (Object.entries(buildingConfigs) as [BuildingId, BuildingConfig][]).map(([bId, config]) => {
-    // 該当する建物の企画をすべて取得
-    const bEvents = allEvents.filter((e) => e.buildingId === bId);
-
     // 企画が存在する階層（floor）ごとにグループ化
     const floorMap = new Map<number, EventItem[]>();
 
-    bEvents.forEach((ev) => {
-      const parsed = typeof ev.floor === 'number'
-        ? ev.floor
-        : parseInt(String(ev.floor).replace(/[^\d]/g, ''), 10);
-      const floorNum = !isNaN(parsed) && parsed > 0 ? parsed : 1;
-
-      if (!floorMap.has(floorNum)) {
-        floorMap.set(floorNum, []);
+    allEvents.forEach((ev) => {
+      // 企画が持つ複数の location のうち、この buildingId に属するものを探す
+      const matchingLocs = ev.locations.filter((loc) => loc.buildingId === bId);
+      if (matchingLocs.length === 0 && ev.buildingId === bId) {
+        const parsed = typeof ev.floor === 'number'
+          ? ev.floor
+          : parseInt(String(ev.floor).replace(/[^\d]/g, ''), 10);
+        const floorNum = !isNaN(parsed) && parsed > 0 ? parsed : 1;
+        if (!floorMap.has(floorNum)) floorMap.set(floorNum, []);
+        floorMap.get(floorNum)!.push(ev);
+      } else {
+        // 同一フロア内に複数教室があっても同じフロアに重複登録されないよう Set で一意化
+        const uniqueFloors = new Set<number>();
+        matchingLocs.forEach((loc) => {
+          const parsed = typeof loc.floor === 'number'
+            ? loc.floor
+            : parseInt(String(loc.floor).replace(/[^\d]/g, ''), 10);
+          const floorNum = !isNaN(parsed) && parsed > 0 ? parsed : 1;
+          uniqueFloors.add(floorNum);
+        });
+        uniqueFloors.forEach((floorNum) => {
+          if (!floorMap.has(floorNum)) floorMap.set(floorNum, []);
+          floorMap.get(floorNum)!.push(ev);
+        });
       }
-      floorMap.get(floorNum)!.push(ev);
     });
 
     // 階数順（1F, 2F, 3F...）にソートし、企画があるフロアのみ生成
@@ -101,4 +113,4 @@ export const buildingDataMap = Object.fromEntries(
 ) as Record<BuildingId, BuildingData>;
 
 export const getEventsByTent = (locationId?: LocationItem['locationId']): EventItem[] =>
-  locationId ? allEvents.filter((e) => e.locationId === locationId) : [];
+  locationId ? allEvents.filter((e) => e.locationIds.includes(locationId)) : [];

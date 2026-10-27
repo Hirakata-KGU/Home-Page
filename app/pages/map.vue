@@ -24,7 +24,7 @@ interface MapTab {
 const mapTabs: MapTab[] = [
   { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店', title: '全体マップ' },
   { key: 'no3', label: '社会連携館', sub: '3号館', title: '社会連携館 (3号館)' },
-  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F', title: '屋内ステージ (SCC 4F)' },
+  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F ベンネットホール', title: '屋内ステージ' },
   { key: 'no7', label: '音楽館', sub: '7号館', title: '音楽館 (7号館)' },
   { key: 'no8', label: '文化館 (8号館)', sub: '8号館', title: '文化館 (8号館)' },
   { key: 'no6', label: '文化館 (6号館)', sub: '6号館', title: '文化館 (6号館)' },
