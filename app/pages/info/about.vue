@@ -207,6 +207,9 @@ const memories2025 = [
           <NuxtLink to="/events" class="btn btn-primary">
             企画一覧を見る →
           </NuxtLink>
+          <NuxtLink to="/info/pamphlet" class="btn btn-secondary">
+            電子パンフレットを見る →
+          </NuxtLink>
           <NuxtLink to="/#access" class="btn btn-secondary">
             アクセス情報はこちら →
           </NuxtLink>

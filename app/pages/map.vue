@@ -19,15 +19,18 @@ interface MapTab {
   label: string;
   sub: string;
   title: string;
+  pamphletPage: number;
 }
 
+const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
+
 const mapTabs: MapTab[] = [
-  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店', title: '全体マップ' },
-  { key: 'no3', label: '社会連携館', sub: '3号館', title: '社会連携館 (3号館)' },
-  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F ベンネットホール', title: '屋内ステージ' },
-  { key: 'no7', label: '音楽館', sub: '7号館', title: '音楽館 (7号館)' },
-  { key: 'no8', label: '文化館 (8号館)', sub: '8号館', title: '文化館 (8号館)' },
-  { key: 'no6', label: '文化館 (6号館)', sub: '6号館', title: '文化館 (6号館)' },
+  { key: 'all', label: '全体マップ', sub: 'キャンパス＆模擬店', title: '全体マップ', pamphletPage: 3 },
+  { key: 'no3', label: '社会連携館', sub: '3号館', title: '社会連携館 (3号館)', pamphletPage: 7 },
+  { key: 'scc', label: '屋内ステージ', sub: 'SCC 4F ベンネットホール', title: '屋内ステージ', pamphletPage: 12 },
+  { key: 'no7', label: '音楽館', sub: '7号館', title: '音楽館 (7号館)', pamphletPage: 11 },
+  { key: 'no8', label: '文化館 (8号館)', sub: '8号館', title: '文化館 (8号館)', pamphletPage: 13 },
+  { key: 'no6', label: '文化館 (6号館)', sub: '6号館', title: '文化館 (6号館)', pamphletPage: 14 },
 ];
 
 const route = useRoute();
@@ -60,6 +63,11 @@ const setTab = (key: TabKey, isPush = true) => {
 };
 
 const currentTabInfo = computed(() => mapTabs.find((t) => t.key === currentTab.value));
+
+const currentTabPamphletUrl = computed(() => {
+  const page = currentTabInfo.value?.pamphletPage ?? 3;
+  return `${baseURL}/hirakatasai2026-pamphlet.pdf#page=${page}`;
+});
 
 const currentBuilding = computed(() => {
   if (currentTab.value === 'all') return null;
@@ -113,6 +121,15 @@ const handleSelectBuildingFromMap = (buildingId: BuildingId) => {
             <p class="text-fluid-caption text-[#6b7280] mt-1 font-medium">
               キャンパス ＆ 模擬店エリア
             </p>
+            <div class="mt-2.5">
+              <NuxtLink
+                :to="currentTabPamphletUrl"
+                external
+                class="pamphlet-link-badge"
+              >
+                電子パンフレットでこのエリアを見る →
+              </NuxtLink>
+            </div>
           </div>
 
           <!-- 地図説明 ＆ 地図（全体マップは最初の幅 max-width: 820px） -->
@@ -132,6 +149,15 @@ const handleSelectBuildingFromMap = (buildingId: BuildingId) => {
             <p v-if="currentBuilding.description" class="text-fluid-caption text-[#6b7280] mt-1.5 font-medium mx-auto max-w-2xl">
               {{ currentBuilding.description }}
             </p>
+            <div class="mt-2.5">
+              <NuxtLink
+                :to="currentTabPamphletUrl"
+                external
+                class="pamphlet-link-badge"
+              >
+                電子パンフレットでこのエリアを見る →
+              </NuxtLink>
+            </div>
           </div>
 
           <!-- 階層（フロア）ごとの企画カード一覧（企画がある階層のみ自動表示） -->
@@ -322,6 +348,31 @@ const handleSelectBuildingFromMap = (buildingId: BuildingId) => {
   text-align: center;
   border-radius: 8px;
   border: 1px dashed #e5e5e5;
+}
+
+/* パンフレット案内バッジ */
+.pamphlet-link-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--olive, #2f5b34);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(47, 91, 52, 0.3);
+  background: #f7faf7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.pamphlet-link-badge:hover {
+  background: var(--olive, #2f5b34);
+  color: white;
+  border-color: var(--olive, #2f5b34);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(47, 91, 52, 0.2);
 }
 
 /* トランジション */

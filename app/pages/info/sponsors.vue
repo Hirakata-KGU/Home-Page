@@ -30,6 +30,9 @@ const sponsors: Sponsor[] = [
   { id: 'show-shukatsu', name: 'SHOW就活株式会社' },
 ];
 
+const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
+const pamphletSponsorsUrl = `${baseURL}/hirakatasai2026-pamphlet.pdf#page=15`;
+
 </script>
 
 <template>
@@ -75,6 +78,17 @@ const sponsors: Sponsor[] = [
 
         <div class="w-full h-px bg-sprout-border/20 mt-10 mb-8"></div>
 
+        <!-- 電子パンフレット協賛紹介ページ導線 -->
+        <div class="mb-8 text-center">
+          <NuxtLink
+            :to="pamphletSponsorsUrl"
+            external
+            class="pamphlet-link-badge"
+          >
+            電子パンフレットで協賛企業ご紹介を見る →
+          </NuxtLink>
+        </div>
+
         <!-- お問い合わせ導線 -->
         <div class="text-center flex flex-col items-center gap-3">
           <p class="text-xs sm:text-sm text-text-muted m-0">
@@ -91,3 +105,29 @@ const sponsors: Sponsor[] = [
     </main>
   </div>
 </template>
+
+<style scoped>
+.pamphlet-link-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--olive, #2f5b34);
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(47, 91, 52, 0.3);
+  background: #f7faf7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.pamphlet-link-badge:hover {
+  background: var(--olive, #2f5b34);
+  color: white;
+  border-color: var(--olive, #2f5b34);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(47, 91, 52, 0.2);
+}
+</style>

@@ -12,6 +12,8 @@ useSeoMeta({
 
 const route = useRoute();
 const router = useRouter();
+const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
+const pamphletTimetableUrl = `${baseURL}/hirakatasai2026-pamphlet.pdf#page=9`;
 
 const activeDayId = ref<'day1' | 'day2'>('day1');
 const highlightedSlotId = ref<string | null>(null);
@@ -234,7 +236,7 @@ useEventListener('click', closeActiveSlot);
 
           <!-- パンフレット案内 -->
           <div class="header-right-tools">
-            <NuxtLink to="/info/pamphlet" class="pamphlet-link-badge">
+            <NuxtLink :to="pamphletTimetableUrl" external class="pamphlet-link-badge">
               電子パンフレットを見る →
             </NuxtLink>
           </div>
