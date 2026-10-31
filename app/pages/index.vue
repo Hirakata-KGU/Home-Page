@@ -170,6 +170,15 @@ const featuredEvents: FeaturedEventItem[] = [
     desc: '美術・写真展示、体験型ワークショップなど、学生たちの創造力が光る文化館展示をお楽しみください！',
     to: '/events?category=culture',
   },
+  {
+    id: 'garapon',
+    title: '抽選会',
+    badge: '委員企画',
+    image: '/images/top/garapon.webp',
+    desc: 'アンケートに答えて必ず景品ゲット！会場は平潟祭本部（入り口付近）までぜひお越しください！',
+    to: '/garapon.pdf',
+    external: true,
+  },
     {
     id: 'radio',
     title: 'ひらかたジャック2026！～学生が届ける、平潟祭の『今』!～',
