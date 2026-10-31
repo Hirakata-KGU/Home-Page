@@ -13,6 +13,27 @@ useSeoMeta({
 const route = useRoute();
 const router = useRouter();
 
+const baseURL = useRuntimeConfig().app.baseURL.replace(/\/$/, '');
+
+const categoryPamphletPageMap: Record<EventCategory, number> = {
+  food: 4,
+  culture: 13,
+  music: 11,
+  entertainment: 10,
+  expo: 8,
+  other: 12,
+};
+
+const pamphletCategoryUrl = computed(() => {
+  if (selectedCategory.value === 'all') {
+    return '/info/pamphlet';
+  }
+  const page = categoryPamphletPageMap[selectedCategory.value] || 4;
+  return `${baseURL}/hirakatasai2026-pamphlet.pdf#page=${page}`;
+});
+
+const isPamphletExternal = computed(() => selectedCategory.value !== 'all');
+
 // URLクエリのパース＆正規化ヘルパー
 const normalizeCategory = (cat: unknown): 'all' | EventCategory => {
   if (typeof cat !== 'string') return 'all';
@@ -240,18 +261,27 @@ watch(
           </div>
         </div>
 
-        <!-- 該当件数 & アクティブ条件リセット -->
+        <!-- 該当件数 & アクティブ条件リセット & パンフレット導線 -->
         <div class="filter-footer">
           <div class="results-count">
-            該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 {{allEvents.length }} 件
+            該当企画: <strong>{{ filteredEvents.length }}</strong> 件 / 全 {{ allEvents.length }} 件
           </div>
-          <button
-            v-if="selectedCategory !== 'all' || selectedDay !== 'all' || searchQuery"
-            class="reset-text-btn"
-            @click="resetFilters"
-          >
-            条件をすべてクリア
-          </button>
+          <div class="filter-footer-actions">
+            <button
+              v-if="selectedCategory !== 'all' || selectedDay !== 'all' || searchQuery"
+              class="reset-text-btn"
+              @click="resetFilters"
+            >
+              条件をすべてクリア
+            </button>
+            <NuxtLink
+              :to="pamphletCategoryUrl"
+              :external="isPamphletExternal"
+              class="pamphlet-link-badge"
+            >
+              電子パンフレットを見る →
+            </NuxtLink>
+          </div>
         </div>
       </section>
 
@@ -436,10 +466,40 @@ watch(
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
   margin-top: 20px;
   padding-top: 14px;
   border-top: 1px solid var(--border);
   font-size: 13px;
+}
+
+.filter-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pamphlet-link-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--olive);
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(47, 91, 52, 0.3);
+  background: #f7faf7;
+  transition: all 0.2s ease;
+}
+
+.pamphlet-link-badge:hover {
+  background: var(--olive);
+  color: white;
+  border-color: var(--olive);
 }
 
 .results-count {
